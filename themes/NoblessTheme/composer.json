@@ -1,0 +1,17 @@
+{
+    "name": "nobless/store-theme",
+    "description": "Nobless Store theme",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Frederic KIM",
+            "email": "chez.molton@gmail.com"
+        }
+    ],
+    "extra": {
+        "sylius-theme": {
+            "title": "Nobless Store theme",
+            "parents": [ "sylius/bootstrap-theme" ]
+        }
+    }
+}

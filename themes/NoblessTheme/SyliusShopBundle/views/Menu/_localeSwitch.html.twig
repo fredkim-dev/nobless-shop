@@ -1,0 +1,20 @@
+{% import '@SyliusUi/Macro/flags.html.twig' as flags %}
+
+{% if locales|length > 1 %}
+    <div class="dropdown">
+        <button class="btn btn-sm text-muted dropdown-toggle banner-link" type="button" data-toggle="dropdown">
+            {{ flags.fromLocaleCode(sylius.localeCode) }}
+            {{ active|sylius_locale_name }}
+        </button>
+        <div class="dropdown-menu">
+            {% for code in locales %}
+                {% if code is not same as(active) %}
+                    <a class="dropdown-item" href="{{ path('sylius_shop_switch_locale', {'code': code}) }}">
+                        {{ flags.fromLocaleCode(code) }}
+                        {{ code|sylius_locale_name }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

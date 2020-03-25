@@ -1,0 +1,110 @@
+@import '../../../BootstrapTheme/assets/scss/index';
+
+@media (min-width: 576px) {
+    .container, .container-sm {
+        max-width: 570px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container, .container-sm, .container-md {
+        max-width: 760px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container, .container-sm, .container-md, .container-lg {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container, .container-sm, .container-md, .container-lg, .container-xl {
+        max-width: 1140px;
+    }
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden;
+}
+
+.bg-header {
+    background-color: #c3c3c3;
+}
+
+.log-link {
+    color: #ffffff;
+}
+
+.d-sm-none .log-link {
+    color: inherit;
+}
+
+header {
+    .navbar {
+        a.nav-item {
+            font-size: 1.3rem;
+            font-weight: bolder;
+            color: #271513;
+            &:hover {
+                text-decoration: underline;
+                color: #271513;
+            }
+        }
+    }
+    
+    .navbar-light {
+        width: 100%;
+    }
+
+    .logo {
+        @include media-breakpoint-up(md) {
+            width: 270px;
+        }
+
+        @include media-breakpoint-down(sm) {
+            width: 280px;
+        }
+    }
+}
+
+footer {
+    .social-media-icons {
+        padding-top: 3px;
+        .footer-icon {
+            font-size: 1.4rem;
+        }
+    }
+}
+
+.header-banner,
+.footer-banner {
+    background-color: #271513;
+
+    a.banner-link, button.banner-link {
+        color: #ffffff;
+    }
+}
+
+div.dropdown-menu {
+    .card-body,
+    .card-body a {
+       color: #271513;
+   }
+}
+
+.account-btn {
+    .dropdown-menu {
+        .card-body {
+            padding: 0;
+        }
+    }
+}
+
+div.main-content {
+    overflow: auto;
+    nav .breadcrumb {
+        margin-top: 1rem !important;
+    }
+}

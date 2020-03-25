@@ -5,7 +5,7 @@ import './js/index';
 import './scss/index.scss';
 
 // Images
-import './media/logo.png';
+import './media/sylius-logo.png';
 
 // Font awesome icons
 import './js/fontawesome';

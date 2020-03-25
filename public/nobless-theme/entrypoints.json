@@ -1,0 +1,15 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/nobless-theme/runtime.js",
+        "/nobless-theme/vendors~app.js",
+        "/nobless-theme/app.js"
+      ],
+      "css": [
+        "/nobless-theme/vendors~app.css",
+        "/nobless-theme/app.css"
+      ]
+    }
+  }
+}

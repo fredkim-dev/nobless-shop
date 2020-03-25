@@ -1,3 +1,3 @@
 const Encore = require('@symfony/webpack-encore');
-const bootstrapTheme = require('./themes/BootstrapTheme/webpack.config');
-module.exports = [bootstrapTheme];
+const noblessTheme = require('./themes/NoblessTheme/webpack.config');
+module.exports = [noblessTheme];

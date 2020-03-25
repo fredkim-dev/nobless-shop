@@ -1,0 +1,26 @@
+<div class="btn-group">
+    {% if is_granted('ROLE_USER') %}
+        <div class="row">
+            <div class="col-12 d-sm-none">{{ 'sylius.ui.hello'|trans }} {{ app.user.customer.fullName }}</div>
+            <div class="col-12 d-sm-none mx-auto">
+                <a class="log-link" href="{{ path('sylius_shop_account_dashboard') }}">{{ 'sylius.ui.my_account'|trans }}</a>
+                <span class="px-1 text-muted">|</span>
+                <a class="log-link" href="{{ path('sylius_shop_logout') }}">{{ 'sylius.ui.logout'|trans }}</a>
+            </div>
+        </div>
+        <div class="d-none d-sm-inline-block account-btn dropdown">
+            <a class="d-flex align-items-center dropdown-toggle banner-link" data-toggle="dropdown" href="#">
+                {{ 'sylius.ui.hello'|trans }} {{ app.user.customer.fullName }}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="card-body text-center row">
+                    <a class="col-12 log-link" href="{{ path('sylius_shop_account_dashboard') }}">{{ 'sylius.ui.my_account'|trans }}</a>
+                    <a class="col-12 log-link" href="{{ path('sylius_shop_logout') }}">{{ 'sylius.ui.logout'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="mr-1">Bienvenue ! </div>
+        <a class="log-link" href="{{ path('sylius_shop_login') }}">{{ 'sylius.ui.login'|trans }}</a>
+    {% endif %}
+</div>

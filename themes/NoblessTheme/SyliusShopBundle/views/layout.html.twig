@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html lang="{{ app.request.locale|slice(0, 2) }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{% block title %}Nobless Store{% endblock %}</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+    {% block metatags %}
+    {% endblock %}
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app', null, 'noblessTheme') }}
+
+        {{ sonata_block_render_event('sylius.shop.layout.stylesheets') }}
+    {% endblock %}
+
+    {{ sonata_block_render_event('sylius.shop.layout.head') }}
+</head>
+
+<body>
+{{ sonata_block_render_event('sylius.shop.layout.before_body') }}
+
+{% block top %}
+{% endblock %}
+
+{% block header %}
+    <div id="headerContainer" class="pt-1 bg-header">
+        <div class="container">
+            <header class="mb-lg-1">
+                {% include '@SyliusShop/_header.html.twig' %}
+
+                {{ sonata_block_render_event('sylius.shop.layout.after_header') }}
+            </header>
+        </div>
+
+        {#<div class="border-top border-bottom bg-light">
+            <div class="container">
+                
+            </div>
+        </div>#}
+
+        <div class="header-banner">
+            <div class="container">
+                <div class="d-flex row no-gutters">
+                    <div class="col col-sm-2 mr-auto text-left">
+                        {{ render(controller('sylius.controller.shop.locale_switch:renderAction')) }}
+                    </div>
+                    <div class="col-auto text-right mr-1 align-self-center d-none d-md-block">
+                        {{ sonata_block_render_event('sylius.shop.layout.before_security_widget') }}
+                        {{ render(controller('sylius.controller.shop.security_widget:renderAction')) }} 
+                        {{ sonata_block_render_event('sylius.shop.layout.after_security_widget') }}
+                    </div>
+                    <div class="col-auto text-left align-self-center">
+                        <span class="text-muted align-middle d-none d-md-inline">|</span>  
+                        {{ render(url('sylius_shop_partial_cart_summary', {'template': '@SyliusShop/Cart/_widget.html.twig'})) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<div id="mainContentContainer" class="main-content container mx-sm-1 mx-md-auto">
+    {% include '@SyliusShop/_flashes.html.twig' %}
+
+    {{ sonata_block_render_event('sylius.shop.layout.before_content') }}
+
+    {% block content %}
+    {% endblock %}
+
+    {{ sonata_block_render_event('sylius.shop.layout.after_content') }}
+</div>
+
+{% block footer %}
+    <div class="col-12">
+        {% include '@SyliusShop/_footer.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app', null, 'noblessTheme') }}
+
+    {{ sonata_block_render_event('sylius.shop.layout.javascripts') }}
+{% endblock %}
+
+{{ sonata_block_render_event('sylius.shop.layout.after_body') }}
+
+<div class="loading-overlay" data-js-loading-overlay>
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+</body>
+</html>

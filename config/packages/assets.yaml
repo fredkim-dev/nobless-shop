@@ -1,5 +1,5 @@
 framework:
     assets:
         packages:
-            bootstrapTheme:
-                json_manifest_path: '%kernel.project_dir%/public/bootstrap-theme/manifest.json' 
+            noblessTheme:
+                json_manifest_path: '%kernel.project_dir%/public/nobless-theme/manifest.json' 
