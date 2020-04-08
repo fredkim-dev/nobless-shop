@@ -1,0 +1,14 @@
+bitbag_sylius_cms_plugin:
+    resource: "@BitBagSyliusCmsPlugin/Resources/config/routing.yml"
+
+app_shop_latest_products:
+    path: /latest/products
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.shop.homepage:latestProductsAction
+
+app_shop_bundles_title:
+    path: /bundles/title
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.shop.homepage:displayBundleTitleAction

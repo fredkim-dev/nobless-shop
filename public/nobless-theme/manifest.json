@@ -4,7 +4,11 @@
   "nobless-theme/runtime.js": "/nobless-theme/runtime.js",
   "nobless-theme/vendors~app.css": "/nobless-theme/vendors~app.css",
   "nobless-theme/vendors~app.js": "/nobless-theme/vendors~app.js",
+  "nobless-theme/fonts/slick.woff": "/nobless-theme/fonts/slick.b7c9e1e4.woff",
+  "nobless-theme/fonts/slick.eot": "/nobless-theme/fonts/slick.ced611da.eot",
+  "nobless-theme/fonts/slick.ttf": "/nobless-theme/fonts/slick.d41f55a7.ttf",
+  "nobless-theme/images/ajax-loader.gif": "/nobless-theme/images/ajax-loader.c5cd7f53.gif",
   "nobless-theme/images/flags.png": "/nobless-theme/images/flags.9c74e172.png",
-  "nobless-theme/images/sylius-logo.png": "/nobless-theme/images/sylius-logo.ac4ac094.png",
-  "nobless-theme/images/logo.png": "/nobless-theme/images/logo.6c0a5a54.png"
+  "nobless-theme/images/logo.png": "/nobless-theme/images/logo.6c0a5a54.png",
+  "nobless-theme/images/slick.svg": "/nobless-theme/images/slick.f97e3bbf.svg"
 }
