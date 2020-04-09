@@ -18,6 +18,7 @@
     ],
     "require": {
         "php": "^7.2",
+        "bitbag/product-bundle-plugin": "dev-master",
         "sylius/sylius": "~1.7",
         "symfony/dotenv": "^4.3",
         "symfony/flex": "^1.2",
