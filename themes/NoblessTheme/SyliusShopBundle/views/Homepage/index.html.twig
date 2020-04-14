@@ -11,6 +11,6 @@
 
     {{ headers.default(render(url('app_shop_bundles_title'))) }}
 
-    {{ render(url('sylius_shop_partial_product_index_latest', {'count': 4, 'template': '@SyliusShop/Product/_horizontalList.html.twig'})) }}
+    {{ render(url('app_shop_latest_bundles')) }}
 
 {% endblock %}

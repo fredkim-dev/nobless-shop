@@ -7,6 +7,12 @@ app_shop_latest_products:
     defaults:
         _controller: sylius.controller.shop.homepage:latestProductsAction
 
+app_shop_latest_bundles:
+    path: /latest/bundles
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.shop.homepage:latestBundlesAction
+        
 app_shop_bundles_title:
     path: /bundles/title
     methods: [GET]
