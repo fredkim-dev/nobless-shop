@@ -56,10 +56,34 @@ class HomepageController extends ResourceController
         );
     }
 
-    /*public function getLastBundles(): Response
+    public function latestBundlesAction(): Response
     {
-        return $this->templatingEngine->renderResponse('custom.html.twig');
-    }*/
+        $currentLocale = $this->container->get('sylius.context.locale')->getLocaleCode();
+
+        /** @var ArrayCollection $taxons */
+        $taxons = $this->container->get('sylius.repository.taxon')
+            ->findChildrenByChannelMenuTaxon(null, $currentLocale);
+
+        if (count($taxons) === 0) {
+            throw new NotFoundHttpException('No Taxons, no products.');
+        }
+
+        /** @var Taxon $taxon */
+        $productsList = array();
+        foreach ($taxons as $taxon) {
+            $taxonProducts = $this->container->get('sylius.repository.product')->findByTaxonId($taxon->getId());
+            foreach ($taxonProducts as $product) {
+                array_push($productsList, $product);
+            }
+        }
+        shuffle($productsList);
+
+        return $this->templatingEngine->renderResponse('@SyliusShop/Homepage/latestBundles.html.twig',
+            array(
+                'products' => $productsList
+            )
+        );
+    }
 
     public function displayBundleTitleAction(Request $request): Response
     {

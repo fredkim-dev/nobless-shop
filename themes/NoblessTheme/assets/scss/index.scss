@@ -1,30 +1,18 @@
 @import '~slick-carousel/slick/slick';
 @import '~slick-carousel/slick/slick-theme';
-@import '../../../BootstrapTheme/assets/scss/index';
 
-@media (min-width: 576px) {
-    .container, .container-sm {
-        max-width: 570px;
-    }
-}
+@import '../../../BootstrapTheme/assets/scss/variables';
+@import './variables';
 
-@media (min-width: 768px) {
-    .container, .container-sm, .container-md {
-        max-width: 760px;
-    }
-}
+@import "~bootstrap/scss/bootstrap";
 
-@media (min-width: 992px) {
-    .container, .container-sm, .container-md, .container-lg {
-        max-width: 960px;
-    }
-}
+// Custom theme styles
+@import "../../../BootstrapTheme/assets/scss/steps";
+@import "../../../BootstrapTheme/assets/scss/custom";
 
-@media (min-width: 1200px) {
-    .container, .container-sm, .container-md, .container-lg, .container-xl {
-        max-width: 1140px;
-    }
-}
+// Third party components
+@import '~semantic-ui-css/components/flag.min.css';
+@import '~glightbox/dist/css/glightbox.min.css';
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -111,17 +99,7 @@ div.main-content {
     }
 }
 
-#carouselLatest,
-#carouselLatestMD,
-#carouselLatestLG {
-    .carousel-item.active,
-    .carousel-item-next,
-    .carousel-item-prev {
-        display: flex;
-    }
-}
-
-#slider-controls {
+.slider-controls {
     position: relative;
     .div-btn {
 
