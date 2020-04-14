@@ -1,3 +1,5 @@
+@import '~slick-carousel/slick/slick';
+@import '~slick-carousel/slick/slick-theme';
 @import '../../../BootstrapTheme/assets/scss/index';
 
 @media (min-width: 576px) {
@@ -53,7 +55,7 @@ header {
             }
         }
     }
-    
+
     .navbar-light {
         width: 100%;
     }
@@ -106,5 +108,36 @@ div.main-content {
     overflow: auto;
     nav .breadcrumb {
         margin-top: 1rem !important;
+    }
+}
+
+#carouselLatest,
+#carouselLatestMD,
+#carouselLatestLG {
+    .carousel-item.active,
+    .carousel-item-next,
+    .carousel-item-prev {
+        display: flex;
+    }
+}
+
+#slider-controls {
+    position: relative;
+    .div-btn {
+
+        .slick-prev,
+        .slick-next {
+            position: initial;
+            background: transparent;
+            &:hover, &:focus {
+                background: transparent;
+            }
+            &:before {
+                font-size: 20px;
+                color: black;
+            }
+            left: unset;
+            right: unset;
+        }
     }
 }

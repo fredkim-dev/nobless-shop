@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\OrderItem as BaseOrderItem;
 
 use BitBag\SyliusProductBundlePlugin\Entity\ProductBundleOrderItemInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -15,8 +16,30 @@ use BitBag\SyliusProductBundlePlugin\Entity\ProductBundleOrderItemInterface;
  */
 class OrderItem extends BaseOrderItem
 {
-    public function addProductBundleItem(ProductBundleOrderItemInterface $productBundleOrderItem): void
+    /**
+     * @ORM\OneToMany(targetEntity="BitBag\SyliusProductBundlePlugin\Entity\ProductBundleOrderItemInterface", mappedBy="orderItem", cascade={"persist"})
+     */
+    protected $productBundleItems;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->productBundleItems = new ArrayCollection();
+    }
+
+    public function addProductBundleItem(ProductBundleOrderItemInterface $productBundleOrderItem): self
     {
         $productBundleOrderItem->setOrderItem($this);
+        if (!$this->productBundleItems->contains($productBundleOrderItem)) {
+            $this->productBundleItems[] = $productBundleOrderItem;
+        }
+
+        return $this;
+    }
+
+    public function getProductBundleItems(): ArrayCollection
+    {
+        return $this->productBundleItems;
     }
 }

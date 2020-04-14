@@ -18,11 +18,17 @@
     ],
     "require": {
         "php": "^7.2",
+        "bitbag/cms-plugin": "^2.3",
         "bitbag/product-bundle-plugin": "dev-master",
+        "friendsofsymfony/ckeditor-bundle": "1.2.0",
+        "suncat/mobile-detect-bundle": "^1.1",
         "sylius/sylius": "~1.7",
         "symfony/dotenv": "^4.3",
         "symfony/flex": "^1.2",
-        "symfony/webpack-encore-bundle": "^1.7"
+        "symfony/webpack-encore-bundle": "^1.7",
+        "twig/extensions": "^1.5",
+        "twig/extra-bundle": "^3.0",
+        "twig/intl-extra": "^2.12"
     },
     "require-dev": {
         "behat/behat": "^3.4",

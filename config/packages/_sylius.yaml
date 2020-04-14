@@ -6,6 +6,8 @@ imports:
 
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
     - { resource: "@BitBagSyliusProductBundlePlugin/Resources/config/config.yml" }
+    
+    - { resource: "@BitBagSyliusCmsPlugin/Resources/config/config.yml" }
 
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
@@ -144,6 +146,7 @@ sylius_product:
         product:
             classes:
                 model: App\Entity\Product\Product
+                repository: App\Repository\ProductRepository
             translation:
                 classes:
                     model: App\Entity\Product\ProductTranslation
@@ -282,3 +285,9 @@ sylius_grid:
                                     label: bitbag_sylius_product_bundle.ui.bundle
                                     icon: plus
                                     route: bitbag_product_bundle_admin_product_create_bundle
+mobile_detect:
+    service:
+        mobile_detector: mobile_detect.mobile_detector.default
+    device_view_class: SunCat\MobileDetectBundle\Helper\DeviceView
+    request_response_listener_class: SunCat\MobileDetectBundle\EventListener\RequestResponseListener
+    twig_extension_class: SunCat\MobileDetectBundle\Twig\Extension\MobileDetectExtension

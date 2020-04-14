@@ -12,8 +12,10 @@ Encore
   .cleanupOutputBeforeBuild()
   .splitEntryChunks()
   .enableSassLoader()
+  .autoProvidejQuery()
   .enableSourceMaps(!Encore.isProduction())
-  .enableVersioning(Encore.isProduction());
+  .enableVersioning(Encore.isProduction())
+;
 
 const config = Encore.getWebpackConfig();
 config.name = 'noblessTheme';
