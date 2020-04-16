@@ -6,14 +6,35 @@ use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository as BaseProductReposi
 
 class ProductRepository extends BaseProductRepository
 {
-    public function findByTaxonId(int $idTaxon): array
+    public function findRandomlyByTaxonId(int $idTaxon, ?array $latestIds = array()): array
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.mainTaxon', 'taxon')
+            ->andWhere('taxon.id = :id')
+            ->setParameter('id', $idTaxon)
+        ;
+
+        if (count($latestIds) > 0) {
+            $qb
+                ->andWhere('p.id NOT IN (:latestIds)')
+                ->setParameter('latestIds', $latestIds)
+            ;
+        }
+        return $qb
+            ->orderBy('RAND()')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findLatestByTaxonId(int $idTaxon): array
     {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.mainTaxon', 'taxon')
             ->andWhere('taxon.id = :id')
             ->setParameter('id', $idTaxon)
-            ->setMaxResults(4)
             ->addOrderBy('p.id', 'DESC')
+            ->setMaxResults(4)
             ->getQuery()
             ->getResult()
         ;
