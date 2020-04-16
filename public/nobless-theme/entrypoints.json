@@ -2,13 +2,13 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/nobless-theme/runtime.49fb4f7b.js",
-        "/nobless-theme/0.90480635.js",
-        "/nobless-theme/app.98fe35e4.js"
+        "/nobless-theme/runtime.js",
+        "/nobless-theme/vendors~app.js",
+        "/nobless-theme/app.js"
       ],
       "css": [
-        "/nobless-theme/0.a1774e19.css",
-        "/nobless-theme/app.83163a7a.css"
+        "/nobless-theme/vendors~app.css",
+        "/nobless-theme/app.css"
       ]
     }
   }

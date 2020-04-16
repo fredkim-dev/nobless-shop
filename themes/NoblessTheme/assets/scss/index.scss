@@ -99,6 +99,16 @@ div.main-content {
     }
 }
 
+.homepage-title {
+    a {
+        color: inherit;
+        &:hover {
+            color: #212529;
+            text-decoration: underline;
+        }
+    }
+}
+
 .slider-controls {
     position: relative;
     .div-btn {

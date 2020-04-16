@@ -42,7 +42,7 @@ class HomepageController extends ResourceController
         /** @var Taxon $taxon */
         $productsList = array();
         foreach ($taxons as $taxon) {
-            $taxonProducts = $this->container->get('sylius.repository.product')->findByTaxonId($taxon->getId());
+            $taxonProducts = $this->container->get('sylius.repository.product')->findLatestByTaxonId($taxon->getId());
             foreach ($taxonProducts as $product) {
                 array_push($productsList, $product);
             }
@@ -60,27 +60,30 @@ class HomepageController extends ResourceController
     {
         $currentLocale = $this->container->get('sylius.context.locale')->getLocaleCode();
 
-        /** @var ArrayCollection $taxons */
-        $taxons = $this->container->get('sylius.repository.taxon')
-            ->findChildrenByChannelMenuTaxon(null, $currentLocale);
-
-        if (count($taxons) === 0) {
-            throw new NotFoundHttpException('No Taxons, no products.');
-        }
-
         /** @var Taxon $taxon */
-        $productsList = array();
-        foreach ($taxons as $taxon) {
-            $taxonProducts = $this->container->get('sylius.repository.product')->findByTaxonId($taxon->getId());
-            foreach ($taxonProducts as $product) {
-                array_push($productsList, $product);
-            }
+        $taxon = $this->container->get('sylius.repository.taxon')
+            ->findOneBySlug('bundles', $currentLocale);
+
+        if (!($taxon instanceof Taxon)) {
+            throw new NotFoundHttpException('Taxon does not exist with this slug');
         }
-        shuffle($productsList);
+
+        $bundlesList = array();
+        $latestBundlesIds = array();
+        $latest = $this->container->get('sylius.repository.product')->findLatestByTaxonId($taxon->getId());
+        foreach ($latest as $lBundle) {
+            array_push($bundlesList, $lBundle);
+            array_push($latestBundlesIds, $lBundle->getId());
+        }
+
+        $randomBundles = $this->container->get('sylius.repository.product')->findRandomlyByTaxonId($taxon->getId(), $latestBundlesIds);
+        foreach ($randomBundles as $rBundle) {
+            array_push($bundlesList, $rBundle);
+        }
 
         return $this->templatingEngine->renderResponse('@SyliusShop/Homepage/latestBundles.html.twig',
             array(
-                'products' => $productsList
+                'bundles' => $bundlesList
             )
         );
     }
@@ -97,6 +100,10 @@ class HomepageController extends ResourceController
             throw new NotFoundHttpException('Requested taxon does not exist.');
         }
 
-        return new Response($taxon->getName());
+        return $this->templatingEngine->renderResponse('@SyliusShop/Homepage/bundlesTitle.html.twig',
+            array(
+                'taxon' => $taxon
+            )
+        );
     }
 }
