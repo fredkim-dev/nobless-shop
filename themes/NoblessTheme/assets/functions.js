@@ -25,14 +25,6 @@ function createCarousel() {
       {
         breakpoint: 1400,
         settings: {
-          slidesToShow: 6,
-          slidesToScroll: 1,
-          infinite: true
-        }
-      },
-      {
-        breakpoint: 1200,
-        settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
           infinite: true
@@ -41,7 +33,7 @@ function createCarousel() {
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1,
           slidesToScroll: 1
         }
       },
@@ -66,14 +58,6 @@ function createCarousel() {
     responsive: [
       {
         breakpoint: 1400,
-        settings: {
-          slidesToShow: 6,
-          slidesToScroll: 1,
-          infinite: true
-        }
-      },
-      {
-        breakpoint: 1200,
         settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
