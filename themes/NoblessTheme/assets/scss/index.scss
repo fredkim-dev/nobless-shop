@@ -131,6 +131,34 @@ div.main-content {
     }
 }
 
+.card {
+    background-color: #271513;
+    border-radius: 0.5rem;
+    .card-body {
+        border-bottom-left-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        background: #271513;
+        h6.product-name {
+            font-family: "Bookman Old Style", "Open Sans", sans-serif;
+            font-weight: bold;
+            font-size: 1.3rem;
+            a {
+                color: #ffffff;
+                a:hover {
+                    text-decoration: underline;
+                    color: #ffffff;
+                }
+            }
+        }
+        span.product-price {
+            font-family: "Bookman Old Style", "Open Sans", sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+    }
+}
+
 .homepage-title {
     a {
         color: inherit;
@@ -139,6 +167,10 @@ div.main-content {
             text-decoration: underline;
         }
     }
+}
+
+div.col.slick-slide {
+    padding:0 5px;
 }
 
 .slider-controls {
