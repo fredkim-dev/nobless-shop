@@ -16,7 +16,7 @@ function createCarousel() {
   jQuery('#carouselLatestProducts').slick({
     infinite: true,
     speed: 700,
-    slidesToShow: 8,
+    slidesToShow: 6,
     slidesToScroll: 1,
     appendArrows: jQuery('#carouselLatestProducts').next('.slider-controls'),
     prevArrow: '<div class="div-btn"><button type="button" class="slick-prev ">Previous</button></div>',
@@ -33,7 +33,7 @@ function createCarousel() {
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1
         }
       },
@@ -50,7 +50,7 @@ function createCarousel() {
   jQuery('#carouselLatestBundles').slick({
     infinite: true,
     speed: 700,
-    slidesToShow: 8,
+    slidesToShow: 6,
     slidesToScroll: 1,
     appendArrows: jQuery('#carouselLatestBundles').next('.slider-controls'),
     prevArrow: '<div class="div-btn"><button type="button" class="slick-prev ">Previous</button></div>',
