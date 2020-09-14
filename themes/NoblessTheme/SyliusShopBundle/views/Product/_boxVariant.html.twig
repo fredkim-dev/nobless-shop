@@ -1,0 +1,9 @@
+<div>
+    {% for variant in productVariants %}
+        {% for option in variant.optionValues %}
+            <span class="option-value{% if variant.onHand == 0 %} out-of-stock{% endif %}">
+                {{ option.code }}
+            </span>
+        {% endfor %}
+    {% endfor %}
+</div>

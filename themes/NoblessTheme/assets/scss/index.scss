@@ -43,6 +43,14 @@ body {
     color: inherit;
 }
 
+a {
+    color: #271513;;
+    &:hover {
+        text-decoration: underline;
+        color: #271513;;
+    }
+}
+
 header {
     .navbar {
         a.nav-item {
@@ -110,7 +118,13 @@ div.dropdown-menu {
     .card-body,
     .card-body a {
        color: #271513;
-   }
+    }
+    .dropdown-item, .dropdown-item:active {
+        &.active, &:active {
+            background-color: #f8f9fa;
+            color: #271513;
+        }
+    }
 }
 
 .account-btn {
@@ -118,6 +132,18 @@ div.dropdown-menu {
         .card-body {
             padding: 0;
         }
+    }
+}
+
+a.log-link:hover {
+    color: #ffffff;
+}
+
+.btn-link {
+    color: #271513;
+    &:hover {
+        text-decoration: underline;
+        color: #271513;
     }
 }
 
@@ -132,7 +158,26 @@ div.main-content {
     }
 }
 
+.product-description {
+    color: #271513;
+}
+
 .card {
+    background-color: transparent;
+    border-color: #271513;
+    .card-body {
+        label {
+            color: #212529;
+        }
+        .btn-primary {
+            background-color: #271513;
+            color: #ffffff;
+            border-color: #271513;
+        }
+    }
+}
+
+.card-carousel {
     background-color: #271513;
     border-radius: 0.5rem;
     .card-body {
@@ -151,10 +196,22 @@ div.main-content {
                 }
             }
         }
+        .option-value {
+            font-family: "Bookman Old Style", "Open Sans", sans-serif;
+            font-size: 1.1rem;
+            position: relative;
+            color: #ffffff;
+            &.out-of-stock {
+                opacity: 0.3;
+            }
+        }
         span.product-price {
             font-family: "Bookman Old Style", "Open Sans", sans-serif;
             font-size: 1.2rem;
             font-weight: bold;
+            color: #ffffff;
+        }
+        label {
             color: #ffffff;
         }
     }
@@ -167,6 +224,12 @@ div.main-content {
             color: #212529;
             text-decoration: underline;
         }
+    }
+}
+
+.breadcrumb-item {
+    &.active, & + .breadcrumb-item::before {
+        color: #212529;
     }
 }
 

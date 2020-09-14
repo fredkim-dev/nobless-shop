@@ -1,4 +1,3 @@
-{% dump product.isBundle %}
 {% if product.variants.empty() or product.simple and not sylius_inventory_is_available(product.variants.first) %}
     {% include '@SyliusShop/Product/Show/_outOfStock.html.twig' %}
 {% else %}
