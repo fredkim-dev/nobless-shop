@@ -31,7 +31,7 @@
 
 {% block header %}
     <div id="headerContainer" class="pt-1 bg-header">
-        <div class="container">
+        <div class="container-fluid">
             <header class="mb-lg-1">
                 {% include '@SyliusShop/_header.html.twig' %}
 
@@ -46,7 +46,7 @@
         </div>#}
 
         <div class="header-banner">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="d-flex row no-gutters">
                     <div class="col col-sm-2 mr-auto text-left">
                         {{ render(controller('sylius.controller.shop.locale_switch:renderAction')) }}
@@ -66,7 +66,7 @@
     </div>
 {% endblock %}
 
-<div id="mainContentContainer" class="main-content container mx-sm-1 mx-md-auto">
+<div id="mainContentContainer" class="main-content container-fluid mx-sm-1 mx-md-auto">
     {% include '@SyliusShop/_flashes.html.twig' %}
 
     {{ sonata_block_render_event('sylius.shop.layout.before_content') }}
@@ -78,6 +78,7 @@
 </div>
 
 {% block footer %}
+
     {% include '@SyliusShop/_footer.html.twig' %}
 {% endblock %}
 

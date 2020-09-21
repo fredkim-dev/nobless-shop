@@ -23,7 +23,15 @@ function createCarousel() {
     nextArrow: '<div class="div-btn"><button type="button" class="slick-next">Previous</button></div>',
     responsive: [
       {
-        breakpoint: 1400,
+        breakpoint: 1920,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 1,
+          infinite: true
+        }
+      },
+      {
+        breakpoint: 1280,
         settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
@@ -34,13 +42,6 @@ function createCarousel() {
         breakpoint: 768,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 576,
-        settings: {
-          slidesToShow: 1,
           slidesToScroll: 1
         }
       }
@@ -57,7 +58,15 @@ function createCarousel() {
     nextArrow: '<div class="div-btn"><button type="button" class="slick-next">Previous</button></div>',
     responsive: [
       {
-        breakpoint: 1400,
+        breakpoint: 1920,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 1,
+          infinite: true
+        }
+      },
+      {
+        breakpoint: 1280,
         settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
@@ -68,13 +77,6 @@ function createCarousel() {
         breakpoint: 768,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 576,
-        settings: {
-          slidesToShow: 1,
           slidesToScroll: 1
         }
       }

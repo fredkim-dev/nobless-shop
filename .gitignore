@@ -4,6 +4,7 @@
 /public/media
 !/public/media/image/.gitkeep
 /public/*.sql
+/themes/NoblessTheme/assets/.DS_Store
 
 /node_modules
 /.idea

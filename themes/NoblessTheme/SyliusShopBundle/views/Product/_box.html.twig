@@ -3,14 +3,11 @@
 {{ sonata_block_render_event('sylius.shop.product.index.before_box', {'product': product}) }}
 
 <div class="card card-carousel border-0">
-    <a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}">
-        {% include '@SyliusShop/Product/_mainImage.html.twig' with {'product': product, 'class': 'card-img-top'} %}
-    </a>
+    <div class="card-img-top">
+        {% include '@SyliusShop/Product/_mainImage.html.twig' with {'product': product} %}
+    </div>
     <div class="card-body text-center">
         <h6 class="product-name"><a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}" class="card-link">{{ product.name }}</a></h6>
-        {% if product.variants|length > 1 %}
-            {% include '@SyliusShop/Product/_boxVariant.html.twig' with {'productVariants': product.variants} %}
-        {% endif %}
         {% if not product.variants.empty() %}
             <span class="text-muted product-price">{{ money.calculatePrice(product|sylius_resolve_variant) }}</span>
         {% endif %}

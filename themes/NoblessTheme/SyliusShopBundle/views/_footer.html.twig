@@ -1,13 +1,9 @@
 <footer id="footerContainer" class="bg-footer">
     {{ sonata_block_render_event('sylius.shop.layout.before_footer') }}
     <div class="footer-banner">
-        <div class="container">
-            <div class="row d-flex">
-                <div class="col-12 col-sm text-center text-sm-left align-self-center pt-2 pt-sm-0">
-                    <a class="banner-link" href="{{ path('bitbag_sylius_cms_plugin_shop_page_show_link_by_code', {'code' : 'cgv'}) }}">{{ 'sylius.ui.terms_and_conditions'|trans }}</a>
-                </div>
-
-                <div class="col-12 col-sm-auto mx-auto text-sm-left justify-content-center align-self-center d-flex pb-1 pb-sm-0">
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-end">
+                <div class="col-12 col-sm-auto justify-content-center d-flex pb-1 pb-sm-0">
                     <div class="social-media-icons d-inline-block">
                         <a class="banner-link" href="https://facebook.com"><i class="fab fa-facebook-square footer-icon"></i></a>
                         <a class="banner-link" href="https://instagram.com"><i class="fab fa-instagram footer-icon"></i></a>

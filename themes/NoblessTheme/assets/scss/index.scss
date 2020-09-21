@@ -32,22 +32,29 @@ body {
 }
 
 .bg-header, .bg-footer {
-    background-color: #c3c3c3;
+    background-color: #ffffff;
 }
 
-.log-link {
-    color: #ffffff;
-}
-
-.d-sm-none .log-link {
+.d-md-none .log-link {
     color: inherit;
+    &:hover {
+        text-decoration: underline;
+        color: #271513;
+    }
+}
+.d-md-block .log-link {
+    color: #ffffff;
+    &:hover {
+        text-decoration: underline;
+        color: #ffffff;
+    }
 }
 
 a {
     color: #271513;;
     &:hover {
         text-decoration: underline;
-        color: #271513;;
+        color: #271513;
     }
 }
 
@@ -148,13 +155,45 @@ a.log-link:hover {
 }
 
 #mainContentContainer {
-    background-color: #cc9d84;
+    background-color: #ffffff;
 }
 
 div.main-content {
     overflow: auto;
     nav .breadcrumb {
         margin-top: 1rem !important;
+    }
+}
+
+#footer-infos {
+    font-family: 'Roboto', sans-serif;
+    h5 {
+        font-family: 'Bookman Old Style', 'Roboto', sans-serif;
+        margin-bottom: 15px;
+    }
+    .row.footer-legal {
+        background-color: #c3c3c3;
+        .flex-row {
+            .icon-footer {
+                width: 64px;
+                height: 64px;
+            }
+        }
+    }
+    .row.footer-links {
+        .payment-mode, .delivery-mode {
+            margin-bottom: 15px;
+            img {
+                height: 40px;
+                margin: 0 10px;
+            }
+        }
+        .delivery-mode {
+            img {
+                height: 48px;
+                margin: 0 10px;
+            }
+        }
     }
 }
 
@@ -186,7 +225,6 @@ div.main-content {
         background: #271513;
         h6.product-name {
             font-family: "Bookman Old Style", "Open Sans", sans-serif;
-            font-weight: bold;
             font-size: 1.3rem;
             a {
                 color: #ffffff;
@@ -201,18 +239,90 @@ div.main-content {
             font-size: 1.1rem;
             position: relative;
             color: #ffffff;
-            &.out-of-stock {
-                opacity: 0.3;
-            }
         }
         span.product-price {
-            font-family: "Bookman Old Style", "Open Sans", sans-serif;
+            font-family: "Roboto", "Open Sans", sans-serif;
             font-size: 1.2rem;
-            font-weight: bold;
             color: #ffffff;
         }
         label {
             color: #ffffff;
+        }
+    }
+    .card-img-top {
+        position: relative;
+        img {
+            width: 100%;
+        }
+        .variants-container {
+            
+            &.flex-sm-column {
+                position: absolute;
+                top: 17%;
+                right: 10%;
+
+                .option-value {
+                    border: 1px solid #271513;
+                    padding: 1px 5px;
+                    color: #271513;
+                    text-align: center;
+                    font-size: 0.8rem;
+                    position: relative;
+                    .out-of-stock {
+                        &.s, &.m, &.l, &.xs, &.xl {
+                            width: 34px;
+                            height: 0px;
+                            border-bottom: 1px solid #271513;
+                            transform: translateY(20px) translateX(5px) rotate(-41deg);
+                            -webkit-transform: translateY(20px) translateX(5px) rotate(-41deg);
+                            position: absolute;
+                            top: -9px;
+                            left: -9px;
+                        }
+                        &.xxl {
+                            width: 41px;
+                            height: 0px;
+                            border-bottom: 1px solid #271513;
+                            transform: translateY(20px) translateX(5px) rotate(-26deg);
+                            -webkit-transform: translateY(20px) translateX(5px) rotate(-35deg);
+                            position: absolute;
+                            top: -9px;
+                            left: -9px;
+                        }
+                    }
+                }
+            }
+
+            &.flex-xs-row {    
+                position: absolute;
+                top: 79%;
+                bottom: 2%;
+                right: auto;
+                left: auto;
+                .option-value {
+                    font-size: 0.7rem;
+                    .out-of-stock {
+                        &.s, &.m, &.l {
+                            width: 28px;
+                            transform: translateY(20px) translateX(5px) rotate(-44deg);
+                            -webkit-transform: translateY(20px) translateX(5px) rotate(-44deg);
+                            top: -11px;
+                        }
+                        &.xs, &.xl {
+                            width: 31px;
+                            transform: translateY(20px) translateX(5px) rotate(-40deg);
+                            -webkit-transform: translateY(20px) translateX(5px) rotate(-40deg);
+                            top: -11px;
+                        }
+                        &.xxl {
+                            width: 38px;
+                            transform: translateY(20px) translateX(5px) rotate(-32deg);
+                            -webkit-transform: translateY(20px) translateX(5px) rotate(-32deg);
+                            top: -11px;
+                        }
+                    }
+                }
+            }
         }
     }
 }
