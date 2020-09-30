@@ -1,0 +1,50 @@
+{% if product.imagesByType('main') is not empty %}
+    {% set source_path = product.imagesByType('main').first.path %}
+    {% set original_path = source_path|imagine_filter('sylius_shop_product_original') %}
+    {% set mainPath = source_path|imagine_filter('sylius_shop_product_mobile_thumbnail') %}
+{% elseif product.images.first %}
+    {% set source_path = product.images.first.path %}
+    {% set original_path = source_path|imagine_filter('sylius_shop_product_original') %}
+    {% set mainPath = source_path|imagine_filter('sylius_shop_product_mobile_thumbnail') %}
+{% else %}
+    {% set original_path = '//placehold.it/400x300' %}
+    {% set mainPath = original_path %}
+{% endif %}
+
+{{ sonata_block_render_event('sylius.shop.product.show.before_thumbnails', {'product': product}) }}
+
+{% if product.images|length == 1 %}
+
+    <div class="row">
+        <div class="col-12" data-product-image="{{ mainPath }}" data-product-link="{{ original_path }}"></div>
+        <img class="img-fluid" src="{{ mainPath }}" alt="{{ product.name }}" />
+    </div>
+
+{% else %}
+
+    <div class="position-relative">
+        <div id="productGallery" class="row">
+            {% for image in product.images %}
+                {% set path = image.path is not null ? image.path|imagine_filter('sylius_shop_product_mobile_thumbnail') : '//placehold.it/500x750'  %}
+                <img class="img-fluid" src="{{ path }}" data-large-thumbnail="{{ image.path|imagine_filter('sylius_shop_product_mobile_thumbnail') }}" alt="{{ product.name }}" />
+            {% endfor %}
+        </div>
+        <div class="row product-gallery slider-controls"></div>
+    </div>
+
+
+{# <div class="row mt-3">
+    {% for image in product.images %}
+    {% set path = image.path is not null ? image.path|imagine_filter('sylius_shop_product_small_thumbnail') : '//placehold.it/200x200' %}
+    <div class="col-4" data-js-product-thumbnail>
+    {% if product.isConfigurable() and product.variants|length > 0 %}
+        {% include '@SyliusShop/Product/Show/_imageVariants.html.twig' %}
+    {% endif %}
+        <a href="{{ image.path|imagine_filter('sylius_shop_product_original') }}" class="glightbox">
+            <img class="img-fluid" src="{{ path }}" data-large-thumbnail="{{ image.path|imagine_filter('sylius_shop_product_large_thumbnail') }}" alt="{{ product.name }}" />
+        </a>
+    </div>
+    {% endfor %}
+</div>#}
+{% endif %}
+

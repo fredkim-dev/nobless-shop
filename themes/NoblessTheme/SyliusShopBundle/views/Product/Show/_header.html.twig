@@ -1,0 +1,22 @@
+{% import '@SyliusShop/Common/Macro/headers.html.twig' as headers %}
+<div class="d-flex">
+    <div class="w-100">
+        {{ headers.default(product.name) }}
+    </div>
+    <div id="shareDropdown" class="mt-1 justify-content-end">
+        <a class="share-dropdown dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="fas fa-share-square"></i>
+        </a>
+        {% set currentUrl = app.request.uri %}
+        {% set mailSubject = product.name ~ " - Noblezz Shop" %}
+        <div class="dropdown-menu dropdown-menu-right py-0">
+            <div class="share-icons mx-3">
+                <a id="copyShare" data-toggle="tooltip" title="Copied!" data-placement="top"><i class="fas fa-copy"></i></a>
+                <a id="facebookShare" data-url="{{ currentUrl | url_encode }}" href="http://www.facebook.com/sharer.php?u={{ currentUrl | url_encode }}"><i class="fab fa-facebook"></i></a>
+                {#<a href="#"><i class="fab fa-instagram"></i></a>#}
+                <a id="mailShare" data-mailto="mailto:?subject={{ mailSubject }}"><i class="far fa-envelope"></i></a>
+                <input type="text" id="pageLink" class="d-none" value="{{ currentUrl }}" />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,11 +1,16 @@
 {% import '@SyliusShop/Common/Macro/messages.html.twig' as messages %}
 {% import '@SyliusShop/Common/Macro/pagination.html.twig' as pagination %}
 
-<div class="card mb-5">
+<div class="card mb-5 category-header">
     <div class="card-body p-2">
-        <div class="d-flex justify-content-end">
-            {% include '@SyliusShop/Product/Index/_pagination.html.twig' %}
-            {% include '@SyliusShop/Product/Index/_sorting.html.twig' %}
+        <div class="row">
+            <div class="col-9 d-flex justify-content-start">
+                {% include '@SyliusShop/Product/Index/_header.html.twig' %}
+            </div>
+            <div class="col-3 d-flex justify-content-end">
+                {% include '@SyliusShop/Product/Index/_pagination.html.twig' %}
+                {% include '@SyliusShop/Product/Index/_sorting.html.twig' %}
+            </div>
         </div>
     </div>
 </div>
@@ -15,7 +20,7 @@
 {% if resources.data|length > 0 %}
     <div class="row">
         {% for product in resources.data %}
-            <div class="col-6 col-md-6 col-lg-4 mb-3">
+            <div class="col-6 col-md-4 col-lg-2 mb-3">
                 {% include '@SyliusShop/Product/_box.html.twig' %}
             </div>
         {% endfor %}

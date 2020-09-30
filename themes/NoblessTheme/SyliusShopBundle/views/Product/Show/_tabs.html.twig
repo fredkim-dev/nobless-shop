@@ -1,0 +1,24 @@
+<div class="card tabs-card mobile d-block d-sm-none">
+    <a class="nav-item nav-link mx-2 px-0 collapsed" href="#nav-composition-mobile" data-toggle="collapse">Composition<i class="fa fa-plus"></i><i class="fa fa-minus"></i></a>
+    <div id="nav-composition-mobile" class="nav-content p-2 collapse">
+        {% include '@SyliusShop/Product/Show/Tabs/_composition.html.twig' %}
+    </div>
+
+    <a class="nav-item nav-link mx-2 px-0 collapsed" href="#nav-details-mobile" data-toggle="collapse">{{ 'sylius.ui.details'|trans }}<i class="fa fa-plus"></i><i class="fa fa-minus"></i></a>
+    <div id="nav-details-mobile" class="nav-content p-2 collapse">
+        {% include '@SyliusShop/Product/Show/Tabs/_details.html.twig' %}
+    </div>
+</div>
+
+<div class="card tabs-card d-none d-sm-block">
+    <div class="card-header">
+        <nav class="nav nav-tabs nav-justified card-header-tabs">
+            {% include '@SyliusShop/Product/Show/Tabs/_menu.html.twig' %}
+        </nav>
+    </div>
+    <div class="card-body">
+        <div class="tab-content">
+            {% include '@SyliusShop/Product/Show/Tabs/_content.html.twig' %}
+        </div>
+    </div>
+</div>

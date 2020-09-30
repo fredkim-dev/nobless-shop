@@ -1,0 +1,109 @@
+{% if product.imagesByType('main') is not empty %}
+    {% set source_path = product.imagesByType('main').first.path %}
+    {% set original_path = source_path|imagine_filter('sylius_shop_product_original') %}
+    {% set mainPath = source_path|imagine_filter('sylius_shop_product_original') %}
+    {% set thumbnail = source_path|imagine_filter('sylius_shop_product_thumbnail') %}
+{% elseif product.images.first %}
+    {% set source_path = product.images.first.path %}
+    {% set original_path = source_path|imagine_filter('sylius_shop_product_original') %}
+    {% set mainPath = source_path|imagine_filter('sylius_shop_product_original') %}
+    {% set thumbnail = source_path|imagine_filter('sylius_shop_product_thumbnail') %}
+{% else %}
+    {% set original_path = '//placehold.it/400x300' %}
+    {% set mainPath = original_path %}
+{% endif %}
+
+{% if product.images|length == 1 %}
+
+    <div class="row px-3">
+        <div class="col-12" data-product-image="{{ mainPath }}" data-product-link="{{ original_path }}"></div>
+        <a href="{{ original_path }}" class="glightbox" data-js-product-image>
+            <img class="img-fluid" src="{{ mainPath }}" alt="{{ product.name }}" />
+        </a>
+    </div>
+
+{% else %}
+
+    {{ sonata_block_render_event('sylius.shop.product.show.before_thumbnails', {'product': product}) }}
+
+    {% set thumbs = [] %}
+    {% set columnThumbs = [] %}
+    {% set otherThumbs = [] %}
+    {% for image in product.images %}
+        {% if loop.index != 1 %}
+            {% if loop.index < 3 %}
+                {% set thumbs = thumbs|merge([image]) %}
+            {% endif %}
+            {% if loop.index > 2 and loop.index < 5 %}
+                {% set columnThumbs = columnThumbs|merge([image]) %}
+            {% endif %}
+            {% if loop.index > 4 %}
+                {% set otherThumbs = otherThumbs|merge([image]) %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+{# 
+data-fresco-group="gallery-product" data-fresco-group-options="thumbnails: 'vertical', thumbnail: '{{ thumbnail }}'" 
+data-fresco-group="gallery-product" data-fresco-group-options="thumbnail: '{{ thumbnailSecond }}'"
+data-fresco-group="gallery-product" data-fresco-group-options="thumbnail: '{{ thumbnailThird }}'" 
+data-fresco-group="gallery-product" data-fresco-group-options="thumbnail: '{{ thumbnailOther }}'" 
+#}
+    {# Main image #}
+    <div class="row px-3">
+        {% set thumbnail = source_path|imagine_filter('sylius_shop_product_thumbnail') %}
+        <div class="col-12" data-product-image="{{ mainPath }}" data-product-link="{{ original_path }}"></div>
+        <a href="{{ original_path }}" class="fresco-slide" data-thumbnail="{{ thumbnail }}" data-image="{{ mainPath }}">
+            <img class="img-fluid" src="{{ mainPath }}" alt="{{ product.name }}" />
+        </a>
+    </div>
+    {# Top thumbnails #}
+    <div class="row mt-3">
+        {% for thumb in thumbs %}
+            <div class="col-8">
+                {% set path = thumb.path is not null ? thumb.path|imagine_filter('sylius_shop_product_large_gallery') : '//placehold.it/981x1500'  %}
+                {% set originalPath = thumb.path is not null ? thumb.path|imagine_filter('sylius_shop_product_original') : '//placehold.it/981x1500'  %}
+                {% set thumbnailSecond = thumb.path|imagine_filter('sylius_shop_product_thumbnail') %}
+                <a href="{{ thumb.path|imagine_filter('sylius_shop_product_original') }}" class="fresco-slide" data-thumbnail="{{ thumbnailSecond }}" data-image="{{ originalPath }}">
+                    <img class="img-fluid" src="{{ path }}" data-large-thumbnail="{{ thumb.path|imagine_filter('sylius_shop_product_large_gallery') }}" alt="{{ product.name }}" />
+                </a>
+            </div>
+        {% endfor %}
+        <div class="col-4 d-flex flex-column justify-content-center pl-0">
+        {% for columnThumb in columnThumbs %}
+            <div class="d-flex {% if loop.index == 1 %}mb-3{% endif %}">
+                {% set path = columnThumb.path is not null ? columnThumb.path|imagine_filter('sylius_shop_product_gallery') : '//placehold.it/400x600'  %}
+                {% set originalPath = columnThumb.path is not null ? columnThumb.path|imagine_filter('sylius_shop_product_original') : '//placehold.it/981x1500'  %}
+                {% set thumbnailThird = columnThumb.path|imagine_filter('sylius_shop_product_thumbnail') %}
+                <a href="{{ columnThumb.path|imagine_filter('sylius_shop_product_original') }}" class="fresco-slide" data-thumbnail="{{ thumbnailThird }}" data-image="{{ originalPath }}">
+                    <img class="img-fluid" src="{{ path }}" data-large-thumbnail="{{ columnThumb.path|imagine_filter('sylius_shop_product_gallery') }}" alt="{{ product.name }}" />
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    {# bottom thumbnails #}
+    <div class="d-none">
+        {% for other in otherThumbs %}
+            {% set path = other.path is not null ? other.path|imagine_filter('sylius_admin_product_thumbnail') : '//placehold.it/200x200'  %}
+            {% set originalPath = other.path is not null ? other.path|imagine_filter('sylius_shop_product_original') : '//placehold.it/981x1500'  %}
+            {% set thumbnailOther = other.path|imagine_filter('sylius_shop_product_thumbnail') %}
+            <img class="img-fluid fresco-slide" src="{{ path }}" data-large-thumbnail="{{ other.path|imagine_filter('sylius_admin_product_thumbnail') }}" alt="{{ product.name }}" data-thumbnail="{{ thumbnailOther }}" data-image="{{ originalPath }}"/>
+        {% endfor %}
+    </div>
+
+
+{# <div class="row mt-3">
+    {% for image in product.images %}
+    {% set path = image.path is not null ? image.path|imagine_filter('sylius_shop_product_small_thumbnail') : '//placehold.it/200x200' %}
+    <div class="col-4" data-js-product-thumbnail>
+    {% if product.isConfigurable() and product.variants|length > 0 %}
+        {% include '@SyliusShop/Product/Show/_imageVariants.html.twig' %}
+    {% endif %}
+        <a href="{{ image.path|imagine_filter('sylius_shop_product_original') }}" class="glightbox">
+            <img class="img-fluid" src="{{ path }}" data-large-thumbnail="{{ image.path|imagine_filter('sylius_shop_product_large_thumbnail') }}" alt="{{ product.name }}" />
+        </a>
+    </div>
+    {% endfor %}
+</div>#}
+{% endif %}

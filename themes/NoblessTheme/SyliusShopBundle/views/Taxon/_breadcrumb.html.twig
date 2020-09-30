@@ -1,7 +1,7 @@
 {% set ancestors = taxon.ancestors|reverse %}
 
 <nav>
-    <ol class="breadcrumb">
+    <ol class="breadcrumb mx-3">
         <li class="breadcrumb-item"><a href="{{ path('sylius_shop_homepage') }}">{{ 'sylius.ui.home'|trans }}</a></li>
 
         {% for ancestor in ancestors %}

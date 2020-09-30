@@ -24,6 +24,8 @@
 </head>
 
 <body>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v8.0" nonce="txnbdLod"></script>
 {{ sonata_block_render_event('sylius.shop.layout.before_body') }}
 
 {% block top %}
@@ -66,7 +68,7 @@
     </div>
 {% endblock %}
 
-<div id="mainContentContainer" class="main-content container-fluid mx-sm-1 mx-md-auto">
+<div id="mainContentContainer" class="main-content container-fluid mx-sm-1 mx-md-auto p-0">
     {% include '@SyliusShop/_flashes.html.twig' %}
 
     {{ sonata_block_render_event('sylius.shop.layout.before_content') }}
@@ -74,11 +76,12 @@
     {% block content %}
     {% endblock %}
 
+    {% include '@SyliusShop/footerInfos.html.twig' %}
+
     {{ sonata_block_render_event('sylius.shop.layout.after_content') }}
 </div>
 
 {% block footer %}
-
     {% include '@SyliusShop/_footer.html.twig' %}
 {% endblock %}
 

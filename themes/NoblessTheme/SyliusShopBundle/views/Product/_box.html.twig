@@ -6,7 +6,7 @@
     <div class="card-img-top">
         {% include '@SyliusShop/Product/_mainImage.html.twig' with {'product': product} %}
     </div>
-    <div class="card-body text-center">
+    <div class="card-body card-body-product text-left">
         <h6 class="product-name"><a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}" class="card-link">{{ product.name }}</a></h6>
         {% if not product.variants.empty() %}
             <span class="text-muted product-price">{{ money.calculatePrice(product|sylius_resolve_variant) }}</span>
