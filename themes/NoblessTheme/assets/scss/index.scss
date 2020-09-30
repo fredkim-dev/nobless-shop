@@ -251,11 +251,18 @@ div.main-content {
         padding-left: 0px;
     }
     .share-dropdown {
+        .fa-share-square {
+            font-size: 20px;
+            opacity: 0.4;
+        }
         &::after {
             content: none;
         }
     }
     .share-icons {
+        &.dropdown-item {
+            padding: 0;
+        }
         a {
             margin: 0 8px;
             font-size: 20px;
@@ -263,13 +270,13 @@ div.main-content {
                 cursor:pointer;
             }
             .svg-inline--fa {
-                font-size: 20px;
+                font-size: 32px;
                 text-align: center;
                 &.fa-facebook {
                     color: #3b5998;
                 }
-                &.fa-instagram {
-                    color: #C13584;
+                &.fa-pinterest {
+                    color: #BD081C;
                 }
             }
         }
@@ -559,16 +566,25 @@ div.main-content {
     margin: 0 auto;
     top: calc(50%);
     .div-btn {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        z-index: 9999;
+        &.next {
+            right: 0;
+        }
+        button {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            z-index: 9999;
+            &.slick-next {
+                right: 0;
+            }
+        }
         .slick-prev:before, .slick-next:before {
             font-size: 40px;
             color: #c3c3c3;
-        }
-        .slick-prev {
-            position:absolute;
-        }
-        .slick-next {
-            position: absolute;
-            right: 20px;
         }
     }
 }

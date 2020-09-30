@@ -1,21 +1,28 @@
 <div class="row align-items-center no-gutters">
-    <div class="col-sm text-center text-lg-left">
-        <a href="{{ path('sylius_shop_homepage') }}"><img class="logo" src="{{ asset('nobless-theme/images/logo.png', 'noblessTheme') }}" alt="Sylius logo" /></a>
+    {# MOBILE HEADER #}
+    <div class="d-flex d-sm-none">
+        <div class="d-flex align-items-center">
+            <a href="{{ path('sylius_shop_homepage') }}"><img class="logo w-100" src="{{ asset('nobless-theme/images/logo.png', 'noblessTheme') }}" alt="Sylius logo" /></a>
+        </div>
+        {# Menu #}
+        <div class="navbar-light text-right">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar">
+                <span>Menu</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
     </div>
-
-    {# Categories #}
-    <div class="container col-sm-12 order-md-12 text-center text-md-left d-md-none">
-            <div class="navbar-light">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar">
-                    <span>Menu</span>
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
+    
+    {# DESKTOP HEADER #}
+    <div class="col-sm text-center text-lg-left d-none d-sm-block">
+        <a href="{{ path('sylius_shop_homepage') }}"><img class="logo " src="{{ asset('nobless-theme/images/logo.png', 'noblessTheme') }}" alt="Sylius logo" /></a>
     </div>
+    {# Menu #}
     <div class="col-sm-12 col-md order-md-1 text-center">
         {{ sonata_block_render_event('sylius.shop.layout.header') }}
         {{ render(url('sylius_shop_partial_taxon_index_by_code', {'code': 'category', 'template': '@SyliusShop/Taxon/_horizontalMenu.html.twig'})) }}
     </div>
+
     {#<div class="col-auto d-flex align-items-center">
         <div class="d-none d-md-block text-right">
             {{ sonata_block_render_event('sylius.shop.layout.before_security_widget') }}

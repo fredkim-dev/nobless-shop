@@ -113,7 +113,7 @@ function createCarousel() {
       mobileFirst: true,
       appendArrows: jQuery('#productGallery').next('.slider-controls'),
       prevArrow: '<div class="div-btn"><button type="button" class="slick-prev ">Previous</button></div>',
-      nextArrow: '<div class="div-btn"><button type="button" class="slick-next">Previous</button></div>',
+      nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Previous</button></div>',
       responsive: [ 
         { 
           breakpoint: 550, 
@@ -138,7 +138,7 @@ function createCarousel() {
       mobileFirst: true,
       appendArrows: jQuery('#productGallery').next('.slider-controls'),
       prevArrow: '<div class="div-btn"><button type="button" class="slick-prev ">Previous</button></div>',
-      nextArrow: '<div class="div-btn"><button type="button" class="slick-next">Previous</button></div>',
+      nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Previous</button></div>',
       responsive: [ 
         { 
           breakpoint: 550, 
@@ -248,7 +248,7 @@ function navbarCollapseInit() {
  */
 function shareFunctions() {
   if(document.getElementById('shareDropdown')) {
-    $('#copyShare').tooltip('disable');
+    jQuery('#copyShare').tooltip('disable');
     // Facebook Share
     document.getElementById('facebookShare').addEventListener('click', function (event) {
       event.preventDefault();
@@ -257,6 +257,13 @@ function shareFunctions() {
       const url = document.getElementById('facebookShare').dataset.url;
       window.open('http://www.facebook.com/sharer.php?u='+url, 'Facebook - Noblezz Shop', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=600,height=350');
     });
+
+    // Pinterest Share
+    document.getElementById('pinterestShare').addEventListener('click', function (event) {
+      event.preventDefault();
+      document.getElementById('realPinterestShare').click();
+    });
+
 
     // Copy to Clipboard
     document.getElementById('copyShare').addEventListener('click', function (event) {
@@ -286,6 +293,7 @@ function resizeContent() {
   if ($(document).width() > 768) {
     createGalleryDesktop();
   }
+  shareFunctions();
   Fresco.hide();
 }
 
