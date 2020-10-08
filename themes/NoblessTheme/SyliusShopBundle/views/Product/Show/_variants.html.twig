@@ -28,7 +28,7 @@
 </table>#}
 
 <div class="row">
-    <div class="variant-list col-12 col-sm-8 col-md-9">
+    <div class="variant-list col-12 col-xl-9">
         <div class="form-group d-flex flex-column">
             <label class="variant-label required">{#{{ 'sylius.ui.details'|trans }}#}Choisir sa taille</label>
             <div class="container-fluid col-12 p-0 text-left">
@@ -46,8 +46,15 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-4 col-md-3">
-        {{ form_row(form.cartItem.quantity) }}
+    <div class="qty-product col-12 col-xl-3">
+        <div class="form-group d-flex flex-column">
+            <label for="sylius_add_to_cart_cartItem_quantity" class="required">Quantité</label>
+            <select id="sylius_add_to_cart_cartItem_quantity" name="sylius_add_to_cart[cartItem][quantity]" class="form-control" required="required">
+                {% for i in 1..7 %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
         {{ sonata_block_render_event('sylius.shop.product.show.add_to_cart_form', {'product': product, 'order_item': order_item}) }}
     </div>

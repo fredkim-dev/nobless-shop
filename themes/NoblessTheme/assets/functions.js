@@ -196,13 +196,12 @@ function createGalleryDesktop() {
  * Fix product description div on top (right column) when scrolling
  */
 function fixProductDescriptionDiv() {
-  if ($('#product-info').offset().top + $('#product-info').height() >= $('#last-products').offset().top - 50) {
-    document.getElementById('product-info').classList.add('sticky-bottom');
-    document.getElementById('product-info').classList.remove('sticky-top-custom');
-  }
-  if ($(document).scrollTop() + window.innerHeight < $('#last-products').offset().top + 50) {
-    document.getElementById('product-info').classList.remove('sticky-bottom');
-    document.getElementById('product-info').classList.add('sticky-top-custom');
+  if ($('#images-container').height() - $('#product-sticky').height() - $('#headerContainer').height() - 24 >= -($('#images-container').offset().top)) {
+    document.getElementById('product-sticky').classList.remove('sticky-bottom');
+    document.getElementById('product-sticky').classList.add('sticky-top-custom');
+  } else {
+    document.getElementById('product-sticky').classList.add('sticky-bottom');
+    document.getElementById('product-sticky').classList.remove('sticky-top-custom');
   }
 }
 
@@ -241,7 +240,7 @@ function navbarCollapseInit() {
     resizeContent();
   });
 
-} 
+}
 
 /**
  * Share function 

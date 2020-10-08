@@ -1,22 +1,22 @@
 
 <div id="footer-infos">
     <div class="container-fluid">
-        <div class="row py-4 footer-legal justify-content-center">
-            <div class="col-xs col-md-3 d-flex flex-row return-policy justify-content-center align-items-center mb-3 mb-sm-0">
+        <div class="row py-2 footer-legal justify-content-center">
+            <div class="col-xs col-md-3 d-flex flex-row return-policy justify-content-left justify-content-sm-center align-items-center mb-3 mb-sm-0">
                 <img class="icon-footer" src="{{ asset('nobless-theme/images/return-policy.png', 'noblessTheme') }}" alt="Return Policy">
                 <span class="ml-4">
                     <h5>Satisfait ou remboursé</h5>
                     <p class="m-0">14 jours pour essayer votre produit et nous le retourner satisfait ou remboursé</p>
                 </span>
             </div>
-            <div class="col-xs col-md-3 d-flex flex-row delivery justify-content-center align-items-center mb-3 mb-sm-0">
+            <div class="col-xs col-md-3 d-flex flex-row delivery justify-content-left justify-content-sm-center align-items-center mb-3 mb-sm-0">
                 <img class="icon-footer" src="{{ asset('nobless-theme/images/delivery-truck.png', 'noblessTheme') }}">
                 <span class="ml-4">
                     <h5>Livraison Express</h5>
                     <p class="m-0">Chez vous ou en point relais<br><span>Livraison gratuite à partir de 49&euro;</span></p>
                 </span>
             </div>
-            <div class="col-xs col-md-3 d-flex flex-row payment justify-content-center align-items-center mb-2 mb-sm-0">
+            <div class="col-xs col-md-3 d-flex flex-row payment justify-content-left justify-content-sm-center align-items-center mb-2 mb-sm-0">
                 <img class="icon-footer" src="{{ asset('nobless-theme/images/card.png', 'noblessTheme') }}">
                 <span class="ml-4">
                     <h5>Paiement sécurisé</h5>
@@ -24,7 +24,8 @@
                 </span>
             </div>
         </div>
-        <div class="row footer-links mt-4 mx-sm-5 justify-content-start justify-content-sm-center">
+        {# DESKTOP FOOTER #}
+        <div class="row footer-links mt-4 mx-sm-5 justify-content-start justify-content-sm-center d-none d-sm-flex flex-row">
             <div class="col-xs col-md-3 d-flex flex-column mb-3 text-center text-sm-left">
                 <h5>Informations</h5>
                 <a href="#">Livraison et retours</a>
@@ -41,19 +42,60 @@
                 <a href="#">Mes informations personnelles</a>
                 <a href="#">Mes bons de réduction</a>
             </div>
-            <div class="col-xs col-md-3 d-flex flex-column text-center text-sm-left">
+            <div class="col-xs col-md-4 col-xl-3 d-flex flex-column text-center text-sm-left">
                 <h5>Moyens de paiement</h5>
-                <span class="d-flex d-row payment-mode justify-content-center justify-content-sm-start">
+                <span class="d-flex flex-row payment-mode justify-content-center justify-content-sm-start">
                     <img src="{{ asset('nobless-theme/images/mastercard.png', 'noblessTheme') }}" />
                     <img src="{{ asset('nobless-theme/images/visa.png', 'noblessTheme') }}" />
                     <img src="{{ asset('nobless-theme/images/paypal.png', 'noblessTheme') }}" />
                 </span>
                 <h5>Moyens de livraison</h5>
-                <span class="d-flex d-row delivery-mode justify-content-center justify-content-sm-start">
+                <span class="d-flex flex-row delivery-mode justify-content-center justify-content-sm-start">
                     <img src="{{ asset('nobless-theme/images/mondial-relay.png', 'noblessTheme') }}" />
                     <img src="{{ asset('nobless-theme/images/colissimo.png', 'noblessTheme') }}" />
                     <img src="{{ asset('nobless-theme/images/chronopost.png', 'noblessTheme') }}" />
                 </span>
+            </div>
+        </div>
+        {# MOBILE FOOTER #}
+        <div id="footerLinksCollapse" class="row footer-links card tabs-card mobile d-flex d-sm-none flex-column my-2">
+            <div class="col-xs col-md-3 d-flex flex-column text-center text-sm-left">
+                <h5 class="nav-item nav-link mx-2 px-0 collapsed" href="#footer-info-collapse" data-toggle="collapse">Informations<i class="fa fa-plus"></i><i class="fa fa-minus"></i></h5>
+                <ul id="footer-info-collapse" class="collapse" data-parent="#footerLinksCollapse">
+                    <li><a href="#">Livraison et retours</a></li>
+                    <li><a href="#">Mentions légales</a></li>
+                    <li><a href="#">Politique de confidentialité</a></li>
+                    <li><a href="#">FAQ - Service client</a></li>
+                    <li><a class="banner-link" href="{{ path('bitbag_sylius_cms_plugin_shop_page_show_link_by_code', {'code' : 'cgv'}) }}">{{ 'sylius.ui.terms_and_conditions'|trans }}</a></li>
+                </ul>
+            </div>
+            <div class="col-xs col-md-3 d-flex flex-column text-center text-sm-left">
+                <h5 class="nav-item nav-link mx-2 px-0 collapsed" href="#footer-account-collapse" data-toggle="collapse">Mon compte<i class="fa fa-plus"></i><i class="fa fa-minus"></i></h5>
+                <ul id="footer-account-collapse" class="collapse" data-parent="#footerLinksCollapse">
+                    <li><a href="#">Mes commandes</a></li>
+                    <li><a href="#">Mes avoirs</a></li>
+                    <li><a href="#">Mes adresses</a></li>
+                    <li><a href="#">Mes informations personnelles</a></li>
+                    <li><a href="#">Mes bons de réduction</a></li>
+                </ul>
+            </div>
+            <div class="col-xs col-md-3 d-flex flex-column text-center text-sm-left">
+                <h5 class="nav-item nav-link mx-2 px-0 collapsed" href="#footer-payment-collapse" data-toggle="collapse">Moyens de paiement<i class="fa fa-plus"></i><i class="fa fa-minus"></i></h5>
+                <div id="footer-payment-collapse" class="collapse" data-parent="#footerLinksCollapse">
+                    <span class="payment-mode justify-content-center justify-content-sm-start">
+                        <img src="{{ asset('nobless-theme/images/mastercard.png', 'noblessTheme') }}" />
+                        <img src="{{ asset('nobless-theme/images/visa.png', 'noblessTheme') }}" />
+                        <img src="{{ asset('nobless-theme/images/paypal.png', 'noblessTheme') }}" />
+                    </span>
+                </div>
+                <h5 class="nav-item nav-link mx-2 px-0 collapsed" href="#footer-delivery-collapse" data-toggle="collapse">Moyens de livraison<i class="fa fa-plus"></i><i class="fa fa-minus"></i></h5>
+                <div id="footer-delivery-collapse" class="collapse" data-parent="#footerLinksCollapse">
+                    <span class="delivery-mode justify-content-center justify-content-sm-start">
+                        <img src="{{ asset('nobless-theme/images/mondial-relay.png', 'noblessTheme') }}" />
+                        <img src="{{ asset('nobless-theme/images/colissimo.png', 'noblessTheme') }}" />
+                        <img src="{{ asset('nobless-theme/images/chronopost.png', 'noblessTheme') }}" />
+                    </span>
+                </div>
             </div>
         </div>
     </div>

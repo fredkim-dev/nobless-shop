@@ -2,8 +2,8 @@
 
 {% block content %}
 
-<div class="row m-0 mx-sm-3 position-relative">
-    <div id="images-container container-fluid p-0 p-sm-auto" class="col-12 col-md-8 mb-5">
+<div class="row col-xl-10 m-0 mx-sm-3 mx-xl-auto position-relative">
+    <div id="images-container" class="col-12 col-xl-8 mb-5">
         <div class="p-0 d-block d-sm-none">
             {{ sonata_block_render_event('sylius.shop.product.show.before_images', {'product': product}) }}
 
@@ -19,32 +19,34 @@
             {{ sonata_block_render_event('sylius.shop.product.show.after_images', {'product': product}) }}
         </div>
     </div>
-    <div id="product-info" class="col-12 col-md-4 mb-5 sticky-top-custom">
-        {% include '@SyliusShop/Product/Show/_header.html.twig' %}
+    <div id="product-info" class="col-12 col-xl-4 position-relative p-0">
+        <div id="product-sticky" class="col-12 px-15 p-xl-0 sticky-top-custom">
+            {% include '@SyliusShop/Product/Show/_header.html.twig' %}
 
-        {{ sonata_block_render_event('sylius.shop.product.show.after_product_header', {'product': product}) }}
+            {{ sonata_block_render_event('sylius.shop.product.show.after_product_header', {'product': product}) }}
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            {% if not product.variants.empty() %}
-                {% include '@SyliusShop/Product/Show/_price.html.twig' %}
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                {% if not product.variants.empty() %}
+                    {% include '@SyliusShop/Product/Show/_price.html.twig' %}
+                {% endif %}
+            </div>
+
+            {{ sonata_block_render_event('sylius.shop.product.show.after_price', {'product': product}) }}
+
+            {# <p class="pb-4">{{ product.shortDescription }}</p> #}
+
+            {{ sonata_block_render_event('sylius.shop.product.show.after_description', {'product': product}) }}
+
+            {% if product.isConfigurable() and product.getVariantSelectionMethod() == 'match' and not product.variants.empty() %}
+                {% include '@SyliusShop/Product/Show/_variantsPricing.html.twig' with {'pricing': sylius_product_variant_prices(product, sylius.channel)} %}
             {% endif %}
+            {% include '@SyliusShop/Product/Show/_inventory.html.twig' %}
+        
+            {{ sonata_block_render_event('sylius.shop.product.show.after_add_to_cart', {'product': product}) }}
+
+            {# PRODUCT DESCRIPTION #}
+            {% include '@SyliusShop/Product/Show/_tabs.html.twig' %}
         </div>
-
-        {{ sonata_block_render_event('sylius.shop.product.show.after_price', {'product': product}) }}
-
-        <p class="pb-4">{{ product.shortDescription }}</p>
-
-        {{ sonata_block_render_event('sylius.shop.product.show.after_description', {'product': product}) }}
-
-        {% if product.isConfigurable() and product.getVariantSelectionMethod() == 'match' and not product.variants.empty() %}
-            {% include '@SyliusShop/Product/Show/_variantsPricing.html.twig' with {'pricing': sylius_product_variant_prices(product, sylius.channel)} %}
-        {% endif %}
-        {% include '@SyliusShop/Product/Show/_inventory.html.twig' %}
-    
-        {{ sonata_block_render_event('sylius.shop.product.show.after_add_to_cart', {'product': product}) }}
-
-        {# PRODUCT DESCRIPTION #}
-        {% include '@SyliusShop/Product/Show/_tabs.html.twig' %}
     </div>
 </div>
 
