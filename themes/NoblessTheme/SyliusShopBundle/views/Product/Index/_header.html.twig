@@ -1,0 +1,4 @@
+
+<div class="taxon-header container-fluid p-0">
+    {{ render(path('bitbag_sylius_cms_plugin_shop_media_index_by_section_code', {'sectionCode' : 'header-' ~ app.request.attributes.get('slug'), 'template' : '@SyliusShop/Taxon/taxonHeader.html.twig', 'slug' : app.request.attributes.get('slug')})) }}
+</div>

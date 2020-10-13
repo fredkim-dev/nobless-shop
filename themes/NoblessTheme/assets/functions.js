@@ -10,6 +10,17 @@ function resizeMainContainer() {
   document.getElementById('mainContentContainer').style.height = contentHeight + "px";
 }
 
+function replaceCarouselArrow(carouselElement) {
+  let imgSliderHeight;
+  if (carouselElement === undefined) {
+    imgSliderHeight = $('.slick-active .card-img-top').height();
+  } else {
+    imgSliderHeight = $('.slick-active .card-img-top', carouselElement).height();
+  }
+  const arrowTopValue = Math.ceil(imgSliderHeight / 2 - 10);
+  $('.slider-controls').css('top', arrowTopValue + 'px');
+}
+
 /**
  * Carousel creation
  */
@@ -18,22 +29,14 @@ function createCarousel() {
     jQuery('#carouselLatestProducts').slick({
       infinite: true,
       speed: 700,
-      slidesToShow: 6,
+      slidesToShow: 4,
       slidesToScroll: 1,
       appendArrows: jQuery('#carouselLatestProducts').next('.slider-controls'),
-      prevArrow: '<div class="div-btn"><button type="button" class="slick-prev ">Previous</button></div>',
-      nextArrow: '<div class="div-btn"><button type="button" class="slick-next">Previous</button></div>',
+      prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
+      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Previous</button></div>',
       responsive: [
         {
           breakpoint: 1920,
-          settings: {
-            slidesToShow: 6,
-            slidesToScroll: 1,
-            infinite: true
-          }
-        },
-        {
-          breakpoint: 1280,
           settings: {
             slidesToShow: 4,
             slidesToScroll: 1,
@@ -41,7 +44,7 @@ function createCarousel() {
           }
         },
         {
-          breakpoint: 992,
+          breakpoint: 1280,
           settings: {
             slidesToShow: 3,
             slidesToScroll: 1,
@@ -57,28 +60,23 @@ function createCarousel() {
         }
       ]
     });
+    $('#carouselLatestProducts').on('setPosition', function(event, slick, currentSlide, nextSlide){
+      replaceCarouselArrow(jQuery('#carouselLatestProducts'));
+    });
   }
 
   if(jQuery('#carouselLatestBundles') && !jQuery('#carouselLatestBundles').hasClass('slick-initialized')) {
     jQuery('#carouselLatestBundles').slick({
       infinite: true,
       speed: 700,
-      slidesToShow: 6,
+      slidesToShow: 4,
       slidesToScroll: 1,
       appendArrows: jQuery('#carouselLatestBundles').next('.slider-controls'),
-      prevArrow: '<div class="div-btn"><button type="button" class="slick-prev ">Previous</button></div>',
-      nextArrow: '<div class="div-btn"><button type="button" class="slick-next">Previous</button></div>',
+      prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
+      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Previous</button></div>',
       responsive: [
         {
           breakpoint: 1920,
-          settings: {
-            slidesToShow: 6,
-            slidesToScroll: 1,
-            infinite: true
-          }
-        },
-        {
-          breakpoint: 1280,
           settings: {
             slidesToShow: 4,
             slidesToScroll: 1,
@@ -86,7 +84,7 @@ function createCarousel() {
           }
         },
         {
-          breakpoint: 992,
+          breakpoint: 1280,
           settings: {
             slidesToShow: 3,
             slidesToScroll: 1,
@@ -101,6 +99,9 @@ function createCarousel() {
           }
         }
       ]
+    });
+    $('#carouselLatestBundles').on('setPosition', function(event, slick, currentSlide, nextSlide){
+      replaceCarouselArrow(jQuery('#carouselLatestBundles'));
     });
   }
 
@@ -214,13 +215,11 @@ function productFunctions() {
   $('.card-carousel .card-img-top .variants-container').hide();
   $('.card-carousel .card-img-top')
   .on('mouseenter', function() {
-    if ($(document).width() > 768) {
-      $('.variants-container', this).addClass('d-flex');
+    if ($(document).width() > 1000) {
+      $('.variants-container', this).show();
     }
   }).on('mouseleave', function() {
-    if ($(document).width() > 768) {
-      $('.variants-container', this).removeClass('d-flex');
-    }
+    $('.variants-container', this).hide();
   });
 }
 
@@ -292,6 +291,7 @@ function resizeContent() {
   if ($(document).width() > 768) {
     createGalleryDesktop();
   }
+  //replaceCarouselArrow();
   shareFunctions();
   Fresco.hide();
 }
@@ -314,6 +314,7 @@ function init() {
   if ($(document).width() > 768) {
     createGalleryDesktop();
   }
+  replaceCarouselArrow();
   if (document.getElementById('mainContentContainer') && document.getElementById('product-info')) {
     document.getElementById('mainContentContainer').onscroll = fixProductDescriptionDiv;
     document.getElementById('product-info').onscroll = fixProductDescriptionDiv;

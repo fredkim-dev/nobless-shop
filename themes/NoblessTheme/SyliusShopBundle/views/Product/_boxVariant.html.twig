@@ -1,12 +1,14 @@
-<div class="variants-container justify-content-center">
-    {% for variant in productVariants %}
-        {% for option in variant.optionValues %}
-            <span class="m-1 option-value{% if variant.onHand == 0 %} option-disabled{% endif %}">
-                {{ option.code|upper }}
-                {% if variant.onHand == 0 %}
-                    <span class="out-of-stock {{ option.code|lower }}"></span>
-                {% endif %}
-            </span>
+<div class="variants-container">
+    <div class="justify-content-center align-items-center d-flex">
+        {% for variant in productVariants %}
+            {% for option in variant.optionValues %}
+                <span class="m-1 option-value{% if variant.onHand == 0 %} option-disabled{% endif %}">
+                    {{ option.code|upper }}
+                    {% if variant.onHand == 0 %}
+                        <span class="out-of-stock {{ option.code|lower }}"></span>
+                    {% endif %}
+                </span>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
+    </div>
 </div>

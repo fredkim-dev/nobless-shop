@@ -5,11 +5,11 @@
 {% block content %}
     {{ render(path('bitbag_sylius_cms_plugin_shop_media_index_by_section_code', {'sectionCode' : 'slider_homepage', 'template' : '@SyliusShop/Homepage/slider.html.twig'})) }}
 
-    {{ headers.default('sylius.ui.latest_products'|trans) }}
+    <h3 class="mb-2 ml-2 pl-4">{{ 'sylius.ui.latest_products'|trans }}</h3>
 
     {{ render(url('app_shop_latest_products')) }}
 
-    {{ render(url('app_shop_bundles_title')) }}
+    <h3 class="mb-2 ml-2 pl-4">{#{{ 'sylius.ui.latest_products'|trans }}#} Buy by look</h3>
 
     {{ render(url('app_shop_latest_bundles')) }}
 

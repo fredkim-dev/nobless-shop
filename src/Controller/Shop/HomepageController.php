@@ -87,23 +87,4 @@ class HomepageController extends ResourceController
             )
         );
     }
-
-    public function displayBundleTitleAction(Request $request): Response
-    {
-        $currentLocale = $this->container->get('sylius.context.locale')->getLocaleCode();
-
-        /** @var Taxon $taxon */
-        $taxon = $this->container->get('sylius.repository.taxon')
-            ->findOneBySlug('bundles', $currentLocale);
-
-        if (!isset($taxon)) {
-            throw new NotFoundHttpException('Requested taxon does not exist.');
-        }
-
-        return $this->templatingEngine->renderResponse('@SyliusShop/Homepage/bundlesTitle.html.twig',
-            array(
-                'taxon' => $taxon
-            )
-        );
-    }
 }
