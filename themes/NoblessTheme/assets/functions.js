@@ -12,13 +12,16 @@ function resizeMainContainer() {
 
 function replaceCarouselArrow(carouselElement) {
   let imgSliderHeight;
-  if (carouselElement === undefined) {
-    imgSliderHeight = $('.slick-active .card-img-top').height();
+  if (carouselElement != undefined) {
+    imgSliderHeight = $('.slick-active .card-img-top', carouselElement).outerHeight();
+    const arrowTopValue = Math.round(imgSliderHeight / 2 - 17);
+    $(carouselElement).next('.slider-controls').css('top', arrowTopValue + 'px');
   } else {
-    imgSliderHeight = $('.slick-active .card-img-top', carouselElement).height();
+    imgSliderHeight = $('.slick-active .card-img-top').outerHeight();
+    const arrowTopValue = Math.round(imgSliderHeight / 2 - 17);
+    $('.slider-controls').not('.product-gallery').css('top', arrowTopValue + 'px');
+
   }
-  const arrowTopValue = Math.ceil(imgSliderHeight / 2 - 10);
-  $('.slider-controls').css('top', arrowTopValue + 'px');
 }
 
 /**
@@ -113,7 +116,7 @@ function createCarousel() {
       slidesToScroll: 1,
       mobileFirst: true,
       appendArrows: jQuery('#productGallery').next('.slider-controls'),
-      prevArrow: '<div class="div-btn"><button type="button" class="slick-prev ">Previous</button></div>',
+      prevArrow: '<div class="div-btn prev"><button type="button" class="slick-prev">Previous</button></div>',
       nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Previous</button></div>',
       responsive: [ 
         { 
@@ -138,7 +141,7 @@ function createCarousel() {
       slidesToScroll: 1,
       mobileFirst: true,
       appendArrows: jQuery('#productGallery').next('.slider-controls'),
-      prevArrow: '<div class="div-btn"><button type="button" class="slick-prev ">Previous</button></div>',
+      prevArrow: '<div class="div-btn prev"><button type="button" class="slick-prev">Previous</button></div>',
       nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Previous</button></div>',
       responsive: [ 
         { 
@@ -291,7 +294,6 @@ function resizeContent() {
   if ($(document).width() > 768) {
     createGalleryDesktop();
   }
-  //replaceCarouselArrow();
   shareFunctions();
   Fresco.hide();
 }
