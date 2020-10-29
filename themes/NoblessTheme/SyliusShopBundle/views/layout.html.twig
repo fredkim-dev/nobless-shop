@@ -5,19 +5,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>{% block title %}Nobless Store{% endblock %}</title>
+    <title>{% block title %}Noblezz Store{% endblock %}</title>
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link href="https://fr.allfont.net/allfont.css?fonts=bookman-old-style" rel="stylesheet" type="text/css" />
 
     {% block metatags %}
     {% endblock %}
 
     {% block stylesheets %}
         {{ encore_entry_link_tags('app', null, 'noblessTheme') }}
-
+        
+        <link rel="stylesheet" type="text/css" href="//github.com/downloads/lafeber/world-flags-sprite/flags32.css"/>
         {{ sonata_block_render_event('sylius.shop.layout.stylesheets') }}
+
     {% endblock %}
 
     {{ sonata_block_render_event('sylius.shop.layout.head') }}
@@ -33,7 +34,7 @@
 {% endblock %}
 
 {% block header %}
-    <div id="headerContainer" class="pt-1 bg-header">
+    <div id="headerContainer" class="bg-header">
         <div class="container-fluid">
             <header class="mb-lg-1">
                 {% include '@SyliusShop/_header.html.twig' %}
@@ -41,31 +42,7 @@
                 {{ sonata_block_render_event('sylius.shop.layout.after_header') }}
             </header>
         </div>
-
-        {#<div class="border-top border-bottom bg-light">
-            <div class="container">
-                
-            </div>
-        </div>#}
-
-        <div class="header-banner">
-            <div class="container-fluid">
-                <div class="d-flex row no-gutters">
-                    <div class="col col-sm-2 mr-auto text-left">
-                        {{ render(controller('sylius.controller.shop.locale_switch:renderAction')) }}
-                    </div>
-                    <div class="col-auto text-right mr-1 align-self-center d-none d-md-block">
-                        {{ sonata_block_render_event('sylius.shop.layout.before_security_widget') }}
-                        {{ render(controller('sylius.controller.shop.security_widget:renderAction')) }} 
-                        {{ sonata_block_render_event('sylius.shop.layout.after_security_widget') }}
-                    </div>
-                    <div class="col-auto text-left align-self-center">
-                        <span class="text-muted align-middle d-none d-md-inline">|</span>  
-                        {{ render(url('sylius_shop_partial_cart_summary', {'template': '@SyliusShop/Cart/_widget.html.twig'})) }}
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="header-banner"></div>
     </div>
 {% endblock %}
 

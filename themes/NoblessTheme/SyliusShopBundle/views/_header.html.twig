@@ -1,38 +1,45 @@
 <div class="row align-items-center no-gutters">
-    {# MOBILE HEADER #}
-    <div class="d-flex d-sm-none">
-        <div class="d-flex align-items-center">
-            <a href="{{ path('sylius_shop_homepage') }}"><img class="logo w-100" src="{{ asset('nobless-theme/images/logo.png', 'noblessTheme') }}" alt="Sylius logo" /></a>
+    <div class="header-links col-3 col-lg-4 text-uppercase">
+        <div class="row mt-1">
+            <div class="ml-3">
+                <a id="menuButtonMain" class="show">
+                    <span class="open">
+                        <span class="d-block d-lg-none"><i class="fas fa-bars icon"></i></span>
+                        <span class="header-link d-none d-lg-inline-block">Prêt-à-porter</span>
+                    </span>
+                    <span class="close">&times</span>
+                    <span class="back"><img src="{{ asset('nobless-theme/images/back.png', 'noblessTheme') }}" /></span>
+                </a>
+            </div>
+            <div class="d-flex align-items-center">
+                <a href="#" class="header-link d-none d-lg-inline-block archives">Archives</a>
+            </div>
         </div>
-        {# Menu #}
-        <div class="navbar-light text-right">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar">
-                <span>Menu</span>
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </div>
-    
-    {# DESKTOP HEADER #}
-    <div class="col-sm text-center text-lg-left d-none d-sm-block">
-        <a href="{{ path('sylius_shop_homepage') }}"><img class="logo " src="{{ asset('nobless-theme/images/logo.png', 'noblessTheme') }}" alt="Sylius logo" /></a>
-    </div>
-    {# Menu #}
-    <div class="col-sm-12 col-md order-md-1 text-center">
-        {{ sonata_block_render_event('sylius.shop.layout.header') }}
-        {{ render(url('sylius_shop_partial_taxon_index_by_code', {'code': 'category', 'template': '@SyliusShop/Taxon/_horizontalMenu.html.twig'})) }}
     </div>
 
-    {#<div class="col-auto d-flex align-items-center">
-        <div class="d-none d-md-block text-right">
-            {{ sonata_block_render_event('sylius.shop.layout.before_security_widget') }}
+    <div id="megamenuDropdown" class="dropdown has-megamenu">
+        <a id="menuButton" data-trigger="#navbarMainMobile" class="dropdown-toggle" data-toggle="dropdown" data-offset="13"></a>
+        {# MENU DESKTOP #}
+        <div class="dropdown-menu megamenu">
+            {{ render(url('sylius_shop_partial_taxon_index_by_code', {'code': 'category', 'template': '@SyliusShop/Taxon/_verticalMenu.html.twig'})) }}
+        </div>
 
+        {# MENU MOBILE #}
+        <b class="screen-overlay"></b>
+        <nav id="navbarMainMobile" class="mobile-offcanvas h-100">            
+            {{ render(url('sylius_shop_partial_taxon_index_by_code', {'code': 'category', 'template': '@SyliusShop/Taxon/_verticalMenuMobile.html.twig'})) }}
+        </nav>
+    </div>
+
+    <div class="col-6 col-lg-4 text-center">
+        <a href="{{ path('sylius_shop_homepage') }}"><img class="logo img-fluid" src="{{ asset('nobless-theme/images/logo.png', 'noblessTheme') }}" alt="Noblezz logo" /></a>
+    </div>
+
+    <div class="col-3 col-lg-4 text-right my-1">
+        <div class="d-flex flex-row justify-content-end menu-icones">
             {{ render(controller('sylius.controller.shop.security_widget:renderAction')) }}
-
-            {{ sonata_block_render_event('sylius.shop.layout.after_security_widget') }}
-        </div>
-        <div class="ml-4">
             {{ render(url('sylius_shop_partial_cart_summary', {'template': '@SyliusShop/Cart/_widget.html.twig'})) }}
+            {{ render(controller('sylius.controller.shop.locale_switch:renderAction')) }}
         </div>
-    </div>#}
+    </div>
 </div>

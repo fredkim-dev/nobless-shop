@@ -1,0 +1,52 @@
+{% import '@SyliusUi/Macro/flags.html.twig' as flags %}
+
+{% macro item(taxon, isChild) %}
+    {% import _self as macros %}
+
+    {% if taxon.children|length > 0 %}
+        <span class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                {{ taxon.name }}
+            </a>
+            <div class="dropdown-menu">
+                {% for childTaxon in taxon.children %}
+                    {{ macros.item(childTaxon, true) }}
+                {% endfor %}
+            </div>
+        </span>
+    {% else %}
+        <a href="{{ path('sylius_shop_product_index', {'slug': taxon.slug, '_locale': taxon.translation.locale}) }}"
+           class="{% if isChild %} dropdown-item{% else %} nav-item nav-link{% endif %}">{{ taxon.name }}</a>
+    {% endif %}
+{% endmacro %}
+
+{% import _self as macros %}
+
+{% if taxons|length > 0 %}
+    <nav class="navbar h-100">
+        <div id="navbarMain" class="col-12 p-0 h-100">
+            <div class="col-12 navbar-nav d-flex flex-column py-2 px-0 text-center">
+                <a class="nav-item nav-link navbarTaxonsLink" data-div-to-open="#navbarTaxons">Prêt-à-porter<img class="arrow" src="{{ asset('nobless-theme/images/next.png', 'noblessTheme') }}" /></a>
+                <a href="{{ path('sylius_shop_product_index', {'slug': 'bundles', '_locale': sylius.localeCode}) }}" class="nav-item nav-link">Buy by Look</a>
+                <a href="#" class="nav-item nav-link">Archives</a>
+            </div>
+            <div id="menuMobileLinks" class="mt-3">
+                <div class="menu-link">
+                    <a class="log-link nav-item nav-link" href="{{ path('sylius_shop_account_dashboard') }}"><img src="{{ asset('nobless-theme/images/account-icon.png', 'noblessTheme') }}" class="icon" /><span class="ml-3">{{ 'sylius.ui.my_account'|trans }}</span></a>
+                </div>
+                <div class="menu-link locale">
+                    {% set languageArray = (sylius.localeCode|sylius_locale_name)|split(' ') %}
+                    <a class="locale-link nav-item nav-link active" data-div-to-open="#navbarLocale"><img src="{{ asset('nobless-theme/images/icon-' ~ sylius.localeCode|sylius_locale_country|lower ~ '.png', 'noblessTheme') }}" class="icon" /><span class="ml-3">{{ languageArray.0|capitalize }}</span><img class="arrow" src="{{ asset('nobless-theme/images/next.png', 'noblessTheme') }}" /></a>
+                </div>
+            </div>
+        </div>
+        <div id="navbarTaxons" class="col-12 p-0 py-2 text-center">
+            {% for taxon in taxons %}
+                {{ macros.item(taxon) }}
+            {% endfor %}
+        </div>
+        <div id="navbarLocale" class="col-12 px-3 py-2">
+            {{ render(controller('sylius.controller.shop.locale_switch:renderMobileMenuAction')) }}
+        </div>
+    </nav>
+{% endif %}

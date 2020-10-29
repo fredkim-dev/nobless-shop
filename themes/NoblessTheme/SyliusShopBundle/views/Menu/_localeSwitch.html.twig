@@ -1,17 +1,20 @@
 {% import '@SyliusUi/Macro/flags.html.twig' as flags %}
 
 {% if locales|length > 1 %}
-    <div class="dropdown">
-        <button class="btn btn-sm text-muted dropdown-toggle banner-link" type="button" data-toggle="dropdown">
-            {{ flags.fromLocaleCode(sylius.localeCode) }}
-            {{ active|sylius_locale_name }}
-        </button>
-        <div class="dropdown-menu">
+    <div class="btn-group dropdown d-none d-lg-inline-block">
+        <a class="dropdown-toggle dropdown-icon" data-toggle="dropdown">
+            {#{{ flags.fromLocaleCode(sylius.localeCode) }}#}
+            {% if sylius.localeCode|sylius_locale_country != '' %}
+                <img src="{{ asset('nobless-theme/images/icon-' ~ sylius.localeCode|sylius_locale_country|lower ~ '.png', 'noblessTheme') }}" class="icon" />
+            {% endif %}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
             {% for code in locales %}
                 {% if code is not same as(active) %}
+                    {% set languageArray = (code|sylius_locale_name)|split(' ') %}
                     <a class="dropdown-item" href="{{ path('sylius_shop_switch_locale', {'code': code}) }}">
                         {{ flags.fromLocaleCode(code) }}
-                        {{ code|sylius_locale_name }}
+                        {{ languageArray.0|capitalize }}
                     </a>
                 {% endif %}
             {% endfor %}

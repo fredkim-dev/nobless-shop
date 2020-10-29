@@ -1,0 +1,56 @@
+{% macro item(taxon, isChild) %}
+    {% import _self as macros %}
+
+    {% if taxon.children|length > 0 %}
+        <span class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                {{ taxon.name }}
+            </a>
+            <div class="dropdown-menu">
+                {% for childTaxon in taxon.children %}
+                    {{ macros.item(childTaxon, true) }}
+                {% endfor %}
+            </div>
+        </span>
+    {% else %}
+        <a href="{{ path('sylius_shop_product_index', {'slug': taxon.slug, '_locale': taxon.translation.locale}) }}"
+           class="p-0 nav-taxon {% if isChild %} dropdown-item{% else %} nav-item nav-link{% endif %}" data-taxon="{{ taxon.slug }}">{{ taxon.name }}</a>
+    {% endif %}
+{% endmacro %}
+
+{% import _self as macros %}
+
+{% if taxons|length > 0 %}
+    <nav class="navbar navbar-expand-md">
+        <div class="collapse navbar-collapse justify-content-center align-items-start" id="mainNavbar">
+            <div class="{% if taxons|length > 6 %}col-3{% else %}col-3 col-xl-2{% endif %}">
+                <h3 class="bookman-title">Prêt-à-porter</h3>
+                <div class="d-flex flex-row">
+                {% for taxon in taxons %}
+                    {% if loop.index == 1 or loop.index == 7 %}
+                        <div class="col-6 navbar-nav py-1 d-flex flex-column">
+                    {% endif %}
+                    {{ macros.item(taxon) }}
+                    {% if loop.index == 6 or loop.index == loop.last %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+            <div class="col-6 {% if taxons|length > 2 %}col-xl-7{% else %}col-xl-8{% endif %} p-0 d-flex flex-row menu-images">
+                <div class="col-6 p-0 d-none d-xl-block">
+                    {% for taxon in taxons %}
+                        <div class="menu-img menu-img-{{ taxon.slug }}{% if loop.index == 1 %} active{% endif %}">
+                            {{ bitbag_cms_render_media('menu-image-taxon-' ~ taxon.slug) }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-6 p-0 m-0 ml-xl-3">
+                    <div class="menu-img-look">
+                        {{ bitbag_cms_render_media('menu-image-look') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endif %}

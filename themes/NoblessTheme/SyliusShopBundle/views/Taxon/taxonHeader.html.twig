@@ -1,5 +1,9 @@
-{% set image = media|first %}
-<div class="taxon-header-image row" style="background: url('{{ image.path }}') no-repeat top center;">
+{% set imagePath = '' %}
+{% if media|first != null %}
+    {% set imagePath = (media|first).path %}
+{% endif %}
+
+<div class="taxon-header-image row" style="background: url('{{ imagePath }}') no-repeat top center;">
     <div class="col-10 taxon-header-title d-flex flex-column justify-content-center align-items-center align-items-md-start">
         {{ render(url('sylius_shop_partial_taxon_show_by_slug', {
             'slug': app.request.query.get('slug'),

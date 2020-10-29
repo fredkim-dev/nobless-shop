@@ -1,14 +1,12 @@
 {% extends '@SyliusShop/layout.html.twig' %}
 
-{% block content %}
-    {% block breadcrumb %}
-    {% endblock %}
+{% block content %}    
+    <div class="row mx-3 mb-3">
+        <div class="col-12">
+            {% block breadcrumb %}
+            {% endblock %}
+        </div>
 
-    <div class="row">
-        Page mon compte
-    </div>
-    {#
-    <div class="row">
         <div class="col-12 col-md-4 col-lg-3 mb-4">
             {{ sonata_block_render_event('sylius.shop.account.layout.before_menu') }}
 
@@ -25,5 +23,5 @@
             {{ sonata_block_render_event('sylius.shop.account.layout.after_subcontent') }}
         </div>
     </div>
-    #}
+    
 {% endblock %}

@@ -7,9 +7,5 @@
 {% endif %}
 
 <a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}">
-    <img src="{{ path }}" alt="{{ product.name }}" class="p-2" />
+    <img src="{{ path }}" alt="{{ product.name }}" class="p-2 img-fluid" />
 </a>
-
-{% if product.variants|length > 1 %}
-    {% include '@SyliusShop/Product/_boxVariant.html.twig' with {'productVariants': product.variants} %}
-{% endif %}

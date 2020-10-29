@@ -38,3 +38,13 @@ services:
         class: App\Controller\Shop\HomepageController
         arguments: ['@templating']
         tags: ['controller.service_arguments']
+
+    sylius.controller.shop.locale_switch:
+        class: App\Controller\Shop\LocaleSwitchController
+        arguments: ['@templating', '@sylius.context.locale', '@sylius.locale_provider', '@sylius.shop.locale_switcher']
+        tags: ['controller.service_arguments']
+    
+    sylius.controller.shop.security:
+        class: App\Controller\Shop\SecurityController
+        arguments: ['@security.authentication_utils', '@form.factory', '@templating', '@security.authorization_checker', '@router']
+        tags: ['controller.service_arguments']

@@ -19,6 +19,15 @@ import './media/paypal.png';
 import './media/colissimo.png';
 import './media/chronopost.png';
 import './media/mondial-relay.png';
+import './media/account-icon.png';
+import './media/shopping-bag-icon.png';
+import './media/back.png';
+import './media/next.png';
+import './media/icon-fr.png';
+import './media/icon-de.png';
+import './media/icon-it.png';
+import './media/icon-es.png';
+import './media/icon-en.png';
 
 window.onload = init;
 window.onresize = resizeContent;

@@ -1,0 +1,12 @@
+{% set countryCode = '' %}
+{% for code in locales %}
+    {% if code is not same as(active) %}
+        {% if code|sylius_locale_country|lower == 'gb' or code|sylius_locale_country|lower == 'us' %}
+            {% set countryCode = 'en' %}
+        {% else %}
+            {% set countryCode = code|sylius_locale_country|lower %}
+        {% endif %}
+        {% set languageArray = (code|sylius_locale_name)|split(' ') %}
+        <a class="locale-link nav-item nav-link" href="{{ path('sylius_shop_switch_locale', {'code': code}) }}">{% if countryCode != '' %}<img src="{{ asset('nobless-theme/images/icon-' ~ countryCode ~ '.png', 'noblessTheme') }}" class="icon" />{% endif %}<span class="ml-3">{{ languageArray.0|capitalize }}</span></a>
+    {% endif %}
+{% endfor %}

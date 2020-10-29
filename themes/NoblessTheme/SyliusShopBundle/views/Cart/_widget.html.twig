@@ -2,15 +2,23 @@
 {% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
 
 {{ sonata_block_render_event('sylius.shop.partial.cart.summary.before_widget_content', {'cart': cart}) }}
+{% set cartCount = 0 %}
+{% for item in cart.items %}
+    {% set cartCount = cartCount + item.quantity %}
+{% endfor %}
 
-<div class="btn-group cart-btn">
-    <a class="d-flex align-items-center dropdown-toggle banner-link" data-toggle="dropdown" href="#">
-        <span>Panier&nbsp;</span>
-        <span>({{ cart.items|length }})</span>
-        <span>&nbsp;{{ money.convertAndFormat(cart.itemsTotal) }}</span>
+
+<div class="btn-group dropdown cart-btn">
+    <a class="dropdown-toggle dropdown-icon position-relative" data-toggle="dropdown" href="#">
+        <span class="cart-icon position-relative">
+            <img src="{{ asset('nobless-theme/images/shopping-bag-icon.png', 'noblessTheme') }}" class="icon"/>
+            <span class="cart-count">
+                {{ cartCount }}
+            </span>
+        </span>
     </a>
 
-    <div class="dropdown-menu dropdown-menu-right" style="width:300px">
+    <div class="dropdown-menu dropdown-menu-right cart-dropdown" style="width:300px">
         {{ sonata_block_render_event('sylius.shop.partial.cart.summary.before_popup_content', {'cart': cart}) }}
 
         {% if cart.empty %}

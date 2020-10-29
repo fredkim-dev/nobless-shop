@@ -10,7 +10,9 @@
     {% set thumbnail = source_path|imagine_filter('sylius_shop_product_thumbnail') %}
 {% else %}
     {% set original_path = '//placehold.it/400x300' %}
+    {% set source_path = original_path %}
     {% set mainPath = original_path %}
+    {% set thumbnail = source_path %}
 {% endif %}
 
 {% if product.images|length == 1 %}
@@ -43,12 +45,6 @@
         {% endif %}
     {% endfor %}
 
-{# 
-data-fresco-group="gallery-product" data-fresco-group-options="thumbnails: 'vertical', thumbnail: '{{ thumbnail }}'" 
-data-fresco-group="gallery-product" data-fresco-group-options="thumbnail: '{{ thumbnailSecond }}'"
-data-fresco-group="gallery-product" data-fresco-group-options="thumbnail: '{{ thumbnailThird }}'" 
-data-fresco-group="gallery-product" data-fresco-group-options="thumbnail: '{{ thumbnailOther }}'" 
-#}
     {# Main image #}
     <div class="row px-3">
         {% set thumbnail = source_path|imagine_filter('sylius_shop_product_thumbnail') %}
