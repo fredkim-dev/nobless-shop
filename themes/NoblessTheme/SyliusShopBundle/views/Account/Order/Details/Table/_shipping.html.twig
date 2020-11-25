@@ -1,0 +1,19 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+{% set orderShippingPromotionAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT') %}
+{% set shippingAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::SHIPPING_ADJUSTMENT') %}
+{% set orderShippingPromotions = sylius_aggregate_adjustments(order.getAdjustmentsRecursively(orderShippingPromotionAdjustment)) %}
+
+{% if not orderShippingPromotions is empty %}
+    <strong>{{ 'sylius.ui.shipping_total'|trans }}:</strong>
+    <small><s>{{ money.convertAndFormat(order.getAdjustmentsTotal(shippingAdjustment)) }}</s></small>
+    <span>
+        <span>{{ money.convertAndFormat(order.getAdjustmentsTotal(shippingAdjustment) + order.getAdjustmentsTotal(orderShippingPromotionAdjustment)) }}</span>
+        <span title="{% for label, amount in orderShippingPromotions %}<div>{{ label }}: {{ money.convertAndFormat(amount) }}</div>{% endfor %}" data-toggle="tooltip" data-placement="top" >
+            <i class="fas fa-question-circle"></i>
+        </span>
+    </span>
+{% else %}
+    <strong>{{ 'sylius.ui.shipping_total'|trans }}:</strong>
+    {{ money.convertAndFormat(order.shippingTotal) }}
+{% endif %}

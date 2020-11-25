@@ -3,9 +3,17 @@
 {% elseif product.images.first %}
     {% set path = product.images.first.path|imagine_filter(filter|default('sylius_shop_product_vertical_thumbnail')) %}
 {% else %}
-    {% set path = '//placehold.it/350x450' %}
+    {% if filter is defined and filter == 'sylius_shop_order_info_thumbnail' %}
+        {% set path = '//placehold.it/112x150' %}
+    {% else %}
+        {% set path = '//placehold.it/350x450' %}
+    {% endif %}
+{% endif %}
+
+{% if class is not defined %}
+    {% set class = 'p-2 img-fluid' %}
 {% endif %}
 
 <a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}">
-    <img src="{{ path }}" alt="{{ product.name }}" class="p-2 img-fluid" />
+    <img src="{{ path }}" alt="{{ product.name }}" class="{{ class }}" />
 </a>

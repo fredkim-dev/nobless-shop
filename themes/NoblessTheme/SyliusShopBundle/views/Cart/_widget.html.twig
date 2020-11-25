@@ -18,7 +18,8 @@
         </span>
     </a>
 
-    <div class="dropdown-menu dropdown-menu-right cart-dropdown" style="width:300px">
+    <b class="screen-overlay-cart"></b>
+    <div class="header-dropdown dropdown-menu cart-dropdown">
         {{ sonata_block_render_event('sylius.shop.partial.cart.summary.before_popup_content', {'cart': cart}) }}
 
         {% if cart.empty %}
@@ -26,28 +27,23 @@
                 {{ 'sylius.ui.your_cart_is_empty'|trans }}.
             </div>
         {% else %}
+            <div class="d-flex flex-column justify-content-between">
+                <div id="headerCartItems">
+                    {% for item in cart.items %}
+                        {% include '@SyliusShop/Product/_headerProductItem.html.twig' with {'product': item, 'variant': item.variant} %}
+                    {% endfor %}
+                </div>
+                <div id="cartActions">
+                    <div class="d-flex flex-row justify-content-between mt-2 mx-3">
+                        <span class="item-title">{{ 'sylius.ui.subtotal'|trans }}</span>
+                        <span>{{ money.convertAndFormat(cart.itemsTotal) }}</span>
+                    </div>
 
-            <table class="table table-borderless">
-                <tbody>
-                {% for item in cart.items %}
-                    <tr>
-                        <td>{{ item.product }}</td>
-                        <td class="text-right">
-                            <small class="text-muted">{{ item.quantity }} x </small>
-                            {{ money.convertAndFormat(item.unitPrice) }}
-                        </td>
-                    </tr>
-                {% endfor %}
-                    <tr class="bg-light">
-                        <td><strong class="text-dark">{{ 'sylius.ui.subtotal'|trans }}:</strong></td>
-                        <td class="text-right text-dark"><strong>{{ money.convertAndFormat(cart.itemsTotal) }}</strong></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="px-3 pb-2">
-                <a href="{{ path('sylius_shop_cart_summary') }}" class="btn btn-outline-primary btn-block">{{ 'sylius.ui.view_and_edit_cart'|trans }}</a>
-                <a href="{{ path('sylius_shop_checkout_start') }}" class="btn btn-primary btn-block">{{ 'sylius.ui.checkout'|trans }}</a>
+                    <div class="p-3">
+                        <a href="{{ path('sylius_shop_cart_summary') }}" class="btn btn-outline-primary btn-block">{{ 'sylius.ui.edit_cart'|trans }}</a>
+                        <a href="{{ path('sylius_shop_checkout_start') }}" class="btn btn-primary btn-block">{{ 'sylius.ui.checkout'|trans }}</a>
+                    </div>
+                </div>
             </div>
         {% endif %}
 

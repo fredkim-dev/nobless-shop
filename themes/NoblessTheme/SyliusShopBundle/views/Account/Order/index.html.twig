@@ -1,0 +1,14 @@
+{% extends '@SyliusShop/Account/layout.html.twig' %}
+
+{% block breadcrumb %}
+    {% include '@SyliusShop/Account/Order/Index/_breadcrumb.html.twig' %}
+{% endblock %}
+
+{% block subcontent %}
+    {{ sonata_block_render_event('sylius.shop.account.order.index.after_content_header', {'orders': orders}) }}
+
+    <div id="ordersPage" class="mt-5">
+        {{ sylius_grid_render(resources, '@SyliusShop/Account/Order/_ordersGrid.html.twig') }}
+    </div>
+    {{ sonata_block_render_event('sylius.shop.account.order.index.after_grid', {'orders': orders}) }}
+{% endblock %}

@@ -13,4 +13,17 @@ use Sylius\Component\Core\Model\Address as BaseAddress;
  */
 class Address extends BaseAddress
 {
+    /** @ORM\Column(type="string", name="street_2", nullable=true) */
+   private $street2;
+
+   public function getStreet2(): ?string
+   {
+       return $this->street2;
+   }
+
+   public function setStreet2(string $street2): void
+   {
+       $this->street2 = $street2;
+   }
+
 }

@@ -35,7 +35,7 @@
                 {% for key, variant in product.variants %}
                     <label for="sylius_add_to_cart_cartItem_variant_{{ key }}" class="variant-name{% if variant.onHand == 0 %} variant-disabled{% endif %}">
                         {% for optionValue in variant.optionValues %}
-                            {{ optionValue.value }}
+                            {{ optionValue.code }}
                             {% if variant.onHand == 0 %}
                                 <span class="out-of-stock {{ optionValue.code|lower }}"></span>
                             {% endif %}

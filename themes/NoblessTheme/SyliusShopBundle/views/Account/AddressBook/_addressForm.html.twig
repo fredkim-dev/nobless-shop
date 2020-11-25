@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-12 col-md-6 form-group">
+        {{ form_label(form.firstName) }}
+        {{ form_widget(form.firstName) }}
+        {{ form_errors(form.firstName) }}
+    </div>
+    <div class="col-12 col-md-6 form-group">
+        {{ form_label(form.lastName) }}
+        {{ form_widget(form.lastName) }}
+        {{ form_errors(form.lastName) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-md-6 form-group">
+        {{ form_label(form.company) }}
+        {{ form_widget(form.company) }}
+        {{ form_errors(form.company) }}
+    </div>
+    <div class="col-12 col-md-6 form-group">
+        {{ form_label(form.phoneNumber) }}
+        {{ form_widget(form.phoneNumber) }}
+        {{ form_errors(form.phoneNumber) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-md-6 form-group">
+        {{ form_label(form.street) }}
+        {{ form_widget(form.street) }}
+        {{ form_errors(form.street) }}
+    </div>
+    <div class="col-12 col-md-6 form-group">
+        {{ form_label(form.street2) }}
+        {{ form_widget(form.street2) }}
+        {{ form_errors(form.street2) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-md-6 form-group">
+        {{ form_label(form.postcode) }}
+        {{ form_widget(form.postcode) }}
+        {{ form_errors(form.postcode) }}
+    </div>
+    <div class="col-12 col-md-6 form-group">
+        {{ form_label(form.city) }}
+        {{ form_widget(form.city) }}
+        {{ form_errors(form.city) }}
+    </div>
+</div>
+{% include '@SyliusShop/Common/Form/_countryCode.html.twig' with {'form': form.countryCode} %}
+

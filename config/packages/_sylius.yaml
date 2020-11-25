@@ -92,6 +92,7 @@ sylius_customer:
         customer:
             classes:
                 model: App\Entity\Customer\Customer
+                controller: App\Controller\Shop\UserController
         customer_group:
             classes:
                 model: App\Entity\Customer\CustomerGroup
@@ -285,6 +286,103 @@ sylius_grid:
                                     label: bitbag_sylius_product_bundle.ui.bundle
                                     icon: plus
                                     route: bitbag_product_bundle_admin_product_create_bundle
+        sylius_shop_account_order:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%sylius.model.order.class%"
+                    repository:
+                        method: createByCustomerAndChannelIdQueryBuilder
+                        arguments:
+                            - "expr:service('sylius.context.customer').getCustomer().getId()"
+                            - "expr:service('sylius.context.channel').getChannel().getId()"
+            sorting:
+                checkoutCompletedAt: desc
+            fields:
+                number:
+                    type: twig
+                    label: sylius.ui.number
+                    sortable: false
+                    options:
+                        template: "@SyliusShop/Account/Order/Grid/Field/number.html.twig"
+                checkoutCompletedAt:
+                    type: datetime
+                    label: sylius.ui.date
+                    sortable: false
+                    options:
+                        format: m/d/Y
+                shippingAddress:
+                    enabled: false
+                    type: twig
+                    label: sylius.ui.ship_to
+                    options:
+                        template: "@SyliusShop/Account/Order/Grid/Field/address.html.twig"
+                state:
+                    type: twig
+                    label: sylius.ui.state
+                    sortable: false
+                    options:
+                        template: "@SyliusShop/Account/Order/Grid/Field/state.html.twig"
+                        vars:
+                            labels: "@SyliusShop/Account/Order/Label/State"
+                    position: 3
+                shipments:
+                    type: twig
+                    label: sylius.ui.tracking_number
+                    sortable: false
+                    options: 
+                        template: "@SyliusShop/Account/Order/Grid/Field/shipment_number.html.twig"
+                    position: 4
+                total:
+                    type: twig
+                    label: sylius.ui.total
+                    path: .
+                    sortable: false
+                    options:
+                        template: "@SyliusShop/Account/Order/Grid/Field/total.html.twig"
+                    position: 5
+            actions:
+                item:
+                    show:
+                        type: shop_show
+                        label: sylius.ui.show_order
+                        options:
+                            template: "@SyliusShop/Account/Order/Grid/Action/show.html.twig"
+                            link:
+                                route: sylius_shop_account_order_show
+                                parameters:
+                                    number: resource.number
+                    pay:
+                        enabled: false
+                        type: shop_pay
+                        label: sylius.ui.pay
+                        options:
+                            link:
+                                route: sylius_shop_order_show
+                                parameters:
+                                    tokenValue: resource.tokenValue
+
+liip_imagine:
+    filter_sets:
+        sylius_shop_product_vertical_thumbnail:
+            filters:
+                thumbnail: { size: [500, 637], mode: outbound }
+        sylius_shop_product_gallery:
+            filters:
+                thumbnail: { size: [400, 600], mode: outbound }
+        sylius_shop_product_large_gallery:
+            filters:
+                thumbnail: { size: [981, 1500], mode: outbound }
+        sylius_shop_product_mobile_thumbnail:
+            filters:
+                thumbnail: { size: [500, 750], mode: outbound }
+        sylius_shop_slider_mobile_thumbnail:
+            filters:
+                thumbnail: { size: [800, 800], mode: outbound }
+        sylius_shop_order_info_thumbnail:
+            filters:
+                thumbnail: { size: [112, 150], mode: outbound }
+                
 mobile_detect:
     service:
         mobile_detector: mobile_detect.mobile_detector.default

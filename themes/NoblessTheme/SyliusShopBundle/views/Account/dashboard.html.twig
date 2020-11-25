@@ -1,0 +1,51 @@
+{% extends '@SyliusShop/Account/layout.html.twig' %}
+
+{% import '@SyliusShop/Common/Macro/headers.html.twig' as headers %}
+{% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
+
+{% block breadcrumb %}
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('sylius_shop_homepage') }}">{{ 'sylius.ui.home'|trans }}</a></li>
+            <li class="breadcrumb-item active">{{ 'sylius.ui.my_account'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block subcontent %}
+    {{ sonata_block_render_event('sylius.shop.account.dashboard.after_content_header', {'customer': customer}) }}
+    <div id="dashboardPage">
+        <div class="col-12 row dashboard-items mt-5">
+            <div class="col-12 col-md-4">
+                <h5>{{ 'sylius.ui.profile'|trans }}</h5>
+                <div class="mb-3">
+                    <div class="text-dark">{{ ('sylius.ui.gender.' ~ customer.gender|lower ~ '')|trans }} {{ customer.fullName }}</div>
+                    <div>{{ customer.email }}</div>
+                    {% if customer.user.verified %}
+                        <div class="text-success text-uppercase">{{ 'sylius.ui.verified'|trans }}</div>
+                    {% else %}
+                        <form action="{{ path('sylius_shop_user_request_verification_token') }}" method="post">
+                            <a class="verify-account">
+                                {{ 'sylius.ui.not_verified'|trans }}
+                            </a>
+                        </form>
+                    {% endif %}
+                </div>
+                <a href="{{ path('sylius_shop_account_profile_update') }}" class="d-block text-uppercase">{{ 'sylius.ui.edit_account'|trans }}</a>
+            </div>
+            <div class="col-12 col-md-4 mt-5 mt-md-0">
+                <h5>{{ 'sylius.ui.shipping_address_default'|trans }}</h5>
+                <div class="address-info mb-2">
+                    {% include '@SyliusShop/Account/AddressBook/_defaultAddress.html.twig' with {'address': customer.defaultAddress} %}
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mt-5 mt-md-0">
+                <h5>{{ 'sylius.ui.billing_address_default'|trans }}</h5>
+                <div class="address-info mb-2">
+                    {% include '@SyliusShop/Account/AddressBook/_defaultAddress.html.twig' with {'address': customer.defaultAddress} %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ sonata_block_render_event('sylius.shop.account.dashboard.after_information', {'customer': customer}) }}
+{% endblock %}

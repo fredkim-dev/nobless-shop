@@ -1,0 +1,49 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+{% set product = variant.product %}
+
+<div class="media">
+    <div class="mr-3 product-img-order">
+        {% include '@SyliusShop/Product/_mainImage.html.twig' with {'product': product, 'filter': 'sylius_shop_order_info_thumbnail'} %}
+    </div>
+    <div class="media-body d-flex flex-column justify-content-between py-2" style="height:166px;">
+        <div>
+            <h5 class="my-2">{{ item.productName }}</h5>
+            <span>{{ 'sylius.ui.sku'|trans }} : {{ variant.code }}</span>
+        </div>
+        <div>
+            {% if product.hasOptions() %}
+                <div>
+                    {% for optionValue in variant.optionValues %}
+                        <div data-sylius-option-name="{{ optionValue.name }}">
+                            <span>{{ 'sylius.ui.size'|trans }} : {{ optionValue.value }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% elseif item.variantName is not null %}
+                <div>
+                    <span>{{ 'sylius.ui.size'|trans }} : {{ item.variantName }}</span>
+                </div>
+            {% endif %}
+
+            {# Product quantity #}
+            <div>
+                <span>{{ 'sylius.ui.qty'|trans }} : {{ item.quantity }}</span>
+            </div>
+
+            {# Product Price #}
+            <div>
+                {% if item.unitPrice != item.discountedUnitPrice %}
+                    <small><s>{{ money.convertAndFormat(item.unitPrice) }}</s></small>
+                {% endif %}
+                <span>
+                    {{ money.convertAndFormat(item.discountedUnitPrice) }}
+                    {% if item.unitPrice != item.discountedUnitPrice %}
+                        <span title="{% for promotion in unitPromotions %}<div>{{ promotion.label }}: {{ money.convertAndFormat(promotion.amount) }}</div>{% endfor %}" data-toggle="tooltip" data-placement="top" >
+                            <i class="fas fa-question-circle"></i>
+                        </span>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

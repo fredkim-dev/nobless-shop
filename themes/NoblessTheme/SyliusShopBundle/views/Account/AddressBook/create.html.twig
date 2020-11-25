@@ -1,0 +1,43 @@
+{% extends '@SyliusShop/Account/AddressBook/layout.html.twig' %}
+
+{% form_theme form '@SyliusShop/Form/theme.html.twig' %}
+
+{% import '@SyliusShop/Common/Macro/headers.html.twig' as headers %}
+
+{% block subcontent %}
+    <div class="row col-12 col-md-10 col-lg-8 mx-auto">
+        <div class="col-12">
+            <h5>{{ 'sylius.ui.add_address'|trans }}</h5>
+
+            {{ sonata_block_render_event('sylius.shop.account.address_book.create.after_content_header', {'address': address}) }}
+
+            {{ form_start(form, {'action': path('sylius_shop_account_address_book_create'), 'attr': {'novalidate': 'novalidate'}}) }}
+                {% include '@SyliusShop/Account/AddressBook/_addressForm.html.twig' with {'form': form} %}
+                
+                <div class="row">
+                    <div class="col-12 col-md-6 mb-2 mb-md-0">
+                        <div class="col-12 p-0">
+                            <a href="{{ path('sylius_shop_account_address_book_index') }}" class="btn btn-secondary w-100 d-inline-block d-md-none">
+                                {{ 'sylius.ui.cancel'|trans }}
+                            </a>
+                            <a href="{{ path('sylius_shop_account_address_book_index') }}" class="btn btn-secondary d-none d-md-inline-block">
+                                {{ 'sylius.ui.cancel'|trans }}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="col-12 p-0">
+                            <button type="submit" class="btn btn-primary w-100">
+                                {{ 'sylius.ui.save_changes'|trans }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            {{ sonata_block_render_event('sylius.shop.account.address_book.create.form', {'address': address}) }}
+
+            {{ form_row(form._token) }}
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    </div>
+{% endblock %}

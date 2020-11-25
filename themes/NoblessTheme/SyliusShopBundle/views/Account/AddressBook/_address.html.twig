@@ -1,0 +1,12 @@
+<address>
+    {% if address.company is not null %}
+        <span class="d-block"><strong>{{ address.company }}</strong></span>
+    {% endif %}
+    <span class="d-block">{# {{ address.gender|capitalize }} #} {{ address.firstName }} {{ address.lastName }}</span>
+    <span class="d-block">{{ address.street }} {{ address.street2 }}</span>
+    <span class="d-block">{{ address.postcode }} {{ address.city }}</span>
+    {% if address.phoneNumber is not null %}
+        <span class="d-block">{{ address.phoneNumber }}</span>
+    {% endif %}
+    <span class="d-block">{{ address.countryCode|sylius_country_name }}</span>
+</address>

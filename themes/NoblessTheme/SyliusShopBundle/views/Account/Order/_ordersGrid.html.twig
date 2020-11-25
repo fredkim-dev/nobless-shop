@@ -1,0 +1,130 @@
+{% import '@SyliusShop/Common/Macro/pagination.html.twig' as pagination %}
+{% import '@SyliusShop/Common/Macro/messages.html.twig' as messages %}
+{% import '@SyliusShop/Common/Macro/table.html.twig' as table %}
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+{% set definition = grid.definition %}
+{% set data = grid.data %}
+
+{% set path = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+
+{% if definition.enabledFilters|length > 0 %}
+    <div class>
+        <div class="">
+            {{ 'sylius.ui.filters'|trans }}
+        </div>
+        <div class="">
+            <form method="get" action="{{ path }}" class="loadable">
+                <div class="">
+                {% for filter in definition.enabledFilters|sort_by('position') if filter.enabled %}
+                    {{ sylius_grid_render_filter(grid, filter) }}
+
+                    {% if loop.index0 % 2 %}
+                        </div>
+                        <div class="">
+                    {% endif %}
+                {% endfor %}
+                </div>
+                <button class="btn btn-primary" type="submit">
+                    {{ 'sylius.ui.filter'|trans }}
+                </button>
+                <a class="btn btn-outline-primary" href="{{ path }}">
+                    {{ 'sylius.ui.clear_filters'|trans }}
+                </a>
+            </form>
+        </div>
+    </div>
+{% endif %}
+
+{% if data|length > 0 and definition.actionGroups.bulk is defined and definition.getEnabledActions('bulk')|length > 0 %}
+    <div class="">
+        <div class="">
+            {{ 'sylius.ui.bulk_actions'|trans }}
+        </div>
+        <div class="">
+            {% for action in definition.getEnabledActions('bulk') %}
+                {{ sylius_grid_render_bulk_action(grid, action, null) }}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+<div class="col-12 px-0 px-md-3">
+    {% if definition.limits|length > 1 and data|length > min(definition.limits) %}
+    <div class="">
+        <div class="">
+            {{ pagination.simple(data) }}
+        </div>
+        <div class="">
+            <div class="">
+                {{ pagination.perPage(data, definition.limits) }}
+            </div>
+        </div>
+    </div>
+    {% else %}
+        {{ pagination.simple(data) }}
+    {% endif %}
+
+    {% if data|length > 0 %}
+        {# DESKTOP ORDERS LIST #}
+        <table class="table d-none d-md-table">
+            <thead>
+            <tr>
+                {{ table.headers(grid, definition, app.request.attributes) }}
+            </tr>
+            </thead>
+            <tbody id="orderAccordionDesktop">
+            {% for row in data %}
+                {{ table.row(grid, definition, row) }}
+                <tr class="collapse-tr">
+                    {% include '@SyliusShop/Account/Order/Show/gridDetails.html.twig' with {'order': row} %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {# MOBILE ORDERS LIST #}
+        <div id="orderAccordionMobile" class="d-block d-md-none">
+            {% for order in data %}
+                <div class="order-item-mobile pt-2 pb-3{% if loop.index > 1 %} mt-2{% endif %}">
+                    <div class="row position-relative init mx-auto" data-toggle="collapse" href="#collapse-{{ order.id }}">
+                        <div class="col-5 font-weight-bold px-1">
+                            {{ 'sylius.ui.number'|trans }}<br>
+                            #{{ order.number }}
+                        </div>
+                        <div class="col-5 px-1">
+                            <strong>{{ 'sylius.ui.date'|trans }}</strong><br>
+                            {{ order.checkoutCompletedAt|format_date }}
+                        </div>
+                        <div class="col-2 px-1">
+                            <strong>{{ 'sylius.ui.total'|trans }}</strong><br>
+                            {{ money.convertAndFormat(order.total) }}
+                        </div>
+                        <i class="fas fa-angle-down"></i>
+                    </div>
+                    <div class="order-details collapse py-3 row" id="collapse-{{ order.id }}" data-parent="#orderAccordionMobile">
+                        <div class="col-12 d-flex justify-content-between">
+                            <div class="font-weight-bold">{{ 'sylius.ui.state'|trans }} :</div> <div class="">{{ ('sylius.ui.' ~ order.state)|trans }}</div>
+                        </div>
+                        {% if order.shipments.first.tracking %}
+                            <div class="col-12 row">
+                                <div class="col-4 font-weight-bold">{{ 'sylius.ui.tracking_number'|trans }} :</div> <div class="col-2"><strong>{{ order.shipments.first.tracking }}</strong></div>
+                            </div>
+                        {% endif %}
+
+                        <table class="col-12 table table-details mt-2">
+                            {% for item in order.items %}
+                                {% include '@SyliusShop/Account/Order/Details/Table/_item.html.twig' %}
+                            {% endfor %}
+                        </table>
+                        <div class="w-100 p-2 arrow-close">
+                            <i class="fas fa-angle-up"></i>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        {{ messages.info('sylius.ui.no_results_to_display') }}
+    {% endif %}
+    {{ pagination.simple(data) }}
+</div>

@@ -46,13 +46,19 @@
     </div>
 {% endblock %}
 
+
 <div id="mainContentContainer" class="main-content container-fluid mx-auto p-0">
-    {% include '@SyliusShop/_flashes.html.twig' %}
 
     {{ sonata_block_render_event('sylius.shop.layout.before_content') }}
 
     {% block content %}
+        {% block flashes %}
+            {% include '@SyliusShop/_flashes.html.twig' %}
+        {% endblock %}
     {% endblock %}
+
+    {# Forgotten password modal #}
+    {{ render(url('sylius_shop_request_password_reset_token', {'template': '@SyliusShop/Account/passwordResetModal.html.twig'})) }}
 
     {% include '@SyliusShop/footerInfos.html.twig' %}
 

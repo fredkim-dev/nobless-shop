@@ -12,3 +12,29 @@ sylius_shop_default_locale:
     methods: [GET]
     defaults:
         _controller: sylius.controller.shop.locale_switch:switchAction
+
+sylius_shop_request_password_reset_token:
+    path: /{_locale}/forgotten-password
+    methods: [GET, POST]
+    defaults:
+        _controller: sylius.controller.shop_user:requestPasswordResetTokenAction
+        _sylius:
+            template: "@SyliusShop/Account/passwordResetModal.html.twig"
+            redirect: sylius_shop_login
+
+sylius_shop_login:
+    path: /{_locale}/login
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.shop.security:loginAction
+        _sylius:
+            template: "@SyliusShop/login.html.twig"
+            logged_in_route: sylius_shop_account_dashboard
+
+sylius_shop_to_register:
+    path: /{_locale}/to-register
+    methods: [POST, GET]
+    defaults:
+        _controller: sylius.controller.shop.register:toRegisterAction
+        _sylius:
+            logged_in_route: sylius_shop_account_dashboard

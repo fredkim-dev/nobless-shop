@@ -15,6 +15,8 @@ namespace App\Controller\Shop;
 
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Bundle\UiBundle\Form\Type\SecurityLoginType;
+use App\Form\RegisterLoginType;
+use Sylius\Bundle\UserBundle\Form\Type\UserRequestPasswordResetType;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -55,6 +57,34 @@ class SecurityController extends ResourceController
         $this->router = $router;
     }
 
+    public function loginAction(Request $request): Response
+    {
+        $alreadyLoggedInRedirectRoute = $request->attributes->get('_sylius')['logged_in_route'] ?? null;
+
+        if ($alreadyLoggedInRedirectRoute && $this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new RedirectResponse($this->router->generate($alreadyLoggedInRedirectRoute));
+        }
+
+        $lastError = $this->authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $this->authenticationUtils->getLastUsername();
+
+        $options = $request->attributes->get('_sylius');
+
+        $template = $options['template'] ?? '@SyliusUi/Security/login.html.twig';
+        $formType = $options['form'] ?? SecurityLoginType::class;
+        $form = $this->formFactory->createNamed('', $formType);
+
+        $formRegisterType = RegisterLoginType::class;
+        $formRegister = $this->formFactory->createNamed('', $formRegisterType);
+
+        return $this->templatingEngine->renderResponse($template, [
+            'form' => $form->createView(),
+            'form_register' => $formRegister->createView(),
+            'last_username' => $lastUsername,
+            'last_error' => $lastError,
+        ]);
+    }
+
     public function headerLoginAction(Request $request): Response
     {
         $alreadyLoggedInRedirectRoute = $request->attributes->get('_sylius')['logged_in_route'] ?? null;
@@ -72,10 +102,36 @@ class SecurityController extends ResourceController
         $formType = $options['form'] ?? SecurityLoginType::class;
         $form = $this->formFactory->createNamed('', $formType);
 
+        $formRegisterType = RegisterLoginType::class;
+        $formRegister = $this->formFactory->createNamed('', $formRegisterType);
+
+        $formForgottenPasswordType = UserRequestPasswordResetType::class;
+        $formForgottenPassword = $this->formFactory->createNamed('', $formForgottenPasswordType);
+
         return $this->templatingEngine->renderResponse($template, [
             'form' => $form->createView(),
+            'form_register' => $formRegister->createView(),
+            'form_forgotten_password' => $formForgottenPassword->createView(),
             'last_username' => $lastUsername,
             'last_error' => $lastError,
+        ]);
+    }
+
+    public function renderForgottenPasswordAction(Request $request): Response
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        $passwordReset = new PasswordResetRequest();
+        $formType = UserRequestPasswordResetType::class;
+        $form = $this->createResourceForm($configuration, $formType, $passwordReset);
+        
+        $options = $request->attributes->get('_sylius');
+        $template = $options['template'] ?? '@SyliusShop/Account/passwordResetModal.html.twig';
+        $idModal = $options['id_modal'] ?? 'resetPasswordModal';
+
+        return $this->templatingEngine->renderResponse($template, [
+            'form' => $form->createView(),
+            'idModal' => $idModal
         ]);
     }
 }

@@ -8,16 +8,23 @@
                 <img src="{{ asset('nobless-theme/images/icon-' ~ sylius.localeCode|sylius_locale_country|lower ~ '.png', 'noblessTheme') }}" class="icon" />
             {% endif %}
         </a>
-        <div class="dropdown-menu dropdown-menu-right">
-            {% for code in locales %}
-                {% if code is not same as(active) %}
-                    {% set languageArray = (code|sylius_locale_name)|split(' ') %}
-                    <a class="dropdown-item" href="{{ path('sylius_shop_switch_locale', {'code': code}) }}">
-                        {{ flags.fromLocaleCode(code) }}
-                        {{ languageArray.0|capitalize }}
-                    </a>
-                {% endif %}
-            {% endfor %}
+        <div class="header-dropdown dropdown-menu" style="width:350px">
+            <div class="mb-2">
+                {% set activeLangArray = (active|sylius_locale_name)|split(' ') %}
+                <h6 class="pb-3 pl-4">
+                    {{ flags.fromLocaleCode(active) }}
+                    {{ activeLangArray.0|capitalize }}
+                </h6>
+                {% for code in locales %}
+                {% set languageArray = (code|sylius_locale_name)|split(' ') %}
+                    {% if code is not same as(active) %}
+                        <a class="dropdown-item" href="{{ path('sylius_shop_switch_locale', {'code': code}) }}">
+                            {{ flags.fromLocaleCode(code) }}
+                            {{ languageArray.0|capitalize }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endif %}

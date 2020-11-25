@@ -1,0 +1,64 @@
+sylius:
+    ui:
+        registered_customers: 'Connectez-vous'
+        registered_customers_subtitle: 'Vous êtes déjà client Noblezz, connectez-vous avec vos identifiants de connexion'
+        customer_login: 'Mon compte'
+        new_customers: 'Créer un compte'
+        new_customers_subtitle: Créer votre compte Noblezz en quelques clics pour pouvoir suivre aisément vos commandes, gérer vos adresses et cumuler des avoirs de fidélité à chaque commande. Suivez les prochaines étapes pour créer dès aujourd'hui votre compte Noblezz
+        personal_information: 'Informations du compte'
+        account_credentials: 'Informations de connexion'
+        sign_in_here: 'Accédez à votre compte'
+        and: 'et'
+        edit_account: 'Editer mon compte'
+        edit_address: Editer l'adresse
+        change_password: 'Changer mon mot de passe'
+        shipping_address_default: 'Adresse de livraison par défaut'
+        billing_address_default: 'Adresse de facturation par défaut'
+        edit_your_personal_information: 'Modifier mes informations personnelles'
+        change_newsletter_subscription: 'Modifier mon abonnement à la newsletter Noblezz'
+        additional_addresses: 'Adresses supplémentaires'
+        add_new_address: Ajouter l'adresse
+        add_address: Ajouter une adresse
+        gender:
+            f: 'Mme.'
+            m: 'M.'
+        no_results_to_display: Vous n'avez pas encore passé commande chez Noblezz
+        show_order: Voir la commande
+        number: Numéro de la commande
+        date: Date de la commande
+        state: Statut de la commande
+        tracking_number: Numéro de suivi
+        menu: Menu
+        not_verified: Veuillez valider votre compte
+        qty: Qté
+        size: Taille
+        sku: Réf
+        view_cart: Voir le panier
+        edit_cart: Modifier le panier
+        forgot_password_title: J'ai oublié mon mot de passe
+        set_a_new_password_for_your_account: Veuillez entrer votre adresse mail pour recevoir le lien de réinitialisation du mot de passe
+        reset_password: Réinitialiser mon mot de passe
+    menu:
+        shop:
+            account:
+                personal_information: Mes informations personnelles
+                address_book: Mes adresses
+                order_history: Mes commandes
+    form:
+        login:
+            username: 'Adresse mail *'
+            password: 'Mot de passe *'
+            remember_me: 'Rester connecté'
+            verify_credentials: 'Veuillez vérifier vos informations de connexion'
+        user:
+            password:
+                confirmation: 'Confirmer le mot de passe'
+        customer:
+            subscribed_to_newsletter: S'inscrire à la newsletter
+            subscribed_to_newsletter_noblezz: Je souhaite m'inscrire à la newsletter Noblezz m'informant des nouveaux produits et offres spécifiques de la marque
+            accept_cgv_1: J'accepte
+            accept_cgv_2: les conditions générales de vente
+            accept_cgv_3: la politique de confidentialité
+        address:
+            street: Adresse
+            street2: Adresse (suite)

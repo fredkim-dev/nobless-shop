@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-12 col-md-6">
+        <h4>{{ 'sylius.ui.personal_information'|trans }}</h4>
+        
+        {{ form_row(form.gender) }}
+        <div class="form-group">
+            {{ form_label(form.firstName) }}
+            {{ form_widget(form.firstName) }}
+            {{ form_errors(form.firstName) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.lastName) }}
+            {{ form_widget(form.lastName) }}
+            {{ form_errors(form.lastName) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email, {'value': app.request.get('username') }) }}
+            {{ form_errors(form.email) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.birthday) }}
+            {{ form_widget(form.birthday) }}
+            {{ form_errors(form.birthday) }}
+        </div>
+    </div>
+    <div class="col-12 col-md-6 mt-3 mt-md-0">
+        <h4>{{ 'sylius.ui.account_credentials'|trans }}</h4>
+
+        <div class="form-group">
+            {{ form_label(form.user.plainPassword.first) }}
+            {{ form_widget(form.user.plainPassword.first) }}
+            {{ form_errors(form.user.plainPassword.first) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.user.plainPassword.second) }}
+            {{ form_widget(form.user.plainPassword.second) }}
+            {{ form_errors(form.user.plainPassword.second) }}
+        </div>
+
+        <div class="mb-1 label-button">_</div>
+        <div class="form-group">
+            {{ form_widget(form.subscribedToNewsletter) }}
+        </div>
+
+        <div class="mb-1 label-button">_</div>
+        <div class="form-group">
+            <div class="form-check">
+                <input type="checkbox" id="{{ form.acceptCgv.vars.id }}" name="{{ form.acceptCgv.vars.full_name }}" required class="form-check-input" {% if form.acceptCgv.vars.checked %}checked{% endif %}>
+                <label for="{{ form.acceptCgv.vars.id }}" class="form-check-label{% if not form.acceptCgv.vars.valid %} is-invalid{% endif %}">
+                    {{ 'sylius.form.customer.accept_cgv_1'|trans }} <a href="#">{{ 'sylius.form.customer.accept_cgv_2'|trans }}</a> {{ 'sylius.ui.and'|trans }} <a href="#">{{ 'sylius.form.customer.accept_cgv_3'|trans }}</a><span class="required d-inline-block ml-1">*</required>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="d-none d-md-inline-block label-button">_</label>
+            <button type="submit" class="col-12 btn btn-primary mt-4 mt-md-0">
+                {{ 'sylius.ui.create_an_account'|trans }}
+            </button>
+        </div>
+    </div>
+</div>
+{{ form_row(form._token) }}
+
+

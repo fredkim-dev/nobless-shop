@@ -1,0 +1,9 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+{% set unitPromotionAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT') %}
+{% set unitPromotions = item.units.first.adjustments(unitPromotionAdjustment) %}
+
+<tr>
+    <td colspan="3">{% include '@SyliusShop/Product/_infoOrder.html.twig' with {'variant': item.variant} %}</td>
+    <td class="text-right pb-2">{{ money.convertAndFormat(item.subtotal) }}</td>
+</tr>

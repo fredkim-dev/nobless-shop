@@ -1,0 +1,30 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% block root %}
+    <div class="list-row row col-12 mx-auto">
+        <div class="col p-0">
+            {{ block('list') }}
+        </div>
+        <div class="col-2 p-0 text-right">
+            <a class="list-group-item d-inline-block logout" href="{{ path('sylius_shop_logout') }}">
+                {{ 'sylius.ui.logout'|trans }}
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block list %}
+    {% for item in item.children %}
+        {{ block('item') }}
+    {% endfor %}
+{% endblock %}
+
+{% block item %}
+    {% set activeClass = '' %}
+    {% if item.uri == app.request.requestUri or (item.name == 'address_book' and item.name in app.request.get('_route')) %}
+        {% set activeClass = ' active' %}
+    {% endif %}
+    <a class="d-inline-block list-group-item mr-2{{ activeClass }}" href="{{ item.uri }}">
+        {{ item.label|trans }}
+    </a>
+{% endblock %}

@@ -37,14 +37,41 @@ services:
     sylius.controller.shop.homepage:
         class: App\Controller\Shop\HomepageController
         arguments: ['@templating']
-        tags: ['controller.service_arguments']
 
     sylius.controller.shop.locale_switch:
         class: App\Controller\Shop\LocaleSwitchController
         arguments: ['@templating', '@sylius.context.locale', '@sylius.locale_provider', '@sylius.shop.locale_switcher']
-        tags: ['controller.service_arguments']
     
     sylius.controller.shop.security:
         class: App\Controller\Shop\SecurityController
         arguments: ['@security.authentication_utils', '@form.factory', '@templating', '@security.authorization_checker', '@router']
-        tags: ['controller.service_arguments']
+    
+    sylius.controller.shop.register:
+        class: App\Controller\Shop\RegisterController
+        arguments: ['@security.authentication_utils', '@form.factory', '@templating', '@security.authorization_checker', '@router']
+
+    # Forms
+    app.form.type.register_login:
+        class: App\Form\RegisterLoginType
+        tags:
+            - { name: form.type }
+
+    app.form.extension.customer_registration:
+        class: App\Form\Extension\CustomerRegistrationTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Sylius\Bundle\CoreBundle\Form\Type\Customer\CustomerRegistrationType }
+
+    app.form.extension.customer_profile:
+        class: App\Form\Extension\CustomerProfileTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Sylius\Bundle\CustomerBundle\Form\Type\CustomerProfileType }
+
+    app.form.extension.address:
+        class: App\Form\Extension\AddressTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Sylius\Bundle\AddressingBundle\Form\Type\AddressType }
+
+    app.listener.shop.menu_builder:
+        class: App\Menu\AccountMenuListener
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu.shop.account, method: addAccountMenuItems }

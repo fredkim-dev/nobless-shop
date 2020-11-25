@@ -4,44 +4,95 @@
 
 {% block content %}
 
-    <div class="row mx-3 mb-3">
+
+    <div id="loginPage" class="col-12 col-lg-10 col-xl-8 row mx-auto p-0">
         <div class="col-12">
             {% include '@SyliusShop/Login/_header.html.twig' %}
 
             {{ sonata_block_render_event('sylius.shop.login.after_content_header') }}
         </div>
-        <div class="col-12 col-md-6 mb-3">
-            {{ sonata_block_render_event('sylius.shop.login.before_login') }}
 
-            <div class="card">
-                <div class="card-body">
-                    <h4>{{ 'sylius.ui.registered_customers'|trans }}</h4>
-                    <p>{{ 'sylius.ui.if_you_have_an_account_sign_in_with_your_email_address'|trans }}.</p>
-                    {{ form_start(form, {'action': path('sylius_shop_login_check'), 'attr': {'class': 'loadable', 'novalidate': 'novalidate'}}) }}
-                        {% include '@SyliusShop/Login/_form.html.twig' %}
+        {% include '@SyliusShop/Login/_flashes.html.twig' %}
 
-                        {{ sonata_block_render_event('sylius.shop.login.form', {'form': form}) }}
-
-                        <button type="submit" class="btn btn-primary">{{ 'sylius.ui.login'|trans }}</button>
-                        <a href="{{ path('sylius_shop_request_password_reset_token') }}" class="btn btn-link">{{ 'sylius.ui.forgot_password'|trans }}</a>
-                        <input type="hidden" name="_csrf_shop_security_token" value="{{ csrf_token('shop_authenticate') }}">
-                    {{ form_end(form, {'render_rest': false}) }}
+        <div class="row col-12 col-md-11 col-xl-10 mx-auto p-0 mb-3">
+            <div class="d-none d-md-block col-12 col-md-6 p-0">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>{{ 'sylius.ui.registered_customers'|trans }}</h4>
+                        <div class="mb-3">
+                            {{ 'sylius.ui.registered_customers_subtitle'|trans }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-none d-md-block col-12 col-md-6 p-0">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>{{ 'sylius.ui.new_customers'|trans }}</h4>
+                        <div class="mb-3">
+                            {{ 'sylius.ui.new_customers_subtitle'|trans }}
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {{ sonata_block_render_event('sylius.shop.login.after_login') }}
-        </div>
+            <div class="col-12 col-md-6 p-0">
+                {{ sonata_block_render_event('sylius.shop.login.before_login') }}
 
-        <div class="col-12 col-md-6 mb-3">
-            {{ sonata_block_render_event('sylius.shop.login.before_register') }}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-block d-md-none">
+                            <h4>{{ 'sylius.ui.registered_customers'|trans }}</h4>
+                            <div class="mb-3">
+                                {{ 'sylius.ui.registered_customers_subtitle'|trans }}
+                            </div>
+                        </div>
 
-            <div class="card">
-                <div class="card-body">
-                    {% include '@SyliusShop/Login/_register.html.twig' %}
+                        {{ form_start(form, {'action': path('sylius_shop_login_check'), 'attr': {'class': 'loadable login-form', 'novalidate': 'novalidate'}}) }}
+                            {% include '@SyliusShop/Login/_form.html.twig' %}
+
+                            {{ sonata_block_render_event('sylius.shop.login.form', {'form': form}) }}
+
+                            <button type="submit" class="d-block d-md-none btn btn-primary col-12">{{ 'sylius.ui.login'|trans }}</button>
+                            <input type="hidden" name="_csrf_shop_security_token" value="{{ csrf_token('shop_authenticate') }}">
+                        {{ form_end(form, {'render_rest': false}) }}
+                    </div>
                 </div>
+
+                {{ sonata_block_render_event('sylius.shop.login.after_login') }}
             </div>
 
-            {{ sonata_block_render_event('sylius.shop.login.after_register') }}
+            <div class="col-12 col-md-6 p-0 mt-4 mt-md-0">
+                {{ sonata_block_render_event('sylius.shop.login.before_register') }}
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-block d-md-none">
+                            <h4>{{ 'sylius.ui.new_customers'|trans }}</h4>
+                            <div class="mb-3">
+                                {{ 'sylius.ui.new_customers_subtitle'|trans }}
+                            </div>
+                        </div>
+                        {% include '@SyliusShop/Login/_register.html.twig' with {'form': form_register} %}
+                    </div>
+                </div>
+
+                {{ sonata_block_render_event('sylius.shop.login.after_register') }}
+            </div>
+            <div class="d-none d-md-block col-12 col-md-6 p-0">
+                <div class="card">
+                    <div class="card-body pt-0">
+                        <button type="submit" class="btn btn-primary col-12 btn-form" data-form=".login-form">{{ 'sylius.ui.login'|trans }}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="d-none d-md-block col-12 col-md-6 p-0">
+                <div class="card">
+                    <div class="card-body pt-0">
+                        <button type="submit" class="btn btn-primary col-12 btn-form" data-form=".register-form">{{ 'sylius.ui.create_an_account'|trans }}</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

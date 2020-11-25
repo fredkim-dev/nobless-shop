@@ -32,7 +32,7 @@
             </div>
             <div id="menuMobileLinks" class="mt-3">
                 <div class="menu-link">
-                    <a class="log-link nav-item nav-link" href="{{ path('sylius_shop_account_dashboard') }}"><img src="{{ asset('nobless-theme/images/account-icon.png', 'noblessTheme') }}" class="icon" /><span class="ml-3">{{ 'sylius.ui.my_account'|trans }}</span></a>
+                    <a class="log-link nav-item nav-link" {% if sylius.customer is null %}href="{{ path('sylius_shop_account_dashboard') }}"{% else %}data-div-to-open="#navbarAccountLinks"{% endif %}><img src="{{ asset('nobless-theme/images/account-icon.png', 'noblessTheme') }}" class="icon" /><span class="ml-3">{{ 'sylius.ui.my_account'|trans }}</span></a>
                 </div>
                 <div class="menu-link locale">
                     {% set languageArray = (sylius.localeCode|sylius_locale_name)|split(' ') %}
@@ -47,6 +47,9 @@
         </div>
         <div id="navbarLocale" class="col-12 px-3 py-2">
             {{ render(controller('sylius.controller.shop.locale_switch:renderMobileMenuAction')) }}
+        </div>
+        <div id="navbarAccountLinks" class="col-12 px-3 py-2 text-center">
+            {{ knp_menu_render('sylius.shop.account', {'template': '@SyliusShop/Menu/menuAccountLinks.html.twig'}) }}
         </div>
     </nav>
 {% endif %}
