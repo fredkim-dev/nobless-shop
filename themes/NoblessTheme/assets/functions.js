@@ -431,6 +431,38 @@ function formFunctions() {
       $(this).closest('form').trigger('submit');
     });
   }
+
+  if ($('#resetPasswordSubmit')) {
+    $('#resetPasswordSubmit').on('click', function(e) {
+      e.preventDefault();
+      $('.reset-password .modal-dialog .form-error-message').html('');
+      const form = $(this).closest('form');
+      $(form).addClass('loading');
+      $.ajax({
+        type: "POST",
+        url: form.attr('action'),
+        data: form.serialize(),
+        success: function(response) {
+          $('.reset-password .modal-dialog').append(response);
+          $('.reset-password .modal-dialog .modal-content:not(.success)').addClass('d-none');
+          $('.modal-dialog input.form-control').removeClass('is-invalid');
+          $(form).removeClass('loading');
+        },
+        error: function(error) {
+          $('.reset-password .modal-dialog input.form-control').addClass('is-invalid');
+          $('.modal-dialog .form-errors .form-error-message').text($($.parseHTML(error.responseText)[1]).find('.form-errors ul li').text());
+          $(form).removeClass('loading');
+        }
+      })
+    });
+
+    $('#resetPasswordModal').on('hide.bs.modal', function (e) {
+      $('.reset-password .modal-dialog input.form-control').removeClass('is-invalid');
+      $('.reset-password .modal-dialog form').removeClass('loading');
+      $('.reset-password .modal-dialog form input').val('');
+      $('.reset-password .modal-dialog .form-error-message').html('');
+    })
+  }
 }
 
 /**

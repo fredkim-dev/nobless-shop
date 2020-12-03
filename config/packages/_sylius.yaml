@@ -244,6 +244,7 @@ sylius_user:
             user:
                 classes:
                     model: App\Entity\User\ShopUser
+                    controller: App\Controller\Shop\UserController
         oauth:
             user:
                 classes:

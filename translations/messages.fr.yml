@@ -36,8 +36,14 @@ sylius:
         view_cart: Voir le panier
         edit_cart: Modifier le panier
         forgot_password_title: J'ai oublié mon mot de passe
-        set_a_new_password_for_your_account: Veuillez entrer votre adresse mail pour recevoir le lien de réinitialisation du mot de passe
+        set_a_new_password_for_your_account_1: Veuillez saisir l'adresse mail associée à votre compte.
+        set_a_new_password_for_your_account_2: Vous recevrez à cette adresse un lien vous permettant de réinitialiser votre mot de passe.
         reset_password: Réinitialiser mon mot de passe
+    user:
+        reset_password_request_ok: Votre demande de réinitialisation a bien été prise en compte
+        reset_password_request: Si l'email que vous avez spécifié existe dans notre système, vous recevrez un message avec les instructions pour réinitialiser votre mot de passe.
+        reset_password_not_received_title: Vous n'avez pas reçu cette email ?
+        reset_password_not_received: Nous vous invitons à vérifier que l'email n'a pas été redirigé dans la boite de courriers indésirables (Spam) de votre boite de réception.        
     menu:
         shop:
             account:

@@ -800,6 +800,7 @@ div.taxon-header {
 }
 
 .modal {
+    z-index: 9999999;
     &.reset-password {
         .modal-content {
             border: none;
@@ -810,6 +811,9 @@ div.taxon-header {
             }
             input {
                 width: 100%;
+            }
+            .password-request-success {
+                color: #155724;
             }
         }
     }

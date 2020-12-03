@@ -14,14 +14,12 @@ declare(strict_types=1);
 namespace App\Controller\Shop;
 
 use FOS\RestBundle\View\View;
+use Sylius\Component\Resource\ResourceActions;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
-use Sylius\Bundle\UserBundle\Form\Model\ChangePassword;
 use Sylius\Bundle\UserBundle\Form\Model\PasswordReset;
 use Sylius\Bundle\UserBundle\Form\Model\PasswordResetRequest;
-use Sylius\Bundle\UserBundle\Form\Type\UserChangePasswordType;
 use Sylius\Bundle\UserBundle\Form\Type\UserRequestPasswordResetType;
-use Sylius\Bundle\UserBundle\Form\Type\UserResetPasswordType;
 use Sylius\Bundle\UserBundle\UserEvents;
 use Sylius\Component\User\Model\UserInterface;
 use Sylius\Component\User\Repository\UserRepositoryInterface;
@@ -31,16 +29,10 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Sylius\Component\Resource\Exception\UpdateHandlingException;
 use Webmozart\Assert\Assert;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Sylius\Component\Resource\Exception\UpdateHandlingException;
-use Sylius\Component\Resource\Metadata\MetadataInterface;
-use Sylius\Component\Resource\ResourceActions;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\FormFactoryInterface;
 
 class UserController extends ResourceController
 {
@@ -78,7 +70,9 @@ class UserController extends ResourceController
     
                 try {
                     $this->resourceUpdateHandler->handle($resource, $configuration, $this->manager);
-                    if ($form->get('newPassword')->getData() !== '') {
+                    $newFormPassword = $form->get('newPassword')->getData();
+                    if ($newFormPassword !== null
+                    || (gettype($newFormPassword) == 'string' && trim($newFormPassword) !== '')) {
                         $this->handleChangePassword($request, $configuration, $user, $form->get('newPassword')->getData());
                     }                    
                 } catch (UpdateHandlingException $exception) {
@@ -141,22 +135,68 @@ class UserController extends ResourceController
         return parent::updateAction($request);
     }
 
-    public function changePasswordAction(Request $request): Response
+    public function requestPasswordResetTokenAction(Request $request): Response
     {
-        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        if (!$this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            throw new AccessDeniedException('You have to be registered user to access this section.');
+        if($request->getMethod() === 'GET' && $request->get('loadMethod') === null) {
+            return $this->redirectToRoute('sylius_shop_account_dashboard');
         }
 
-        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        /** @var GeneratorInterface $generator */
+        $generator = $this->container->get(sprintf('sylius.%s.token_generator.password_reset', $this->metadata->getName()));
+        $senderEvent = UserEvents::REQUEST_RESET_PASSWORD_TOKEN;
 
-        $changePassword = new ChangePassword();
-        $formType = $this->getSyliusAttribute($request, 'form', UserChangePasswordType::class);
-        $form = $this->createResourceForm($configuration, $formType, $changePassword);
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        $passwordReset = new PasswordResetRequest();
+        $formType = $this->getSyliusAttribute($request, 'form', UserRequestPasswordResetType::class);
+        $form = $this->createResourceForm($configuration, $formType, $passwordReset);
+        $template = $this->getSyliusAttribute($request, 'template', null);
+        if ($configuration->isHtmlRequest()) {
+            Assert::notNull($template, 'Template is not configured.');
+        }
 
         if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'], true) && $form->handleRequest($request)->isValid()) {
-            return $this->handleChangePassword($request, $configuration, $user, $changePassword->getNewPassword());
+            $userRepository = $this->repository;
+            
+            /** @var UserRepositoryInterface $userRepository */
+            Assert::isInstanceOf($userRepository, UserRepositoryInterface::class);
+
+            $user = $userRepository->findOneByEmail($passwordReset->getEmail());
+            if (null !== $user) {
+                $this->handleResetPasswordRequest($generator, $user, $senderEvent);
+            }
+
+            if (!$configuration->isHtmlRequest()) {
+                return $this->viewHandler->handle($configuration, View::create(null, Response::HTTP_NO_CONTENT));
+            }
+
+            $redirectRoute = $this->getSyliusAttribute($request, 'redirect', null);
+            Assert::notNull($redirectRoute, 'Redirect is not configured.');
+
+            if (is_array($redirectRoute)) {
+                return $this->redirectHandler->redirectToRoute(
+                    $configuration,
+                    $configuration->getParameters()->get('redirect')['route'],
+                    $configuration->getParameters()->get('redirect')['parameters']
+                );
+            }
+            
+            if ($request->isXMLHttpRequest()) {
+                return $this->container->get('templating')->renderResponse(
+                    '@SyliusShop/Account/PasswordReset/success.html.twig'
+                );
+            }
+        }
+        
+        if ($request->isXMLHttpRequest()) {
+            $html = $this->container->get('templating')->renderResponse(
+                $template,
+                [
+                    'form' => $form->createView(),
+                ]
+            );
+
+            return new Response($html, 400);
         }
 
         if (!$configuration->isHtmlRequest()) {
@@ -164,9 +204,28 @@ class UserController extends ResourceController
         }
 
         return $this->container->get('templating')->renderResponse(
-            $configuration->getTemplate('changePassword.html'),
-            ['form' => $form->createView()]
-        );
+            $template,
+            [
+                'form' => $form->createView(),
+            ]
+        );;
+    }
+
+    protected function handleResetPasswordRequest(
+        GeneratorInterface $generator,
+        UserInterface $user,
+        string $senderEvent
+    ): void {
+        $user->setPasswordResetToken($generator->generate());
+        $user->setPasswordRequestedAt(new \DateTime());
+
+        // I have to use doctrine manager directly, because domain manager functions add a flash messages. I can't get rid of them.
+        $manager = $this->container->get('doctrine.orm.default_entity_manager');
+        $manager->persist($user);
+        $manager->flush();
+
+        $dispatcher = $this->container->get('event_dispatcher');
+        $dispatcher->dispatch($senderEvent, new GenericEvent($user));
     }
 
     /**
@@ -190,7 +249,6 @@ class UserController extends ResourceController
         $dispatcher->dispatch(UserEvents::PRE_PASSWORD_CHANGE, new GenericEvent($user));
 
         $this->manager->flush();
-        $this->addTranslatedFlash('success', 'sylius.user.change_password');
 
         $dispatcher->dispatch(UserEvents::POST_PASSWORD_CHANGE, new GenericEvent($user));
 
@@ -209,5 +267,20 @@ class UserController extends ResourceController
         $attributes = $request->attributes->get('_sylius');
 
         return $attributes[$attribute] ?? $default;
+    }
+
+    /**
+     * @param object $object
+     */
+    protected function createResourceForm(
+        RequestConfiguration $configuration,
+        string $type,
+        $object
+    ): FormInterface {
+        if (!$configuration->isHtmlRequest()) {
+            return $this->container->get('form.factory')->createNamed('', $type, $object, ['csrf_protection' => false]);
+        }
+
+        return $this->container->get('form.factory')->create($type, $object);
     }
 }

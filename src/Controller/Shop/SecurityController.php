@@ -116,22 +116,4 @@ class SecurityController extends ResourceController
             'last_error' => $lastError,
         ]);
     }
-
-    public function renderForgottenPasswordAction(Request $request): Response
-    {
-        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        $passwordReset = new PasswordResetRequest();
-        $formType = UserRequestPasswordResetType::class;
-        $form = $this->createResourceForm($configuration, $formType, $passwordReset);
-        
-        $options = $request->attributes->get('_sylius');
-        $template = $options['template'] ?? '@SyliusShop/Account/passwordResetModal.html.twig';
-        $idModal = $options['id_modal'] ?? 'resetPasswordModal';
-
-        return $this->templatingEngine->renderResponse($template, [
-            'form' => $form->createView(),
-            'idModal' => $idModal
-        ]);
-    }
 }
