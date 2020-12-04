@@ -509,6 +509,42 @@ function shareFunctions() {
   }
 }
 
+function cartFunctions() {
+  // Reload Qty
+  $('.reload-qty').on('click', function() {
+    if ($(this).hasClass('mobile')) {
+      $('form.form-to-submit').trigger('submit');
+    } else {
+      $(this).closest('form').trigger('submit');
+    }
+  });
+
+  // Apply coupon code
+  $('.coupon-code-btn').on('click', function() {
+    const coupon = $('.coupon-code').val();
+    $('#sylius_cart_promotionCoupon').val(coupon);
+    $('form.form-to-submit').trigger('submit');
+  });
+
+  $("body").on("keydown", ".coupon-code", function () {
+    $(this).closest('div').removeClass('invalid-code');
+    $('.coupon-error').html('');
+  });
+
+  // Change quantity on mobile
+  $('.mobile-qty').on('change', function() {
+    const newQty = $(this).val();
+    const inputQtyName = $(this).data('input-qty');
+    $('input[name="' + inputQtyName + '"]').val(newQty);
+  });
+
+  if($('.coupon-code-error .form-error-message').html() != undefined) {
+    $('.coupon-input').addClass('invalid-code');
+    $('.coupon-error').html($('.coupon-code-error .form-error-message').html());
+    $('.coupon-code').val($('#sylius_cart_promotionCoupon').val());
+  }
+}
+
 function ordersGridFunctions() {
   // Desktop Accordion
   $('#orderAccordionDesktop').on('hidden.bs.collapse', function(e) {
@@ -571,6 +607,7 @@ function init() {
   formFunctions();
   ordersGridFunctions();
   loginPageFunctions();
+  cartFunctions();
 
   resizeMainContainer();
   if ($(document).width() > 768) {

@@ -1,0 +1,61 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+{% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
+
+{% set product_variant = item.variant %}
+{% set product = item.variant.product %}
+
+<div class="col-12 position-relative card m-0 mb-3 mobile-display">
+    <button type="button"
+            data-js-remove-from-cart-button
+            data-js-remove-from-cart-redirect-url="{{ path('sylius_shop_cart_summary') }}"
+            data-js-remove-from-cart-csrf-token="{{ csrf_token(item.id) }}"
+            data-js-remove-from-cart-api-url="{{ path('sylius_shop_ajax_cart_item_remove', {'id': item.id}) }}"
+            class="btn btn-md btn-link delete-product position-absolute">{{ icons.times() }}</button>
+    <div class="row">
+        <div class="col-3 d-flex align-items-center img-container">
+            {% include '@SyliusShop/Product/_mainImage.html.twig' with {'product': product} %}
+        </div>
+        <div class="col d-flex flex-column justify-content-between py-3">
+            <div>
+                {# Product name #}
+                <h6 class="col-11 p-0"><a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}">{{ item.productName }}</a></h6>
+                
+                {# Quantity #}
+                <div class="col-12 p-0">
+                    {{ 'sylius.ui.quantity'|trans }} : <input type="number" class="form-control qty mobile-qty" value="{{ item.quantity }}" data-input-qty="sylius_cart[items][{{ key }}][quantity]" /> <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty mobile" />
+                </div>
+
+                {# Variant #}
+                <div class="col-12 p-0">
+                    {% if product.hasOptions() %}
+                        <div>
+                            {% for optionValue in product_variant.optionValues %}
+                                <div data-sylius-option-name="{{ optionValue.name }}">
+                                    {{ 'sylius.ui.size'|trans }} : {{ optionValue.value }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% elseif item.variantName is not null %}
+                        <div>{{ 'sylius.ui.size'|trans }} : {{ item.variantName }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div>
+                    {{ 'sylius.ui.total'|trans }} : {{ money.convertAndFormat(item.subtotal) }}
+            </div>
+        </div>
+    </div>
+    {#<td class="text-center">
+        {% if item.unitPrice != item.discountedUnitPrice %}
+            <small><s>{{ money.convertAndFormat(item.unitPrice) }}</s></small>
+        {% endif %}
+        <span>{{ money.convertAndFormat(item.discountedUnitPrice) }}</span>
+    </td>
+    <td class="text-center">
+        <span>{{ form_widget(form.quantity) }}</span>
+    </td>
+    <td class="text-right">
+        <span>{{ money.convertAndFormat(item.subtotal) }}</span>
+    </td>#}
+</div>

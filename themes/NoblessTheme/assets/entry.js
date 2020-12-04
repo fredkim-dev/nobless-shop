@@ -28,6 +28,7 @@ import './media/icon-de.png';
 import './media/icon-it.png';
 import './media/icon-es.png';
 import './media/icon-gb.png';
+import './media/reload.png';
 
 window.onload = init;
 window.onresize = resizeContent;

@@ -808,6 +808,12 @@ div.taxon-header {
             .modal-header {
                 border: none;
                 border-radius: 0;
+                .modal-title {
+                    font-size: 1.1rem;
+                }
+                .modal-subtitle {
+                    font-size: 0.8rem;
+                }
             }
             input {
                 width: 100%;
@@ -815,6 +821,94 @@ div.taxon-header {
             .password-request-success {
                 color: #155724;
             }
+        }
+    }
+}
+
+/*=============*/
+/* CART PAGE  */
+/*=============*/
+#cartPage {
+    .card {
+        border-radius: 0;
+        border: 1px solid var(--gray);
+        input.qty {
+            &.form-control {
+                border: none;
+                border-bottom: 1px solid #495057;
+                width: 30%;
+                padding: 0;
+                display: inline-block;
+                height: initial;
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+        }
+        .reload-icon {
+            width: 34px;
+            height: 24px;
+            padding: 0 5px;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        .btn.delete-product {
+            right: 5px;
+            top:5px;
+        }
+        &.totals {
+            border: 2px solid #271513;
+        }
+        &.mobile-display {
+            input.qty {
+                width: 50px;
+            }
+            .img-container {
+                max-width: unset;
+                width: 90px;
+                margin-right: 7px;
+                img {
+                    max-width: unset;
+                    width: 90px;
+                }
+            }
+        }
+    }
+    .totals {
+        .input-group {
+            border: 1px solid var(--gray);
+            input {
+                .form-control {
+                    &:focus {
+                        box-shadow: none;
+                    }
+                }
+                border: none;
+            }
+            .input-group-text {
+                background: none;
+                border: none;
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+            &.invalid-code {
+                border: 1px solid #dc3545;
+            }
+        }
+        .coupon-error {
+            color: #dc3545;
+            font-size: 80%;
+        }
+
+        .total-separator {
+            border-bottom: 1px dashed #271513;
+            height: 2px;
+        }
+
+        .svg-inline--fa {
+            color: var(--gray);
         }
     }
 }
@@ -1619,6 +1713,11 @@ div.col.slick-slide {
         }
     } 
     
+    .modal.reset-password {
+        .modal-title {
+            font-size: 1rem;
+        }
+    }
 }
 
 @media (max-width: 768px) {
