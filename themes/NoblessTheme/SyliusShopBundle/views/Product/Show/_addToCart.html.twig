@@ -10,7 +10,9 @@
 
         {{ form_start(form, {'action': path('sylius_shop_ajax_cart_add_item', {'productId': product.id}), 'attr': {'id': 'sylius-product-adding-to-cart', 'data-js-add-to-cart': 'form', 'class': 'loadable', 'novalidate': 'novalidate', 'data-redirect': path(configuration.getRedirectRoute('summary'))}}) }}
             {{ form_errors(form) }}
-            <div class="alert alert-danger d-none" data-js-add-to-cart="error"></div>
+            <div class="alert alert-danger my-2 d-none" data-js-add-to-cart="error"></div>
+            <div class="alert alert-danger my-2 d-none empty-product">{{ 'sylius.ui.please_choose_size'|trans }}</div>
+
             {% if not product.simple %}
                 {% if product.variantSelectionMethodChoice %}
                     {% include '@SyliusShop/Product/Show/_variants.html.twig' %}

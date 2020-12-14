@@ -34,6 +34,8 @@ sylius:
         quantity: Quantité
         size: Taille
         sku: Réf
+        choose_size: Choisir sa taille
+        please_choose_size: Veuillez choisir une taille
         view_cart: Voir le panier
         edit_cart: Modifier le panier
         forgot_password_title: J'ai oublié mon mot de passe
@@ -49,11 +51,14 @@ sylius:
         tva_20: TVA 20%
         ttc: (TTC)
         global_amount: Montant global
+        estimate_shipping: Estimation des frais de livraison
+        discount: 'Code PROMO : %s'
         free_shipping: Gratuits
         without_shipping: (hors frais de livraison)
         france_shipping: France
         europe_shipping: Europe
         international_shipping: International
+        invalid_email: Email invalide
     user:
         reset_password_request_ok: Votre demande de réinitialisation a bien été prise en compte
         reset_password_request: Si l'email que vous avez spécifié existe dans notre système, vous recevrez un message avec les instructions pour réinitialiser votre mot de passe.

@@ -4,15 +4,15 @@
             <div class="ml-3">
                 <a id="menuButtonMain" class="show">
                     <span class="open">
-                        <span class="d-block d-lg-none"><i class="fas fa-bars icon"></i></span>
-                        <span class="header-link d-none d-lg-inline-block">Prêt-à-porter</span>
+                        <span class="d-block d-xl-none"><i class="fas fa-bars icon"></i></span>
+                        <span class="header-link d-none d-xl-inline-block">Prêt-à-porter</span>
                     </span>
                     <span class="close">&times</span>
                     <span class="back"><img src="{{ asset('nobless-theme/images/back.png', 'noblessTheme') }}" /></span>
                 </a>
             </div>
             <div class="d-flex align-items-center">
-                <a href="#" class="header-link d-none d-lg-inline-block archives">Archives</a>
+                <a href="#" class="header-link d-none d-xl-inline-block archives">Archives</a>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
 
         {# MENU MOBILE #}
         <b class="screen-overlay"></b>
-        <nav id="navbarMainMobile" class="mobile-offcanvas h-100">            
+        <nav id="navbarMainMobile" class="mobile-offcanvas h-100">
             {{ render(url('sylius_shop_partial_taxon_index_by_code', {'code': 'category', 'template': '@SyliusShop/Taxon/_verticalMenuMobile.html.twig'})) }}
         </nav>
     </div>

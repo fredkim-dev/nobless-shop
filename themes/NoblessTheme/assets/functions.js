@@ -118,17 +118,17 @@ function createCarousel() {
       appendArrows: jQuery('#productGallery').next('.slider-controls'),
       prevArrow: '<div class="div-btn prev"><button type="button" class="slick-prev">Previous</button></div>',
       nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Previous</button></div>',
-      responsive: [ 
-        { 
-          breakpoint: 550, 
+      responsive: [
+        {
+          breakpoint: 550,
           settings: {
             slidesToShow: 1,
             slidesToScroll: 1
-          } 
+          }
         },
-        { 
-          breakpoint: 768, 
-          settings: "unslick" 
+        {
+          breakpoint: 992,
+          settings: "unslick"
         }
       ]
     });
@@ -143,17 +143,17 @@ function createCarousel() {
       appendArrows: jQuery('#productGallery').next('.slider-controls'),
       prevArrow: '<div class="div-btn prev"><button type="button" class="slick-prev">Previous</button></div>',
       nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Previous</button></div>',
-      responsive: [ 
-        { 
-          breakpoint: 550, 
+      responsive: [
+        {
+          breakpoint: 550,
           settings: {
             slidesToShow: 1,
             slidesToScroll: 1
-          } 
+          }
         },
-        { 
-          breakpoint: 768, 
-          settings: "unslick" 
+        {
+          breakpoint: 992,
+          settings: "unslick"
         }
       ]
     };
@@ -176,7 +176,7 @@ function createGalleryDesktop() {
     };
     images.push(image);
   });
-  const heightContent = Math.max( document.body.scrollHeight, document.body.offsetHeight, 
+  const heightContent = Math.max( document.body.scrollHeight, document.body.offsetHeight,
   document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight );
 
   document.querySelectorAll('.fresco-slide').forEach((item, index) => {
@@ -199,7 +199,7 @@ function createGalleryDesktop() {
 /**
  * Fix product description div on top (right column) when scrolling
  */
-function fixProductDescriptionDiv() {
+/*function fixProductDescriptionDiv() {
   if ($('#images-container').height() - $('#product-sticky').height() - $('#headerContainer').height() - 24 >= -($('#images-container').offset().top)) {
     document.getElementById('product-sticky').classList.remove('sticky-bottom');
     document.getElementById('product-sticky').classList.add('sticky-top-custom');
@@ -207,7 +207,7 @@ function fixProductDescriptionDiv() {
     document.getElementById('product-sticky').classList.add('sticky-bottom');
     document.getElementById('product-sticky').classList.remove('sticky-top-custom');
   }
-}
+}*/
 
 function productFunctions() {
   $('.variant-list .variant-name:not(.variant-disabled)').on('click', function(event) {
@@ -224,6 +224,17 @@ function productFunctions() {
   }).on('mouseleave', function() {
     $('.variants-container', this).hide();
   });
+
+  $('#sylius-product-adding-to-cart .btn-primary').on('click', function(e) {
+    e.preventDefault();
+    const addToCartForm = $(this).closest('form');
+    if($('input[name^="sylius_add_to_cart"]:checked').length === 0) {
+      $(addToCartForm).find('.empty-product').removeClass('d-none');
+    } else {
+      $(addToCartForm).find('.empty-product').addClass('d-none');
+      $(addToCartForm).trigger('submit');
+    }
+  })
 }
 
 /**
@@ -250,33 +261,25 @@ function navbarCollapseInit() {
 function megamenuFunctions() {
   // Button hover simulates click on it
   $('#menuButtonMain, #megamenuDropdown').on('mouseenter', function() {
-    if (!$('.dropdown-menu.megamenu').hasClass('show') && $(document).width() > 992) {
-      if ($(document).width() > 1024) {
-        $('#menuButton').trigger('click');
-      } else if ($(document).width() <= 1024) {
-        $('.dropdown-menu.megamenu').addClass('show');
-      }
+    if (!$('.dropdown-menu.megamenu').hasClass('show') && $(document).width() > 1200) {
+      $('#menuButton').trigger('click');
     }
   }).on('mouseleave', function() {
-    if ($('.dropdown-menu.megamenu').hasClass('show') && $(document).width() > 992) {
-      if ($(document).width() > 1024) {
-        $('#menuButton').trigger('click');
-      } else if ($(document).width() <= 1024) {
-        $('.dropdown-menu.megamenu').removeClass('show');
-      }
+    if ($('.dropdown-menu.megamenu').hasClass('show') && $(document).width() > 1200) {
+      $('#menuButton').trigger('click');
     }
   });
 
-  $('#mainContentContainer').on('click', function() {
-    if ($('.dropdown-menu.megamenu').hasClass('show') && $(document).width() > 992) {
+  /*$('#mainContentContainer').on('click', function() {
+    if ($('.dropdown-menu.megamenu').hasClass('show') && $(document).width() > 1200) {
       if ($(document).width() <= 1033) {
         $('.dropdown-menu.megamenu').removeClass('show');
       }
     }
-  });
+  });*/
 
   $('#menuButtonMain').on('click', function() {
-    if ($(document).width() < 992) {
+    if ($(document).width() < 1200) {
       if ($('#navbarMainMobile').hasClass('show')) {
         closeMobileMenu();
       } else {
@@ -329,7 +332,7 @@ function megamenuFunctions() {
 
 function menuIconesFunctions() {
   $('.menu-icones .dropdown').on('show.bs.dropdown', function(e) {
-    if ($(document).width() <= 992) {
+    if ($(document).width() <= 1200) {
       const headerOuterHeight = $('#headerContainer').outerHeight() - $('.header-banner').height();
       const productContainerHeight = $('.cart-dropdown').height() - $('header').height() - $('#cartActions').outerHeight();
       $('.screen-overlay-cart').css('top', headerOuterHeight + 'px');
@@ -341,7 +344,7 @@ function menuIconesFunctions() {
   });
 
   $('.menu-icones .dropdown').on('hidden.bs.dropdown', function(e) {
-    if ($(document).width() <= 992) {
+    if ($(document).width() <= 1200) {
       $(".screen-overlay-cart").removeClass("show");
       $('body').removeClass("offcanvas-active");
     }
@@ -349,7 +352,7 @@ function menuIconesFunctions() {
 }
 
 function resizeMenu(element) {
-  if ($(document).width() > 992) {
+  if ($(document).width() > 1200) {
     closeMobileMenu();
     $('#headerCartItems').css('height', '');
     $(".screen-overlay").removeClass("show");
@@ -368,13 +371,12 @@ function resizeMenu(element) {
 
 function openMobileMenu() {
   var offcanvas_id = $('#menuButton').attr('data-trigger');
-    
   resizeMenu(offcanvas_id);
 
   $(offcanvas_id).addClass("show");
   $('#menuButtonMain').removeClass('show');
   $('.dropdown a.btn-close').addClass('show');
-  
+
   $('body').addClass("offcanvas-active");
   $(".screen-overlay").addClass("show");
 
@@ -416,7 +418,7 @@ function developMobileMenu(divToOpen) {
   }
 }
 
-function formFunctions() {
+function loginFunctions() {
   if($('.login-form') || $('.register-form')) {
     $('.btn-form').on('click', function(e) {
       e.preventDefault();
@@ -463,10 +465,22 @@ function formFunctions() {
       $('.reset-password .modal-dialog .form-error-message').html('');
     })
   }
+
+  /*$('.register-form button').on('click', function(e) {
+    e.preventDefault();
+    const regex = /\S+@\S+\.\S+/;
+    const email = $('.register-form input').val();
+    if (regex.test(email)) {
+      $(e.target).prev('div').find('span.is-invalid').addClass('d-none');
+      $(e.target).closest('form').trigger('submit');
+    } else {
+      $(e.target).prev('div').find('span.is-invalid').removeClass('d-none');
+    }
+  });*/
 }
 
 /**
- * Share function 
+ * Share function
  */
 function shareFunctions() {
   if(document.getElementById('shareDropdown')) {
@@ -493,8 +507,8 @@ function shareFunctions() {
       const copyText = document.getElementById('pageLink');
       $('#copyShare').tooltip('enable');
       navigator.clipboard.writeText(copyText.value)
-        .then(() => { 
-          $('#copyShare').tooltip('show'); 
+        .then(() => {
+          $('#copyShare').tooltip('show');
           setTimeout(function() { $('#copyShare').tooltip('disable'); }, 1500);
         })
         .catch((error) => { console.log(`Copy failed! ${error}`) })
@@ -522,7 +536,12 @@ function cartFunctions() {
   // Apply coupon code
   $('.coupon-code-btn').on('click', function() {
     const coupon = $('.coupon-code').val();
-    $('#sylius_cart_promotionCoupon').val(coupon);
+    if (coupon === '') {
+      $('#sylius_cart_promotionCoupon').val('')
+    } else {
+      $('#sylius_cart_promotionCoupon').val(coupon);
+    }
+
     $('form.form-to-submit').trigger('submit');
   });
 
@@ -594,8 +613,8 @@ function init() {
   $(function () {
     $('[data-toggle="tooltip"]').tooltip();
   });
-  // PREVENT INSIDE CLICK DROPDOWN 
-  $('.dropdown-menu').on("click.bs.dropdown", function (e) {   
+  // PREVENT INSIDE CLICK DROPDOWN
+  $('.dropdown-menu').on("click.bs.dropdown", function (e) {
     e.stopImmediatePropagation();
   });
   shareFunctions();
@@ -604,7 +623,7 @@ function init() {
   megamenuFunctions();
   menuIconesFunctions();
 
-  formFunctions();
+  loginFunctions();
   ordersGridFunctions();
   loginPageFunctions();
   cartFunctions();
@@ -614,12 +633,12 @@ function init() {
     createGalleryDesktop();
   }
   replaceCarouselArrow();
-  if (document.getElementById('mainContentContainer') && document.getElementById('product-info')) {
+  /*if (document.getElementById('mainContentContainer') && document.getElementById('product-info')) {
     document.getElementById('mainContentContainer').onscroll = fixProductDescriptionDiv;
     document.getElementById('product-info').onscroll = fixProductDescriptionDiv;
-  }
+  }*/
   // Show mobile menu after page is loaded
   $('.mobile-offcanvas').show();
 }
 
-export { init, fixProductDescriptionDiv, resizeContent };
+export { init, resizeContent };

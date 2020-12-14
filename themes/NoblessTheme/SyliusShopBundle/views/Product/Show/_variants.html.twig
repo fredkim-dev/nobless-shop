@@ -1,36 +1,9 @@
 {% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
 
-{#<table class="table" id="sylius-product-variants">
-    <thead class="">
-        <tr>
-            <th class="border-0 h6">{{ 'sylius.ui.variant'|trans }}</th>
-            <th class="border-0 h6">{{ 'sylius.ui.price'|trans }}</th>
-            <th class="border-0 h6"></th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for key, variant in product.variants %}
-        <tr>
-            <td>
-                {{ variant.name }}
-                {% if product.hasOptions() %}
-                    <span class="text-muted">|</span>
-                    {% for optionValue in variant.optionValues %}
-                        <span class="pr-1">{{ optionValue.value }}</span>
-                    {% endfor %}
-                {% endif %}
-            </td>
-            <td data-js-product-variant-price>{{ money.calculatePrice(variant) }}</td>
-            <td class="text-right">{{ form_widget(form.cartItem.variant[key], {'label': false}) }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>#}
-
 <div class="row">
     <div class="variant-list col-12 col-xl-9">
         <div class="form-group d-flex flex-column">
-            <label class="variant-label required">{#{{ 'sylius.ui.details'|trans }}#}Choisir sa taille</label>
+            <label class="variant-label required">{{ 'sylius.ui.choose_size'|trans }}</label>
             <div class="container-fluid col-12 p-0 text-left">
                 {% for key, variant in product.variants %}
                     <label for="sylius_add_to_cart_cartItem_variant_{{ key }}" class="variant-name{% if variant.onHand == 0 %} variant-disabled{% endif %}">
@@ -41,7 +14,7 @@
                             {% endif %}
                         {% endfor %}
                     </label>
-                    <input type="radio" id="sylius_add_to_cart_cartItem_variant_{{ key }}" name="sylius_add_to_cart[cartItem][variant]" required="required" class="form-check-input" value="{{ variant.code }}" {% if variant.onHand == 0 %}disabled{% endif %}>
+                    <input type="radio" id="sylius_add_to_cart_cartItem_variant_{{ key }}" name="sylius_add_to_cart[cartItem][variant]" required="required" class="form-check-input" value="{{ variant.code }}" {% if variant.onHand == 0 %}disabled{% endif %}/>
                 {% endfor %}
             </div>
         </div>

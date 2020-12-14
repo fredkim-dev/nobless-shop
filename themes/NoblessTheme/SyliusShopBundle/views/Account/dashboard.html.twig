@@ -3,6 +3,10 @@
 {% import '@SyliusShop/Common/Macro/headers.html.twig' as headers %}
 {% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
 
+{% block title %}
+    {{ 'sylius.menu.shop.account.dashboard'|trans }} | {{ parent() }}
+{% endblock %}
+
 {% block breadcrumb %}
     <nav>
         <ol class="breadcrumb">

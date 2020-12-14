@@ -1,7 +1,7 @@
 {% import '@SyliusUi/Macro/flags.html.twig' as flags %}
 
 {% if locales|length > 1 %}
-    <div class="btn-group dropdown d-none d-lg-inline-block">
+    <div class="btn-group dropdown d-none d-xl-inline-block">
         <a class="dropdown-toggle dropdown-icon" data-toggle="dropdown">
             {#{{ flags.fromLocaleCode(sylius.localeCode) }}#}
             {% if sylius.localeCode|sylius_locale_country != '' %}

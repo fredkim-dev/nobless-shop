@@ -1,7 +1,14 @@
 {% extends '@SyliusShop/layout.html.twig' %}
 
+{% block title %}
+    {{ render(url('sylius_shop_partial_taxon_show_by_slug', {
+        'slug': app.request.attributes.get('slug'),
+        'template': '@SyliusShop/Taxon/_title.html.twig'
+    })) }} | {{ parent() }}
+{% endblock %}
+
 {% block content %}
-    
+
 <div class="row m-0">
     {% include '@SyliusShop/Product/Index/_header.html.twig' %}
     <div class="col-12">

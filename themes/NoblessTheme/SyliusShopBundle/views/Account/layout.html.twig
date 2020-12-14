@@ -1,6 +1,6 @@
 {% extends '@SyliusShop/layout.html.twig' %}
 
-{% block content %}    
+{% block content %}
     <div id="accountPage" class="row col-12 col-lg-11 col-xl-10 mx-auto">
         <div class="col-12 text-center mb-3 mb-md-5">
             <h1>{{ 'sylius.ui.my_account'|trans }}</h1>
@@ -17,11 +17,11 @@
                 <div id="openAccountMenu" class="p-2 d-inline-block">
                     <span class="pr-2">{{ 'sylius.ui.menu'|trans }}</span>
                     <i class="fas fa-bars icon"></i>
-                </div>        
+                </div>
             </div>
 
             {{ sonata_block_render_event('sylius.shop.account.layout.after_menu') }}
-            
+
             {% block flashes %}
                 {{ parent() }}
             {% endblock %}
@@ -35,5 +35,5 @@
             {{ sonata_block_render_event('sylius.shop.account.layout.after_subcontent') }}
         </div>
     </div>
-    
+
 {% endblock %}

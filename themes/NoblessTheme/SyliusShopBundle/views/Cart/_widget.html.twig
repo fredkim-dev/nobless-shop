@@ -7,6 +7,8 @@
     {% set cartCount = cartCount + item.quantity %}
 {% endfor %}
 
+{% set itemsSubtotal = sylius_order_items_subtotal(cart) %}
+{% set taxIncluded = sylius_order_tax_included(cart) %}
 
 <div class="btn-group dropdown cart-btn">
     <a class="dropdown-toggle dropdown-icon position-relative" data-toggle="dropdown" href="#">
@@ -36,7 +38,7 @@
                 <div id="cartActions">
                     <div class="d-flex flex-row justify-content-between mt-2 mx-3">
                         <span class="item-title">{{ 'sylius.ui.subtotal'|trans }}</span>
-                        <span>{{ money.convertAndFormat(cart.itemsTotal) }}</span>
+                        <span>{{ money.convertAndFormat(itemsSubtotal) }}</span>
                     </div>
 
                     <div class="p-3">

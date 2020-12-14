@@ -1,17 +1,19 @@
 {% extends '@SyliusShop/layout.html.twig' %}
 
+{% block title %}{{ product.name }} | {{ parent() }}{% endblock %}
+
 {% block content %}
 
 <div class="row col-xl-10 p-0 p-md-auto m-0 mx-sm-3 mx-xl-auto position-relative">
-    <div id="images-container" class="col-12 col-xl-8 mb-5">
-        <div class="p-0 d-block d-sm-none">
+    <div id="images-container" class="col-12 col-md-6 col-xl-8 mb-3">
+        <div class="p-0 px-sm-3 d-block d-lg-none">
             {{ sonata_block_render_event('sylius.shop.product.show.before_images', {'product': product}) }}
 
             {% include '@SyliusShop/Product/Show/_images_mobile.html.twig' %}
 
             {{ sonata_block_render_event('sylius.shop.product.show.after_images', {'product': product}) }}
         </div>
-        <div class="pr-3 d-none d-sm-block">
+        <div class="pr-3 d-none d-lg-block">
             {{ sonata_block_render_event('sylius.shop.product.show.before_images', {'product': product}) }}
 
             {% include '@SyliusShop/Product/Show/_images.html.twig' %}
@@ -19,8 +21,8 @@
             {{ sonata_block_render_event('sylius.shop.product.show.after_images', {'product': product}) }}
         </div>
     </div>
-    <div id="product-info" class="col-12 col-xl-4 position-relative p-0">
-        <div id="product-sticky" class="col-12 px-15 p-xl-0 sticky-top-custom">
+    <div id="product-info" class="col-12 col-md-6 col-xl-4 position-relative p-1 p-xl-0 mb-1">
+        <div id="product-sticky" class="col-12 px-3 pl-sm-2 pr-sm-4 p-xl-0 sticky-top-custom">
             {% include '@SyliusShop/Product/Show/_header.html.twig' %}
 
             {{ sonata_block_render_event('sylius.shop.product.show.after_product_header', {'product': product}) }}
@@ -41,7 +43,7 @@
                 {% include '@SyliusShop/Product/Show/_variantsPricing.html.twig' with {'pricing': sylius_product_variant_prices(product, sylius.channel)} %}
             {% endif %}
             {% include '@SyliusShop/Product/Show/_inventory.html.twig' %}
-        
+
             {{ sonata_block_render_event('sylius.shop.product.show.after_add_to_cart', {'product': product}) }}
 
             {# PRODUCT DESCRIPTION #}
@@ -49,7 +51,7 @@
         </div>
     </div>
 </div>
-
+<div class="mb-4"></div>
 {{ sonata_block_render_event('sylius.shop.product.show.before_associations', {'product': product}) }}
 <div id="last-products">
 {% include '@SyliusShop/Product/Show/_associations.html.twig' %}

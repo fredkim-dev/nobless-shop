@@ -4,6 +4,10 @@
 
 {% import '@SyliusShop/Common/Macro/headers.html.twig' as headers %}
 
+{% block title %}
+    {{ 'sylius.menu.shop.account.personal_information'|trans }} | {{ parent() }}
+{% endblock %}
+
 {% block subcontent %}
     <div class="col-12 mt-5">
         {{ form_start(form, {'action': path('sylius_shop_account_profile_update'), 'attr': {'class': 'loadable', 'novalidate': 'novalidate'}}) }}

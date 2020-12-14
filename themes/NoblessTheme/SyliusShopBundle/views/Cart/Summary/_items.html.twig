@@ -1,5 +1,5 @@
 
-{{ form_start(form, {'action': path('sylius_shop_cart_save'), 'attr': {'class': 'loadable form-to-submit', 'novalidate': 'novalidate'}}) }}
+{{ form_start(form, {'action': path('sylius_shop_cart_save'), 'attr': {'class': 'loadable form-to-submit cart-items', 'novalidate': 'novalidate'}}) }}
     {{ form_errors(form) }}
     <input type="hidden" name="_method" value="PATCH"/>
 

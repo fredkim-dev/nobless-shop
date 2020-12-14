@@ -4,6 +4,10 @@
 {% import '@SyliusShop/Common/Macro/headers.html.twig' as headers %}
 {% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
 
+{% block title %}
+    {{ 'sylius.menu.shop.account.address_book'|trans }} | {{ parent() }}
+{% endblock %}
+
 {% block subcontent %}
     <div id="addressPage" class="col-12">
         {% if addresses|length > 0 %}

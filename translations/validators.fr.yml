@@ -5,3 +5,5 @@ sylius:
                 not_blank: Veuillez saisir votre date de naissance
             password:
                 min_length: Votre mot de passe doit faire 6 caractères au minimum
+    cart_item:
+        not_available: L'article n'est pas en stock

@@ -4,7 +4,7 @@
 {% set product_variant = item.variant %}
 {% set product = item.variant.product %}
 
-<div class="col-12 position-relative card m-0 mb-3">
+<div class="col-12 position-relative card m-0 mb-1">
     <button type="button"
             data-js-remove-from-cart-button
             data-js-remove-from-cart-redirect-url="{{ path('sylius_shop_cart_summary') }}"
@@ -12,10 +12,10 @@
             data-js-remove-from-cart-api-url="{{ path('sylius_shop_ajax_cart_item_remove', {'id': item.id}) }}"
             class="btn btn-md btn-link delete-product position-absolute">{{ icons.times() }}</button>
     <div class="row">
-        <div class="col-3 d-flex align-items-center">
+        <div class="col-4 d-flex align-items-center p-1 p-lg-3">
             {% include '@SyliusShop/Product/_mainImage.html.twig' with {'product': product} %}
         </div>
-        <div class="col d-flex flex-column justify-content-center py-3">
+        <div class="col d-flex flex-column justify-content-center pl-0 py-3">
             {# Product name #}
             <h6><a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}">{{ item.productName }}</a></h6>
 
@@ -27,12 +27,12 @@
 
             <div class="row mt-4 p-2">
                 {% set variantClass = "" %}
-                {% set paddingClass = "p-0" %}
+                {% set paddingClass = "p-md-2 p-xxxl-0" %}
                 {% if not product.hasOptions() and item.variantName is null %}
                     {% set variantClass = "d-none" %}
                     {% set paddingClass = "px-2" %}
                 {% endif %}
-                <div class="col-3 px-2 {{ variantClass }}">
+                <div class="col-md-12 col-xxxl-4 px-2 {{ variantClass }}">
                     {% if product.hasOptions() %}
                         <div>
                             {% for optionValue in product_variant.optionValues %}
@@ -46,11 +46,11 @@
                     {% endif %}
                 </div>
 
-                <div class="col {{ paddingClass }}">
+                <div class="col-sm-12 col-lg-6 col-xl {{ paddingClass }}">
                     {{ 'sylius.ui.quantity'|trans }} : {{ form_widget(form.quantity, {'attr': {'class': 'qty' }}) }} <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty" />
                 </div>
 
-                <div class="col-4">
+                <div class="col-sm-12 col-md-5 col-lg-6 col-xl-4 px-2 p-lg-2 py-xxl-0">
                     {{ 'sylius.ui.total'|trans }} : {{ money.convertAndFormat(item.subtotal) }}
                 </div>
             </div>
@@ -68,4 +68,7 @@
     <td class="text-right">
         <span>{{ money.convertAndFormat(item.subtotal) }}</span>
     </td>#}
+    {% if loop.index != cart.items|length %}
+        <span class="cart-item-separator"></span>
+    {% endif %}
 </div>

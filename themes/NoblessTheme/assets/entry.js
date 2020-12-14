@@ -2,7 +2,7 @@
 import 'popper.js/dist/popper.min';
 import '@fortawesome/fontawesome-free/js/all';
 import 'bootstrap/dist/js/bootstrap.min';
-import { init, fixProductDescriptionDiv, resizeContent } from './functions';
+import { init, resizeContent } from './functions';
 import './indexBootstrapTheme';
 import 'slick-carousel/slick/slick.min';
 
@@ -27,10 +27,9 @@ import './media/icon-fr.png';
 import './media/icon-de.png';
 import './media/icon-it.png';
 import './media/icon-es.png';
-import './media/icon-gb.png';
+import './media/icon-en.png';
 import './media/reload.png';
 
 window.onload = init;
 window.onresize = resizeContent;
-window.onscroll = fixProductDescriptionDiv;
 

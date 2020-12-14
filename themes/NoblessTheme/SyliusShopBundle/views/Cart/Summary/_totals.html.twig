@@ -4,13 +4,18 @@
 {% set taxIncluded = sylius_order_tax_included(cart) %}
 {% set taxExcluded = sylius_order_tax_excluded(cart) %}
 
-<div class="totals card mb-3">
+{% set subtotal = itemsSubtotal %}
+{% if cart.orderPromotionTotal %}
+    {% set subtotal = itemsSubtotal + cart.orderPromotionTotal %}
+{% endif %}
+
+<div class="totals card mb-3 position-sticky">
     {{ sonata_block_render_event('sylius.shop.cart.summary.totals', {'cart': cart}) }}
 
-    <div class="d-flex flex-column py-3 px-4 col-11 col-md-10 col-lg-12 mx-auto">
+    <div class="d-flex flex-column py-3 px-0 px-lg-4 col-11 col-md-10 col-lg-12 mx-auto">
         <div class="d-flex justify-content-between">
             <span>{{ 'sylius.ui.items_total'|trans }}</span>
-            <span>{{ money.convertAndFormat(itemsSubtotal - taxIncluded) }}</span>
+            <span>{{ money.convertAndFormat(subtotal - taxIncluded) }}</span>
         </div>
 
         <div class="d-flex justify-content-between">
@@ -31,11 +36,41 @@
                 {{ 'sylius.ui.global_amount'|trans }}<br>
                 <small>{{ 'sylius.ui.without_shipping'|trans }}</small>
             </span>
-            <span>{{ money.convertAndFormat(itemsSubtotal) }}</span>
+            <div>
+                {% if cart.orderPromotionTotal %}
+                    <span class="mr-2 position-relative subtotal-strike"><span></span>{{ money.convertAndFormat(itemsSubtotal) }}</span>
+                {% endif %}
+                <span>{{ money.convertAndFormat(subtotal) }}</span>
+            </div>
         </div>
 
         <div class="total-separator w-75 mx-auto mt-3 mb-2"></div>
 
+        <div class="d-flex flex-column">
+            <span class="text-muted mb-2">{{ 'Les codes promo ne peuvent pas être combinés' }}</span>
+            <div class="coupon-input input-group mb-2 mr-sm-2">
+                <input type="text" placeholder="Ajouter un code promo" class="coupon-code form-control w-100" />
+                <div class="input-group-append">
+                    <button class="btn input-group-text coupon-code-btn"><i class="fas fa-long-arrow-alt-right"></i></button>
+                </div>
+            </div>
+            <span class="coupon-error px-2"></span>
+        </div>
+
+        {% if cart.orderPromotionTotal %}
+            <div class="d-flex justify-content-between">
+                {% set couponCode = '' %}
+                {% if cart.promotionCoupon != null %}
+                    {% set couponCode = cart.promotionCoupon.code %}
+                {% endif %}
+                <span>{{ 'sylius.ui.discount'|trans({'%s': couponCode}) }}</span>
+                <span class="promotion-amount">{{ money.convertAndFormat(cart.orderPromotionTotal) }}</span>
+            </div>
+        {% endif %}
+
+        <div class="total-separator w-75 mx-auto mt-3 mb-2"></div>
+
+        <div class="col-12 p-0 mb-2 text-muted">{{ 'sylius.ui.estimate_shipping'|trans }}</div>
         <div class="d-flex justify-content-between">
             <span class="col-9 p-0">
                 <select class="form-control mb-1">
@@ -68,32 +103,15 @@
         </div>
 
         <div>
-            <span class="text-muted">Livraison standard 5,90€</span> (offerte dès 80€)<br>
-            <span class="text-muted">Livraison express 14,90€</span> (offerte dès 300€)<br>
-        </div>
-
-        <div class="total-separator w-75 mx-auto mt-3 mb-2"></div>
-
-        <div class="d-flex flex-column">
-            <span class="text-muted mb-2">{{ 'Les codes promo ne peuvent pas être combinés' }}</span>
-            <div class="coupon-input input-group mb-2 mr-sm-2">
-                <input type="text" placeholder="Ajouter un code promo" class="coupon-code form-control w-100" />
-                <div class="input-group-append">
-                    <button class="btn input-group-text coupon-code-btn"><i class="fas fa-long-arrow-alt-right"></i></button>
-                </div>
+            <div class="d-flex flex-row flex-md-column flex-lg-row">
+                <span class="text-muted mr-1">Livraison standard 5,90€</span> (offerte dès 80€)
             </div>
-            <span class="coupon-error px-2"></span>
+            <div class="d-flex flex-row flex-md-column flex-lg-row">
+                <span class="text-muted mr-1">Livraison express 14,90€</span> (offerte dès 300€)
+            </div>
         </div>
-
-        {% if cart.orderPromotionTotal %}
-        <div class="d-flex justify-content-between">
-            <span>{{ 'sylius.ui.discount'|trans }}</span>
-            <span>{{ money.convertAndFormat(cart.orderPromotionTotal) }}</span>
-        </div>
-        {% endif %}
 
         <div class="total-separator w-75 mx-auto mt-3 mb-2"></div>
-        
 
         <div class="d-flex justify-content-between mt-3">
             <span>
