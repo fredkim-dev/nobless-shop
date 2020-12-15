@@ -9,38 +9,43 @@
 {% block title %}{{ header|trans }} | {{ parent() }}{% endblock %}
 
 {% block content %}
+
     <div id="cartPage" class="row col-12 col-lg-11 col-xl-10 mx-auto mx-3 mb-3">
         {% if not cart.empty %}
-
-                <div class="col-12 p-0">
-                    {% include '@SyliusShop/Cart/Summary/_header.html.twig' %}
-
-                    {{ sonata_block_render_event('sylius.shop.cart.summary.after_content_header', {'cart': cart}) }}
+            {% block flashes %}
+                <div class="col-12">
+                    {{ parent() }}
                 </div>
-                {# FORM DESKTOP #}
-                <div class="col-7 mb-3 d-none d-md-block p-0">
-                    {{ sonata_block_render_event('sylius.shop.cart.summary.before_items', {'cart': cart}) }}
+            {% endblock %}
 
-                    {% include '@SyliusShop/Cart/Summary/_items.html.twig' %}
+            <div class="col-12 p-0">
+                {% include '@SyliusShop/Cart/Summary/_header.html.twig' %}
 
-                    {{ sonata_block_render_event('sylius.shop.cart.summary.after_items', {'cart': cart}) }}
-                </div>
-                {# FORM MOBILE #}
-                <div class="col-12 mb-3 d-block d-md-none">
-                    {{ sonata_block_render_event('sylius.shop.cart.summary.before_items', {'cart': cart}) }}
+                {{ sonata_block_render_event('sylius.shop.cart.summary.after_content_header', {'cart': cart}) }}
+            </div>
+            {# FORM DESKTOP #}
+            <div class="col-7 mb-3 d-none d-md-block p-0">
+                {{ sonata_block_render_event('sylius.shop.cart.summary.before_items', {'cart': cart}) }}
 
-                    {% include '@SyliusShop/Cart/Summary/Mobile/_items.html.twig' %}
+                {% include '@SyliusShop/Cart/Summary/_items.html.twig' %}
 
-                    {{ sonata_block_render_event('sylius.shop.cart.summary.after_items', {'cart': cart}) }}
-                </div>
-                <div class="col-12 col-md-5 position-relative">
-                    {{ sonata_block_render_event('sylius.shop.cart.summary.before_totals', {'cart': cart}) }}
+                {{ sonata_block_render_event('sylius.shop.cart.summary.after_items', {'cart': cart}) }}
+            </div>
+            {# FORM MOBILE #}
+            <div class="col-12 mb-3 d-block d-md-none">
+                {{ sonata_block_render_event('sylius.shop.cart.summary.before_items', {'cart': cart}) }}
 
-                    {% include '@SyliusShop/Cart/Summary/_totals.html.twig' %}
+                {% include '@SyliusShop/Cart/Summary/Mobile/_items.html.twig' %}
 
-                    {{ sonata_block_render_event('sylius.shop.cart.summary.after_totals', {'cart': cart}) }}
-                </div>
+                {{ sonata_block_render_event('sylius.shop.cart.summary.after_items', {'cart': cart}) }}
+            </div>
+            <div class="col-12 col-md-5 position-relative">
+                {{ sonata_block_render_event('sylius.shop.cart.summary.before_totals', {'cart': cart}) }}
 
+                {% include '@SyliusShop/Cart/Summary/_totals.html.twig' %}
+
+                {{ sonata_block_render_event('sylius.shop.cart.summary.after_totals', {'cart': cart}) }}
+            </div>
         {% else %}
             <div class="col-12">
                 {{ messages.info('sylius.ui.your_cart_is_empty') }}
