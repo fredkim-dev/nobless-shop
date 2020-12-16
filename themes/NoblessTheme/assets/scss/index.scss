@@ -861,6 +861,9 @@ div#mainContentContainer {
     }
 }
 
+#completeYourStyle {
+}
+
 /*==============*/
 /* PRODUCT LIST */
 /*==============*/
@@ -1356,22 +1359,25 @@ div.taxon-header {
     }
 }
 
+.complete-your-style.slider-controls,
 .latest-products.slider-controls,
 .latest-bundles.slider-controls {
     position:absolute;
     width: 100%;
     margin: 0 auto;
     top: calc(40%);
+    right: 0px;
+    left: 14px;
     .div-btn {
         width: 38px;
         height: 34px;
         position: absolute;
         z-index: 9999;
         &.next-btn {
-            right: 0;
+            right: 15px;
         }
         &.prev-btn {
-            left: 0;
+            left: 15px;
         }
         button {
             width: 38px;
@@ -1405,7 +1411,9 @@ div {
 /*====================================*/
 /* CAROUSEL LATEST PRODUCTS / BUNDLES */
 /*====================================*/
-#carouselLatestProducts, #carouselLatestBundles {
+#carouselLatestProducts,
+#carouselLatestBundles,
+#carouselCompleteYourStyle {
     h6.product-name {
         font-family: "Open Sans", "Roboto", sans-serif;
         font-size: 1.1rem;
@@ -1500,6 +1508,54 @@ div {
 /*==========================*/
 /* MEDIA QUERY MAX BEHAVIOR */
 /*==========================*/
+@media (max-width: 1600px) {
+    .card-carousel {
+        .card-img-top {
+            .variants-container {
+                div {
+                    .option-value {
+                        font-size: 0.9rem;
+                        .out-of-stock {
+                            &.s, &.l {
+                                width: 47px;
+                                transform: translateY(16px) translateX(8px) rotate(-47deg);
+                                -webkit-transform: translateY(16px) translateX(8px) rotate(-47deg);
+                                -ms-transform: translateY(16px) translateX(8px) rotate(-47deg);
+                                left: -15px;
+                                top: 0;
+                            }
+                            &.m {
+                                width: 51px;
+                                transform: translateY(16px) translateX(7px) rotate(-43deg);
+                                -webkit-transform: translateY(16px) translateX(7px) rotate(-43deg);
+                                -ms-transform: translateY(16px) translateX(7px) rotate(-43deg);
+                                left: -14px;
+                                top: 1px;
+                            }
+                            &.xl {
+                                width: 54px;
+                                transform: translateY(16px) translateX(7px) rotate(-41deg);
+                                -webkit-transform: translateY(16px) translateX(7px) rotate(-41deg);
+                                -ms-transform: translateY(16px) translateX(7px) rotate(-41deg);
+                                left: -14px;
+                                top: 1px;
+                            }
+                            &.xxl {
+                                width: 62px;
+                                transform: translateY(17px) translateX(6px) rotate(-34deg);
+                                -webkit-transform: translateY(17px) translateX(6px) rotate(-34deg);
+                                -ms-transform: translateY(17px) translateX(6px) rotate(-34deg);
+                                left: -12px;
+                                top: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media (max-width: 1440px) {
     div.taxon-header {
         .taxon-header-image {
@@ -1710,6 +1766,27 @@ div {
 
 @media all and (max-width: 992px) {
 
+    .complete-your-style.slider-controls,
+    .latest-products.slider-controls,
+    .latest-bundles.slider-controls {
+        right: unset;
+        left: unset;
+        .div-btn {
+            &.next-btn {
+                right: 10px;
+            }
+
+            &.prev-btn {
+                left: 10px;
+            }
+        }
+    }
+
+    div {
+        &.col.slick-slide {
+            padding: 0;
+        }
+    }
 }
 
 @media (max-width: 768px) {

@@ -59,6 +59,10 @@ sylius:
         europe_shipping: Europe
         international_shipping: International
         invalid_email: Email invalide
+        see_product: Voir le produit
+        newest_products: Nouveautés
+        buy_by_look: Buy By Look
+        complete_your_style: Compléter votre style
     user:
         reset_password_request_ok: Votre demande de réinitialisation a bien été prise en compte
         reset_password_request: Si l'email que vous avez spécifié existe dans notre système, vous recevrez un message avec les instructions pour réinitialiser votre mot de passe.

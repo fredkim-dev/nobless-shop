@@ -1,12 +1,12 @@
-<h3 class="mb-2 ml-2 pl-4 text-uppercase font-weight-bold">{#{{ 'sylius.ui.latest_products'|trans }}#}Nouveautés</h3>
+<h3 class="col-12 col-lg-10 mx-auto mb-2 ml-2 pl-4 text-uppercase font-weight-bold {{ text_center_class }}"><span class="px-3">{{ 'sylius.ui.newest_products'|trans }}</span></h3>
 
 <div class="m-0 m-sm-2 p-sm-2 position-relative">
-    <div id="carouselLatestProducts" class="m-0">
+    <div id="carouselLatestProducts" class="m-0 col-12 col-lg-10 mx-auto">
         {% for index, product in products %}
             <div class="col">
                 {% include '@SyliusShop/Product/_box.html.twig' %}
             </div>
         {% endfor %}
     </div>
-    <div class="row justify-content-center slider-controls latest-products"></div>
+    <div class="row justify-content-center slider-controls latest-products col-12 col-lg-10 mx-auto"></div>
 </div>

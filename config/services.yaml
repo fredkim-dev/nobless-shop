@@ -38,6 +38,10 @@ services:
         class: App\Controller\Shop\HomepageController
         arguments: ['@templating']
 
+    sylius.controller.shop.product:
+        class: App\Controller\Shop\ProductController
+        arguments: [ '@templating' ]
+
     sylius.controller.shop.locale_switch:
         class: App\Controller\Shop\LocaleSwitchController
         arguments: ['@templating', '@sylius.context.locale', '@sylius.locale_provider', '@sylius.shop.locale_switcher']

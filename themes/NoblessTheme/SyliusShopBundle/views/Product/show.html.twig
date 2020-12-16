@@ -53,7 +53,12 @@
 </div>
 <div class="mb-4"></div>
 {{ sonata_block_render_event('sylius.shop.product.show.before_associations', {'product': product}) }}
-<div id="last-products">
-{% include '@SyliusShop/Product/Show/_associations.html.twig' %}
+
+<div id="completeYourStyle">
+    {{ render(url('app_shop_complete_your_style', {'product': product.id})) }}
+</div>
+
+<div id="LastProducts">
+    {% include '@SyliusShop/Product/Show/_associations.html.twig' %}
 </div>
 {% endblock %}

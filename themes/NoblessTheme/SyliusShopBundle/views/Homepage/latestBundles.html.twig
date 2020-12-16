@@ -1,12 +1,12 @@
-<h3 class="mb-2 ml-2 pl-4 text-uppercase font-weight-bold"><a href="{{ path('sylius_shop_product_index', {'slug': 'bundles', '_locale': sylius.localeCode}) }}">{#{{ 'sylius.ui.latest_products'|trans }}#}Buy by look</a> </h3>
+<h3 class="col-12 col-lg-10 mx-auto mb-2 ml-2 px-4 text-uppercase font-weight-bold"><a class="px-3" href="{{ path('sylius_shop_product_index', {'slug': 'bundles', '_locale': sylius.localeCode}) }}">{{ 'sylius.ui.buy_by_look'|trans }}</a> </h3>
 
 <div class="mb-5 m-0 m-sm-2 p-sm-2 position-relative">
-    <div id="carouselLatestBundles" class="m-0">
+    <div id="carouselLatestBundles" class="m-0 col-12 col-lg-10 mx-auto">
         {% for index, product in bundles %}
             <div class="col">
                 {% include '@SyliusShop/Product/_box.html.twig' %}
             </div>
         {% endfor %}
     </div>
-    <div class="row justify-content-center slider-controls latest-bundles"></div>
+    <div class="row justify-content-center slider-controls latest-bundles col-12 col-lg-10"></div>
 </div>

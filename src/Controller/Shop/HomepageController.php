@@ -30,6 +30,7 @@ class HomepageController extends ResourceController
     public function latestProductsAction(Request $request): Response
     {
         $currentLocale = $this->container->get('sylius.context.locale')->getLocaleCode();
+        $textCenterClass = $request->get('is_product') ? 'text-center' : '';
 
         /** @var ArrayCollection $taxons */
         $taxons = $this->container->get('sylius.repository.taxon')
@@ -51,7 +52,8 @@ class HomepageController extends ResourceController
 
         return $this->templatingEngine->renderResponse('@SyliusShop/Homepage/latestProducts.html.twig',
             array(
-                'products' => $productsList
+                'products' => $productsList,
+                'text_center_class' => $textCenterClass
             )
         );
     }

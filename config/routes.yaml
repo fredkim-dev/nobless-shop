@@ -15,3 +15,9 @@ app_shop_latest_bundles:
     methods: [GET]
     defaults:
         _controller: sylius.controller.shop.homepage:latestBundlesAction
+
+app_shop_complete_your_style:
+    path: /product/complete/{product}
+    methods: [ GET ]
+    defaults:
+        _controller: sylius.controller.shop.product:completeYourStyleAction

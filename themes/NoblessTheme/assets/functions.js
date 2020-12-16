@@ -47,7 +47,7 @@ function createCarousel() {
           }
         },
         {
-          breakpoint: 1280,
+          breakpoint: 1200,
           settings: {
             slidesToShow: 3,
             slidesToScroll: 1,
@@ -87,7 +87,7 @@ function createCarousel() {
           }
         },
         {
-          breakpoint: 1280,
+          breakpoint: 1200,
           settings: {
             slidesToShow: 3,
             slidesToScroll: 1,
@@ -162,6 +162,47 @@ function createCarousel() {
       slider.slick(opts);
     }
   }
+
+  if (jQuery('#carouselCompleteYourStyle') && !jQuery('#carouselCompleteYourStyle').hasClass('slick-initialized')) {
+    jQuery('#carouselCompleteYourStyle').slick({
+      infinite: true,
+      speed: 700,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      appendArrows: jQuery('#carouselCompleteYourStyle').next('.slider-controls'),
+      prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
+      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Previous</button></div>',
+      responsive: [
+        {
+          breakpoint: 1920,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            infinite: true
+          }
+        },
+        {
+          breakpoint: 1200,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: true
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
+    $('#carouselCompleteYourStyle').on('setPosition', function(event, slick, currentSlide, nextSlide){
+      replaceCarouselArrow(jQuery('#carouselCompleteYourStyle'));
+    });
+  }
+
 }
 
 /**
@@ -218,7 +259,7 @@ function productFunctions() {
   $('.card-carousel .card-img-top .variants-container').hide();
   $('.card-carousel .card-img-top')
   .on('mouseenter', function() {
-    if ($(document).width() > 1000) {
+    if ($(document).width() > 1440) {
       $('.variants-container', this).show();
     }
   }).on('mouseleave', function() {
