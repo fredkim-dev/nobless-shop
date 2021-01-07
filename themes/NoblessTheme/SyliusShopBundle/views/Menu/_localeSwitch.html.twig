@@ -5,7 +5,12 @@
         <a class="dropdown-toggle dropdown-icon" data-toggle="dropdown">
             {#{{ flags.fromLocaleCode(sylius.localeCode) }}#}
             {% if sylius.localeCode|sylius_locale_country != '' %}
-                <img src="{{ asset('nobless-theme/images/icon-' ~ sylius.localeCode|sylius_locale_country|lower ~ '.png', 'noblessTheme') }}" class="icon" />
+                {% if sylius.localeCode|sylius_locale_country|lower == 'gb' or sylius.localeCode|sylius_locale_country|lower == 'us' %}
+                    {% set countryCode = 'en' %}
+                {% else %}
+                    {% set countryCode = sylius.localeCode|sylius_locale_country|lower %}
+                {% endif %}
+                <img src="{{ asset('nobless-theme/images/icon-' ~ countryCode ~ '.png', 'noblessTheme') }}" class="icon" />
             {% endif %}
         </a>
         <div class="header-dropdown dropdown-menu" style="width:350px">

@@ -18,9 +18,10 @@
     ],
     "require": {
         "php": "^7.2",
+        "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.2",
         "bitbag/cms-plugin": "^2.3",
-        "bitbag/product-bundle-plugin": "dev-master",
+        "bitbag/product-bundle-plugin": "^1.0",
         "friendsofsymfony/ckeditor-bundle": "1.2.0",
         "suncat/mobile-detect-bundle": "^1.1",
         "sylius/sylius": "~1.7",

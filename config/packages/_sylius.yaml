@@ -148,6 +148,7 @@ sylius_product:
             classes:
                 model: App\Entity\Product\Product
                 repository: App\Repository\ProductRepository
+                controller: App\Controller\Admin\ProductController
             translation:
                 classes:
                     model: App\Entity\Product\ProductTranslation
@@ -368,6 +369,9 @@ liip_imagine:
         sylius_shop_product_vertical_thumbnail:
             filters:
                 thumbnail: { size: [500, 637], mode: outbound }
+        sylius_shop_bundle_item_thumbnail:
+            filters:
+                thumbnail: { size: [170, 217], mode: outbound }
         sylius_shop_product_gallery:
             filters:
                 thumbnail: { size: [400, 600], mode: outbound }

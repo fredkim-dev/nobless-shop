@@ -1,5 +1,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+imports:
+    - { resource: services/ }
+
 parameters:
     locale: fr_FR
 
@@ -79,3 +82,11 @@ services:
         class: App\Menu\AccountMenuListener
         tags:
             - { name: kernel.event_listener, event: sylius.menu.shop.account, method: addAccountMenuItems }
+
+    #app.twig.extension.product_bundle_variant_availability:
+    #    class: App\Twig\Extension\ProductBundleVariantAvailability
+    #    arguments: 
+    #        - 'bitbag_sylius_product_bundle.repository.product_bundle_order_item'
+    #        - 'twig'
+    #    tags:
+    #        - { name: twig.extension }

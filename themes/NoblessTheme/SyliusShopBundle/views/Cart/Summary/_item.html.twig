@@ -3,6 +3,7 @@
 
 {% set product_variant = item.variant %}
 {% set product = item.variant.product %}
+{% set prices = product.variants|first.channelPricings|first %}
 
 <div class="col-12 position-relative card m-0 mb-1">
     <button type="button"
@@ -23,34 +24,52 @@
             {% if item.unitPrice != item.discountedUnitPrice %}
                 <small><s>{{ money.convertAndFormat(item.unitPrice) }}</s></small>
             {% endif %}
-            <span>{{ money.convertAndFormat(item.discountedUnitPrice) }}</span>
 
-            <div class="row mt-4 p-2">
+            {% if product.isBundle() %}
+                <div class="d-flex flex-row">
+                    <span class="original-price"><span></span>{{ money.convertAndFormat(prices.originalPrice) }}</span>
+                    <span class="ml-2">{{ money.convertAndFormat(item.discountedUnitPrice) }}</span>
+                </div>
+                <span class="bundle-saving">{{ 'sylius.ui.bundle_saving'|trans }}</span>
+            {% else %}
+                <span>{{ money.convertAndFormat(item.discountedUnitPrice) }}</span>
+            {% endif %}
+
+            <div class="row mt-4 mt-sm-0 p-2">
                 {% set variantClass = "" %}
-                {% set paddingClass = "p-md-2 p-xxxl-0" %}
+                {% set paddingClass = "px-md-2 pt-md-2 pb-md-0 p-xxxl-0" %}
+                {% set totalPaddingClass = "py-xxl-0" %}
                 {% if not product.hasOptions() and item.variantName is null %}
                     {% set variantClass = "d-none" %}
                     {% set paddingClass = "px-2" %}
+                    {% set totalPaddingClass = "py-lg-0" %}
                 {% endif %}
-                <div class="col-md-12 col-xxxl-4 px-2 {{ variantClass }}">
-                    {% if product.hasOptions() %}
-                        <div>
-                            {% for optionValue in product_variant.optionValues %}
-                                <div data-sylius-option-name="{{ optionValue.name }}">
-                                    {{ 'sylius.ui.size'|trans }} : {{ optionValue.value }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% elseif item.variantName is not null %}
-                        <div>{{ 'sylius.ui.size'|trans }} : {{ item.variantName }}</div>
-                    {% endif %}
-                </div>
+
+                {% if not product.isBundle() %}
+                    <div class="col-md-12 col-xxxl-4 px-2 {{ variantClass }}">
+                        {% if product.hasOptions() %}
+                            <div>
+                                {% for optionValue in product_variant.optionValues %}
+                                    <div data-sylius-option-name="{{ optionValue.name }}">
+                                        {{ 'sylius.ui.size'|trans }} : {{ optionValue.value }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% elseif item.variantName is not null %}
+                            <div>{{ 'sylius.ui.size'|trans }} : {{ item.variantName }}</div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="col-12 p-2">
+                        {{ bitbag_render_product_bundle_order_items(item) }}
+                    </div>
+                {% endif %}
 
                 <div class="col-sm-12 col-lg-6 col-xl {{ paddingClass }}">
                     {{ 'sylius.ui.quantity'|trans }} : {{ form_widget(form.quantity, {'attr': {'class': 'qty' }}) }} <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty" />
                 </div>
 
-                <div class="col-sm-12 col-md-5 col-lg-6 col-xl-4 px-2 p-lg-2 py-xxl-0">
+                <div class="col-sm-12 col-md-5 col-lg-6 col-xl-4 p-2 px-lg-2 {{ totalPaddingClass }}">
                     {{ 'sylius.ui.total'|trans }} : {{ money.convertAndFormat(item.subtotal) }}
                 </div>
             </div>

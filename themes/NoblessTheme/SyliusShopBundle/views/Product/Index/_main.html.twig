@@ -20,7 +20,7 @@
 {% if resources.data|length > 0 %}
     <div class="row">
         {% for product in resources.data %}
-            <div class="col-6 col-sm-4 col-md-3 mb-3">
+            <div class="col-6 col-sm-4 col-md-3 mb-3 px-2">
                 {% include '@SyliusShop/Product/_box.html.twig' %}
             </div>
         {% endfor %}

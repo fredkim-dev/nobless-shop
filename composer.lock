@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cf08f5dd49c67ca9c528be94e04f55d4",
+    "content-hash": "0988da9f82a0604ca79eb8a7ed9343b8",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -182,21 +182,21 @@
         },
         {
             "name": "bitbag/product-bundle-plugin",
-            "version": "dev-master",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BitBagCommerce/SyliusProductBundlePlugin.git",
-                "reference": "e3748092b68c8100fc1140ab1443c658942a130c"
+                "reference": "8153b31682f94f39ebfa3fc68d4cf3fd8c37327d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BitBagCommerce/SyliusProductBundlePlugin/zipball/e3748092b68c8100fc1140ab1443c658942a130c",
-                "reference": "e3748092b68c8100fc1140ab1443c658942a130c",
+                "url": "https://api.github.com/repos/BitBagCommerce/SyliusProductBundlePlugin/zipball/8153b31682f94f39ebfa3fc68d4cf3fd8c37327d",
+                "reference": "8153b31682f94f39ebfa3fc68d4cf3fd8c37327d",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2",
-                "sylius/sylius": "^1.4",
+                "php": "^7.3",
+                "sylius/sylius": "^1.7",
                 "symfony/messenger": "^4.3"
             },
             "conflict": {
@@ -207,7 +207,7 @@
                 "symfony/symfony": "4.1.8"
             },
             "require-dev": {
-                "behat/behat": "^3.4",
+                "behat/behat": "^3.6.1",
                 "behat/mink": "^1.7@dev",
                 "behat/mink-browserkit-driver": "^1.3",
                 "behat/mink-extension": "^2.2",
@@ -217,19 +217,19 @@
                 "friends-of-behat/symfony-extension": "^2.0",
                 "friends-of-behat/variadic-extension": "^1.1",
                 "lakion/mink-debug-extension": "^1.2.3",
-                "phpspec/phpspec": "^5.0",
-                "phpstan/phpstan-doctrine": "^0.10",
-                "phpstan/phpstan-shim": "^0.10",
-                "phpstan/phpstan-webmozart-assert": "^0.10",
-                "phpunit/phpunit": "^6.5",
-                "sensiolabs/security-checker": "^5.0",
-                "sylius-labs/coding-standard": "^2.0",
-                "symfony/browser-kit": "^3.4|^4.1",
-                "symfony/debug-bundle": "^3.4|^4.1",
-                "symfony/dotenv": "^4.2",
-                "symfony/intl": "^3.4|^4.1",
-                "symfony/web-profiler-bundle": "^3.4|^4.1",
-                "symfony/web-server-bundle": "^3.4|^4.1"
+                "phpspec/phpspec": "^6.0",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-doctrine": "^0.12",
+                "phpstan/phpstan-webmozart-assert": "^0.12",
+                "phpunit/phpunit": "^7.0",
+                "sensiolabs/security-checker": "^6.0",
+                "sylius-labs/coding-standard": "^3.0",
+                "symfony/browser-kit": "^4.4",
+                "symfony/debug-bundle": "^4.4",
+                "symfony/dotenv": "^4.4",
+                "symfony/intl": "^4.4",
+                "symfony/web-profiler-bundle": "^4.4",
+                "symfony/web-server-bundle": "^4.4"
             },
             "type": "sylius-plugin",
             "autoload": {
@@ -246,7 +246,7 @@
                 "sylius",
                 "sylius-plugin"
             ],
-            "time": "2020-04-08T14:42:32+00:00"
+            "time": "2020-05-29T13:11:09+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -943,6 +943,7 @@
                 "cache",
                 "caching"
             ],
+            "abandoned": true,
             "time": "2019-11-29T11:22:01+00:00"
         },
         {
@@ -1599,6 +1600,7 @@
                 "reflection",
                 "static"
             ],
+            "abandoned": "roave/better-reflection",
             "time": "2020-03-27T11:06:43+00:00"
         },
         {
@@ -2032,6 +2034,7 @@
                 "faker",
                 "fixtures"
             ],
+            "abandoned": true,
             "time": "2019-12-12T13:22:17+00:00"
         },
         {
@@ -3956,12 +3959,12 @@
             "version": "v2.1.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/whiteoctober/Pagerfanta.git",
+                "url": "https://github.com/BabDev/Pagerfanta.git",
                 "reference": "a53ff01d521648d9dbca19b93ac6bc75a59b0972"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/a53ff01d521648d9dbca19b93ac6bc75a59b0972",
+                "url": "https://api.github.com/repos/BabDev/Pagerfanta/zipball/a53ff01d521648d9dbca19b93ac6bc75a59b0972",
                 "reference": "a53ff01d521648d9dbca19b93ac6bc75a59b0972",
                 "shasum": ""
             },
@@ -10300,6 +10303,7 @@
                 "i18n",
                 "text"
             ],
+            "abandoned": true,
             "time": "2018-12-05T18:34:18+00:00"
         },
         {
@@ -10532,12 +10536,12 @@
             "version": "v1.3.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/whiteoctober/WhiteOctoberPagerfantaBundle.git",
+                "url": "https://github.com/sampart/WhiteOctoberPagerfantaBundle.git",
                 "reference": "6df560869b5e09a3acf920890ab40598998b30ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whiteoctober/WhiteOctoberPagerfantaBundle/zipball/6df560869b5e09a3acf920890ab40598998b30ae",
+                "url": "https://api.github.com/repos/sampart/WhiteOctoberPagerfantaBundle/zipball/6df560869b5e09a3acf920890ab40598998b30ae",
                 "reference": "6df560869b5e09a3acf920890ab40598998b30ae",
                 "shasum": ""
             },
@@ -10586,6 +10590,7 @@
                 "page",
                 "paging"
             ],
+            "abandoned": "babdev/pagerfanta-bundle",
             "time": "2019-12-02T14:19:37+00:00"
         },
         {
@@ -15534,16 +15539,17 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "bitbag/product-bundle-plugin": 20,
         "behat/mink": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2"
+        "php": "^7.2",
+        "ext-zip": "*"
     },
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.3"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }

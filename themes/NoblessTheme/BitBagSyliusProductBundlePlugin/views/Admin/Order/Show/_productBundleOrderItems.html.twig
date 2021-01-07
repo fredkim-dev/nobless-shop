@@ -1,0 +1,27 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+{% for item in items %}
+    {% set variant = item.productVariant %}
+    {% set product = variant.product %}
+
+    <div>
+        <div class="mb-">
+            <div>{{ product.name }}</div>
+            <div class="row">
+                <div class="col-4 pr-0 d-none d-lg-block">
+                    {{ money.calculatePrice(product|sylius_resolve_variant) }}
+                </div>
+                <div class="col ml-3 ml-lg-3">
+                    {% if product.hasOptions() %}
+                        {% for optionValue in variant.optionValues %}
+                            {{ 'sylius.ui.size'|trans }} : {{ optionValue.value }}
+                        {% endfor %}
+                    {% elseif variant.name is not null %}
+                        {{ 'sylius.ui.size'|trans }} : {{ variant.name }}
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endfor %}

@@ -1,0 +1,26 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+{% set prices = product.variants|first.channelPricings|first %}
+
+<div class="d-flex flex-row mb-1 align-items-center">
+    {% if prices.originalPrice > 0 %}
+        <span class="h3 original-price mr-4 mb-0 ml-1" data-js-product-price>
+            <span></span>
+            {{ money.convertAndFormat(prices.originalPrice) }}
+        </span>
+    {% endif %}
+
+    <span class="h3 mb-0" data-js-product-price>
+        {{ money.calculatePrice(product|sylius_resolve_variant) }}
+    </span>
+
+    {% if product.isBundle() %}
+        <div class="ml-3 bundle-saving d-none d-lg-block">{{ 'sylius.ui.bundle_saving'|trans }}</div>
+    {% endif %}
+</div>
+
+{% if product.isBundle() %}
+    <div class="col-12 p-0 bundle-saving d-block d-lg-none">{{ 'sylius.ui.bundle_saving'|trans }}</div>
+    <div class="col-12 mt-4 mb-1 bundle-composition">{{ 'sylius.ui.bundle_composition'|trans }}</div>
+{% endif %}
+

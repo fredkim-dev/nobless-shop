@@ -17,6 +17,9 @@
                     <input type="radio" id="sylius_add_to_cart_cartItem_variant_{{ key }}" name="sylius_add_to_cart[cartItem][variant]" required="required" class="form-check-input" value="{{ variant.code }}" {% if variant.onHand == 0 %}disabled{% endif %}/>
                 {% endfor %}
             </div>
+
+            <span class="invalid-feedback d-none empty-product">{{ 'sylius.ui.please_choose_size'|trans }}</span>
+            <div class="invalid-feedback form-error-message my-2 d-none" data-js-add-to-cart="error"></div>
         </div>
     </div>
     <div class="qty-product col-12 col-xl-3">

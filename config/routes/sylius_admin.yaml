@@ -1,3 +1,20 @@
 sylius_admin:
     resource: "@SyliusAdminBundle/Resources/config/routing.yml"
     prefix: /admin
+
+sylius_admin_product_update:
+    path: /admin/products/{id}/edit
+    methods: [GET, PUT, PATCH]
+    defaults:
+        _controller: sylius.controller.product:updateAction
+        _sylius:
+            section: admin
+            permission: true
+            redirect: referer
+            template: "@SyliusAdmin/Crud/update.html.twig"
+            vars:
+                subheader: sylius.ui.manage_your_product_catalog
+                icon: cube
+                templates:
+                    form: "@SyliusAdmin/Product/_form.html.twig"
+                    toolbar: "@SyliusAdmin/Product/Update/_toolbar.html.twig"

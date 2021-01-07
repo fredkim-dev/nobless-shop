@@ -34,8 +34,11 @@ sylius:
         quantity: Quantité
         size: Taille
         sku: Réf
+        bundle_saving: (Vous économisez 10%)
+        bundle_composition: Composition du look
         choose_size: Choisir sa taille
         please_choose_size: Veuillez choisir une taille
+        please_choose_size_bundle: Veuillez choisir une taille pour chaque produit du pack
         view_cart: Voir le panier
         edit_cart: Modifier le panier
         forgot_password_title: J'ai oublié mon mot de passe

@@ -1,40 +1,68 @@
+{% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
 {% set product = order_item.variant.product %}
 
 {% form_theme form '@SyliusShop/Form/theme.html.twig' %}
 
-<div class="ui segment" id="sylius-product-selecting-variant">
-    {{ sonata_block_render_event('sylius.shop.product.show.before_add_to_cart', {'product': product, 'order_item': order_item}) }}
+<div class="card add-to-cart" id="sylius-product-selecting-variant">
+    <div class="card-body">
+        {{ sonata_block_render_event('sylius.shop.product.show.before_add_to_cart', {'product': product, 'order_item': order_item}) }}
 
-    {{ form_start(form, {'action': path('bitbag_sulius_product_bundle_shop_ajax_cart_add_product_bundle', {'productId': product.id}), 'attr': {'id': 'sylius-product-adding-to-cart', 'class': 'ui loadable form', 'novalidate': 'novalidate', 'data-redirect': path(configuration.getRedirectRoute('summary'))}}) }}
-    {{ form_errors(form) }}
-    <div class="ui red label bottom pointing hidden sylius-validation-error" id="sylius-cart-validation-error"></div>
-    {% if not product.simple %}
-        {% if product.variantSelectionMethodChoice %}
-            {% include '@SyliusShop/Product/Show/_variants.html.twig' %}
-        {% else %}
-            {% include '@SyliusShop/Product/Show/_options.html.twig' %}
-        {% endif %}
-    {% endif %}
-    {{ form_row(form.cartItem.quantity) }}
+        {{ form_start(form, {'action': path('bitbag_sylius_product_bundle_shop_ajax_cart_add_product_bundle', {'productId': product.id}), 'attr': {'id': 'sylius-product-adding-to-cart', 'class': 'loadable form', 'novalidate': 'novalidate', 'data-redirect': path(configuration.getRedirectRoute('summary')), 'data-name-to-check': 'bitbag_sylius_product_bundle_plugin_add_product_bundle_to_cart'}}) }}
+        {{ form_errors(form) }}
+        <div class="alert alert-danger d-none sylius-validation-error" id="sylius-cart-validation-error"></div>
 
-    <h2>{{ 'bitbag_sylius_product_bundle.ui.products_in_bundle'|trans }}</h2>
+        {# Bundle items #}
+        {% for item in form.productBundleItems %}
+            <div class="row bundle-item my-3">
+                {% set data = item.vars.data %}
+                <div class="col-6 col-lg-4">
+                    {% include '@SyliusShop/Product/Show/Bundle/itemImage.html.twig' with {'product': data.productVariant.product} %}
+                </div>
+                <div class="col-12 col-lg mt-3 mt-lg-0 d-flex flex-column justify-content-between">
+                    <div>
+                        <h4 class="mb-0">{{ data.productVariant.product.name }}</h4>
+                        <div class="pb-1 bundle-item-price separator-between-item mb-4 mb-md-0">{{ money.calculatePrice(data.productVariant.product|sylius_resolve_variant) }}</div>
+                    </div>
+                    {% if item.productVariant is defined %}
+                        {% include '@SyliusShop/Product/Show/Bundle/_variants.html.twig' with {'product': data.productVariant.product, 'product_variant_input': item.productVariant, 'id': item.vars.id} %}
+                    {% endif %}
+                </div>
+                {% if loop.index < loop.length %}
+                    <div class="mb-2 mt-4 separator mx-auto"></div>
+                {% else %}
+                    <div class="mb-2 mt-4 end-separator w-100"></div>
+                {% endif %}
+            </div>
+        {% endfor %}
 
-    {% for item in form.productBundleItems %}
-        <div class="ui segment">
-            {% set data = item.vars.data %}
+        {{ sonata_block_render_event('sylius.shop.product.show.add_to_cart_form', {'product': product, 'order_item': order_item}) }}
 
-            <h3>{{ data.quantity }} x {{ data.productVariant.product.name }}</h3>
-
-            {% if item.productVariant is defined %}
-                {{ form_row(item.productVariant) }}
-            {% endif %}
+        <div class="row align-items-end">
+            {# Quantity #}
+            <div class="col-12">
+                <label for="{{ form.cartItem.quantity.vars.id }}" class="required">Quantité</label>
+            </div>
+            <div class="col-12 col-md-3 col-lg-2 form-group d-flex flex-column pr-md-0">
+                <select id="{{ form.cartItem.quantity.vars.id }}" name="{{ form.cartItem.quantity.vars.full_name }}" class="form-control" required="required">
+                    {% for i in 1..7 %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {# Add to cart button #}
+            <div class="col">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-primary" {{ sylius_test_html_attribute('add-to-cart-button') }}>
+                        <span class="btn-icon">{{ icons.cart() }}</span>
+                        {{ 'sylius.ui.add_to_cart'|trans }}
+                    </button>
+                </div>
+            </div>
         </div>
 
-    {% endfor %}
-
-    {{ sonata_block_render_event('sylius.shop.product.show.add_to_cart_form', {'product': product, 'order_item': order_item}) }}
-
-    <button type="submit" class="ui huge primary icon labeled button"><i class="cart icon"></i> {{ 'sylius.ui.add_to_cart'|trans }}</button>
-    {{ form_row(form._token) }}
-    {{ form_end(form, {'render_rest': false}) }}
+        {{ form_row(form._token) }}
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
 </div>

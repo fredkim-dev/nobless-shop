@@ -3,6 +3,7 @@
 
 {% set product_variant = item.variant %}
 {% set product = item.variant.product %}
+{% set prices = product.variants|first.channelPricings|first %}
 
 <div class="col-12 position-relative card m-0 mb-1 mobile-display">
     <button type="button"
@@ -26,23 +27,29 @@
                 </div>
 
                 {# Variant #}
-                <div class="col-12 p-0">
-                    {% if product.hasOptions() %}
-                        <div>
-                            {% for optionValue in product_variant.optionValues %}
-                                <div data-sylius-option-name="{{ optionValue.name }}">
-                                    {{ 'sylius.ui.size'|trans }} : {{ optionValue.value }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% elseif item.variantName is not null %}
-                        <div>{{ 'sylius.ui.size'|trans }} : {{ item.variantName }}</div>
-                    {% endif %}
-                </div>
+                {% if not product.isBundle() %}
+                    <div class="col-12 p-0">
+                        {% if product.hasOptions() %}
+                            <div>
+                                {% for optionValue in product_variant.optionValues %}
+                                    <div data-sylius-option-name="{{ optionValue.name }}">
+                                        {{ 'sylius.ui.size'|trans }} : {{ optionValue.value }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% elseif item.variantName is not null %}
+                            <div>{{ 'sylius.ui.size'|trans }} : {{ item.variantName }}</div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="col-12 px-0 py-2">
+                        {{ bitbag_render_product_bundle_order_items(item) }}
+                    </div>
+                {% endif %}
             </div>
 
             <div>
-                    {{ 'sylius.ui.total'|trans }} : {{ money.convertAndFormat(item.subtotal) }}
+                {{ 'sylius.ui.total'|trans }} : {{ money.convertAndFormat(item.subtotal) }}
             </div>
         </div>
     </div>

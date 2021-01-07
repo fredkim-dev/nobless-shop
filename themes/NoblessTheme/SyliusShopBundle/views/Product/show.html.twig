@@ -3,9 +3,10 @@
 {% block title %}{{ product.name }} | {{ parent() }}{% endblock %}
 
 {% block content %}
+{% set isProductBundle = product.isBundle() %}
 
-<div class="row col-xl-10 p-0 p-md-auto m-0 mx-sm-3 mx-xl-auto position-relative">
-    <div id="images-container" class="col-12 col-md-6 col-xl-8 mb-3">
+<div class="row col-xl-10 p-0 p-md-auto m-0 mx-sm-3 mx-xl-auto{% if isProductBundle %} is-bundle{% endif %}">
+    <div id="images-container" class="col-12 col-md-6 mb-3{% if not isProductBundle %} col-xl-8{% endif %}">
         <div class="p-0 px-sm-3 d-block d-lg-none">
             {{ sonata_block_render_event('sylius.shop.product.show.before_images', {'product': product}) }}
 
@@ -21,13 +22,13 @@
             {{ sonata_block_render_event('sylius.shop.product.show.after_images', {'product': product}) }}
         </div>
     </div>
-    <div id="product-info" class="col-12 col-md-6 col-xl-4 position-relative p-1 p-xl-0 mb-1">
-        <div id="product-sticky" class="col-12 px-3 pl-sm-2 pr-sm-4 p-xl-0 sticky-top-custom">
+    <div id="product-info" class="col-12 col-md-6 {% if not isProductBundle %}col-xl-4{% endif %} position-relative p-1 p-xl-0 mb-1">
+        <div id="product-sticky" class="col-12 px-3 pl-sm-2 pr-sm-4 p-xl-0 {% if not isProductBundle %}sticky-top-custom{% endif %}">
             {% include '@SyliusShop/Product/Show/_header.html.twig' %}
 
             {{ sonata_block_render_event('sylius.shop.product.show.after_product_header', {'product': product}) }}
 
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="{% if isProductBundle %}mb-0{% else %}d-flex mb-3{% endif %}">
                 {% if not product.variants.empty() %}
                     {% include '@SyliusShop/Product/Show/_price.html.twig' %}
                 {% endif %}
@@ -47,7 +48,9 @@
             {{ sonata_block_render_event('sylius.shop.product.show.after_add_to_cart', {'product': product}) }}
 
             {# PRODUCT DESCRIPTION #}
-            {% include '@SyliusShop/Product/Show/_tabs.html.twig' %}
+            {% if not isProductBundle %}
+                {% include '@SyliusShop/Product/Show/_tabs.html.twig' %}
+            {% endif %}
         </div>
     </div>
 </div>

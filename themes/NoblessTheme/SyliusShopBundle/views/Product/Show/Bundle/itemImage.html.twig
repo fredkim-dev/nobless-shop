@@ -1,0 +1,14 @@
+{% if product.imagesByType('main') is not empty %}
+    {% set source_path = product.imagesByType('main').first.path %}
+    {% set thumbnail = source_path|imagine_filter('sylius_shop_bundle_item_thumbnail') %}
+{% elseif product.images.first %}
+    {% set source_path = product.images.first.path %}
+    {% set thumbnail = source_path|imagine_filter('sylius_shop_bundle_item_thumbnail') %}
+{% else %}
+    {% set source_path = '//placehold.it/400x300' %}
+    {% set thumbnail = source_path %}
+{% endif %}
+
+<div class="row px-3">
+    <img class="img-fluid" src="{{ thumbnail }}" alt="{{ product.name }}" />
+</div>

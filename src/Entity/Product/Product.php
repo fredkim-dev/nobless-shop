@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Product as BaseProduct;
 use Sylius\Component\Product\Model\ProductTranslationInterface;
 use BitBag\SyliusProductBundlePlugin\Entity\ProductBundlesAwareTrait;
+use BitBag\SyliusProductBundlePlugin\Entity\ProductBundleInterface;
 use BitBag\SyliusProductBundlePlugin\Entity\ProductInterface;
 /**
  * @ORM\Entity

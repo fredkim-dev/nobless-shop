@@ -252,7 +252,12 @@ function createGalleryDesktop() {
 
 function productFunctions() {
   $('.variant-list .variant-name:not(.variant-disabled)').on('click', function(event) {
-    $('.variant-list .variant-name').removeClass('variant-selected');
+    const bundleItem = $(this).data('bundle-item');
+    if(bundleItem !== undefined) {
+      $('.variant-name[data-bundle-item="' + bundleItem + '"]').removeClass('variant-selected');
+    } else {
+      $('.variant-list .variant-name').removeClass('variant-selected');
+    }
     $(this).addClass('variant-selected');
   });
 
@@ -269,12 +274,20 @@ function productFunctions() {
   $('#sylius-product-adding-to-cart .btn-primary').on('click', function(e) {
     e.preventDefault();
     const addToCartForm = $(this).closest('form');
-    if($('input[name^="sylius_add_to_cart"]:checked').length === 0) {
-      $(addToCartForm).find('.empty-product').removeClass('d-none');
+    const selectedSize = $('input[name^="' + $(addToCartForm).data('nameToCheck') + '"]:checked').length;
+    const bundleItemsCount = $('div.bundle-item').length;
+    if(selectedSize > 0 && selectedSize < bundleItemsCount ) {
+      $(addToCartForm).find('.empty-product:not(.input-checked)').removeClass('d-none').addClass('d-block');
+    } else if (selectedSize === 0) {
+      $(addToCartForm).find('.empty-product').removeClass('d-none').addClass('d-block');
     } else {
-      $(addToCartForm).find('.empty-product').addClass('d-none');
+      $(addToCartForm).find('.empty-product').addClass('d-none').removeClass('d-block');
       $(addToCartForm).trigger('submit');
     }
+  })
+
+  $('input[id^="bitbag_sylius_product_bundle_plugin_add_product_bundle_to_cart_"]').on('change', function(e) {
+    $(this).closest('div').find('span.invalid-feedback').addClass('input-checked').addClass('d-none').removeClass('d-block');
   })
 }
 
