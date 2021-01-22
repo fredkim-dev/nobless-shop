@@ -6,9 +6,7 @@
     <div class="card-img-top">
         {% include '@SyliusShop/Product/_mainImage.html.twig' with {'product': product} %}
 
-        {% if product.variants|length > 1 %}
-            {% include '@SyliusShop/Product/_boxVariant.html.twig' with {'productVariants': product.variants} %}
-        {% endif %}
+        {{ sylius_product_variants(product) }}
     </div>
     <div class="card-body card-body-product text-left">
         <h6 class="product-name"><a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}" class="card-link">{{ product.name }}</a></h6>

@@ -1,0 +1,43 @@
+{% if resources.data.nbResults > 0 %}
+
+{% set route = app.request.attributes.get('_route') %}
+{% set route_parameters = app.request.attributes.get('_route_params')|merge(app.request.query.all) %}
+
+{% set criteria = app.request.query.get('criteria', {}) %}
+
+{% set newest_first_path = path(route, route_parameters|merge({'sorting': {'createdAt': 'desc'}, 'criteria': criteria})) %}
+{% set cheapest_first_path = path(route, route_parameters|merge({'sorting': {'price': 'asc'}, 'criteria': criteria})) %}
+{% set most_expensive_first_path = path(route, route_parameters|merge({'sorting': {'price': 'desc'}, 'criteria': criteria})) %}
+
+{% if app.request.query.get('sorting') is empty or (app.request.query.get('sorting').createdAt is defined and app.request.query.get('sorting').createdAt == 'desc') %}
+    {% set isChecked = 'createdAtDesc' %}
+{% elseif app.request.query.get('sorting').price is defined and app.request.query.get('sorting').price == 'asc'%}
+    {% set isChecked = 'priceAsc' %}
+{% elseif app.request.query.get('sorting').price is defined and app.request.query.get('sorting').price == 'desc' %}
+    {% set isChecked = 'priceDesc' %}
+{% else %}
+    {% set isChecked = 'createdAtDesc' %}
+{% endif %}
+
+
+<div class="has-separator mt-3 mb-2 pb-3">
+    <h5>{{ 'sylius.ui.sort_by'|trans }}</h5>
+    <div class="radio-container py-0 ml-2 mb-0 align-items-center">
+        <input type="radio" value="desc" name="sorting[createdAt]" class="input-sorting-createdAt d-none" />
+        <input id="createdAtDesc" type="radio" value="createdAt" name="sorting[price]" class="input-sorting" {% if isChecked == 'createdAtDesc' %}checked="checked"{% endif %} data-text="{{ 'sylius.ui.newest_first'|trans|lower }}" />
+        <span class="checkmark"><span class="checked{% if isChecked == 'createdAtDesc' %} d-block{% endif %}"></span></span>
+        <label for="createdAtDesc" class="pl-4 m-0">{{ 'sylius.ui.newest_first'|trans }}</label>
+    </div>
+    <div class="radio-container py-0 ml-2 mb-0 align-items-center">
+        <input id="priceAsc" type="radio" value="asc" name="sorting[price]" class="input-sorting" {% if isChecked == 'priceAsc' %}checked="checked"{% endif %} data-text="{{ 'sylius.ui.cheapest_first'|trans|lower }}" />
+        <span class="checkmark"><span class="checked{% if isChecked == 'priceAsc' %} d-block{% endif %}"></span></span>
+        <label for="priceAsc" class="pl-4 m-0">{{ 'sylius.ui.cheapest_first'|trans }}</label>
+    </div>
+    <div class="radio-container py-0 ml-2 mb-0 align-items-center">
+        <input id="priceDesc" type="radio" value="desc" name="sorting[price]" class="input-sorting" {% if isChecked == 'priceDesc' %}checked="checked"{% endif %} data-text="{{ 'sylius.ui.most_expensive_first'|trans|lower }}" />
+        <span class="checkmark"><span class="checked{% if isChecked == 'priceDesc' %} d-block{% endif %}"></span></span>
+        <label for="priceDesc" class="pl-4 m-0">{{ 'sylius.ui.most_expensive_first'|trans }}</label>
+    </div>
+</div>
+
+{% endif %}

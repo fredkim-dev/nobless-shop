@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-md">
         <div class="collapse navbar-collapse justify-content-center align-items-start" id="mainNavbar">
             <div class="{% if taxons|length > 6 %}col-3{% else %}col-3 col-xl-2{% endif %}">
-                <h3 class="bookman-title">Prêt-à-porter</h3>
+                <h3 class="bookman-title">{{ 'sylius.ui.pret_a_porter'|trans }}</h3>
                 <div class="d-flex flex-row">
                 {% for taxon in taxons %}
                     {% if loop.index == 1 or loop.index == 7 %}

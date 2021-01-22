@@ -26,7 +26,7 @@
     <nav class="navbar h-100">
         <div id="navbarMain" class="col-12 p-0 h-100">
             <div class="col-12 navbar-nav d-flex flex-column py-2 px-0 text-center">
-                <a class="nav-item nav-link navbarTaxonsLink" data-div-to-open="#navbarTaxons">Prêt-à-porter<img class="arrow" src="{{ asset('nobless-theme/images/next.png', 'noblessTheme') }}" /></a>
+                <a class="nav-item nav-link navbarTaxonsLink" data-div-to-open="#navbarTaxons">{{ 'sylius.ui.pret_a_porter'|trans }}<img class="arrow" src="{{ asset('nobless-theme/images/next.png', 'noblessTheme') }}" /></a>
                 <a href="{{ path('sylius_shop_product_index', {'slug': 'bundles', '_locale': sylius.localeCode}) }}" class="nav-item nav-link">Buy by Look</a>
                 <a href="#" class="nav-item nav-link">Archives</a>
             </div>
@@ -36,7 +36,12 @@
                 </div>
                 <div class="menu-link locale">
                     {% set languageArray = (sylius.localeCode|sylius_locale_name)|split(' ') %}
-                    <a class="locale-link nav-item nav-link active" data-div-to-open="#navbarLocale"><img src="{{ asset('nobless-theme/images/icon-' ~ sylius.localeCode|sylius_locale_country|lower ~ '.png', 'noblessTheme') }}" class="icon" /><span class="ml-3">{{ languageArray.0|capitalize }}</span><img class="arrow" src="{{ asset('nobless-theme/images/next.png', 'noblessTheme') }}" /></a>
+                    {% if sylius.localeCode|sylius_locale_country|lower == 'gb' or sylius.localeCode|sylius_locale_country|lower == 'us' %}
+                        {% set countryCode = 'en' %}
+                    {% else %}
+                        {% set countryCode = sylius.localeCode|sylius_locale_country|lower %}
+                    {% endif %}
+                    <a class="locale-link nav-item nav-link active" data-div-to-open="#navbarLocale"><img src="{{ asset('nobless-theme/images/icon-' ~ countryCode ~ '.png', 'noblessTheme') }}" class="icon" /><span class="ml-3">{{ languageArray.0|capitalize }}</span><img class="arrow" src="{{ asset('nobless-theme/images/next.png', 'noblessTheme') }}" /></a>
                 </div>
             </div>
         </div>

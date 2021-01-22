@@ -1,0 +1,8 @@
+{% if taxons|length > 0 %}
+    <h5 class="nav-item nav-link mx-2 px-0 collapsed" href="#footer-catalog-collapse" data-toggle="collapse">{{ 'sylius.ui.shop_catalog'|trans }}<i class="fa fa-plus"></i><i class="fa fa-minus"></i></h5>
+    <ul id="footer-catalog-collapse" class="collapse px-2" data-parent="#footerLinksCollapse">
+        {% for taxon in taxons %}
+            <li><a href="{{ path('sylius_shop_product_index', {'slug': taxon.slug, '_locale': taxon.translation.locale}) }}">{{ taxon.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}

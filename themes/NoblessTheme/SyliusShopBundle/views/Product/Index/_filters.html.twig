@@ -1,0 +1,24 @@
+<form id="productFilterForm" method="get" action="{{ path('sylius_shop_product_index', {'slug': app.request.attributes.get('slug')}) }}">
+    <div class="row d-flex flex-row align-items-center m-0">
+        {% for filter in products.definition.enabledFilters %}
+            <div class="dropdown-filter px-2">
+                <a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                    {{ ('sylius.ui.' ~ filter.label ~ '_filter')|trans }}
+                </a>
+                <div class="dropdown-menu">
+                    {{ sylius_grid_render_filter(products, filter) }}
+                    <div class="text-center mb-2">
+                        <a class="btn btn-primary validate-filter d-block mx-3">{{ 'sylius.ui.validate_filter'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary d-none">{{ 'sylius.ui.validate_filter'|trans }}</button>
+            <a href="{{ path('sylius_shop_product_index', {'slug': app.request.attributes.get('slug')}) }}" class="btn btn-link reinit-filter d-none">
+                {{ 'sylius.ui.clear'|trans }}
+            </a>
+        </div>
+    </div>
+</form>

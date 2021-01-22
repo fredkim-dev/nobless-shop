@@ -4,7 +4,7 @@
     <div class="variant-list col-12">
         <div class="d-flex flex-column">
             <label class="variant-label required">{{ 'sylius.ui.choose_size'|trans }}</label>
-            <div class="container-fluid col-12 p-0 text-left">
+            <div class="container-fluid col-12 p-0 text-left d-flex flex-row">
                 {% for key, variant in product.variants %}
                     <label for="{{ id }}_productVariant_{{ key }}" class="variant-name{% if variant.onHand == 0 %} variant-disabled{% endif %}" data-bundle-item="{{ id }}">
                         {% for optionValue in variant.optionValues %}

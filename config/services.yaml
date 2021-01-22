@@ -29,7 +29,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{Entity,Migrations,Tests,Kernel.php,Twig}'
 
     # Controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -43,7 +43,7 @@ services:
 
     sylius.controller.shop.product:
         class: App\Controller\Shop\ProductController
-        arguments: [ '@templating' ]
+        arguments: [ '@templating']
 
     sylius.controller.shop.locale_switch:
         class: App\Controller\Shop\LocaleSwitchController
@@ -78,15 +78,37 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Sylius\Bundle\AddressingBundle\Form\Type\AddressType }
 
+    #Menu
     app.listener.shop.menu_builder:
         class: App\Menu\AccountMenuListener
         tags:
             - { name: kernel.event_listener, event: sylius.menu.shop.account, method: addAccountMenuItems }
 
-    #app.twig.extension.product_bundle_variant_availability:
-    #    class: App\Twig\Extension\ProductBundleVariantAvailability
-    #    arguments: 
-    #        - 'bitbag_sylius_product_bundle.repository.product_bundle_order_item'
-    #        - 'twig'
-    #    tags:
-    #        - { name: twig.extension }
+    #Grid Filters
+    app.grid.filter.size:
+        class: App\Grid\Filter\SizeFilter
+        tags:
+            -   name: sylius.grid_filter
+                type: size
+                form_type: App\Form\Type\Filter\SizeFilterType
+
+    app.grid.filter.price:
+        class: App\Grid\Filter\PriceFilter
+        arguments: 
+            -   '@doctrine.orm.entity_manager'
+            -   "@request_stack"
+            -   "@sylius.context.locale"
+            -   "@sylius.repository.taxon"
+        tags:
+            -   name: sylius.grid_filter
+                type: price
+                form_type: App\Form\Type\Filter\PriceFilterType
+
+    #Twig Extensions
+    app.twig.extension.product_variants:
+        class: App\Twig\Extension\ProductVariants
+        arguments:
+            - '@twig'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: twig.extension }

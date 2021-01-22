@@ -10,5 +10,5 @@
 {% endif %}
 
 <div class="row px-3">
-    <img class="img-fluid" src="{{ thumbnail }}" alt="{{ product.name }}" />
+    <a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}"><img class="img-fluid" src="{{ thumbnail }}" alt="{{ product.name }}" /></a>
 </div>

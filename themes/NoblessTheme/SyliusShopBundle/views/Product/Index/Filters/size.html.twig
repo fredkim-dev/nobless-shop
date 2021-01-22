@@ -1,0 +1,24 @@
+
+<div class="mt-3 mb-2 pb-2 {% if loop.index != loop.last %}has-separator{% endif %}">
+    <h5 class="mb-3">{{ ('sylius.ui.size_filter')|trans }}</h5>
+    <div class="size-filter mx-3 my-2 text-center">
+        <div>
+            <div id="criteriaSizeMobile" class="text-left text-md-center">
+                <input type="checkbox" id="size_S" data-id="criteria_size_size_0" name="criteria[size][size][]" value="S">
+                <label for="size_S">S</label>
+
+                <input type="checkbox" id="size_M" data-id="criteria_size_size_1" name="criteria[size][size][]" value="M">
+                <label for="size_M">M</label>
+
+                <input type="checkbox" id="size_L" data-id="criteria_size_size_2" name="criteria[size][size][]" value="L">
+                <label for="size_L">L</label>
+
+                <input type="checkbox" id="size_XL" data-id="criteria_size_size_3" name="criteria[size][size][]" value="XL">
+                <label for="size_XL">XL</label>
+
+                <input type="checkbox" id="size_XXL" data-id="criteria_size_size_4" name="criteria[size][size][]" value="XXL">
+                <label for="size_XXL">XXL</label>
+            </div>
+        </div>
+    </div>
+</div>

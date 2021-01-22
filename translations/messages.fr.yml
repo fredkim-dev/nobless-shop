@@ -1,5 +1,7 @@
 sylius:
     ui:
+        pret_a_porter: Prêt-à-porter
+        archives: Archives
         registered_customers: 'Connectez-vous'
         registered_customers_subtitle: 'Vous êtes déjà client Noblezz, connectez-vous avec vos identifiants de connexion'
         customer_login: 'Mon compte'
@@ -66,6 +68,39 @@ sylius:
         newest_products: Nouveautés
         buy_by_look: Buy By Look
         complete_your_style: Compléter votre style
+        filters: Filtres
+        no_product_filter: Aucun produit ne correspond à votre sélection
+        size_filter: Taille
+        price_filter: Prix
+        validate_filter: Filtrer
+        sort_and_filter: Trier et filtrer
+        sort_by: 'Trier par :'
+        newest_first: Nouveautés
+        cheapest_first: Prix croissant
+        most_expensive_first: Prix décroissant     
+        money_back_guarantee: Satisfait ou remboursé
+        money_back_guarantee_desc_1: 14 jours pour essayer votre produit
+        money_back_guarantee_desc_2: ou nous le retourner            
+        express_delivery: Livraison Express
+        express_delivery_desc_1: Chez vous ou en point relais
+        express_delivery_desc_2: Livraison gratuite à partir de 49€
+        secured_payment: Paiement sécurisé
+        secured_payment_desc: Réglez votre commande en toute sérénité
+        secured_payment_cards: Mastercard, Visa, Paypal
+        newsletter: Newsletter
+        find_noblezz: Retrouvez Noblezz
+        newsletter_subscribe: Inscrivez-vous à la newsletter
+        newsletter_info: En saisissant votre adresse mail ci-dessous, vous acceptez de recevoir notre newsletter qui présente nos dernières collections, nos évènements et nos initiatives. Vous trouverez plus d'informations à ce sujet dans notre 
+        customer_information: Informations
+        legal_notice: Mentions légales
+        privacy_policy: Politique de confidentialité
+        delivery_and_returns: Livraison et retours
+        client_service: FAQ - Service client
+        contact_us: Contactez-nous
+        my_account: Mon compte
+        shop_catalog: Catalogue
+        visit_blog: Visitez
+        noblezz_blog: le blog de Noblezz
     user:
         reset_password_request_ok: Votre demande de réinitialisation a bien été prise en compte
         reset_password_request: Si l'email que vous avez spécifié existe dans notre système, vous recevrez un message avec les instructions pour réinitialiser votre mot de passe.
@@ -77,6 +112,7 @@ sylius:
                 personal_information: Mes informations personnelles
                 address_book: Mes adresses
                 order_history: Mes commandes
+                client_assets: Mes avoirs
     form:
         login:
             username: 'Adresse mail *'

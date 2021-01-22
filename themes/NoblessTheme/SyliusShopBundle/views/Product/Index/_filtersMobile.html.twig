@@ -1,0 +1,29 @@
+<form id="productFilterMobileForm" method="get" action="{{ path('sylius_shop_product_index', {'slug': app.request.attributes.get('slug')}) }}">
+    <div class="row d-flex flex-column justify-content-between m-0">
+        <div id="filterList" class="d-flex flex-column pb-2">
+            <div class="has-separator">
+                <h4 class="my-2">{{ 'sylius.ui.filters'|trans }}</h4>
+            </div>
+            <div class="d-flex flex-column">
+                {% include '@SyliusShop/Product/Index/_sortingMobile.html.twig' %}
+                {% for filter in products.definition.enabledFilters %}
+                    {% if filter.type == 'size' %}
+                        {% include '@SyliusShop/Product/Index/Filters/size.html.twig' %}
+                    {% else %}
+                        <div class="mt-3 mb-2{% if loop.index != loop.last %} has-separator{% endif %}">
+                            <h5>{{ ('sylius.ui.' ~ filter.label ~ '_filter')|trans }}</h5>
+                            {{ sylius_grid_render_filter(products, filter) }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="filterSubmit" class="d-flex flex-column my-2">
+            <button type="submit" class="btn btn-primary">{{ 'sylius.ui.validate_filter'|trans }}</button>
+            <a href="{{ path('sylius_shop_product_index', {'slug': app.request.attributes.get('slug')}) }}" class="btn btn-link reinit-filter d-none">
+                {{ 'sylius.ui.clear'|trans }}
+            </a>
+        </div>
+    </div>
+</form>

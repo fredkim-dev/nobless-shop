@@ -4,13 +4,13 @@
     <div class="variant-list col-12 col-xl-9">
         <div class="form-group d-flex flex-column">
             <label class="variant-label required">{{ 'sylius.ui.choose_size'|trans }}</label>
-            <div class="container-fluid col-12 p-0 text-left">
+            <div class="container-fluid col-12 p-0 text-left d-flex flex-row">
                 {% for key, variant in product.variants %}
-                    <label for="sylius_add_to_cart_cartItem_variant_{{ key }}" class="variant-name{% if variant.onHand == 0 %} variant-disabled{% endif %}">
+                    <label for="sylius_add_to_cart_cartItem_variant_{{ key }}" class="d-flex justify-content-center align-items-center variant-name{% if variant.onHand == 0 %} variant-disabled{% endif %}">
                         {% for optionValue in variant.optionValues %}
                             {{ optionValue.code }}
                             {% if variant.onHand == 0 %}
-                                <span class="out-of-stock {{ optionValue.code|lower }}"></span>
+                                <span class="out-of-stock"></span>
                             {% endif %}
                         {% endfor %}
                     </label>

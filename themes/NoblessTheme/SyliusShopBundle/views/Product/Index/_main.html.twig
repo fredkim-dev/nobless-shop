@@ -1,13 +1,21 @@
 {% import '@SyliusShop/Common/Macro/messages.html.twig' as messages %}
 {% import '@SyliusShop/Common/Macro/pagination.html.twig' as pagination %}
 
-<div class="card mb-5 category-header">
+<div class="card mb-0 mt-2 category-header">
     <div class="card-body p-2">
-        <div class="row">
-            <div class="col-12">
+        <div class="row d-flex flex-row justify-content-between">
+            <div id="productsFilters" class="product-filters d-none d-xl-block">
+                {% include '@SyliusShop/Product/Index/_filters.html.twig' %}
             </div>
-            <div class="col-12">
-                {% include '@SyliusShop/Product/Index/_pagination.html.twig' %}
+            <b class="screen-overlay-filters"></b>
+            <div id="productsFiltersMobile" class="product-filters dropdown d-block d-xl-none">
+                <a class="btn btn-link dropdown-toggle" data-toggle="dropdown">{{ 'sylius.ui.sort_and_filter'|trans }}</a>
+                <div class="dropdown-menu">
+                    <a class="close d-none">&times;</a>
+                    {% include '@SyliusShop/Product/Index/_filtersMobile.html.twig' %}
+                </div>
+            </div>
+            <div class="d-none d-xl-block">
                 {% include '@SyliusShop/Product/Index/_sorting.html.twig' %}
             </div>
         </div>
@@ -34,7 +42,7 @@
 {% else %}
     <div class="row">
         <div class="col-12">
-        {{ messages.info('sylius.ui.no_results_to_display') }}
+        {{ messages.info('sylius.ui.no_product_filter') }}
         </div>
     </div>
 {% endif %}

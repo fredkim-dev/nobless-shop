@@ -33,7 +33,7 @@ function createCarousel() {
       infinite: true,
       speed: 700,
       slidesToShow: 4,
-      slidesToScroll: 1,
+      slidesToScroll: 4,
       appendArrows: jQuery('#carouselLatestProducts').next('.slider-controls'),
       prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
       nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Previous</button></div>',
@@ -42,7 +42,7 @@ function createCarousel() {
           breakpoint: 1920,
           settings: {
             slidesToShow: 4,
-            slidesToScroll: 1,
+            slidesToScroll: 4,
             infinite: true
           }
         },
@@ -50,7 +50,7 @@ function createCarousel() {
           breakpoint: 1200,
           settings: {
             slidesToShow: 3,
-            slidesToScroll: 1,
+            slidesToScroll: 3,
             infinite: true
           }
         },
@@ -58,7 +58,7 @@ function createCarousel() {
           breakpoint: 768,
           settings: {
             slidesToShow: 2,
-            slidesToScroll: 1
+            slidesToScroll: 2
           }
         }
       ]
@@ -73,7 +73,7 @@ function createCarousel() {
       infinite: true,
       speed: 700,
       slidesToShow: 4,
-      slidesToScroll: 1,
+      slidesToScroll: 4,
       appendArrows: jQuery('#carouselLatestBundles').next('.slider-controls'),
       prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
       nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Previous</button></div>',
@@ -82,7 +82,7 @@ function createCarousel() {
           breakpoint: 1920,
           settings: {
             slidesToShow: 4,
-            slidesToScroll: 1,
+            slidesToScroll: 4,
             infinite: true
           }
         },
@@ -90,7 +90,7 @@ function createCarousel() {
           breakpoint: 1200,
           settings: {
             slidesToShow: 3,
-            slidesToScroll: 1,
+            slidesToScroll: 3,
             infinite: true
           }
         },
@@ -98,7 +98,7 @@ function createCarousel() {
           breakpoint: 768,
           settings: {
             slidesToShow: 2,
-            slidesToScroll: 1
+            slidesToScroll: 2
           }
         }
       ]
@@ -168,7 +168,7 @@ function createCarousel() {
       infinite: true,
       speed: 700,
       slidesToShow: 4,
-      slidesToScroll: 1,
+      slidesToScroll: 4,
       appendArrows: jQuery('#carouselCompleteYourStyle').next('.slider-controls'),
       prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
       nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Previous</button></div>',
@@ -177,7 +177,7 @@ function createCarousel() {
           breakpoint: 1920,
           settings: {
             slidesToShow: 4,
-            slidesToScroll: 1,
+            slidesToScroll: 4,
             infinite: true
           }
         },
@@ -185,7 +185,7 @@ function createCarousel() {
           breakpoint: 1200,
           settings: {
             slidesToShow: 3,
-            slidesToScroll: 1,
+            slidesToScroll: 4,
             infinite: true
           }
         },
@@ -193,7 +193,7 @@ function createCarousel() {
           breakpoint: 768,
           settings: {
             slidesToShow: 2,
-            slidesToScroll: 1
+            slidesToScroll: 2
           }
         }
       ]
@@ -288,6 +288,124 @@ function productFunctions() {
 
   $('input[id^="bitbag_sylius_product_bundle_plugin_add_product_bundle_to_cart_"]').on('change', function(e) {
     $(this).closest('div').find('span.invalid-feedback').addClass('input-checked').addClass('d-none').removeClass('d-block');
+  })
+}
+
+function filterProductFunctions() {
+  const queryString = window.location.search;
+  const criteria = queryString.indexOf('criteria');
+  /*const priceInput = $('.price-filter .price-input');
+  // Mobile Slider
+  const priceMinMobile = $('#productsFiltersMobile input[name="criteria[price][price_1]');
+  const priceMaxMobile = $('#productsFiltersMobile input[name="criteria[price][price_2]');
+  const priceSliderMobile = $('#productsFiltersMobile .slider').slider({
+    'value': [parseFloat(priceMinMobile.val()), parseFloat(priceMaxMobile.val())],
+    'min': parseFloat(priceInput.data('min')),
+    'max': parseFloat(priceInput.data('max')),
+    'tooltip': 'hide',
+  });
+  priceSliderMobile.on('slide', function(e) {
+    const newValue = e.value;
+    priceMinMobile.val(newValue[0]);
+    priceMaxMobile.val(newValue[1]);
+  });
+  // Desktop Slider
+  const priceMin = $('#productsFilters input[name="criteria[price][price_1]');
+  const priceMax = $('#productsFilters input[name="criteria[price][price_2]');
+  const priceSlider = $('#productsFilters .slider').slider({
+    'value': [parseFloat(priceMin.val()), parseFloat(priceMax.val())],
+    'min': parseFloat(priceInput.data('min')),
+    'max': parseFloat(priceInput.data('max')),
+    'tooltip': 'hide',
+  });
+  priceSlider.on('slide', function(e) {
+    const newValue = e.value;
+    priceMin.val(newValue[0]);
+    priceMax.val(newValue[1]);
+  });
+
+  priceInput.on('keyup', function(e) {
+    const newValue = [parseFloat(priceMin.val()), parseFloat(priceMax.val())];
+    priceSlider.slider('setValue', newValue);
+    const newValueMobile = [parseFloat(priceMinMobile.val()), parseFloat(priceMaxMobile.val())];
+    priceSliderMobile.slider('setValue', newValueMobile);
+  });*/
+
+  const sizeFilterInput = $('#sizeFilter input');
+  sizeFilterInput.each(function( index ) {
+    if(this.checked) {
+      $(this).next('label').addClass('selected');
+      $('input[data-id="' + $(this).attr('id') + '"]').attr('checked', 'checked').next('label').addClass('selected');
+    }
+  });
+  sizeFilterInput.on('change', function(e) {
+    if(e.target.checked) {
+      $(e.target).next('label').addClass('selected');
+    } else {
+      $(e.target).next('label').removeClass('selected');
+    }
+  });
+
+  $('#criteriaSizeMobile input').on('change', function(e) {
+    const inputToCheck = $(e.target).data('id');
+    if(e.target.checked) {
+      $(e.target).next('label').addClass('selected');
+      $('#' + inputToCheck).attr('checked', 'checked').next('label').addClass('selected');
+    } else {
+      $(e.target).next('label').removeClass('selected');
+      $('#' + inputToCheck).removeAttr('checked').next('label').removeClass('selected');
+    }
+  });
+
+  // Sorting
+  $('#productFilterMobileForm .radio-container input.input-sorting').on('change', function(e) {
+    $('#productFilterMobileForm .radio-container input').removeAttr('checked');
+    $('#productFilterMobileForm .radio-container .checkmark .checked').removeClass('d-block');
+    $(e.target).attr('checked', 'checked');
+    $(e.target).next('.checkmark').find('.checked').addClass('d-block');
+  });
+
+  // Validate filters
+  $('a.validate-filter').on('click', function(e) {
+    e.preventDefault();
+    $('#productFilterForm').submit();
+  });
+
+  $('#productFilterMobileForm button.btn-primary').on('click', function(e) {
+    e.preventDefault();
+    if($('.input-sorting:checked').val() === 'createdAt') {
+      $('.input-sorting:checked').remove();
+      $('.input-sorting-createdAt').attr('checked', true).removeClass('d-none').addClass('d-inline-block');
+    }
+    $(this).closest('form').submit();
+  })
+
+  if (criteria !== -1) {
+    $('.reinit-filter').removeClass('d-none')
+  }
+
+  // Mobile filters
+  $('.product-filters.dropdown').on('show.bs.dropdown', function(e) {
+    if ($(document).width() <= 1200) {
+      resizeFilterMobileMenu();
+      const headerOuterHeight = $('#headerContainer').outerHeight() - $('.header-banner').height();
+      $('.screen-overlay-filters').css('top', headerOuterHeight + 'px');
+
+      $(".screen-overlay-filters").addClass("show");
+      $('body').addClass("offcanvas-active");
+      $('#productsFiltersMobile .close').removeClass("d-none");
+    }
+  }).on('hidden.bs.dropdown', function(e) {
+    if ($(document).width() <= 1200) {
+      $(".screen-overlay-filters").removeClass("show");
+      $('body').removeClass("offcanvas-active");
+      $('#productsFiltersMobile .close').addClass("d-none");
+    }
+  });
+
+  $('#productsFiltersMobile .close').on('click', function(e) {
+    e.preventDefault();
+    $('#productsFiltersMobile .dropdown-toggle').trigger('click');
   })
 }
 
@@ -423,6 +541,19 @@ function resizeMenu(element) {
   }
 }
 
+function resizeFilterMobileMenu() {
+  if ($(document).width() > 1200) {
+    $(".screen-overlay-filters").removeClass("show");
+  } else {
+    const headerHeight = $('#headerContainer').height() - $('.header-banner').height();
+    const headerOuterHeight = $('#headerContainer').outerHeight() - $('.header-banner').height();
+    const filterListContainerHeight = $('#productsFiltersMobile .dropdown-menu').height() - $('header').height() - $('#filterSubmit').outerHeight() - 10;
+    $('#productsFiltersMobile').css('height', 'calc(100% - ' + headerHeight + 'px)');
+    $('.screen-overlay-filters').css('top', headerOuterHeight + 'px');
+    $('#filterList').css('height', filterListContainerHeight + 'px');
+  }
+}
+
 function openMobileMenu() {
   var offcanvas_id = $('#menuButton').attr('data-trigger');
   resizeMenu(offcanvas_id);
@@ -520,18 +651,30 @@ function loginFunctions() {
     })
   }
 
-  /*$('.register-form button').on('click', function(e) {
+  $('.register-form button').on('click', function(e) {
     e.preventDefault();
     const regex = /\S+@\S+\.\S+/;
-    const email = $('.register-form input').val();
+    const email = $(e.target).closest('form').find('input').val();
+    const registerForm = $(e.target).closest('form');
     if (regex.test(email)) {
-      $(e.target).prev('div').find('span.is-invalid').addClass('d-none');
-      $(e.target).closest('form').trigger('submit');
+      $(e.target).prev('span').removeClass('d-block');
+      registerForm.find('input').removeClass('is-invalid');
+      registerForm.trigger('submit');
     } else {
-      $(e.target).prev('div').find('span.is-invalid').removeClass('d-none');
+      $(e.target).prev('span').addClass('d-block');
+      registerForm.find('input').addClass('is-invalid');
     }
-  });*/
+  });
 }
+
+$('.register-form input').on('keyup', function(e) {
+  const regex = /\S+@\S+\.\S+/;
+  const email = $(e.target).closest('form').find('input').val();
+  if (regex.test(email) && $(e.target).hasClass('is-invalid')) {
+    $(e.target).closest('div').next('span').removeClass('d-block');
+    $(e.target).removeClass('is-invalid');
+  }
+});
 
 /**
  * Share function
@@ -658,6 +801,7 @@ function resizeContent() {
   }
   shareFunctions();
   resizeMenu($('#menuButton').attr('data-trigger'));
+  resizeFilterMobileMenu();
   Fresco.hide();
 }
 
@@ -673,6 +817,7 @@ function init() {
   });
   shareFunctions();
   productFunctions();
+  filterProductFunctions();
   // Menu Functions
   megamenuFunctions();
   menuIconesFunctions();

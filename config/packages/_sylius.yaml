@@ -155,7 +155,7 @@ sylius_product:
         product_variant:
             classes:
                 model: App\Entity\Product\ProductVariant
-                repository: BitBag\SyliusProductBundlePlugin\Repository\ProductVariantRepository
+                repository: App\Repository\ProductVariantRepository
             translation:
                 classes:
                     model: App\Entity\Product\ProductVariantTranslation
@@ -363,6 +363,31 @@ sylius_grid:
                                 route: sylius_shop_order_show
                                 parameters:
                                     tokenValue: resource.tokenValue
+        sylius_shop_product:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%sylius.model.product.class%"
+                    repository:
+                        method: createShopListQueryBuilder
+                        arguments:
+                            channel: "expr:service('sylius.context.channel').getChannel()"
+                            taxon: "expr:notFoundOnNull(service('sylius.repository.taxon').findOneBySlug($slug, service('sylius.context.locale').getLocaleCode()))"
+                            locale: "expr:service('sylius.context.locale').getLocaleCode()"
+                            sorting: "expr:service('request_stack').getCurrentRequest().get('sorting', [])"
+                            includeAllDescendants: "expr:parameter('sylius_shop.product_grid.include_all_descendants')"
+                            criteria: "expr:service('request_stack').getCurrentRequest().get('criteria', [])"
+            filters:
+                search:
+                    enabled: false
+                size:
+                    type: size
+                price:
+                    type: price
+    templates:
+        filter:
+            size: '@SyliusShop/Grid/Filter/size.html.twig'
+            price: '@SyliusShop/Grid/Filter/price.html.twig'
 
 liip_imagine:
     filter_sets:

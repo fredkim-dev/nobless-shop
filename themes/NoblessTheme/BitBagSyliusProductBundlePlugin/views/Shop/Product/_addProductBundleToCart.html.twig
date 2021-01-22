@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-12 col-lg mt-3 mt-lg-0 d-flex flex-column justify-content-between">
                     <div>
-                        <h4 class="mb-0">{{ data.productVariant.product.name }}</h4>
+                        <h4 class="mb-0"><a href="{{ path('sylius_shop_product_show', {'slug': data.productVariant.product.slug, '_locale': data.productVariant.product.translation.locale}) }}">{{ data.productVariant.product.name }}</a></h4>
                         <div class="pb-1 bundle-item-price separator-between-item mb-4 mb-md-0">{{ money.calculatePrice(data.productVariant.product|sylius_resolve_variant) }}</div>
                     </div>
                     {% if item.productVariant is defined %}
