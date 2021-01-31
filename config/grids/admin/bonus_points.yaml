@@ -1,0 +1,16 @@
+sylius_grid:
+    grids:
+        app_admin_bonus_points:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: AppBundlBitBagSyliusBonusPointsPlugine\Entity\CustomerBonusPoints
+            fields:
+                customer:
+                    type: string
+                    label: sylius.ui.customer
+                bonusPoints:
+                    type: string
+                    label: Bonus Points
+                    # options:
+                    #     template: SyliusAdminBundle:Grid/Field:enabled.html.twig # This will be a checkbox field
