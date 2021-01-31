@@ -19,6 +19,7 @@
     "require": {
         "php": "^7.2",
         "beberlei/doctrineextensions": "^1.2",
+        "bitbag/bonus-points-plugin": "^1.0@beta",
         "bitbag/cms-plugin": "^2.3",
         "bitbag/product-bundle-plugin": "dev-master",
         "friendsofsymfony/ckeditor-bundle": "1.2.0",

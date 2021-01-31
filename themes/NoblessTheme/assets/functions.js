@@ -533,6 +533,30 @@ function cartFunctions() {
     }
   });
 
+  // Apply bonus points
+  $('.bonus-points-btn').on('click', function() {
+    const bonusPoints = $('.bonus-points').val();
+    console.log(bonusPoints);
+    if (bonusPoints === '') {
+      $('#sylius_cart_bonusPoints').val('');
+    } else {
+      $('#sylius_cart_bonusPoints').val(bonusPoints);
+    }
+
+    $('form.form-to-submit').trigger('submit');
+  });
+
+  $("body").on("keydown", ".bonus-points", function () {
+    $(this).closest('div').removeClass('invalid-code');
+    $('.bonus-points-error').html('');
+  });
+
+  if($('#bitbag-bonus-points .form-error-message').html() != undefined) {
+    $('.bonus-points-input').addClass('invalid-code');
+    $('.bonus-points-error').html($('#bitbag-bonus-points .form-error-message').html());
+    $('.bonus-points').val($('#sylius_cart_bonusPoints').val());
+  }
+
   // Apply coupon code
   $('.coupon-code-btn').on('click', function() {
     const coupon = $('.coupon-code').val();

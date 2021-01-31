@@ -26,6 +26,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "bitbag/bonus-points-plugin": {
+        "version": "v1.0.0-beta.1"
+    },
     "bitbag/cms-plugin": {
         "version": "v2.3.4"
     },
