@@ -14,6 +14,7 @@
     "jquery": "^3.4.1",
     "jquery.dirtyforms": "^2.0.0",
     "lightbox2": "^2.9.0",
+    "nouislider": "^14.6.3",
     "popper.js": "^1.16.1",
     "semantic-ui-css": "^2.2.0",
     "slick-carousel": "^1.8.1"

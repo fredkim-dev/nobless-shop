@@ -14,6 +14,7 @@
 @import '~semantic-ui-css/components/flag.min.css';
 @import '~glightbox/dist/css/glightbox.min.css';
 @import '../fresco/css/fresco.css';
+@import '~nouislider/distribute/nouislider.min.css';
 @font-face {
     font-family: 'Open Sans';
     src: url('../fonts/OpenSans-Regular.eot');
@@ -22,6 +23,16 @@
         url('../fonts/OpenSans-Regular.woff') format('woff'),
         url('../fonts/OpenSans-Regular.ttf') format('truetype'),
         url('../fonts/OpenSans-Regular.svg#OpenSans-Regular') format('svg');
+}
+
+@font-face {
+    font-family: 'Open Sans Bold';
+    src: url('../fonts/OpenSans-Bold.eot');
+    src: url('../fonts/OpenSans-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/OpenSans-Bold.woff2') format('woff2'),
+        url('../fonts/OpenSans-Bold.woff') format('woff'),
+        url('../fonts/OpenSans-Bold.ttf') format('truetype'),
+        url('../fonts/OpenSans-Bold.svg#OpenSans-Regular') format('svg');
 }
 
 @font-face {
@@ -46,6 +57,10 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Open Sans', 'Roboto', sans-serif;
+}
+
+strong {
+    font-family: 'Open Sans Bold', 'Roboto', sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -529,7 +544,6 @@ div.dropdown-menu {
         font-size: 0.8rem;
     }
     .input-group {
-        width: 75%;
         .form-control {
             &:focus {
                 box-shadow: none;
@@ -549,6 +563,7 @@ div.dropdown-menu {
         }
     }
     .row.footer-links {
+        flex-direction: row;
         .payment-mode, .delivery-mode {
             margin-bottom: 15px;
             img {
@@ -563,6 +578,7 @@ div.dropdown-menu {
             }
         }
     }
+
     #footerLinksCollapse {
         .svg-inline--fa {
             width: 0.7rem;
@@ -591,7 +607,16 @@ div#mainContentContainer {
     nav .breadcrumb {
         margin-top: 1rem !important;
     }
+    strong,
+    .font-weight-bold {
+        font-family: 'Open Sans Bold', 'Roboto', sans-serif;
+    }
 
+    .page-content {
+        h2 {
+            font-size: 1.1rem;
+        }
+    }
 }
 
 /*================*/
@@ -797,12 +822,12 @@ div#mainContentContainer {
                     .out-of-stock {
                         border-bottom: 1px solid #271513;
                         position: absolute;
-                        width: 55px;
+                        width: 68px;
                         transform: rotate(-45deg);
                         -webkit-transform: rotate(-45deg);
                         -ms-transform: rotate(-45deg);
-                        left: -8px;
-                        top: 18px;
+                        left: -10px;
+                        top: 23px;
                     }
                 }
             }
@@ -951,37 +976,46 @@ div.taxon-header {
         }
 
         #priceFilter {
+            width: 250px;
             .price-input {
                 width: 50px;
             }
-            .slider-handle {
-                background-image: none;
-                background-color: #271513;
-                height: 20px;
-                width: 12px;
-                &.round {
-                    -webkit-border-radius: 4px;
-                    -moz-border-radius: 4px;
-                    border-radius: 4px;
-                }
-            }
-            .slider-selection {
-                background-image: none;
-                background-color: #271513;
-
-            }
-            .slider {
+            #priceRange {
                 margin-top: 1rem;
-                &.slider-horizontal {
-                    .slider-track {
-                        height: 7px;
-                        margin-top: -3px;
-                    }
-                    .slider-handle {
-                        margin-left: -7px;
+                &.noUi-horizontal {
+                    height: 12px;
+                    .noUi-handle {
+                        width: 20px;
+                        height: 20px;
+                        right: -8px;
+                        top: -5px;
+                        &:before,
+                        &:after {
+                            height: 8px;
+                            width: 1px;
+                            left: 9px;
+                            top: 5px;
+                        }
+                        &:focus,
+                        &:active {
+                            outline: #271513 auto 1px;
+                        }
                     }
                 }
+                .noUi-connect {
+                    background: #271513;
+                }
             }
+        }
+    }
+    #productsFilters {
+        #priceFilter {
+            padding: 0 1.5rem;
+        }
+    }
+    #productsFiltersMobile {
+        #priceFilter {
+            width: 70%;
         }
     }
 }
@@ -1941,6 +1975,10 @@ div {
             visibility:visible;
         }
     }
+
+    .row.footer-links {
+        flex-direction: column !important;
+    }
 }
 
 @media all and (max-width: 992px) {
@@ -1963,12 +2001,6 @@ div {
     div {
         &.col.slick-slide {
             padding: 0;
-        }
-    }
-
-    #footerInfos {
-        .input-group {
-            width: 50%;
         }
     }
 }
@@ -2044,21 +2076,29 @@ div {
     .mobile-offcanvas {
         width: 60%;
     }
-    #productsFiltersMobile {
-        .close {
-            font-size: 2.2rem;
-            opacity: 0.8;
-            color: white;
-            position: absolute;
-            right: -36px;
-            top: 6px;
-            display: block !important;
-            &:hover {
-                cursor: pointer;
+    #taxonIndex {
+        #productsFiltersMobile {
+            .close {
+                font-size: 2.2rem;
+                opacity: 0.8;
+                color: white;
+                position: absolute;
+                right: -36px;
+                top: 6px;
+                display: block !important;
+
+                &:hover {
+                    cursor: pointer;
+                }
             }
-        }
-        .dropdown-menu {
-            width: 85%;
+
+            .dropdown-menu {
+                width: 85%;
+            }
+
+            #priceFilter {
+                width: auto;
+            }
         }
     }
     #product-info {
@@ -2066,14 +2106,8 @@ div {
             position: relative;
             top: auto;
             right: auto;
-            margin-top: 0;
             margin: 0 !important;
             padding: 0 15px;
-        }
-    }
-    #footerInfos {
-        .input-group {
-            width: 100%;
         }
     }
     #resetPasswordModal {

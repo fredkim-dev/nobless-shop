@@ -1,5 +1,6 @@
 import 'slick-carousel/slick/slick.min';
 import Fresco from './fresco/js/fresco.min';
+import noUiSlider from 'nouislider';
 
 /**
  * Resize function to keep all the main-content visible
@@ -294,42 +295,64 @@ function productFunctions() {
 function filterProductFunctions() {
   const queryString = window.location.search;
   const criteria = queryString.indexOf('criteria');
-  /*const priceInput = $('.price-filter .price-input');
-  // Mobile Slider
-  const priceMinMobile = $('#productsFiltersMobile input[name="criteria[price][price_1]');
-  const priceMaxMobile = $('#productsFiltersMobile input[name="criteria[price][price_2]');
-  const priceSliderMobile = $('#productsFiltersMobile .slider').slider({
-    'value': [parseFloat(priceMinMobile.val()), parseFloat(priceMaxMobile.val())],
-    'min': parseFloat(priceInput.data('min')),
-    'max': parseFloat(priceInput.data('max')),
-    'tooltip': 'hide',
-  });
-  priceSliderMobile.on('slide', function(e) {
-    const newValue = e.value;
-    priceMinMobile.val(newValue[0]);
-    priceMaxMobile.val(newValue[1]);
-  });
-  // Desktop Slider
-  const priceMin = $('#productsFilters input[name="criteria[price][price_1]');
-  const priceMax = $('#productsFilters input[name="criteria[price][price_2]');
-  const priceSlider = $('#productsFilters .slider').slider({
-    'value': [parseFloat(priceMin.val()), parseFloat(priceMax.val())],
-    'min': parseFloat(priceInput.data('min')),
-    'max': parseFloat(priceInput.data('max')),
-    'tooltip': 'hide',
-  });
-  priceSlider.on('slide', function(e) {
-    const newValue = e.value;
-    priceMin.val(newValue[0]);
-    priceMax.val(newValue[1]);
-  });
+  const priceInput = $('.price-filter .price-input');
+  let priceSlider;
+  let priceSliderMobile;
+  const priceMin = $('#productsFilters input[name="criteria[price][price_1]"]');
+  const priceMax = $('#productsFilters input[name="criteria[price][price_2]"]');
+  const priceMinMobile = $('#productsFiltersMobile input[name="criteria[price][price_1]"]');
+  const priceMaxMobile = $('#productsFiltersMobile input[name="criteria[price][price_2]"]');
+  if (priceInput.length > 0) {
+    // Prepare slider options
+    const taxonMinPrice = parseFloat(priceInput.first().data('min'));
+    const taxonMaxPrice = parseFloat(priceInput.first().data('max'));
+    const rangeSliderOptions = {
+      start: [priceMin.val(), priceMax.val()],
 
-  priceInput.on('keyup', function(e) {
-    const newValue = [parseFloat(priceMin.val()), parseFloat(priceMax.val())];
-    priceSlider.slider('setValue', newValue);
-    const newValueMobile = [parseFloat(priceMinMobile.val()), parseFloat(priceMaxMobile.val())];
-    priceSliderMobile.slider('setValue', newValueMobile);
-  });*/
+      range: {
+        'min': [taxonMinPrice],
+        'max': [taxonMaxPrice]
+      },
+      step: 1,
+      connect: true,
+      format: {
+        to: function (value) {
+          return value;
+        },
+        from: function (value) {
+          return value;
+        }
+      },
+      behaviour: 'tap',
+      tooltips: false
+    };
+
+    // Desktop Slider
+    const priceRange = $('#productsFilters #priceRange');
+    priceSlider = noUiSlider.create(priceRange[0], rangeSliderOptions);
+    priceSlider.on('slide', function(newValue) {
+      priceMin.val(parseInt(newValue[0]));
+      priceMax.val(parseInt(newValue[1]));
+    });
+
+    // Mobile Slider
+    const priceRangeMobile = $('#productsFiltersMobile #priceRange');
+    priceSliderMobile = noUiSlider.create(priceRangeMobile[0], rangeSliderOptions);
+    priceSliderMobile.on('slide', function(newValue) {
+      priceMinMobile.val(parseInt(newValue[0]));
+      priceMaxMobile.val(parseInt(newValue[1]));
+    });
+
+    // When user changes price input value
+    priceInput.on('keyup', function(e) {
+      if(e.which !== 8 && !isNaN(String.fromCharCode(e.which))){
+        const newValue = [priceMin.val(), priceMax.val()];
+        priceSlider.set(newValue);
+        const newValueMobile = [priceMinMobile.val(), priceMaxMobile.val()];
+        priceSliderMobile.set(newValueMobile);
+      }
+    });
+  }
 
   const sizeFilterInput = $('#sizeFilter input');
   sizeFilterInput.each(function( index ) {
@@ -368,6 +391,8 @@ function filterProductFunctions() {
   // Validate filters
   $('a.validate-filter').on('click', function(e) {
     e.preventDefault();
+    checkPriceValue(priceSlider, priceMin, priceMax);
+    checkPriceValue(priceSliderMobile, priceMinMobile, priceMaxMobile);
     $('#productFilterForm').submit();
   });
 
@@ -377,6 +402,8 @@ function filterProductFunctions() {
       $('.input-sorting:checked').remove();
       $('.input-sorting-createdAt').attr('checked', true).removeClass('d-none').addClass('d-inline-block');
     }
+    checkPriceValue(priceSlider, priceMin, priceMax);
+    checkPriceValue(priceSliderMobile, priceMinMobile, priceMaxMobile);
     $(this).closest('form').submit();
   })
 
@@ -407,6 +434,27 @@ function filterProductFunctions() {
     e.preventDefault();
     $('#productsFiltersMobile .dropdown-toggle').trigger('click');
   })
+}
+
+function checkPriceValue(priceSliderObject, priceMin, priceMax) {
+  const priceInput = $('.price-filter .price-input').first();
+  let priceMinValue = priceMin.val();
+  let priceMaxValue = priceMax.val();
+  if (priceMin.val() < priceInput.data('min')) {
+    priceMinValue = priceInput.data('min');
+  }
+  if (priceMin.val() > priceInput.data('max')) {
+    priceMinValue = priceInput.data('max');
+  }
+  priceMin.val(priceMinValue);
+  if (priceMax.val() > priceInput.data('max')) {
+    priceMaxValue = priceInput.data('max');
+  }
+  if (priceMax.val() < priceInput.data('min')) {
+    priceMaxValue = priceInput.data('min');
+  }
+  priceMax.val(priceMaxValue);
+  priceSliderObject.set([priceMinValue, priceMaxValue]);
 }
 
 /**
@@ -604,24 +652,24 @@ function developMobileMenu(divToOpen) {
 }
 
 function loginFunctions() {
-  if($('.login-form') || $('.register-form')) {
-    $('.btn-form').on('click', function(e) {
+  if($('.login-form')) {
+    $('.submit-login').on('click', function(e) {
       e.preventDefault();
       const formElement = $(this).data('form');
-      $(formElement + ' button').trigger('click');
+      $(formElement).submit();
     });
   }
 
   if($('.verify-account')) {
     $('.verify-account').on('click', function(e) {
       e.preventDefault();
-      $(this).closest('form').trigger('submit');
+      $(this).closest('form').submit();
     });
   }
 
   if ($('#resetPasswordSubmit')) {
-    $('#resetPasswordSubmit').on('click', function(e) {
-      e.preventDefault();
+    $('#resetPasswordSubmit').on('click', function(event) {
+      event.preventDefault();
       $('.reset-password .modal-dialog .form-error-message').html('');
       const form = $(this).closest('form');
       $(form).addClass('loading');
@@ -651,17 +699,23 @@ function loginFunctions() {
     })
   }
 
-  $('.register-form button').on('click', function(e) {
+  $('button.submit-register').on('click', function(e) {
     e.preventDefault();
     const regex = /\S+@\S+\.\S+/;
-    const email = $(e.target).closest('form').find('input').val();
-    const registerForm = $(e.target).closest('form');
+    let email = $(e.target).closest('form').find('input').val();
+    let registerForm = $(e.target).closest('form');
+    let invalidSpan = $(e.target).prev('span');
+    if($(e.target).data('form') !== undefined) {
+      registerForm = $($(e.target).data('form'));
+      email = $(registerForm).find('input').val()
+      invalidSpan = $($(registerForm).find('.invalid-feedback'));
+    }
     if (regex.test(email)) {
-      $(e.target).prev('span').removeClass('d-block');
+      invalidSpan.removeClass('d-block');
       registerForm.find('input').removeClass('is-invalid');
-      registerForm.trigger('submit');
+      registerForm.submit();
     } else {
-      $(e.target).prev('span').addClass('d-block');
+      invalidSpan.addClass('d-block');
       registerForm.find('input').addClass('is-invalid');
     }
   });

@@ -1,9 +1,9 @@
-{{ form_start(form, {'action': path('sylius_shop_to_register'), 'method': 'POST', 'attr': {'class': 'register-form col-12', 'novalidate': 'novalidate'}}) }}
+{{ form_start(form, {'action': path('sylius_shop_to_register'), 'method': 'POST', 'attr': {'class': 'col-12 register-form', 'novalidate': 'novalidate'}}) }}
     <div class="form-group">
         {{ form_widget(form.username) }}
     </div>
     <span class="invalid-feedback mb-1">
         <span class="form-error-message">{{ 'sylius.ui.invalid_email'|trans }}</span>
     </span>
-    <button type="submit" class="col-12 btn btn-primary">{{ 'sylius.ui.create_an_account'|trans }}</button>
+    <button type="submit" class="col-12 btn btn-primary submit-register">{{ 'sylius.ui.create_an_account'|trans }}</button>
 {{ form_end(form, {'render_rest': false}) }}

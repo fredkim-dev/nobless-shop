@@ -2,22 +2,29 @@
 <div id="footerInfos">
     <div class="container-fluid">
         <div class="row py-2 footer-legal justify-content-center pr-3">
-            <div class="col-xs col-md-4 col-lg-3 d-flex flex-row return-policy justify-content-center justify-content-lg-left my-2 text-center">
+            <div class="col-12 col-sm-6 col-xl-3 d-flex flex-row return-policy justify-content-center justify-content-lg-left my-2 text-center p-0">
                 <span class="ml-4">
-                    <h5 class="mb-2">{{ 'sylius.ui.money_back_guarantee'|trans }}</h5>
+                    <h5 class="mb-1">{{ 'sylius.ui.money_back_guarantee'|trans }}</h5>
                     <p class="m-0 tight-text">{{ 'sylius.ui.money_back_guarantee_desc_1'|trans }}<br>{{ 'sylius.ui.money_back_guarantee_desc_2'|trans }}</p>
                 </span>
             </div>
-            <div class="col-xs col-md-4 col-lg-3 d-flex flex-row delivery justify-content-center justify-content-lg-left my-2 text-center">
+            <div class="col-12 col-sm-6 col-xl-3 d-flex flex-row delivery justify-content-center justify-content-lg-left my-2 text-center p-0">
                 <span class="ml-4">
-                    <h5 class="mb-2">{{ 'sylius.ui.express_delivery'|trans }}</h5>
+                    <h5 class="mb-1">{{ 'sylius.ui.express_delivery'|trans }}</h5>
                     <p class="m-0 tight-text">{{ 'sylius.ui.express_delivery_desc_1'|trans }}<br>{{ 'sylius.ui.express_delivery_desc_2'|trans }}</p>
                 </span>
             </div>
-            <div class="col-xs col-md-4 col-lg-3 d-flex flex-row payment justify-content-center justify-content-lg-left my-2 text-center">
+            <div class="col-12 col-sm-6 col-xl-3 d-flex flex-row payment justify-content-center justify-content-lg-left my-2 text-center p-0">
                 <span class="ml-4">
-                    <h5 class="mb-2">{{ 'sylius.ui.secured_payment'|trans }}</h5>
+                    <h5 class="mb-1">{{ 'sylius.ui.secured_payment'|trans }}</h5>
                     <p class="m-0 tight-text">{{ 'sylius.ui.secured_payment_desc'|trans }}<br>{{ 'sylius.ui.secured_payment_cards'|trans }}</p>
+                </span>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-3 d-flex flex-row delivery justify-content-center justify-content-lg-left my-2 text-center p-0">
+                <span class="ml-4">
+                    <h5 class="mb-1">{{ 'sylius.ui.client_service'|trans }}</h5>
+                    <p class="m-0 tight-text">{{ 'sylius.ui.client_service_desc'|trans }}<br>
+                    <a href="#">{{ 'sylius.ui.contact_us'|trans }}</a></p>
                 </span>
             </div>
         </div>
@@ -25,15 +32,16 @@
             <img class="logo img-fluid" src="{{ asset('nobless-theme/images/logo.png', 'noblessTheme') }}" alt="Noblezz logo" />
         </div>
         {# DESKTOP FOOTER #}
-        <div class="row footer-links mt-3 mx-3 mx-xl-5 justify-content-start justify-content-sm-center d-none d-sm-flex flex-row">
+        <div class="row footer-links mt-3 mx-3 mx-xl-5 justify-content-start justify-content-sm-center d-none d-sm-flex">
             <div class="col-12 col-xl-4 d-flex flex-column text-center text-xl-left mt-3 mt-lg-0">
                 <img class="logo img-fluid d-block d-xl-none mt-3 mb-1 mx-auto" src="{{ asset('nobless-theme/images/logo.png', 'noblessTheme') }}" alt="Noblezz logo" />
                 <h5 class="mb-1">{{ 'sylius.ui.find_noblezz'|trans }}</h5>
                 <label for="newsletterSubscribe" class="text-uppercase mb-1">{{ 'sylius.ui.newsletter_subscribe'|trans }}</label>
-                <p class="tight-text">
-                    {{ 'sylius.ui.newsletter_info'|trans }} <a href="#" class="text-lowercase">{{ 'sylius.ui.privacy_policy'|trans }}</a>
+                <p class="col-md-10 p-0 mb-1 mx-md-auto mx-xl-0 tight-text">
+                    {{ 'sylius.ui.newsletter_info_1'|trans }} <br>
+                    {{ 'sylius.ui.newsletter_info_2'|trans }} <a href="#" class="text-lowercase">{{ 'sylius.ui.privacy_policy'|trans }}</a>
                 </p>
-                <div class="input-group mx-auto mx-xl-0">
+                <div class="input-group mx-auto mx-xl-0 col-md-10 col-lg-9 col-xl-11 p-0">
                     <input id="newsletterSubscribe" type="text" class="form-control" />
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button"> > </button>
@@ -46,19 +54,16 @@
             <div class="p-0 col-12 col-xl-7 offset-xl-1 col-xxl-6 offset-xxl-2 d-flex flex-row">
                 <div class="col-4 d-flex flex-column mb-3 text-center text-sm-left">
                     <h5 class="is-underline">{{ 'sylius.ui.customer_information'|trans }}</h5>
-                    <a href="#">{{ 'sylius.ui.legal_notice'|trans }}</a>
-                    <a class="banner-link" href="{{ path('bitbag_sylius_cms_plugin_shop_page_show_link_by_code', {'code' : 'cgv'}) }}">{{ 'sylius.ui.terms_and_conditions'|trans }}</a>
-                    <a href="#">{{ 'sylius.ui.privacy_policy'|trans }}</a>
-                    <a href="#">{{ 'sylius.ui.delivery_and_returns'|trans }}</a>
-                    <a href="#">{{ 'sylius.ui.client_service'|trans }}</a>
-                    <a href="#">{{ 'sylius.ui.contact_us'|trans }}</a>
+                    <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'legal-notice'}) }}">{{ 'sylius.ui.legal_notice'|trans }}</a>
+                    <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'terms-of-sales'}) }}">{{ 'sylius.ui.terms_and_conditions'|trans }}</a>
+                    <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'privacy-policy'}) }}">{{ 'sylius.ui.privacy_policy'|trans }}</a>
+                    <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'delivery-and-returns'}) }}">{{ 'sylius.ui.delivery_and_returns'|trans }}</a>
+                    <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'client-service'}) }}">{{ 'sylius.ui.client_service_faq'|trans }}</a>
+                    <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'contact-us'}) }}">{{ 'sylius.ui.contact_us'|trans }}</a>
                 </div>
                 <div class="col-4 d-flex flex-column mb-3 text-center text-sm-left">
                     <h5 class="is-underline">{{ 'sylius.ui.my_account'|trans }}</h5>
-                    <a href="#">{{ 'sylius.menu.shop.account.personal_information'|trans }}</a>
-                    <a href="#">{{ 'sylius.menu.shop.account.order_history'|trans }}</a>
-                    <a href="#">{{ 'sylius.menu.shop.account.client_assets'|trans }}</a>
-                    <a href="#">{{ 'sylius.menu.shop.account.address_book'|trans }}</a>
+                    {{ knp_menu_render('sylius.shop.account', {'template': '@SyliusShop/Menu/Footer/menuAccountLinks.html.twig'}) }}
                 </div>
                 <div class="col-4 d-flex flex-column mb-3 text-center text-sm-left">
                     {{ render(url('sylius_shop_partial_taxon_index_by_code', {'code': 'category', 'template': '@SyliusShop/Taxon/Footer/footerTaxons.html.twig'})) }}
@@ -73,7 +78,8 @@
                 <h5 class="mb-0">{{ 'sylius.ui.find_noblezz'|trans }}</h5>
                 <label for="newsletterSubscribe" class="text-uppercase mb-0">{{ 'sylius.ui.newsletter_subscribe'|trans }}</label>
                 <p class="tight-text mb-2">
-                    {{ 'sylius.ui.newsletter_info'|trans }} <a href="#" class="text-lowercase">{{ 'sylius.ui.privacy_policy'|trans }}</a>
+                    {{ 'sylius.ui.newsletter_info_1'|trans }} <br>
+                    {{ 'sylius.ui.newsletter_info_2'|trans }} <a href="#" class="text-lowercase">{{ 'sylius.ui.privacy_policy'|trans }}</a>
                 </p>
                 <div class="input-group">
                     <input id="newsletterSubscribe" type="text" class="form-control" />
@@ -88,21 +94,18 @@
             <div class="col-xs col-md-3 d-flex flex-column text-left">
                 <h5 class="nav-item nav-link mx-2 px-0 collapsed" href="#footer-info-collapse" data-toggle="collapse">{{ 'sylius.ui.customer_information'|trans }}<i class="fa fa-plus"></i><i class="fa fa-minus"></i></h5>
                 <ul id="footer-info-collapse" class="collapse px-2" data-parent="#footerLinksCollapse">
-                    <li><a href="#">{{ 'sylius.ui.legal_notice'|trans }}</a></li>
-                    <li><a class="banner-link" href="{{ path('bitbag_sylius_cms_plugin_shop_page_show_link_by_code', {'code' : 'cgv'}) }}">{{ 'sylius.ui.terms_and_conditions'|trans }}</a></li>
-                    <li><a href="#">{{ 'sylius.ui.privacy_policy'|trans }}</a></li>
-                    <li><a href="#">{{ 'sylius.ui.delivery_and_returns'|trans }}</a></li>
-                    <li><a href="#">{{ 'sylius.ui.client_service'|trans }}</a></li>
-                    <li><a href="#">{{ 'sylius.ui.contact_us'|trans }}</a></li>
+                    <li><a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'legal-notice'}) }}">{{ 'sylius.ui.legal_notice'|trans }}</a></li>
+                    <li><a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'terms-of-sales'}) }}">{{ 'sylius.ui.terms_and_conditions'|trans }}</a></li>
+                    <li><a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'privacy-policy'}) }}">{{ 'sylius.ui.privacy_policy'|trans }}</a></li>
+                    <li><a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'delivery-and-returns'}) }}">{{ 'sylius.ui.delivery_and_returns'|trans }}</a></li>
+                    <li><a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'client-service'}) }}">{{ 'sylius.ui.client_service_faq'|trans }}</a></li>
+                    <li><a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'contact-us'}) }}">{{ 'sylius.ui.contact_us'|trans }}</a></li>
                 </ul>
             </div>
             <div class="col-xs col-md-3 d-flex flex-column text-left">
                 <h5 class="nav-item nav-link mx-2 px-0 collapsed" href="#footer-account-collapse" data-toggle="collapse">{{ 'sylius.ui.my_account'|trans }}<i class="fa fa-plus"></i><i class="fa fa-minus"></i></h5>
                 <ul id="footer-account-collapse" class="collapse px-2" data-parent="#footerLinksCollapse">
-                    <li><a href="#">{{ 'sylius.menu.shop.account.personal_information'|trans }}</a></li>
-                    <li><a href="#">{{ 'sylius.menu.shop.account.order_history'|trans }}</a></li>
-                    <li><a href="#">{{ 'sylius.menu.shop.account.client_assets'|trans }}</a></li>
-                    <li><a href="#">{{ 'sylius.menu.shop.account.address_book'|trans }}</a></li>
+                    {{ knp_menu_render('sylius.shop.account', {'template': '@SyliusShop/Menu/Footer/menuAccountMobileLinks.html.twig'}) }}
                 </ul>
             </div>
             <div class="col-xs col-md-3 d-flex flex-column text-left">

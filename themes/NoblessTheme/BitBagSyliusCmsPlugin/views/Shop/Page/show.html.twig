@@ -3,9 +3,10 @@
 {%- block title -%}
     {% if page.title is not empty %}
         {{ page.title }}
-    {% else %}
-        {{ parent() }}
+    {% elseif page.name is not empty %}
+        {{ page.name }}
     {% endif %}
+    - {{ parent() }}
 {%- endblock -%}
 
 {% block metatags %}
@@ -18,28 +19,22 @@
 {% endblock %}
 
 {% block content %}
-    <div class="ui breadcrumb">
-        <a href="{{ path('sylius_shop_homepage') }}" class="breadcrumb-item section">{{ 'sylius.ui.home'|trans }}</a>
-        <div class="active section breadcrumb-item">{{ page.breadcrumb }}</div>
-    </div>
-    <div class="ui segment">
-        <h1 class="ui dividing header bitbag-page-name">{{ page.name }}</h1>
+    <div class="row col-11 col-md-10 col-xl-8 mx-auto mb-5">
+        <h1 class="text-uppercase mx-auto mb-4">{{ page.name }}</h1>
 
-        <div class="ui grid center aligned">
-            <div class="eight wide column">
-                {% if page.image %}
+        {% if page.image %}
+            <div>
+                <div>
                     {% set path = preview is defined and preview == true ? page.image.path : '/media/image/'~page.image.path %}
-
-                    <img class="page-image ui fluid image" src="{{ path }}" alt="">
-                {% endif %}
+                    <img class="img-fluid" src="{{ path }}" alt="">
+                </div>
             </div>
-        </div>
+        {% endif %}
 
-        <div class="ui hidden divider"></div>
 
-        <div class="bitbag-page-content">{{ bitbag_cms_render_content(page) }}</div>
-        <div class="ui dividing header"></div>
-        <div class="bitbag-page-sections">
+        <div class="page-content">{{ bitbag_cms_render_content(page) }}</div>
+
+        <div>
             {% include '@BitBagSyliusCmsPlugin/Shop/Page/Show/_sections.html.twig' %}
         </div>
     </div>

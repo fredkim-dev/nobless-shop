@@ -1,9 +1,9 @@
 {% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
 
-<div id="priceFilter" class="price-filter m-3 text-center">
+<div id="priceFilter" class="price-filter m-3 text-center mx-0 mx-md-auto">
     <div class="d-flex flex-row justify-content-between">
         {{ form_row(form.price_1) }}
         {{ form_row(form.price_2) }}
     </div>
-    <input class="slider d-none" />
+    <div id="priceRange"></div>
 </div>

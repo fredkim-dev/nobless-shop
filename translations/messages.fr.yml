@@ -79,23 +79,26 @@ sylius:
         cheapest_first: Prix croissant
         most_expensive_first: Prix décroissant     
         money_back_guarantee: Satisfait ou remboursé
-        money_back_guarantee_desc_1: 14 jours pour essayer votre produit
-        money_back_guarantee_desc_2: ou nous le retourner            
-        express_delivery: Livraison Express
+        money_back_guarantee_desc_1: 14 jours pour retourner votre colis
+        money_back_guarantee_desc_2: Retours offerts            
+        express_delivery: Livraison Offerte
         express_delivery_desc_1: Chez vous ou en point relais
-        express_delivery_desc_2: Livraison gratuite à partir de 49€
+        express_delivery_desc_2: Livraison gratuite à partir de 59€
         secured_payment: Paiement sécurisé
         secured_payment_desc: Réglez votre commande en toute sérénité
         secured_payment_cards: Mastercard, Visa, Paypal
+        client_service: Service Client
+        client_service_desc: Nos conseillers Noblezz sont à votre écoute
         newsletter: Newsletter
         find_noblezz: Retrouvez Noblezz
         newsletter_subscribe: Inscrivez-vous à la newsletter
-        newsletter_info: En saisissant votre adresse mail ci-dessous, vous acceptez de recevoir notre newsletter qui présente nos dernières collections, nos évènements et nos initiatives. Vous trouverez plus d'informations à ce sujet dans notre 
+        newsletter_info_1: En saisissant votre adresse mail ci-dessous, vous acceptez de recevoir notre newsletter qui présente nos dernières collections, nos évènements et nos initiatives.
+        newsletter_info_2: Vous trouverez plus d'informations à ce sujet dans notre
         customer_information: Informations
         legal_notice: Mentions légales
         privacy_policy: Politique de confidentialité
         delivery_and_returns: Livraison et retours
-        client_service: FAQ - Service client
+        client_service_faq: FAQ - Service client
         contact_us: Contactez-nous
         my_account: Mon compte
         shop_catalog: Catalogue

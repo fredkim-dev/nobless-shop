@@ -14,7 +14,7 @@
     {{ form_end(form, {'render_rest': false}) }}
 
     {{ sonata_block_render_event('sylius.shop.login.after_login') }}
-    
+
     <h5 class="no-border my-3 px-3">{{ 'sylius.ui.new_customers'|trans }}</h5>
     {% include '@SyliusShop/Login/headerRegister.html.twig' with {'form': form_register} %}
 </div>
