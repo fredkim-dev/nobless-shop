@@ -99,6 +99,10 @@ sylius:
         privacy_policy: Politique de confidentialité
         delivery_and_returns: Livraison et retours
         client_service_faq: FAQ - Service client
+        contact_form: Formulaire de contact
+        subject: Sujet
+        accept_cgv_contact: J'accepte les conditions générales
+        other_subject: Veuillez renseigner le sujet de votre message
         contact_us: Contactez-nous
         my_account: Mon compte
         shop_catalog: Catalogue
@@ -134,3 +138,26 @@ sylius:
         address:
             street: Adresse
             street2: Adresse (suite)
+        choice:
+            subject:
+                order_payment: Commande & Paiement
+                delivery: Expédition & Livraison
+                refund: Retour & Remboursement
+                product_info: Information Produits
+                account: Compte client
+                loyalty_program: Programme de fidélité
+                personal_data: Données Personnelles
+                partnership: Partenariat & Collaboration
+                career: Carrière
+                noblezz: La maison Noblezz
+                brand_rights: Droit de la Marque
+                other: Autre
+    email:
+        contact:
+            new_contact_request: Vous avez un nouveau message
+            new_request_from: 'Une nouvelle demande de contact a été faite par : '
+            request_infos: Voici les informations renseignées
+            subject_is: 'Le sujet concerne : '
+            message_is: 'Voici le message : '
+            email: 'Email : '
+            phone_number: 'Numéro de téléphone : '

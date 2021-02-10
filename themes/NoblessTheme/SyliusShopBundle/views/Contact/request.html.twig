@@ -1,0 +1,84 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% form_theme form '@SyliusShop/Form/theme.html.twig' %}
+
+{% import '@SyliusShop/Common/Macro/headers.html.twig' as headers %}
+
+{% block content %}
+    <div id="contactPage" class="row mb-4">
+        <div class="col-10 col-xl-8 mx-auto">
+            <h1 class="text-uppercase text-center">{{ 'sylius.ui.contact_form'|trans }}</h1>
+
+            {% include '@SyliusShop/_flashes.html.twig' %}
+
+            {{ bitbag_cms_render_block('contact_desc_1') }}
+
+            {{ sonata_block_render_event('sylius.shop.contact.request.after_content_header') }}
+
+            <div>
+                {{ form_start(form, {'action': path('sylius_shop_contact_request'), 'attr': {'class': 'loadable', 'novalidate': 'novalidate'}}) }}
+
+                <div class="row col-6 col-md-3 form-group">
+                    {{ form_label(form.gender) }}
+                    {{ form_widget(form.gender) }}
+                    {{ form_errors(form.gender) }}
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group">
+                        {{ form_label(form.firstname) }}
+                        {{ form_widget(form.firstname) }}
+                        {{ form_errors(form.firstname) }}
+                    </div>
+
+                    <div class="col-12 col-md-6 form-group">
+                        {{ form_label(form.lastname) }}
+                        {{ form_widget(form.lastname) }}
+                        {{ form_errors(form.lastname) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+
+                    <div class="col-12 col-md-6 form-group">
+                        {{ form_label(form.phoneNumber) }}
+                        {{ form_widget(form.phoneNumber) }}
+                        {{ form_errors(form.phoneNumber) }}
+                    </div>
+                </div>
+
+                {{ form_row(form.subject) }}
+                <div class="other-subject mb-3">
+                    {{ form_widget(form.other_subject) }}
+                </div>
+                {{ form_label(form.message) }}
+                {{ form_widget(form.message) }}
+                {{ form_errors(form.message) }}
+
+                {{ bitbag_cms_render_block('contact_desc_2') }}
+
+                {{ sonata_block_render_event('sylius.shop.contact.request.form', {'form': form}) }}
+
+                {{ form_row(form._token) }}
+                <div class="d-block d-md-flex flex-row justify-content-between align-items-center mb-4">
+                    <div class="col-12 col-md-6 p-0 mb-3 mb-md-0">
+                        <input type="checkbox" id="{{ form.acceptCgv.vars.id }}" name="{{ form.acceptCgv.vars.full_name }}" required class="form-check-input" {% if form.acceptCgv.vars.checked %}checked{% endif %}>
+                        <label for="{{ form.acceptCgv.vars.id }}" class="form-check-label{% if not form.acceptCgv.vars.valid %} is-invalid{% endif %}">
+                            {{ 'sylius.ui.accept_cgv_contact'|trans }}
+                            <span class="required d-inline-block ml-1">*</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary col-12 col-md-6">{{ 'sylius.ui.send'|trans }}</button>
+                </div>
+
+                {{ form_end(form, {'render_rest': false}) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
