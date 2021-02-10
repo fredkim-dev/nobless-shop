@@ -44,6 +44,17 @@ services:
     sylius.controller.shop.product:
         class: App\Controller\Shop\ProductController
         arguments: [ '@templating']
+        
+    sylius.controller.shop.contact_custom:
+        class: App\Controller\Shop\ContactController
+        arguments: 
+            - '@router'
+            - '@form.factory'
+            - '@templating'
+            - '@sylius.context.channel'
+            - '@sylius.context.customer'
+            - '@sylius.context.locale'
+            - '@sylius.email_manager.contact'
 
     sylius.controller.shop.locale_switch:
         class: App\Controller\Shop\LocaleSwitchController
@@ -77,6 +88,11 @@ services:
         class: App\Form\Extension\AddressTypeExtension
         tags:
             - { name: form.type_extension, extended_type: Sylius\Bundle\AddressingBundle\Form\Type\AddressType }
+
+    app.form.extension.contact:
+        class: App\Form\Extension\ContactTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Sylius\Bundle\CoreBundle\Form\Type\ContactType }
 
     #Menu
     app.listener.shop.menu_builder:

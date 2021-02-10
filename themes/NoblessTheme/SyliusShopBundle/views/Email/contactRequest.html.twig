@@ -1,0 +1,22 @@
+{% block subject %}
+    {{ 'sylius.email.contact.new_contact_request'|trans }}
+{% endblock %}
+
+{% block body %}
+    {% autoescape %}
+        {{ 'sylius.email.contact.new_request_from'|trans }} {{ data.firstname }} {{ data.lastname }}<br><br>
+        {{ 'sylius.email.contact.request_infos'|trans }} <br>
+        {{ 'sylius.email.contact.email'|trans }} {{ data.email }}
+        {% if data.phoneNumber %} <br>{{ 'sylius.email.contact.phone_number'|trans }} {{ data.phoneNumber }}{% endif %}
+        <br><br>
+        {{ 'sylius.email.contact.subject_is'|trans }}
+        {% if data.subject == 'other' %}
+            {{ data.other_subject }}
+        {% else %}
+            {{ ('sylius.form.choice.subject.' ~ data.subject)|trans }}
+        {% endif %}
+        <br><br>
+        {{ 'sylius.email.contact.message_is'|trans }}<br><br>
+        "{{ data.message|nl2br }}"
+    {% endautoescape %}
+{% endblock %}

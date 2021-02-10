@@ -1472,6 +1472,38 @@ div.taxon-header {
     }
 }
 
+/*==============*/
+/* CONTACT PAGE */
+/*==============*/
+#contactPage {
+    .other-subject {
+        display: none;
+    }
+    .form-check-input {
+        margin-left: 0;
+    }
+    .form-check-label {
+        margin-left: 1.25rem;
+        .required {
+            color: #dc3545;
+        }
+    }
+    label {
+        .invalid-feedback {
+            display: none !important;
+        }
+        &.is-invalid {
+            color: #dc3545;
+        }
+    }
+    .invalid-feedback {
+        .form-error-icon {
+            display: none !important;
+        }
+    }
+
+}
+
 /*==========================*/
 /* PRODUCT GALLERY CAROUSEL */
 /*==========================*/

@@ -7,3 +7,10 @@ sylius:
                 min_length: Votre mot de passe doit faire 6 caractères au minimum
     cart_item:
         not_available: L'article n'est pas en stock
+    contact:
+        lastname: 
+            not_blank: Veuillez saisir votre nom
+        firstname:
+            not_blank: Veuillez saisir votre prénom
+        email:
+            not_blank: Veuillez saisir votre email

@@ -731,6 +731,19 @@ $('.register-form input').on('keyup', function(e) {
 });
 
 /**
+ * Contact Page function
+ */
+function contactPageFunction() {
+  $('#sylius_contact_subject').on('change', function(e) {
+    if($(e.target).val() === 'other') {
+      $('.other-subject').show();
+    } else {
+      $('.other-subject').hide();
+    }
+  });
+}
+
+/**
  * Share function
  */
 function shareFunctions() {
@@ -880,6 +893,8 @@ function init() {
   ordersGridFunctions();
   loginPageFunctions();
   cartFunctions();
+
+  contactPageFunction();
 
   resizeMainContainer();
   if ($(document).width() > 768) {

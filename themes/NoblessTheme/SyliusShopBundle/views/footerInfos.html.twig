@@ -24,7 +24,7 @@
                 <span class="ml-4">
                     <h5 class="mb-1">{{ 'sylius.ui.client_service'|trans }}</h5>
                     <p class="m-0 tight-text">{{ 'sylius.ui.client_service_desc'|trans }}<br>
-                    <a href="#">{{ 'sylius.ui.contact_us'|trans }}</a></p>
+                    <a href="{{ path('sylius_shop_contact_request') }}">{{ 'sylius.ui.contact_us'|trans }}</a></p>
                 </span>
             </div>
         </div>
@@ -59,7 +59,7 @@
                     <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'privacy-policy'}) }}">{{ 'sylius.ui.privacy_policy'|trans }}</a>
                     <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'delivery-and-returns'}) }}">{{ 'sylius.ui.delivery_and_returns'|trans }}</a>
                     <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'client-service'}) }}">{{ 'sylius.ui.client_service_faq'|trans }}</a>
-                    <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'contact-us'}) }}">{{ 'sylius.ui.contact_us'|trans }}</a>
+                    <a href="{{ path('sylius_shop_contact_request') }}">{{ 'sylius.ui.contact_us'|trans }}</a>
                 </div>
                 <div class="col-4 d-flex flex-column mb-3 text-center text-sm-left">
                     <h5 class="is-underline">{{ 'sylius.ui.my_account'|trans }}</h5>
@@ -99,7 +99,7 @@
                     <li><a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'privacy-policy'}) }}">{{ 'sylius.ui.privacy_policy'|trans }}</a></li>
                     <li><a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'delivery-and-returns'}) }}">{{ 'sylius.ui.delivery_and_returns'|trans }}</a></li>
                     <li><a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'client-service'}) }}">{{ 'sylius.ui.client_service_faq'|trans }}</a></li>
-                    <li><a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'contact-us'}) }}">{{ 'sylius.ui.contact_us'|trans }}</a></li>
+                    <li><a href="{{ path('sylius_shop_contact_request') }}">{{ 'sylius.ui.contact_us'|trans }}</a></li>
                 </ul>
             </div>
             <div class="col-xs col-md-3 d-flex flex-column text-left">
