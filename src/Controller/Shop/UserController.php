@@ -43,38 +43,38 @@ class UserController extends ResourceController
 
             $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
             $resource = $this->findOr404($configuration);
-    
+
             $form = $this->resourceFormFactory->create($configuration, $resource);
-    
+
             $user = $this->container->get('security.token_storage')->getToken()->getUser();
-    
+
             if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'], true) && $form->handleRequest($request)->isValid()) {
                 $resource = $form->getData();
-    
+
                 /** @var ResourceControllerEvent $event */
                 $event = $this->eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
-    
+
                 if ($event->isStopped() && !$configuration->isHtmlRequest()) {
                     throw new HttpException($event->getErrorCode(), $event->getMessage());
                 }
                 if ($event->isStopped()) {
                     $this->flashHelper->addFlashFromEvent($configuration, $event);
-    
+
                     $eventResponse = $event->getResponse();
                     if (null !== $eventResponse) {
                         return $eventResponse;
                     }
-    
+
                     return $this->redirectHandler->redirectToResource($configuration, $resource);
                 }
-    
+
                 try {
                     $this->resourceUpdateHandler->handle($resource, $configuration, $this->manager);
                     $newFormPassword = $form->get('newPassword')->getData();
                     if ($newFormPassword !== null
                     || (gettype($newFormPassword) == 'string' && trim($newFormPassword) !== '')) {
                         $this->handleChangePassword($request, $configuration, $user, $form->get('newPassword')->getData());
-                    }                    
+                    }
                 } catch (UpdateHandlingException $exception) {
                     if (!$configuration->isHtmlRequest()) {
                         return $this->viewHandler->handle(
@@ -82,42 +82,42 @@ class UserController extends ResourceController
                             View::create($form, $exception->getApiResponseCode())
                         );
                     }
-    
+
                     $this->flashHelper->addErrorFlash($configuration, $exception->getFlash());
-    
+
                     return $this->redirectHandler->redirectToReferer($configuration);
                 }
-    
+
                 if ($configuration->isHtmlRequest()) {
                     $this->flashHelper->addSuccessFlash($configuration, ResourceActions::UPDATE, $resource);
                 }
-    
+
                 $postEvent = $this->eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
-    
+
                 if (!$configuration->isHtmlRequest()) {
                     $view = $configuration->getParameters()->get('return_content', false) ? View::create($resource, Response::HTTP_OK) : View::create(null, Response::HTTP_NO_CONTENT);
-    
+
                     return $this->viewHandler->handle($configuration, $view);
                 }
-    
+
                 $postEventResponse = $postEvent->getResponse();
                 if (null !== $postEventResponse) {
                     return $postEventResponse;
                 }
-    
+
                 return $this->redirectHandler->redirectToResource($configuration, $resource);
             }
-    
+
             if (!$configuration->isHtmlRequest()) {
                 return $this->viewHandler->handle($configuration, View::create($form, Response::HTTP_BAD_REQUEST));
             }
-    
+
             $initializeEvent = $this->eventDispatcher->dispatchInitializeEvent(ResourceActions::UPDATE, $configuration, $resource);
             $initializeEventResponse = $initializeEvent->getResponse();
             if (null !== $initializeEventResponse) {
                 return $initializeEventResponse;
             }
-    
+
             $view = View::create()
                 ->setData([
                     'configuration' => $configuration,
@@ -128,7 +128,7 @@ class UserController extends ResourceController
                 ])
                 ->setTemplate($configuration->getTemplate(ResourceActions::UPDATE . '.html'))
             ;
-    
+
             return $this->viewHandler->handle($configuration, $view);
         }
 
@@ -157,7 +157,7 @@ class UserController extends ResourceController
 
         if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'], true) && $form->handleRequest($request)->isValid()) {
             $userRepository = $this->repository;
-            
+
             /** @var UserRepositoryInterface $userRepository */
             Assert::isInstanceOf($userRepository, UserRepositoryInterface::class);
 
@@ -180,14 +180,14 @@ class UserController extends ResourceController
                     $configuration->getParameters()->get('redirect')['parameters']
                 );
             }
-            
+
             if ($request->isXMLHttpRequest()) {
                 return $this->container->get('templating')->renderResponse(
                     '@SyliusShop/Account/PasswordReset/success.html.twig'
                 );
             }
         }
-        
+
         if ($request->isXMLHttpRequest()) {
             $html = $this->container->get('templating')->renderResponse(
                 $template,
@@ -208,7 +208,7 @@ class UserController extends ResourceController
             [
                 'form' => $form->createView(),
             ]
-        );;
+        );
     }
 
     protected function handleResetPasswordRequest(

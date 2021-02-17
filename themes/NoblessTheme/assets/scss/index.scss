@@ -1018,6 +1018,45 @@ div.taxon-header {
             width: 70%;
         }
     }
+    .pagination {
+        li {
+            padding-bottom: 0.25rem;
+            &.page-item {
+                position: relative;
+            }
+            &.disabled {
+                display: none;
+            }
+            &.prev, &.next {
+                .page-link {
+                    &:hover {
+                        border: none;
+                    }
+                }
+            }
+            .page-link {
+                border: none;
+                color: #271513;
+                padding: 0.5rem;
+                margin-left: 0.25rem;
+                margin-right: 0.25rem;
+                &:focus {
+                    box-shadow: none;
+                }
+                &:hover {
+                    border-bottom: 1px solid #271513;
+                    background: none;
+                }
+            }
+            &.active {
+                .page-link {
+                    background: none;
+                    color: #271513;
+                    border-bottom: 1px solid #271513;
+                }
+            }
+        }
+    }
 }
 
 /*==============*/
@@ -1025,6 +1064,7 @@ div.taxon-header {
 /*==============*/
 .modal {
     z-index: 9999999;
+    &.contact-response,
     &.reset-password {
         .modal-content {
             border: none;
@@ -1878,7 +1918,7 @@ div {
                 visibility: hidden;
                 transform:translateX(100%) !important;
                 border-radius:0;
-                display: block;
+                display: none;
                 top: 45px !important;
                 right: 0px !important;
                 left: unset !important;
@@ -1920,7 +1960,7 @@ div {
             visibility: hidden;
             transform:translateX(-100%) !important;
             border-radius:0;
-            display: block;
+            display: none;
             top: 45px !important;
             left: 0px !important;
             height: 100%;
@@ -2064,24 +2104,23 @@ div {
         }
     }
 
-    #resetPasswordModal {
-        &.reset-password {
-            .modal-dialog {
-                .modal-content {
-                    .modal-header {
-                        .modal-title {
-                            font-size: 1rem;
-                        }
-                        .modal-subtitle {
-                            font-size: 0.7rem;
-                        }
+    #resetPasswordModal.reset-password,
+    #contactResponseModal.contact-response {
+        .modal-dialog {
+            .modal-content {
+                .modal-header {
+                    .modal-title {
+                        font-size: 1rem;
                     }
-                    label,
-                    button {
-                        font-size: 0.8rem;
-                        &.close {
-                            font-size: 1.1rem;
-                        }
+                    .modal-subtitle {
+                        font-size: 0.7rem;
+                    }
+                }
+                label,
+                button {
+                    font-size: 0.8rem;
+                    &.close {
+                        font-size: 1.1rem;
                     }
                 }
             }
@@ -2142,11 +2181,10 @@ div {
             padding: 0 15px;
         }
     }
-    #resetPasswordModal {
-        &.reset-password {
-            .modal-dialog {
-                margin: 0;
-            }
+    #resetPasswordModal.reset-password,
+    #contactResponseModal.contact-response {
+        .modal-dialog {
+            margin: 0;
         }
     }
 }

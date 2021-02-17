@@ -42,6 +42,18 @@ sylius_shop_to_register:
         _controller: sylius.controller.shop.register:toRegisterAction
         _sylius:
             logged_in_route: sylius_shop_account_dashboard
+            
+sylius_shop_product_index:
+    path: /{_locale}/taxons/{slug}
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.product:indexAction
+        _sylius:
+            maxPerPage: 12
+            template: "@SyliusShop/Product/index.html.twig"
+            grid: sylius_shop_product
+    requirements:
+        slug: .+
 
 # Bitbag override
 bitbag_sylius_product_bundle_shop_partial_cart_add_product_bundle:

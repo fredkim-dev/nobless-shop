@@ -55,6 +55,7 @@ services:
             - '@sylius.context.customer'
             - '@sylius.context.locale'
             - '@sylius.email_manager.contact'
+            - '@bitbag_sylius_cms_plugin.twig.extension.block'
 
     sylius.controller.shop.locale_switch:
         class: App\Controller\Shop\LocaleSwitchController

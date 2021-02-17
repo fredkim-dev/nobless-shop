@@ -10,7 +10,13 @@
     <div class="carousel-inner" role="listbox">
         {% for index, item in media %}
             <div class="carousel-item {% if index == 0 %}active{% endif %}">
-                {{ bitbag_cms_render_media(item.code) }}
+                {% if item.translation(app.request.locale).link != '' %}
+                    <a href="{{ item.translation(app.request.locale).link }}">
+                {% endif %}
+                    {{ bitbag_cms_render_media(item.code) }}
+                {% if item.translation(app.request.locale).link != '' %}
+                    </a>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
@@ -37,7 +43,13 @@
         {% for index, item in media %}
             {% set path = item.path|imagine_filter('sylius_shop_slider_mobile_thumbnail') %}
             <div class="carousel-item {% if index == 0 %}active{% endif %}">
-                <img class="d-block img-fluid" src="{{ path }}" alt="{{ item.name }}" />
+                {% if item.translation(app.request.locale).link != '' %}
+                    <a href="{{ item.translation(app.request.locale).link }}">
+                {% endif %}
+                    <img class="d-block img-fluid" src="{{ path }}" alt="{{ item.name }}" />
+                {% if item.translation(app.request.locale).link != '' %}
+                    </a>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

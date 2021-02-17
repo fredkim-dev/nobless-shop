@@ -11,50 +11,39 @@ use Sylius\Component\Core\Model\TaxonInterface;
 class ProductRepository extends BaseProductRepository
 {
     /**
-     * @param int $idTaxon
-     * @param array|null $latestIds
-     * @param bool $onlyOne
-     * @return array
+     * Return last products for homepage and product page
+     *
+     * @return int|mixed|string
      */
-    public function findRandomlyByTaxonId(int $idTaxon, ?array $latestIds = array(), bool $onlyOne = false): array
+    public function findLatest()
     {
-        $qb = $this->createQueryBuilder('p')
+        return $this->createQueryBuilder('p')
             ->innerJoin('p.mainTaxon', 'taxon')
-            ->andWhere('taxon.id = :id')
-            ->setParameter('id', $idTaxon)
-        ;
-
-        if (count($latestIds) > 0) {
-            $qb
-                ->andWhere('p.id NOT IN (:latestIds)')
-                ->setParameter('latestIds', $latestIds)
-            ;
-        }
-
-        if ($onlyOne) {
-            return $qb
-                ->orderBy('RAND()')
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getResult()
-            ;
-        }
-
-        return $qb
-            ->orderBy('RAND()')
+            ->andWhere('p.enabled = true')
+            ->andWhere('taxon.code <> :code')
+            ->setParameter('code', 'bundles')
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults(12)
             ->getQuery()
             ->getResult()
         ;
     }
 
+    /**
+     * Return last products by taxon id (used for homepage bundle list)
+     *
+     * @param int $idTaxon
+     * @return array
+     */
     public function findLatestByTaxonId(int $idTaxon): array
     {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.mainTaxon', 'taxon')
+            ->andWhere('p.enabled = true')
             ->andWhere('taxon.id = :id')
             ->setParameter('id', $idTaxon)
             ->addOrderBy('p.id', 'DESC')
-            ->setMaxResults(4)
+            ->setMaxResults(12)
             ->getQuery()
             ->getResult()
         ;
@@ -63,12 +52,14 @@ class ProductRepository extends BaseProductRepository
     public function findOthersTaxons(Product $product): array
     {
         return $this->createQueryBuilder('p')
+            ->andWhere('p.enabled = true')
             ->innerJoin('p.mainTaxon', 'taxon')
             ->andWhere('taxon.id NOT IN (:taxonToExclude)')
             ->setParameter('taxonToExclude', $product->getMainTaxon()->getId())
             ->andWhere('taxon.code <> :taxonCodeToExclude')
             ->setParameter('taxonCodeToExclude', 'bundles')
             ->orderBy('RAND()')
+            ->setMaxResults(12)
             ->getQuery()
             ->getResult()
         ;
@@ -89,7 +80,7 @@ class ProductRepository extends BaseProductRepository
             ->innerJoin('o.translations', 'translation', 'WITH', 'translation.locale = :locale')
             ->innerJoin('o.productTaxons', 'productTaxon');
 
-        if ($includeAllDescendants) {
+        /*if ($includeAllDescendants) {
             $queryBuilder
                 ->innerJoin('productTaxon.taxon', 'taxon')
                 ->andWhere('taxon.left >= :taxonLeft')
@@ -99,16 +90,13 @@ class ProductRepository extends BaseProductRepository
                 ->setParameter('taxonRight', $taxon->getRight())
                 ->setParameter('taxonRoot', $taxon->getRoot())
             ;
-        } else {
-            $queryBuilder
-                ->andWhere('productTaxon.taxon = :taxon')
-                ->setParameter('taxon', $taxon)
-            ;
-        }
+        }*/
 
         $queryBuilder
+            ->andWhere('productTaxon.taxon = :taxon')
             ->andWhere(':channel MEMBER OF o.channels')
             ->andWhere('o.enabled = true')
+            ->setParameter('taxon', $taxon)
             ->setParameter('locale', $locale)
             ->setParameter('channel', $channel)
         ;

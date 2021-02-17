@@ -29,26 +29,10 @@ class HomepageController extends ResourceController
 
     public function latestProductsAction(Request $request): Response
     {
-        $currentLocale = $this->container->get('sylius.context.locale')->getLocaleCode();
         $textCenterClass = $request->get('is_product') ? 'text-center' : '';
         $separatorCenterClass = $request->get('is_product') ? 'mx-auto' : 'mx-3';
 
-        /** @var ArrayCollection $taxons */
-        $taxons = $this->container->get('sylius.repository.taxon')
-            ->findChildrenByChannelMenuTaxon(null, $currentLocale);
-
-        if (count($taxons) === 0) {
-            throw new NotFoundHttpException('No Taxons, no products.');
-        }
-
-        /** @var Taxon $taxon */
-        $productsList = array();
-        foreach ($taxons as $taxon) {
-            $taxonProducts = $this->container->get('sylius.repository.product')->findLatestByTaxonId($taxon->getId());
-            foreach ($taxonProducts as $product) {
-                array_push($productsList, $product);
-            }
-        }
+        $productsList = $this->container->get('sylius.repository.product')->findLatest();
         shuffle($productsList);
 
         return $this->templatingEngine->renderResponse('@SyliusShop/Homepage/latestProducts.html.twig',
@@ -73,16 +57,9 @@ class HomepageController extends ResourceController
         }
 
         $bundlesList = array();
-        $latestBundlesIds = array();
         $latest = $this->container->get('sylius.repository.product')->findLatestByTaxonId($taxon->getId());
         foreach ($latest as $lBundle) {
             array_push($bundlesList, $lBundle);
-            array_push($latestBundlesIds, $lBundle->getId());
-        }
-
-        $randomBundles = $this->container->get('sylius.repository.product')->findRandomlyByTaxonId($taxon->getId(), $latestBundlesIds);
-        foreach ($randomBundles as $rBundle) {
-            array_push($bundlesList, $rBundle);
         }
 
         return $this->templatingEngine->renderResponse('@SyliusShop/Homepage/latestBundles.html.twig',
