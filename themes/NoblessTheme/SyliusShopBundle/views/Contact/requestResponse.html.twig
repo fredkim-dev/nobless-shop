@@ -1,0 +1,28 @@
+{% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
+
+{% if not error %}
+    {{ bitbag_cms_render_block('contact_success') }}
+{% else %}
+    {% if form %}
+        <div class="form-errors">
+            <span class="gender">{{ form_errors(form.gender) }}</span>
+            <span class="firstname">{{ form_errors(form.firstname) }}</span>
+            <span class="lastname">{{ form_errors(form.lastname) }}</span>
+            <span class="message">{{ form_errors(form.message) }}</span>
+            <span class="email">{{ form_errors(form.email) }}</span>
+            <span class="acceptCgv">{% if not form.acceptCgv.vars.valid %}is-invalid{% endif %}</span>
+        </div>
+    {% else %}
+        <div class="alert alert-danger alert-dismissible fade show">
+            <div class="d-flex align-items-center">
+                <span class="pr-3 fa-2x">
+                    {{ icon|default(icons.danger()) }}
+                </span>
+                {{ message|trans({}, 'flashes') }}
+                <button type="button" class="close" data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}

@@ -30,20 +30,10 @@ class ProductController extends ResourceController
     public function completeYourStyleAction(Request $request): Response
     {
         $productRepository = $this->container->get('sylius.repository.product');
-        $productId = $request->get('product');
-
-        $product = $productRepository->find($productId);
-        $products = [];
-
-        foreach($productRepository->findOthersTaxons($product) as $key => $otherProduct) {
-            if ($key == 6) {
-                break;
-            }
-            $products[] = $otherProduct;
-        }
+        $product = $productRepository->find($request->get('product'));
 
         return $this->templatingEngine->renderResponse('@SyliusShop/Product/Show/completeYourStyle.html.twig', [
-            'complete_your_style_products' => $products
+            'complete_your_style_products' => $productRepository->findOthersTaxons($product)
         ]);
     }
 }

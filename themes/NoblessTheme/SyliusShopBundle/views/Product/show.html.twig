@@ -62,6 +62,6 @@
 </div>
 
 <div id="LastProducts">
-    {% include '@SyliusShop/Product/Show/_associations.html.twig' %}
+    {{ render(url('app_shop_latest_products', {'is_product': true})) }}
 </div>
 {% endblock %}

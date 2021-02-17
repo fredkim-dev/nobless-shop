@@ -377,6 +377,7 @@ sylius_grid:
                             sorting: "expr:service('request_stack').getCurrentRequest().get('sorting', [])"
                             includeAllDescendants: "expr:parameter('sylius_shop.product_grid.include_all_descendants')"
                             criteria: "expr:service('request_stack').getCurrentRequest().get('criteria', [])"
+            limits: [ 12 ]
             filters:
                 search:
                     enabled: false
