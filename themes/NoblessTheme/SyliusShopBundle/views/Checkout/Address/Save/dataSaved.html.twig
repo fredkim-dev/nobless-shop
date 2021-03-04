@@ -1,0 +1,17 @@
+<div class="save-address-success">
+    <span class="data-shipping-success firstName">{{ shipping.firstName }}</span>
+    <span class="data-shipping-success lastName">{{ shipping.lastName }}</span>
+    <span class="data-shipping-success street">{{ shipping.street }}</span>
+    <span class="data-shipping-success street2">{{ shipping.street2 }}</span>
+    <span class="data-shipping-success countryCode">{{ shipping.countryCode|sylius_country_name|upper }}</span>
+    <span class="data-shipping-success postcode">{{ shipping.postcode }}</span>
+    <span class="data-shipping-success city">{{ shipping.city }}</span>
+
+    <span class="data-billing-success firstName">{{ billing.firstName }}</span>
+    <span class="data-billing-success lastName">{{ billing.lastName }}</span>
+    <span class="data-billing-success street">{{ billing.street }}</span>
+    <span class="data-billing-success street2">{{ billing.street2 }}</span>
+    <span class="data-billing-success countryCode">{{ billing.countryCode|sylius_country_name|upper }}</span>
+    <span class="data-billing-success postcode">{{ billing.postcode }}</span>
+    <span class="data-billing-success city">{{ billing.city }}</span>
+</div>

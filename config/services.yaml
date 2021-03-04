@@ -57,6 +57,10 @@ services:
             - '@sylius.email_manager.contact'
             - '@bitbag_sylius_cms_plugin.twig.extension.block'
 
+    sylius.controller.shop.order_custom:
+        class: App\Controller\Shop\OrderController
+        arguments: ['@sylius.controller.order']
+
     sylius.controller.shop.locale_switch:
         class: App\Controller\Shop\LocaleSwitchController
         arguments: ['@templating', '@sylius.context.locale', '@sylius.locale_provider', '@sylius.shop.locale_switcher']

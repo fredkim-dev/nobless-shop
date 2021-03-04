@@ -1,0 +1,12 @@
+<address>
+    <strong><span class="data-{{ addressType }} firstName">{{ address.firstName }}</span> <span class="data-{{ addressType }} lastName">{{ address.lastName }}</span></strong><br>
+    <span class="data-{{ addressType }} street">{{ address.street }}</span><br/>
+    <div class="street2-container-{{ addressType }}{% if address.street2 == '' %} d-none{% endif %}">
+        <span class="data-{{ addressType }} street2">{{ address.street2 }}</span><br/>
+    </div>
+    <span class="data-{{ addressType }} postcode">{{ address.postcode }}</span> <span class="data-{{ addressType }} city">{{ address.city }}</span><br/>
+    {% if address|sylius_province_name is not empty %}
+        {{ address|sylius_province_name }}<br/>
+    {% endif %}
+    <span class="data-{{ addressType }} countryCode">{{ address.countryCode|sylius_country_name|upper }}</span>
+</address>

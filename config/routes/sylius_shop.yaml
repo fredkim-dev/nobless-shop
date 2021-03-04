@@ -10,7 +10,11 @@ sylius_shop_payum:
 sylius_shop_contact_request:
     resource: "../routing/contact.yml"
     prefix: /{_locale}/contact
-
+    
+sylius_shop_checkout:
+    resource: "../routing/checkout.yml"
+    prefix: /{_locale}/checkout
+    
 sylius_shop_default_locale:
     path: /
     methods: [GET]

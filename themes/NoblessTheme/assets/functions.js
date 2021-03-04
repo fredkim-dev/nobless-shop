@@ -13,16 +13,23 @@ function resizeMainContainer() {
 
 function replaceCarouselArrow(carouselElement) {
   let imgSliderHeight;
-  if (carouselElement != undefined) {
+  let arrowTopValue;
+  if (carouselElement !== undefined) {
     imgSliderHeight = $('.slick-active .card-img-top', carouselElement).outerHeight();
-    const arrowTopValue = Math.round(imgSliderHeight / 2 - 17);
+    arrowTopValue = Math.round(imgSliderHeight / 2 - 17);
     $(carouselElement).next('.slider-controls').css('top', arrowTopValue + 'px');
   } else {
     imgSliderHeight = $('.slick-active .card-img-top').outerHeight();
-    const arrowTopValue = Math.round(imgSliderHeight / 2 - 17);
+    arrowTopValue = Math.round(imgSliderHeight / 2 - 17);
     $('.slider-controls').not('.product-gallery').css('top', arrowTopValue + 'px');
-
   }
+}
+
+function replaceCarouselArrowCart() {
+  const element = jQuery('#carouselSummaryItemsMobile');
+  const imgSliderHeight = $('.slick-active img', element).outerHeight();
+  const arrowTopValue = Math.round(imgSliderHeight);
+  $(element).next('.slider-controls').css('top', arrowTopValue + 'px');
 }
 
 /**
@@ -37,7 +44,7 @@ function createCarousel() {
       slidesToScroll: 4,
       appendArrows: jQuery('#carouselLatestProducts').next('.slider-controls'),
       prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
-      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Previous</button></div>',
+      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Next</button></div>',
       responsive: [
         {
           breakpoint: 1920,
@@ -77,7 +84,7 @@ function createCarousel() {
       slidesToScroll: 4,
       appendArrows: jQuery('#carouselLatestBundles').next('.slider-controls'),
       prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
-      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Previous</button></div>',
+      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Next</button></div>',
       responsive: [
         {
           breakpoint: 1920,
@@ -118,7 +125,7 @@ function createCarousel() {
       mobileFirst: true,
       appendArrows: jQuery('#productGallery').next('.slider-controls'),
       prevArrow: '<div class="div-btn prev"><button type="button" class="slick-prev">Previous</button></div>',
-      nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Previous</button></div>',
+      nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Next</button></div>',
       responsive: [
         {
           breakpoint: 550,
@@ -143,7 +150,7 @@ function createCarousel() {
       mobileFirst: true,
       appendArrows: jQuery('#productGallery').next('.slider-controls'),
       prevArrow: '<div class="div-btn prev"><button type="button" class="slick-prev">Previous</button></div>',
-      nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Previous</button></div>',
+      nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Next</button></div>',
       responsive: [
         {
           breakpoint: 550,
@@ -158,7 +165,7 @@ function createCarousel() {
         }
       ]
     };
-    var slider = $('#productGallery');
+    let slider = $('#productGallery');
     if($(document).width() < 768 && slider[0].slick && slider[0].slick.unslicked) {
       slider.slick(opts);
     }
@@ -172,7 +179,7 @@ function createCarousel() {
       slidesToScroll: 4,
       appendArrows: jQuery('#carouselCompleteYourStyle').next('.slider-controls'),
       prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
-      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Previous</button></div>',
+      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Next</button></div>',
       responsive: [
         {
           breakpoint: 1920,
@@ -204,6 +211,63 @@ function createCarousel() {
     });
   }
 
+  if (jQuery('#carouselSummaryItemsMobile') && !jQuery('#carouselSummaryItemsMobile').hasClass('slick-initialized')) {
+    let slider = jQuery('#carouselSummaryItemsMobile');
+    slider.slick({
+      infinite: true,
+      speed: 700,
+      slidesToShow: 2,
+      slidesToScroll: 2,
+      appendArrows: jQuery('#carouselSummaryItemsMobile').next('.slider-controls'),
+      prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
+      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Next</button></div>',
+      responsive: [
+        {
+          breakpoint: 550,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        },
+        {
+          breakpoint: 992,
+          settings: "unslick"
+        }
+      ]
+    });
+    replaceCarouselArrowCart();
+  } else {
+    const opts = {
+      infinite: true,
+      speed: 700,
+      slidesToShow: 2,
+      slidesToScroll: 2,
+      mobileFirst: true,
+      appendArrows: jQuery('#carouselSummaryItemsMobile').next('.slider-controls'),
+      prevArrow: '<div class="div-btn prev"><button type="button" class="slick-prev">Previous</button></div>',
+      nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Next</button></div>',
+      responsive: [
+        {
+          breakpoint: 550,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        },
+        {
+          breakpoint: 992,
+          settings: "unslick"
+        }
+      ]
+    };
+    let slider = $('#carouselSummaryItemsMobile');
+    if($(document).width() < 768 && slider[0].slick && slider[0].slick.unslicked) {
+      slider.slick(opts);
+    }
+    slider.on('setPosition', function(slick){
+      replaceCarouselArrowCart();
+    });
+  }
 }
 
 /**
@@ -899,6 +963,123 @@ function cartFunctions() {
   }
 }
 
+function checkoutFunctions() {
+  $('.chosen-address .change-address').on('click', function(e) {
+    e.preventDefault();
+    if (!$(this).hasClass('clicked')) {
+      $('.chosen-address .change-address').removeClass('clicked');
+      $(this).addClass('clicked');
+      const saveAddressNavigation = $('#checkoutPage .save-address-navigation');
+      saveAddressNavigation.addClass('d-flex').removeClass('d-none');
+      $('#checkoutPage .save-checkout-address-navigation').hide();
+      if ($(this).hasClass('shipping')) {
+        $('.change-shipping-address').show();
+        $('.change-billing-address').hide();
+        $('button', saveAddressNavigation).removeClass('billing');
+        $('button', saveAddressNavigation).addClass('shipping');
+      }
+      if ($(this).hasClass('billing')) {
+        $('.change-shipping-address').hide();
+        $('.change-billing-address').show();
+        $('button', saveAddressNavigation).removeClass('shipping');
+        $('button', saveAddressNavigation).addClass('billing');
+      }
+      $('#sylius_checkout_address_differentBillingAddress').prop('checked', true);
+      $('#checkoutPage .checkout-address-form').removeClass('d-none').addClass('d-block');
+    }
+  })
+
+  $('#checkoutPage .save-address-navigation button').on('click', function(e) {
+    e.preventDefault();
+    const classListBtn = e.currentTarget.className.split(/\s+/);
+    $('#checkoutPage .data-' + classListBtn[3]).each(function() {
+      const classList = this.className.split(/\s+/);
+      const fieldName = '[name="sylius_checkout_address[' + classListBtn[3] + 'Address][' + classList[1] + ']';
+      const toSave = '#checkoutPage .main-address-form ' + fieldName;
+      const toReplace = '.change-'+ classListBtn[3] +'-address ' + fieldName;
+      $(toReplace).val($(toSave).val());
+    });
+    checkoutSaveAddress(e.currentTarget, classListBtn[3]);
+  });
+
+  $('#checkoutPage .save-address-navigation .btn-link').on('click', function(e) {
+    e.preventDefault();
+    hideChangeAddress();
+    cancelChangeAddress();
+  })
+}
+
+function checkoutSaveAddress(element, addressType) {
+  const form = $(element).closest('form')
+  if ($('input[name="address_type"]', form).length) {
+    $('input[name="address_type"]', form).val(addressType);
+  }
+  $('input[id$="_save_shipping_differentBillingAddress"]').prop('checked', true);
+  $('.main-address-form').addClass('loading');
+  $.ajax({
+    type: "POST",
+    url: form.attr('action'),
+    data: form.serialize(),
+    success: function(response) {
+      const dataSuccessDiv = $(response);
+      if(dataSuccessDiv.hasClass('save-address-success')) {
+        $('#checkoutPage .chosen-address .data-' + addressType).each(function() {
+          const classList = this.className.split(/\s+/);
+          const fieldName = classList[1];
+          $(this).text($('.data-' + addressType + '-success.' + fieldName, dataSuccessDiv).html());
+          if (fieldName === 'street2') {
+            if ($('.data-' + addressType + '-success.' + fieldName, dataSuccessDiv).html().trim() !== '') {
+              $('.street2-container-' + addressType).removeClass('d-none');
+            } else {
+              $('.street2-container-' + addressType).addClass('d-none');
+            }
+          }
+        })
+        hideChangeAddress();
+        $('.main-address-form').removeClass('loading');
+        $('.main-address-form input').removeClass('is-invalid');
+        $('.main-address-form .invalid-feedback').remove();
+      }
+    },
+    error: function(error) {
+      $($.parseHTML(error.responseText)[1]).find('.form-error-message').each(function() {
+        const fieldName = $(this).closest('label').next('input').attr('name');
+        const fieldError = $(this).text();
+        $('.main-address-form [name="'+ fieldName +'"]').addClass('is-invalid').after('<span class="invalid-feedback d-block"><span class="form-error-message d-block">' + fieldError + '</span></span>');
+      });
+
+      $('.main-address-form').removeClass('loading');
+    }
+  })
+}
+
+function hideChangeAddress() {
+  $('#checkoutPage .save-checkout-address-navigation').toggle();
+  $('#checkoutPage .save-address-navigation').addClass('d-none').removeClass('d-flex');
+  $('#mainContentContainer')[0].scrollTop = 0;
+  $('.change-shipping-address').hide();
+  $('.change-billing-address').hide();
+  $('.chosen-address .change-address').removeClass('clicked');
+}
+
+function cancelChangeAddress() {
+  $('#checkoutPage .chosen-address span[class^="data-"]').each(function() {
+    const classList = this.className.split(/\s+/);
+    const addressType = (classList[0].split('-'))[1];
+    const fieldName = classList[1];
+
+    const toSave = '.data-' + addressType + '.' + fieldName;
+    const formFieldName = '[name="sylius_checkout_address[' + addressType + 'Address][' + fieldName + ']';
+    const toReplace = '#checkoutPage .main-address-form ' + formFieldName;
+
+    if (fieldName === 'countryCode') {
+      $(toReplace).val($(toSave).text().substring(0, 2));
+    } else {
+      $(toReplace).val($(toSave).text());
+    }
+  });
+}
+
 function ordersGridFunctions() {
   // Desktop Accordion
   $('#orderAccordionDesktop').on('hidden.bs.collapse', function(e) {
@@ -940,6 +1121,7 @@ function resizeContent() {
   shareFunctions();
   resizeMenu($('#menuButton').attr('data-trigger'));
   resizeFilterMobileMenu();
+  $('.header-dropdown').show();
   Fresco.hide();
 }
 
@@ -964,6 +1146,7 @@ function init() {
   ordersGridFunctions();
   loginPageFunctions();
   cartFunctions();
+  checkoutFunctions();
 
   contactPageFunction();
 
@@ -972,6 +1155,7 @@ function init() {
     createGalleryDesktop();
   }
   replaceCarouselArrow();
+  replaceCarouselArrowCart();
   /*if (document.getElementById('mainContentContainer') && document.getElementById('product-info')) {
     document.getElementById('mainContentContainer').onscroll = fixProductDescriptionDiv;
     document.getElementById('product-info').onscroll = fixProductDescriptionDiv;

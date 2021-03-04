@@ -1,0 +1,88 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+{% set itemsSubtotal = sylius_order_items_subtotal(order) %}
+{% set taxIncluded = sylius_order_tax_included(order) %}
+{% set taxExcluded = sylius_order_tax_excluded(order) %}
+
+{% set orderPromotionTotal = order.orderPromotionTotal %}
+
+{% set bonusPointsAdjustment = constant('BitBag\\SyliusBonusPointsPlugin\\Entity\\AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT') %}
+{% set bonusPointsTotal = order.getAdjustmentsTotal(bonusPointsAdjustment) %}
+
+{% set totalWithoutShipping = itemsSubtotal + orderPromotionTotal + bonusPointsTotal %}
+
+<div class="cart-summary card py-3 px-3 px-lg-4{% if step is defined %} mb-3{% endif %}">
+    <div>
+        {% if step is not defined %}
+            <div class="d-flex flex-row justify-content-between align-items-center mb-2">
+                <h4 class="m-0">{{ 'sylius.ui.cart'|trans }}</h4>
+                <a href="{{ path('sylius_shop_cart_summary') }}">{{ 'sylius.ui.modify_cart'|trans }}</a>
+            </div>
+        {% else %}
+            <div class="d-flex flex-row mb-2">
+                <h4 class="m-0">{{ 'sylius.ui.order_summary'|trans }}</h4>
+            </div>
+        {% endif %}
+        <div class="separator w-75 mx-auto my-3"></div>
+        {# DESKTOP / TABLET cart items #}
+        <div class="cart-items d-none d-md-block">
+            {% for item in order.items %}
+                {% include '@SyliusShop/Product/_headerProductItem.html.twig' with {'product': item, 'variant': item.variant, 'cart_widget': false} %}
+            {% endfor %}
+        </div>
+        {# MOBILE cart items #}
+        <div id="carouselSummaryItemsMobile" class="cart-items-mobile d-flex d-md-none row mb-3">
+            {% for item in order.items %}
+                {% include '@SyliusShop/Checkout/Summary/_cartItem.html.twig' with {'product': item, 'variant': item.variant} %}
+            {% endfor %}
+        </div>
+        <div class="row justify-content-center slider-controls d-block d-md-none"></div>
+
+        <div class="separator w-75 mx-auto my-3"></div>
+        {% if order.shipments|length > 0 and hideShipping is not defined %}
+        <div class="shipping-method d-flex flex-column">
+            <h5>{{ 'sylius.ui.shipping_method'|trans }}</h5>
+            <div class="d-flex flex-row justify-content-between px-3">
+                <span>{{ order.shipments[0].method.name }}</span>
+                <span>{% if order.shippingTotal == 0 %} {{ 'sylius.ui.free_shipping_method'|trans }} {% else %} {{ money.convertAndFormat(order.shippingTotal) }} {% endif %}</span>
+            </div>
+        </div>
+        <div class="separator w-75 mx-auto my-3"></div>
+        {% endif %}
+
+        {% if orderPromotionTotal or bonusPointsTotal %}
+        <div class="d-flex flex-column">
+            <h5>{{ 'sylius.ui.benefit'|trans }}</h5>
+            {% if orderPromotionTotal %}
+            <div class="d-flex flex-row justify-content-between px-3">
+                {% set couponCode = '' %}
+                {% if order.promotionCoupon != null %}
+                    {% set couponCode = order.promotionCoupon.code %}
+                {% endif %}
+                <span>{{ 'sylius.ui.discount'|trans({'%s': couponCode}) }}</span>
+                <span>{{ money.convertAndFormat(orderPromotionTotal) }}</span>
+            </div>
+            {% endif %}
+            {% if bonusPointsTotal %}
+                <div class="d-flex flex-row justify-content-between px-3">
+                    <span>{{ 'sylius.ui.loyalty_account'|trans }}</span>
+                    <span>{{ money.convertAndFormat(bonusPointsTotal) }}</span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="separator w-75 mx-auto my-3"></div>
+        {% endif %}
+
+        <div class="order-total d-flex flex-row justify-content-between pr-3">
+            <div class="d-flex flex-column">
+                <h5 class="mb-0"><strong>{{ 'sylius.ui.order_total'|trans }}</strong></h5>
+                <span>{{ 'sylius.ui.ttc'|trans }}</span>
+            </div>
+            {% if hideShipping is not defined %}
+                <h5>{{ money.convertAndFormat(order.total) }}</h5>
+            {% else %}
+                <h5>{{ money.convertAndFormat(totalWithoutShipping) }}</h5>
+            {% endif %}
+        </div>
+    </div>
+</div>

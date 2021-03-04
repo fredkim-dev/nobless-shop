@@ -5,10 +5,14 @@
 {% endblock %}
 
 {% block header %}
-    {# Override the normal page header with a custom one for all checkout steps. #}
-    {{ sonata_block_render_event('sylius.shop.checkout.address.before_header', {'order': order}) }}
+    <div id="headerContainer" class="bg-header">
+        <div class="container-fluid">
+            <header class="mb-lg-1">
+                {% include '@SyliusShop/_header.html.twig' %}
 
-    {% include '@SyliusShop/Checkout/_header.html.twig' %}
-
-    {{ sonata_block_render_event('sylius.shop.checkout.address.after_header', {'order': order}) }}
+                {{ sonata_block_render_event('sylius.shop.layout.after_header') }}
+            </header>
+        </div>
+        <div class="header-banner"></div>
+    </div>
 {% endblock %}

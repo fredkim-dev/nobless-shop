@@ -21,6 +21,11 @@ sylius:
         additional_addresses: 'Adresses supplémentaires'
         add_new_address: Ajouter l'adresse
         add_address: Ajouter une adresse
+        use_address: Utiliser l'adresse
+        save_and_use_address: Enregistrer sur le compte et l'utiliser
+        change_address: Modifier l'adresse
+        change_shipping_address: Modifier l'adresse de livraison
+        change_billing_address: Modifier l'adresse de facturation
         gender:
             f: 'Mme.'
             m: 'M.'
@@ -44,6 +49,7 @@ sylius:
         please_choose_size_bundle: Veuillez choisir une taille pour chaque produit du pack
         view_cart: Voir le panier
         edit_cart: Modifier le panier
+        modify_cart: Modifier
         forgot_password_title: J'ai oublié mon mot de passe
         set_a_new_password_for_your_account_1: Veuillez saisir l'adresse mail associée à votre compte.
         set_a_new_password_for_your_account_2: Vous recevrez à cette adresse un lien vous permettant de réinitialiser votre mot de passe.
@@ -56,14 +62,22 @@ sylius:
         deliver_tomorrow_with_chronopost: Recevez votre commande dès demain pour toute validation avant midi en choisissant la livraison Express (Chronopost)
         tva_20: TVA 20%
         ttc: (TTC)
+        select_address_from_book: Utiliser une adresse enregistrée
         global_amount: Montant global
         estimate_shipping: Estimation des frais de livraison
         discount: 'Code PROMO : %s'
+        discount_code_cannot_be_combined: Les codes promo ne peuvent pas être combinés
+        add_discount_code: Ajouter un code promo
         free_shipping: Gratuits
         without_shipping: (hors frais de livraison)
         france_shipping: France
         europe_shipping: Europe
         international_shipping: International
+        shipping_method: "Méthode d'expédition"
+        free_shipping_method: Offerts
+        benefit: Avantages
+        order_summary: Récapitulatif
+        loyalty_account: Compte fidélité
         invalid_email: Email invalide
         see_product: Voir le produit
         newest_products: Nouveautés

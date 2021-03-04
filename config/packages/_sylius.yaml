@@ -63,6 +63,7 @@ sylius_channel:
         channel:
             classes:
                 model: App\Entity\Channel\Channel
+
 sylius_core:
     resources:
         product_image:
@@ -442,6 +443,9 @@ liip_imagine:
         sylius_shop_order_info_thumbnail:
             filters:
                 thumbnail: { size: [112, 150], mode: outbound }
+        sylius_shop_summary_thumbnail_mobile:
+            filters:
+                thumbnail: { size: [ 200, 268 ], mode: outbound }
                 
 mobile_detect:
     service:

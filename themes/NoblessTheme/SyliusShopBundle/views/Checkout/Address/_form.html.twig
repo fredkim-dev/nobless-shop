@@ -1,33 +1,35 @@
-<div data-js-address-book="sylius-shipping-address">
-    <h1 class="mb-4">{{ 'sylius.ui.shipping_address'|trans }}</h1>
+{% set idDifferenceBillingAddress = form.differentBillingAddress.vars.id %}
+{% if customIds is defined and formSaveType is defined %}
+    {% set idDifferenceBillingAddress = formSaveType ~ '_' ~ 'save_shipping_differentBillingAddress' %}
+{% endif %}
 
+<div class="change-shipping-address" data-js-address-book="sylius-shipping-address">
+    <h6 class="text-uppercase font-weight-bold">{{ 'sylius.ui.change_shipping_address'|trans }}</h6>
     <div class="card">
         <div class="card-body">
             <div class="mb-3">
                 {% include '@SyliusShop/Checkout/Address/_addressBookSelect.html.twig' %}
             </div>
 
-            {% if form.customer is defined %}
-                {% include '@SyliusShop/Common/Form/_login.html.twig' with {'form': form.customer} %}
-            {% endif %}
-            {% include '@SyliusShop/Common/Form/_address.html.twig' with {'form': form.shippingAddress, 'order': order} %}
-            {{ form_row(form.differentBillingAddress, {'attr': {'data-js-toggle': '[data-js-address-book="sylius-billing-address"]'}}) }}
-            
+            {% include '@SyliusShop/Checkout/Address/Form/_item.html.twig' with {'form': form.shippingAddress, 'order': order, 'addressType': 'shipping'} %}
+            <div class="d-none">
+                {{ form_row(form.differentBillingAddress, {'id': idDifferenceBillingAddress, 'attr': {'data-js-toggle': '[data-js-address-book="sylius-billing-address"]'}}) }}
+            </div>
+
             {{ sonata_block_render_event('sylius.shop.checkout.address.shipping_address_form', {'order': order}) }}
         </div>
     </div>
 </div>
 
-<div data-js-address-book="sylius-billing-address">
-    <h1 class="my-4">{{ 'sylius.ui.billing_address'|trans }}</h1>
-
+<div class="change-billing-address" data-js-address-book="sylius-billing-address">
+    <h6 class="text-uppercase font-weight-bold">{{ 'sylius.ui.change_billing_address'|trans }}</h6>
     <div class="card">
         <div class="card-body">
             <div class="mb-3">
                 {% include '@SyliusShop/Checkout/Address/_addressBookSelect.html.twig' %}
             </div>
 
-            {% include '@SyliusShop/Common/Form/_address.html.twig' with {'form': form.billingAddress, 'order': order} %}
+            {% include '@SyliusShop/Checkout/Address/Form/_item.html.twig' with {'form': form.billingAddress, 'order': order, 'addressType': 'billing'} %}
 
             {{ sonata_block_render_event('sylius.shop.checkout.address.billing_address_form', {'order': order}) }}
         </div>

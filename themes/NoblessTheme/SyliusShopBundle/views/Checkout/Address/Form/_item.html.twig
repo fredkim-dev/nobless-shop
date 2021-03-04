@@ -1,0 +1,51 @@
+{# Change Ids of form fields to avoid html duplication #}
+{% if customIds is defined and addressType is defined and formSaveType is defined %}
+    <div class="row">
+        <div class="col-12 col-lg">
+            {{ form_row(form.firstName, {'id': formSaveType ~ '_' ~ customIds[addressType ~ '_firstname']}) }}
+        </div>
+        <div class="col-12 col-lg">
+            {{ form_row(form.lastName, {'id': formSaveType ~ '_' ~ customIds[addressType ~ '_lastname']}) }}
+        </div>
+    </div>
+    {{ form_row(form.street, {'id': formSaveType ~ '_' ~ customIds[addressType ~ '_street']}) }}
+    {{ form_row(form.street2, {'id': formSaveType ~ '_' ~ customIds[addressType ~ '_street2']}) }}
+
+    {% include '@SyliusShop/Checkout/Address/Form/_countryCode.html.twig' with {'form': form.countryCode, 'id': formSaveType ~ '_' ~ customIds[addressType ~ '_countrycode']} %}
+
+    <div class="form-group province-container"></div>
+
+    <div class="row">
+        <div class="col-12 col-lg">
+            {{ form_row(form.city, {'id': formSaveType ~ '_' ~ customIds[addressType ~ '_city']}) }}
+        </div>
+        <div class="col-12 col-lg">
+            {{ form_row(form.postcode, {'id': formSaveType ~ '_' ~ customIds[addressType ~ '_postcode']}) }}
+        </div>
+    </div>
+{% else %}
+    <div class="row">
+        <div class="col-12 col-lg">
+            {{ form_row(form.firstName) }}
+        </div>
+        <div class="col-12 col-lg">
+            {{ form_row(form.lastName) }}
+        </div>
+    </div>
+    {{ form_row(form.street) }}
+    {{ form_row(form.street2) }}
+
+    {% include '@SyliusShop/Common/Form/_countryCode.html.twig' with {'form': form.countryCode} %}
+
+    <div class="form-group province-container"></div>
+
+    <div class="row">
+        <div class="col-12 col-lg">
+            {{ form_row(form.city) }}
+        </div>
+        <div class="col-12 col-lg">
+            {{ form_row(form.postcode) }}
+        </div>
+    </div>
+
+{% endif %}

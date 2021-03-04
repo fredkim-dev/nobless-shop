@@ -1,0 +1,25 @@
+{% if shipping == null %}
+    {% set shipping = app.user.customer.defaultAddress %}
+{% endif %}
+{% if billing == null %}
+    {% set billing = app.user.customer.defaultAddress %}
+{% endif %}
+
+<div class="chosen-address">
+    <div class="row col-12 col-lg-10 mx-auto mb-3 px-0 px-sm-3">
+        <div class="col pl-0 pr-2 px-sm-3">
+            <h6 class="font-weight-bold text-uppercase">{{ 'sylius.ui.shipping_address'|trans }}</h6>
+            {% include '@SyliusShop/Common/_address.html.twig' with {'address': shipping, 'addressType': 'shipping'} %}
+            {% if step != 'complete' %}
+                <a class="change-address shipping">{{ 'sylius.ui.change_address'|trans }}</a>
+            {% endif %}
+        </div>
+        <div class="col pr-0 pl-2 px-sm-3">
+            <h6 class="font-weight-bold text-uppercase">{{ 'sylius.ui.billing_address'|trans }}</h6>
+            {% include '@SyliusShop/Common/_address.html.twig' with {'address': billing, 'addressType': 'billing'} %}
+            {% if step != 'complete' %}
+                <a class="change-address billing">{{ 'sylius.ui.change_address'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

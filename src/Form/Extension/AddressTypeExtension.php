@@ -26,6 +26,7 @@ final class AddressTypeExtension extends AbstractTypeExtension
             ->add('street2', TextType::class, [
                 'required' => false,
                 'label' => 'sylius.form.address.street2',
+                'empty_data' => ''
             ])
         ;
     }

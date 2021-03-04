@@ -1,0 +1,34 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+{% set product = variant.product %}
+
+<div class="col-6 d-flex flex-column px-2">
+    <div class="mb-2 product-img-order">
+        {% include '@SyliusShop/Product/_mainImage.html.twig' with {'product': product, 'filter': 'sylius_shop_summary_thumbnail_mobile', 'class': 'p-0 img-fluid'} %}
+    </div>
+    <div class="d-flex flex-column">
+        <div class="item-title size-up font-weight-bold">{{ item.productName }}</div>
+        {% if product.hasOptions() %}
+            <div>
+                {% for optionValue in variant.optionValues %}
+                    <div data-sylius-option-name="{{ optionValue.name }}">
+                        <span>{{ optionValue.value }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% elseif item.variantName is not null %}
+            <div>
+                <span>{{ item.variantName }}</span>
+            </div>
+        {% endif %}
+        <div>
+            <span> {{ 'sylius.ui.quantity'|trans }} : {{ item.quantity }}
+        </div>
+        {# Product price #}
+        {% if item.unitPrice == item.discountedUnitPrice %}
+            {% set productPrice = item.unitPrice %}
+        {% else %}
+            {% set productPrice = item.discountedUnitPrice %}
+        {% endif %}
+        <span>{{ money.convertAndFormat(item.discountedUnitPrice) }}</span>
+    </div>
+</div>
