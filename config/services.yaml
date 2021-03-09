@@ -129,3 +129,12 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: twig.extension }
+                
+    #Event Listener
+    app.listener.cart_blamer:
+        class: App\EventListener\CartBlamerListener
+        decorates: sylius.listener.cart_blamer
+        arguments:
+            - '@sylius.manager.order'
+            - '@sylius.context.cart'
+            - '@sylius.context.cart.session_and_channel_based'
