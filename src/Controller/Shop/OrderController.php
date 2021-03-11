@@ -62,30 +62,6 @@ class OrderController extends ResourceController
     }
 
     /**
-     * Save Address in Order Entity during Checkout, Ajax Style
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function saveAddressInCheckoutAction(Request $request): Response
-    {
-        $configuration = $this->_parent->requestConfigurationFactory->create($this->_parent->metadata, $request);
-
-        $this->_parent->isGrantedOr403($configuration, ResourceActions::UPDATE);
-        $order = $this->_parent->findOr404($configuration);
-
-        $form = $this->_parent->resourceFormFactory->create($configuration, $order);
-
-        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'], true)) {
-            if ($form->handleRequest($request)->isValid()) {
-                return $this->saveOrder($form, $configuration);
-            }
-        }
-
-        return $this->showResponse($request, $order, $form, $configuration);
-    }
-
-    /**
      * Save Address in User Account and in Order Entity during Checkout, Ajax Style
      *
      * @param Request $request
@@ -132,7 +108,6 @@ class OrderController extends ResourceController
 
         $form = $this->_parent->resourceFormFactory->create($configuration, $resource);
         $formSaveAccount = $this->_parent->resourceFormFactory->create($configuration, $resource);
-        $formSaveCheckout = $this->_parent->resourceFormFactory->create($configuration, $resource);
         $customIds = [
             'shipping_firstname' => 'save_shipping_firstname',
             'shipping_lastname' => 'save_shipping_lastname',
@@ -222,8 +197,7 @@ class OrderController extends ResourceController
                 'resource' => $resource,
                 $this->_parent->metadata->getName() => $resource,
                 'form' => $form->createView(),
-                'formSaveAccount' => $formSaveAccount->createView(),
-                'formSaveCheckout' => $formSaveCheckout->createView(),
+                'formSave' => $formSaveAccount->createView(),
                 'ids' => $customIds,
             ])
             ->setTemplate($configuration->getTemplate(ResourceActions::UPDATE . '.html'))
@@ -360,7 +334,7 @@ class OrderController extends ResourceController
             ];
 
             $html = $this->container->get('templating')->renderResponse(
-                '@SyliusShop/Checkout/Address/Save/saveInCheckout.html.twig',
+                '@SyliusShop/Checkout/Address/_saveAddressNavigation.html.twig',
                 [
                     'form' => $form->createView(),
                     'order' => $order,
@@ -372,7 +346,7 @@ class OrderController extends ResourceController
         }
 
         return $this->container->get('templating')->renderResponse(
-            '@SyliusShop/Checkout/Address/Save/saveInCheckout.html.twig',
+            '@SyliusShop/Checkout/Address/_saveAddressNavigation.html.twig',
             [
                 'form' => $form->createView(),
                 'order' => $order

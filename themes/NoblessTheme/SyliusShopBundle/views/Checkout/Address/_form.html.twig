@@ -1,37 +1,36 @@
 {% set idDifferenceBillingAddress = form.differentBillingAddress.vars.id %}
 {% if customIds is defined and formSaveType is defined %}
-    {% set idDifferenceBillingAddress = formSaveType ~ '_' ~ 'save_shipping_differentBillingAddress' %}
+    {% set idDifferenceBillingAddress = formSaveType ~ '_' ~ 'save_differentBillingAddress' %}
 {% endif %}
 
-<div class="change-shipping-address" data-js-address-book="sylius-shipping-address">
-    <h6 class="text-uppercase font-weight-bold">{{ 'sylius.ui.change_shipping_address'|trans }}</h6>
+<div>
+    {% if formSaveType is defined %}
+        <h6 class="text-uppercase font-weight-bold">
+            {{ 'sylius.ui.use_new_address'|trans }}
+            <span class="add-shipping-title"> {{ 'sylius.ui.of_shipping'|trans }}</span>
+            <span class="add-billing-title"> {{ 'sylius.ui.of_billing'|trans }}</span>
+        </h6>
+    {% endif %}
     <div class="card">
         <div class="card-body">
-            <div class="mb-3">
+            {% if formSaveType is not defined %}
+            <div class="mb-3 address-book">
                 {% include '@SyliusShop/Checkout/Address/_addressBookSelect.html.twig' %}
             </div>
+            {% endif %}
 
-            {% include '@SyliusShop/Checkout/Address/Form/_item.html.twig' with {'form': form.shippingAddress, 'order': order, 'addressType': 'shipping'} %}
-            <div class="d-none">
-                {{ form_row(form.differentBillingAddress, {'id': idDifferenceBillingAddress, 'attr': {'data-js-toggle': '[data-js-address-book="sylius-billing-address"]'}}) }}
+            <div class="add-shipping-address">
+                {% include '@SyliusShop/Checkout/Address/Form/_item.html.twig' with {'form': form.shippingAddress, 'order': order, 'addressType': 'shipping'} %}
+                <div class="d-none">
+                    {{ form_widget(form.differentBillingAddress, {'id': idDifferenceBillingAddress, 'value': true, 'attr': {'checked': 'checked'}}) }}
+                </div>
+                {{ sonata_block_render_event('sylius.shop.checkout.address.shipping_address_form', {'order': order}) }}
+            </div>
+            <div class="add-billing-address">
+                {% include '@SyliusShop/Checkout/Address/Form/_item.html.twig' with {'form': form.billingAddress, 'order': order, 'addressType': 'billing'} %}
+                {{ sonata_block_render_event('sylius.shop.checkout.address.billing_address_form', {'order': order}) }}
             </div>
 
-            {{ sonata_block_render_event('sylius.shop.checkout.address.shipping_address_form', {'order': order}) }}
-        </div>
-    </div>
-</div>
-
-<div class="change-billing-address" data-js-address-book="sylius-billing-address">
-    <h6 class="text-uppercase font-weight-bold">{{ 'sylius.ui.change_billing_address'|trans }}</h6>
-    <div class="card">
-        <div class="card-body">
-            <div class="mb-3">
-                {% include '@SyliusShop/Checkout/Address/_addressBookSelect.html.twig' %}
-            </div>
-
-            {% include '@SyliusShop/Checkout/Address/Form/_item.html.twig' with {'form': form.billingAddress, 'order': order, 'addressType': 'billing'} %}
-
-            {{ sonata_block_render_event('sylius.shop.checkout.address.billing_address_form', {'order': order}) }}
         </div>
     </div>
 </div>

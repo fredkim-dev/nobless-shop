@@ -1,23 +1,10 @@
 {% if app.user is not empty and app.user.customer is not empty and app.user.customer.addresses|length > 0 %}
-    <div class="choose-address">
-        <select class="col-12 address-book-select form-control">
-            <option value="">{{ 'sylius.ui.select_address_from_book'|trans }}</option>
-            {% for address in app.user.customer.addresses %}
-                <option value="{{ address.id }}" class="dropdown-item"
-                     data-first-name="{{ address.firstName }}"
-                     data-last-name="{{ address.lastName }}"
-                     data-company="{{ address.company }}"
-                     data-street="{{ address.street }}"
-                     data-country-code="{{ address.countryCode }}"
-                     data-province-code="{{ address.provinceCode }}"
-                     data-province-name="{{ address.provinceName }}"
-                     data-city="{{ address.city }}"
-                     data-postcode="{{ address.postcode }}"
-                     data-phone-number="{{ address.phoneNumber }}"
-                >
-                    <strong>{{ address.firstName }} {{ address.lastName }}</strong>, {{ address.street }}, {{ address.city }} {{ address.postcode }}, {{ address.countryCode|sylius_country_name }}
-                </option>
-            {% endfor %}
-        </select>
+    <div id="carouselAddressList" class="choose-address">
+        {% for address in app.user.customer.addresses %}
+            <div class="col choose-address-item">
+                {% include '@SyliusShop/Checkout/Address/Book/_item.html.twig' %}
+            </div>
+        {% endfor %}
     </div>
+    <div class="slider-controls mt-3"></div>
 {% endif %}

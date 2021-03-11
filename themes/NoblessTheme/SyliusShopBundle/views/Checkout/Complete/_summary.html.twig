@@ -3,15 +3,9 @@
 
     <div class="separator w-75 mx-auto mb-4"></div>
 
-    <div class="row col-12 col-lg-10 mx-auto mb-3 px-0 px-sm-3 chosen-methods">
-        <div class="col pl-0 pr-2 px-sm-3">
-            <h6 class="font-weight-bold text-uppercase">{{ 'sylius.ui.shipping_method'|trans }}</h6>
-            {% include '@SyliusShop/Checkout/Complete/_chosenMethod.html.twig' with {'method': order.shipments[0].method} %}
-        </div>
-        <div class="col pr-0 pl-2 px-sm-3">
-            <h6 class="font-weight-bold text-uppercase">{{ 'sylius.ui.payment_method'|trans }}</h6>
-            {% include '@SyliusShop/Checkout/Complete/_chosenMethod.html.twig' with {'method': order.payments[0].method} %}
-        </div>
-    </div>
+    {% include '@SyliusShop/Checkout/Complete/_chosenMethod.html.twig' with {'type': 'shipping', 'method': order.shipments[0].method} %}
 
+    <div class="separator w-75 mx-auto mb-4"></div>
+
+    {% include '@SyliusShop/Checkout/Complete/_chosenMethod.html.twig' with {'type': 'payment', 'method': order.payments[0].method} %}
 </div>

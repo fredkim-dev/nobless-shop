@@ -21,6 +21,9 @@ sylius:
         additional_addresses: 'Adresses supplémentaires'
         add_new_address: Ajouter l'adresse
         add_address: Ajouter une adresse
+        use_new_address: Utiliser une nouvelle adresse
+        of_shipping: de livraison
+        of_billing: de facturation
         use_address: Utiliser l'adresse
         save_and_use_address: Enregistrer sur le compte et l'utiliser
         change_address: Modifier l'adresse
@@ -49,7 +52,7 @@ sylius:
         please_choose_size_bundle: Veuillez choisir une taille pour chaque produit du pack
         view_cart: Voir le panier
         edit_cart: Modifier le panier
-        modify_cart: Modifier
+        modify: Modifier
         forgot_password_title: J'ai oublié mon mot de passe
         set_a_new_password_for_your_account_1: Veuillez saisir l'adresse mail associée à votre compte.
         set_a_new_password_for_your_account_2: Vous recevrez à cette adresse un lien vous permettant de réinitialiser votre mot de passe.

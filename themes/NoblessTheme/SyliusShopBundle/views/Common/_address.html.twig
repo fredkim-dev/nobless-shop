@@ -1,4 +1,12 @@
-<address>
+<address class="cancel-info {{ addressType }}"
+         data-first-name="{{ address.firstName }}"
+         data-last-name="{{ address.lastName }}"
+         data-street="{{ address.street }}"
+         data-country-code="{{ address.countryCode }}"
+         data-country-name="{{ address.countryCode|sylius_country_name|upper }}"
+         data-city="{{ address.city }}"
+         data-postcode="{{ address.postcode }}">
+
     <strong><span class="data-{{ addressType }} firstName">{{ address.firstName }}</span> <span class="data-{{ addressType }} lastName">{{ address.lastName }}</span></strong><br>
     <span class="data-{{ addressType }} street">{{ address.street }}</span><br/>
     <div class="street2-container-{{ addressType }}{% if address.street2 == '' %} d-none{% endif %}">

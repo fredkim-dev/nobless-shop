@@ -1246,6 +1246,9 @@ div.taxon-header {
 /*================*/
 #checkoutPage {
     margin-bottom: 3rem;
+    .separator {
+        border-bottom: 1px solid #271513;
+    }
     #completeAddresses {
         flex-direction: row;
     }
@@ -1318,15 +1321,63 @@ div.taxon-header {
             }
         }
     }
-    .change-shipping-address,
-    .change-billing-address {
+    .checkout-address-form,
+    .add-shipping-address,
+    .add-billing-address,
+    .save-address-form,
+    .cancel-change-address {
         display: none;
+    }
+    #carouselAddressList {
+        &.choose-address + .slider-controls {
+            width: 100%;
+            height: 25px;
+            margin: 0 auto;
+            position: relative;
+
+            .div-btn {
+                width: 30px;
+                height: 30px;
+                z-index: 9999;
+                position: absolute;
+                left: 50%;
+
+                button {
+                    width: 30px;
+                    height: 30px;
+
+                    &.slick-prev {
+                        &:before {
+                            font-size: 30px;
+                            color: #271513;
+                        }
+                    }
+
+                    &.slick-next {
+                        &:before {
+                            font-size: 30px;
+                            color: #271513;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .choose-address-item {
+        &:hover {
+            cursor: pointer;
+            background-color: #271513;
+            color: white;
+        }
+        address {
+            padding: 0.5rem;
+        }
     }
     .card {
         border: 2px solid #271513;
         border-radius: 0;
         &.checkout-address-form,
-        &.complete-summary {
+        &.complete-summary, {
             border: none;
         }
         .card-header {
@@ -1359,17 +1410,20 @@ div.taxon-header {
             text-transform: uppercase;
             word-break: break-word;
         }
-        .separator {
-            border-bottom: 1px solid #271513;
-        }
         .media-body {
             height: 150px;
         }
     }
+    .main-address-form {
+        .card {
+            border: none;
+        }
+    }
+
     a {
-        &.change-address {
-            &:hover {
-                cursor: pointer;
+        &:hover {
+            cursor: pointer;
+            &.change-address {
                 text-decoration: underline;
             }
         }

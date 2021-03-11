@@ -1,0 +1,27 @@
+{% form_theme form '@SyliusShop/Form/theme.html.twig' %}
+
+<div class="save-address-form">
+    <div class="separator w-75 mx-auto mb-3"></div>
+    {{ form_start(form, {'action': path('sylius_shop_checkout_save_user_address'), 'attr': {'novalidate': 'novalidate'}}) }}
+        {% include '@SyliusShop/Checkout/Address/_form.html.twig' with {'form': form, 'customIds': ids, 'formSaveType': 'inAccount'} %}
+        <input type="hidden" name="address_type" />
+
+        <div class="row mt-4 save-address-navigation">
+            <div class="col-auto order-2 order-sm-1">
+                <a class="btn btn-link cancel-add-checkout-address">
+                    {{ 'sylius.ui.cancel'|trans }}
+                </a>
+            </div>
+            <div class="d-flex col-auto save-buttons px-3 px-lg-0 mb-2 order-1 order-sm-2">
+                <div class="col-auto px-0 px-lg-3">
+                    <button type="submit" class="btn btn-primary save-in-account">
+                        {{ 'sylius.ui.save_and_use_address'|trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_row(form._token, {'id': 'inAccount_save_token'}) }}
+    {{ form_end(form, {'render_rest': false}) }}
+</div>
+

@@ -1,10 +1,21 @@
-<div class="list-group mb-2">
-    <div class="flex-column align-items-start">
-        <div class="d-flex w-100">
-            <strong>{{ method.name }}</strong>
+{% set title = 'sylius.ui.' ~ type ~ '_method' %}
+{% set routeType = 'sylius_shop_checkout_select_' ~ type %}
+
+<div class="row col-12 col-lg-11 col-xl-10 mx-auto mb-3 px-0 px-sm-3">
+    <div class="col-12 px-0 px-lg-3 flex-column">
+        <div class="d-flex flex-row justify-content-between">
+            <h6 class="font-weight-bold text-uppercase ">{{ title|trans }}</h6>
+            <a class="d-block d-lg-none" href="{{ path(routeType) }}">{{ 'sylius.ui.modify'|trans }}</a>
         </div>
-        {% if method.description is not null %}
-            <p class="mb-1">{{ method.description }}</p>
-        {% endif %}
+        <div class="list-group mb-2">
+            <div class="flex-column align-items-start">
+                <div class="d-flex w-100">
+                    <strong>{{ method.name }}</strong>
+                </div>
+                {% if method.description is not null %}
+                    <p class="mb-1">{{ method.description }}</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
 </div>

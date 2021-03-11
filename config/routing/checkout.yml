@@ -28,27 +28,6 @@ sylius_shop_checkout_address:
             state_machine:
                 graph: sylius_order_checkout
                 transition: address
-                
-sylius_shop_checkout_save_address:
-    path: /save-address
-    methods: [POST, PUT]
-    defaults:
-        _controller: sylius.controller.shop.order_custom:saveAddressInCheckoutAction
-        _sylius:
-            event: address
-            flash: false
-            template: "@SyliusShop/Checkout/address.html.twig"
-            form:
-                type: Sylius\Bundle\CoreBundle\Form\Type\Checkout\AddressType
-                options:
-                    customer: expr:service('sylius.context.customer').getCustomer()
-            repository:
-                method: findCartForAddressing
-                arguments:
-                    - "expr:service('sylius.context.cart').getCart().getId()"
-            state_machine:
-                graph: sylius_order_checkout
-                transition: address
 
 sylius_shop_checkout_save_user_address:
     path: /save-user-address

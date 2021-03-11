@@ -1,3 +1,5 @@
+{% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
+
 {% extends '@SyliusShop/Checkout/layout.html.twig' %}
 
 {% form_theme form '@SyliusShop/Form/theme.html.twig' %}
@@ -18,8 +20,20 @@
                 {{ form_errors(form) }}
                 <input type="hidden" name="_method" value="PUT" />
 
-                <div class="d-none card checkout-address-form">
+                <div class="card checkout-address-form">
                     <div class="separator w-75 mx-auto mb-3"></div>
+
+                    <div class="d-flex flex-row justify-content-between">
+                        <h6 class="text-uppercase font-weight-bold change-shipping-title">{{ 'sylius.ui.change_shipping_address'|trans }}</h6>
+                        <h6 class="text-uppercase font-weight-bold change-billing-title">{{ 'sylius.ui.change_billing_address'|trans }}</h6>
+
+                        <a class="checkout-add-address">
+                            {{ icons.plus() }}
+                            <span class="d-none d-md-inline">{{ 'sylius.ui.add_address'|trans }}</span>
+                            <span class="d-inline d-md-none">{{ 'sylius.ui.add'|trans }}</span>
+                        </a>
+                    </div>
+
                     {% include '@SyliusShop/Checkout/Address/_form.html.twig' %}
                 </div>
 
@@ -30,7 +44,7 @@
                 {{ form_row(form._token) }}
             {{ form_end(form, {'render_rest': false}) }}
 
-            {% include '@SyliusShop/Checkout/Address/_chooseAddressNavigation.html.twig' %}
+            {% include '@SyliusShop/Checkout/Address/_saveAddressNavigation.html.twig' with {'form': formSave} %}
         </div>
         <div class="col-12 col-md-5 col-xl-4 px-3 px-xl-5">
             {{ sonata_block_render_event('sylius.shop.checkout.address.before_summary', {'order': order}) }}
