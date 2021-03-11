@@ -363,6 +363,35 @@ sylius_grid:
                                 route: sylius_shop_order_show
                                 parameters:
                                     tokenValue: resource.tokenValue
+        app_admin_bonus_points:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: BitBag\SyliusBonusPointsPlugin\Entity\BonusPoints
+            fields:
+                order:
+                    type: twig
+                    label: sylius.ui.number
+                    path: order.number
+                    sortable: false
+                    options:
+                        template: "@SyliusShop/Account/Order/Grid/Field/number.html.twig"
+                customer:
+                    type: string
+                    label: sylius.ui.customer
+                    path: order.customer.fullName
+                    sortable: true
+                points:
+                    type: string
+                    label: Bonus Points
+                isUsed:
+                    type: twig
+                    label: Is used ?
+                    options:
+                        template: "@SyliusUi/Grid/Field/yesNo.html.twig"
+                expiresAt:
+                    type: datetime
+                    label: 'Expires at'
         sylius_shop_product:
             driver:
                 name: doctrine/orm

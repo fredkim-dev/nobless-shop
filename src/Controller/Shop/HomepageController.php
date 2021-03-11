@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Shop;
 
+use App\Entity\User\ShopUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;

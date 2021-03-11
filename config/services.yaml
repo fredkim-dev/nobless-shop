@@ -138,3 +138,19 @@ services:
             - '@sylius.manager.order'
             - '@sylius.context.cart'
             - '@sylius.context.cart.session_and_channel_based'
+
+    #Bonus Points
+    app.listener.admin.menu_builder:
+        class: App\Menu\AdminMenuListener
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }
+
+    app.bonus_points_strategy_rule_checker.none:
+        class: App\Checker\Rule\NoRuleChecker
+        tags:
+            - { name: bitbag.bonus_points_strategy_rule_checker, type: none, label: "no rule", form_type: App\Form\Rule\NoRuleConfigurationType }
+
+    app.form.type.rule.no_rule_configuration:
+        class: App\Form\Rule\NoRuleConfigurationType
+        tags:
+            - { name: form.type }

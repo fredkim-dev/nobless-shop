@@ -21,3 +21,22 @@ app_shop_complete_your_style:
     methods: [ GET ]
     defaults:
         _controller: sylius.controller.shop.product:completeYourStyleAction
+
+bitbag_sylius_bonus_points_plugin:
+    resource: "@BitBagSyliusBonusPointsPlugin/Resources/config/routing.yml"
+
+app_admin_bonus_points:
+    resource: |
+        alias: bitbag_sylius_bonus_points.bonus_points
+        section: admin
+        templates: SyliusAdminBundle:Crud
+        except: ['show']
+        redirect: update
+        grid: app_admin_bonus_points
+        vars:
+            all:
+                subheader: app.ui.bonus_points # define a translation key for your entity subheader
+            index:
+                icon: 'file image outline' # choose an icon that will be displayed next to the subheader
+    type: sylius.resource
+    prefix: admin
