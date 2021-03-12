@@ -1321,12 +1321,28 @@ div.taxon-header {
             }
         }
     }
-    .checkout-address-form,
     .add-shipping-address,
     .add-billing-address,
-    .save-address-form,
     .cancel-change-address {
         display: none;
+    }
+    .checkout-address-form {
+        display: none;
+        h6 {
+            line-height: inherit;
+        }
+    }
+    .save-address-form {
+        display: none;
+        label {
+            margin-bottom: 0.25rem;
+            margin-top: 0.25rem;
+        }
+    }
+    .chosen-address {
+        .cancel-info {
+            padding: 0.5rem 1rem;
+        }
     }
     #carouselAddressList {
         &.choose-address + .slider-controls {
@@ -1364,13 +1380,15 @@ div.taxon-header {
         }
     }
     .choose-address-item {
-        &:hover {
-            cursor: pointer;
-            background-color: #271513;
-            color: white;
-        }
+        border: 1px solid white;
+        margin: 0;
+        padding: 0;
         address {
-            padding: 0.5rem;
+            border: 1px solid white;
+            &:hover {
+                cursor: pointer;
+                border: 1px solid #271513;
+            }
         }
     }
     .card {

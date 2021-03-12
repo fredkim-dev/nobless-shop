@@ -93,6 +93,11 @@ final class CartBlamerListener
             return;
         }
 
+        $cartItemsId = [];
+        foreach ($cart->getItems() as $itemCart) {
+            $cartItemsId[] = $itemCart->getVariant()->getId();
+        }
+
         try {
             $sessionCart = $this->sessionCartContext->getCart();
         } catch (CartNotFoundException $e) {
@@ -100,7 +105,9 @@ final class CartBlamerListener
         }
         if ($sessionCart !== null && $sessionCart->getId() !== $cart->getId()) {
             foreach ($sessionCart->getItems() as $item) {
-                $cart->addItem($item);
+                if (!in_array($item->getVariant()->getId(), $cartItemsId)) {
+                    $cart->addItem($item);
+                }
             }
             $this->cartManager->remove($sessionCart);
             $this->cartManager->persist($sessionCart);

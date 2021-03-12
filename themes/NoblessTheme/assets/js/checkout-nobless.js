@@ -14,7 +14,6 @@ const checkout = function mainFunctions(container) {
       cancelBtn.show();
       cancelBtn.prev().hide();
 
-      $('.change-address', container).show();
       $('.checkout-address-form', container).show();
 
       addressTypeManage(this, 'change', container);
@@ -51,20 +50,28 @@ const checkout = function mainFunctions(container) {
     checkoutSaveAddress(e.currentTarget, classListBtn[3], container);
   });
 
+  // When user clicks on address page next button
+  $('.main-address-form button.btn-primary', container).on('click', function(e) {
+    e.preventDefault();
+    $('.checkout-address-form', container).hide();
+    $(this).closest('form').addClass('loading').submit();
+  })
+
   // When user cancels the address changes
   $('a.cancel-change-address', container).on('click', function(e) {
     e.preventDefault();
     hideChangeAddress(container);
+    hideSaveAddressForm(container);
     cancelChangeAddress(container);
   });
 
   // When user cancels the address add
   $('a.cancel-add-checkout-address', container).on('click', function(e) {
     $('.checkout-address-form', container).show();
-    setAddressCarousel();
     $('.save-checkout-address-navigation', container).show();
     $('.save-address-form', container).removeClass('d-block');
     $('.save-address-form [class^="add-"]', container).hide();
+    hideSaveAddressForm(container);
   });
 };
 
@@ -72,20 +79,28 @@ const setChooseNewAddress = function chooseAddress(element, container) {
   // When user chose an address
   element.on('click', function(e) {
     $('.data-address', this).each(function() {
-      const classList = this.className.split(/\s+/);
-      const classListBtn = $('.chosen-address .change-address.clicked', container)[0].className.split(/\s+/);
-      const fieldName = classList[1];
-      const fieldSelector = '[name="sylius_checkout_address[' + classListBtn[1] + 'Address][' + fieldName + ']';
+      const fieldName = this.className.split(/\s+/)[1];
+      const addressType = $('.chosen-address .change-address.clicked', container)[0].className.split(/\s+/)[1];
+      const fieldSelector = '[name="sylius_checkout_address[' + addressType + 'Address][' + fieldName + ']';
       const formField = '#checkoutPage .main-address-form ' + fieldSelector;
-      const chosenAddressText = '.data-'+ classListBtn[1] +'.' + fieldName;
+      const chosenAddressText = '.data-'+ addressType +'.' + fieldName;
 
       if (fieldName === 'countryCode') {
         $(formField).val($(this).text().substring(0, 2));
       } else {
         $(formField).val($(this).text());
       }
+
+      if (fieldName === 'street2') {
+        if ($(this).text().trim() !== '') {
+          $('.street2-container-' + addressType).removeClass('d-none');
+        } else {
+          $('.street2-container-' + addressType).addClass('d-none');
+        }
+      }
       $(chosenAddressText).text($(this).text());
     });
+    hideChangeAddress(container);
   });
 }
 
@@ -96,7 +111,7 @@ function checkoutSaveAddress(element, addressType, container) {
     $('input[name="address_type"]', form).val(addressType);
   }
   fillOtherAddress(addressType, container);
-  $('.main-address-form', container).addClass('loading');
+  $('.save-address-form form', container).addClass('loading');
 
   $.ajax({
     type: "POST",
@@ -130,20 +145,16 @@ function checkoutSaveAddress(element, addressType, container) {
           $('.address-book', container).html($('.address-book', dataSuccessDiv).html());
         });
         hideChangeAddress(container);
-        $('.main-address-form', container).removeClass('loading');
-        $('.main-address-form input', container).removeClass('is-invalid');
-        $('.main-address-form .invalid-feedback', container).remove();
+        hideSaveAddressForm(container);
       }
     },
     error: function(error) {
-      $('.save-address-form .invalid-feedback', container).remove();
+      hideSaveAddressForm(container);
       $($.parseHTML(error.responseText)[1]).find('.form-error-message').each(function() {
         const fieldName = $(this).closest('label').attr('for');
         const fieldError = $(this).text();
         $('.save-address-form [id="'+ fieldName +'"]', container).addClass('is-invalid').after('<span class="invalid-feedback d-block"><span class="form-error-message d-block">' + fieldError + '</span></span>');
       });
-
-      $('.main-address-form', container).removeClass('loading');
     }
   })
 }
@@ -169,6 +180,13 @@ function hideChangeAddress(container) {
   $('.save-address-form', container).removeClass('d-block');
   $('.chosen-address .change-address', container).removeClass('clicked');
   $('#mainContentContainer')[0].scrollTop = 0;
+}
+
+/* Remove error indicators when save address form is submitted */
+function hideSaveAddressForm(container) {
+  $('.save-address-form form', container).removeClass('loading');
+  $('.save-address-form input', container).removeClass('is-invalid');
+  $('.save-address-form .invalid-feedback', container).remove();
 }
 
 /* Replace all form and displayed address data when cancel modifications */
@@ -211,7 +229,16 @@ function setAddressCarousel() {
     adaptiveHeight: true,
     appendArrows: jQuery('#carouselAddressList').next('.slider-controls'),
     prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
-    nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Next</button></div>'
+    nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Next</button></div>',
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          rows: 4,
+          slidesPerRow: 1
+        }
+      }
+    ]
   };
 
   let slider = $('#carouselAddressList');

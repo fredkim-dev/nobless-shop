@@ -1,7 +1,7 @@
 {% if app.user is not empty and app.user.customer is not empty and app.user.customer.addresses|length > 0 %}
-    <div id="carouselAddressList" class="choose-address">
+    <div id="carouselAddressList" class="choose-address mx-3">
         {% for address in app.user.customer.addresses %}
-            <div class="col choose-address-item">
+            <div class="col choose-address-item mx-0 p-0">
                 {% include '@SyliusShop/Checkout/Address/Book/_item.html.twig' %}
             </div>
         {% endfor %}
