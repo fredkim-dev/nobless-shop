@@ -81,7 +81,7 @@ const setChooseNewAddress = function chooseAddress(element, container) {
     $('.data-address', this).each(function() {
       const fieldName = this.className.split(/\s+/)[1];
       const addressType = $('.chosen-address .change-address.clicked', container)[0].className.split(/\s+/)[1];
-      const fieldSelector = '[name="sylius_checkout_address[' + addressType + 'Address][' + fieldName + ']';
+      const fieldSelector = '[name="sylius_checkout_address[' + addressType + 'Address][' + fieldName + ']"]';
       const formField = '#checkoutPage .main-address-form ' + fieldSelector;
       const chosenAddressText = '.data-'+ addressType +'.' + fieldName;
 
@@ -234,7 +234,7 @@ function setAddressCarousel() {
       {
         breakpoint: 1200,
         settings: {
-          rows: 4,
+          rows: 3,
           slidesPerRow: 1
         }
       }

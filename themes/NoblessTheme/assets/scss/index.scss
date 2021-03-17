@@ -1323,17 +1323,26 @@ div.taxon-header {
     }
     .add-shipping-address,
     .add-billing-address,
+    .checkout-address-form,
+    .save-address-form,
     .cancel-change-address {
         display: none;
     }
+    .add-shipping-address,
+    .add-billing-address {
+        padding: 0.5rem 1.5rem 1rem;
+    }
     .checkout-address-form {
-        display: none;
         h6 {
             line-height: inherit;
         }
     }
+    .save-checkout-address-navigation {
+        .btn.btn-link {
+            padding: 0;
+        }
+    }
     .save-address-form {
-        display: none;
         label {
             margin-bottom: 0.25rem;
             margin-top: 0.25rem;
@@ -1385,6 +1394,7 @@ div.taxon-header {
         padding: 0;
         address {
             border: 1px solid white;
+            margin-bottom: 0;
             &:hover {
                 cursor: pointer;
                 border: 1px solid #271513;

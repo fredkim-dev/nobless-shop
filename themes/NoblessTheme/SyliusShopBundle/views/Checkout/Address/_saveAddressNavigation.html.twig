@@ -6,14 +6,14 @@
         {% include '@SyliusShop/Checkout/Address/_form.html.twig' with {'form': form, 'customIds': ids, 'formSaveType': 'inAccount'} %}
         <input type="hidden" name="address_type" />
 
-        <div class="row mt-4 save-address-navigation">
-            <div class="col-auto d-flex align-items-center">
-                <a class="btn btn-link cancel-add-checkout-address p-0">
+        <div class="row mt-4 save-address-navigation px-3">
+            <div class="col-auto d-flex align-items-center px-0 px-xl-3">
+                <a class="btn btn-link cancel-add-checkout-address px-0">
                     {{ 'sylius.ui.cancel'|trans }}
                 </a>
             </div>
-            <div class="d-flex col-auto save-buttons px-3 px-lg-0 mb-2 order-1 order-sm-2">
-                <div class="col-auto px-0 px-lg-3">
+            <div class="d-flex col-auto save-buttons px-3 px-lg-0 mb-2 order-1 order-sm-2 px-0 px-xl-3">
+                <div class="col-auto px-0">
                     <button type="submit" class="btn btn-primary save-in-account">
                         {{ 'sylius.ui.save_and_use_address'|trans }}
                     </button>

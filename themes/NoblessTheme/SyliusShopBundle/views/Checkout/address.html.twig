@@ -20,11 +20,11 @@
                 {{ form_errors(form) }}
                 <input type="hidden" name="_method" value="PUT" />
 
-                <div class="card checkout-address-form col-12 col-xl-11 mx-auto px-0 px-sm-3">
+                <div class="card checkout-address-form col-12 col-xl-11 mx-auto px-3">
                     <div class="separator w-75 mx-auto mb-3"></div>
 
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="col-auto px-0 px-lg-3">
+                    <div class="d-flex flex-row justify-content-between px-0 px-xl-3">
+                        <div class="col-auto px-0">
                             {% for addressType in ['shipping', 'billing'] %}
                                 {% set className = 'change-' ~ addressType ~ '-title' %}
                                 {% set title = 'sylius.ui.change_' ~ addressType ~ '_address' %}
@@ -32,8 +32,8 @@
                             {% endfor %}
                         </div>
 
-                        <a class="checkout-add-address col-auto pr-0">
-                            {{ icons.plus() }}
+                        <a class="checkout-add-address col-auto pr-0 d-flex flex-row align-items-center">
+                            <span class="pr-2">{{ icons.plus() }}</span>
                             <span class="d-none d-lg-inline">{{ 'sylius.ui.add_address'|trans }}</span>
                             <span class="d-inline d-lg-none">{{ 'sylius.ui.add'|trans }}</span>
                         </a>
