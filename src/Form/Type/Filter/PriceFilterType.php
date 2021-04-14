@@ -41,15 +41,17 @@ class PriceFilterType extends AbstractType
         $taxonSlug = $this->requestStack->getCurrentRequest()->get('slug');
         $taxon = $this->taxonRepository->findOneBySlug($taxonSlug, $this->localeContext->getLocaleCode());
         $minMaxPrices = $this->entityManager->getRepository(ProductVariant::class)->getMinAndMaxPrices($taxon)[0];
+        $minPrice = floor($minMaxPrices['minPrice'] / 100);
+        $maxPrice = ceil($minMaxPrices['maxPrice'] / 100);
         $builder
             ->add('price_1',MoneyType::class, [
                 'label' => false,
                 'divisor' => 100,
                 'scale' => 0,
-                'empty_data' => (string)($minMaxPrices['minPrice'] / 100),
+                'empty_data' => (string)$minPrice,
                 'attr' => [
-                    'data-min' => (string)($minMaxPrices['minPrice'] / 100),
-                    'data-max' => (string)($minMaxPrices['maxPrice'] / 100),
+                    'data-min' => (string)$minPrice,
+                    'data-max' => (string)$maxPrice,
                     'class' => 'price-input'
                 ]
             ])
@@ -57,10 +59,10 @@ class PriceFilterType extends AbstractType
                 'label' => false,
                 'divisor' => 100,
                 'scale' => 0,
-                'empty_data' => (string)($minMaxPrices['maxPrice'] / 100),
+                'empty_data' => (string)$maxPrice,
                 'attr' => [
-                    'data-min' => (string)($minMaxPrices['minPrice'] / 100),
-                    'data-max' => (string)($minMaxPrices['maxPrice'] / 100),
+                    'data-min' => (string)$minPrice,
+                    'data-max' => (string)$maxPrice,
                     'class' => 'price-input'
                 ]
             ])

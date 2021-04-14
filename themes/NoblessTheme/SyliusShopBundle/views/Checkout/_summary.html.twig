@@ -39,16 +39,6 @@
         <div class="row justify-content-center slider-controls d-block d-md-none"></div>
 
         <div class="separator w-75 mx-auto my-3"></div>
-        {% if order.shipments|length > 0 and hideShipping is not defined %}
-        <div class="shipping-method d-flex flex-column">
-            <h5>{{ 'sylius.ui.shipping_method'|trans }}</h5>
-            <div class="d-flex flex-row justify-content-between px-3">
-                <span>{{ order.shipments[0].method.name }}</span>
-                <span>{% if order.shippingTotal == 0 %} {{ 'sylius.ui.free_shipping_method'|trans }} {% else %} {{ money.convertAndFormat(order.shippingTotal) }} {% endif %}</span>
-            </div>
-        </div>
-        <div class="separator w-75 mx-auto my-3"></div>
-        {% endif %}
 
         {% if orderPromotionTotal or bonusPointsTotal %}
         <div class="d-flex flex-column">
@@ -71,6 +61,17 @@
             {% endif %}
         </div>
         <div class="separator w-75 mx-auto my-3"></div>
+        {% endif %}
+
+        {% if order.shipments|length > 0 and hideShipping is not defined %}
+            <div class="shipping-method d-flex flex-column">
+                <h5>{{ 'sylius.ui.shipping_method'|trans }}</h5>
+                <div class="d-flex flex-row justify-content-between px-3">
+                    <span>{{ order.shipments[0].method.name }}</span>
+                    <span>{% if order.shippingTotal == 0 %} {{ 'sylius.ui.free_shipping_method'|trans }} {% else %} {{ money.convertAndFormat(order.shippingTotal) }} {% endif %}</span>
+                </div>
+            </div>
+            <div class="separator w-75 mx-auto my-3"></div>
         {% endif %}
 
         <div class="order-total d-flex flex-row justify-content-between pr-3">

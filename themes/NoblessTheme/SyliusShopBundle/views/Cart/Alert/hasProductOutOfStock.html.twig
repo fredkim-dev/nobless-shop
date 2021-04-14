@@ -1,0 +1,13 @@
+{% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
+
+<div class="col-12 p-0 mb-3 pr-3 has-product-out-of-stock">
+    <div class="alert alert-danger fade show">
+        <div class="d-flex align-items-center">
+            <span class="pr-3 fa-2x">{{ icons.danger() }}</span>
+            <div>
+                <strong>{{ 'sylius.ui.caution'|trans }}&nbsp;</strong>
+                {{ 'sylius.ui.has_product_out_of_stock'|trans }}
+            </div>
+        </div>
+    </div>
+</div>

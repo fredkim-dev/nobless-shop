@@ -1,3 +1,8 @@
-<a href="{{ path('sylius_shop_checkout_start') }}" class="btn btn-primary btn-block mt-4 mb-2">
+{% set classBtn = 'btn-primary' %}
+{% if hasProductOutOfStock is defined and hasProductOutOfStock %}
+    {% set classBtn = classBtn ~ ' disabled' %}
+{% endif %}
+
+<a href="{{ path('sylius_shop_checkout_start') }}" class="{{ classBtn }} btn-to-checkout btn btn-block mt-4 mb-2">
     {{ 'sylius.ui.complete_order'|trans }}
 </a>

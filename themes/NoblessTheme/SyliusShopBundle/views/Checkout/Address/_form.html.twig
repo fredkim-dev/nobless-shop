@@ -3,28 +3,27 @@
     {% set idDifferenceBillingAddress = formSaveType ~ '_' ~ 'save_differentBillingAddress' %}
 {% endif %}
 
-{% set addNewAddress = false %}
-{% if formSaveType is defined %}
-    {% set addNewAddress = true %}
-{% endif %}
 
 <div>
-    {% if addNewAddress %}
-        <h6 class="text-uppercase font-weight-bold mb-3 px-0 px-xl-3">
+    <h6 class="text-uppercase font-weight-bold mb-3 px-0 px-xl-3 new-address-title">
+        <span class="use {% if noAddressesYet %}d-none{% endif %}">
             {{ 'sylius.ui.use_new_address'|trans }}
             <span class="add-shipping-title"> {{ 'sylius.ui.of_shipping'|trans }}</span>
             <span class="add-billing-title"> {{ 'sylius.ui.of_billing'|trans }}</span>
-        </h6>
-    {% endif %}
-    <div class="card{% if addNewAddress %} mx-0 mx-xl-3{% endif %}">
-        <div>
-            {% if not addNewAddress %}
+        </span>
+        <span class="add {% if addressInCheckout %}d-none{% endif %}">
+            {{ 'sylius.ui.add_new_address_form'|trans }}
+        </span>
+    </h6>
+    <div class="card border-0{% if formSaveType is defined %} mx-0 mx-xl-3{% endif %}">
+        <div class="px-0 px-xl-5">
+            {% if formSaveType is not defined %}
             <div class="mb-3 address-book">
-                {% include '@SyliusShop/Checkout/Address/_addressBookSelect.html.twig' %}
+                {% include '@SyliusShop/Checkout/Address/_addressBookSelect.html.twig' with {'noAddressesYet': noAddressesYet, 'addressInCheckout': addressInCheckout} %}
             </div>
             {% endif %}
 
-            <div class="add-shipping-address">
+            <div class="add-shipping-address{% if noAddressesYet %} d-block{% endif %}">
                 {% include '@SyliusShop/Checkout/Address/Form/_item.html.twig' with {'form': form.shippingAddress, 'order': order, 'addressType': 'shipping'} %}
                 <div class="d-none">
                     {{ form_widget(form.differentBillingAddress, {'id': idDifferenceBillingAddress, 'value': true, 'attr': {'checked': 'checked'}}) }}

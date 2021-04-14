@@ -1,0 +1,33 @@
+{% if address is not null %}
+    <address class="cancel-info {{ addressType }}"
+             data-first-name="{{ address.firstName }}"
+             data-last-name="{{ address.lastName }}"
+             data-street="{{ address.street }}"
+             data-country-code="{{ address.countryCode }}"
+             data-country-name="{{ address.countryCode|sylius_country_name|upper }}"
+             data-city="{{ address.city }}"
+             data-postcode="{{ address.postcode }}">
+
+        <strong><span class="data-{{ addressType }} firstName">{{ address.firstName }}</span> <span class="data-{{ addressType }} lastName">{{ address.lastName }}</span></strong><br>
+        <span class="data-{{ addressType }} street">{{ address.street }}</span><br/>
+        <div class="street2-container-{{ addressType }}{% if address.street2 == '' %} d-none{% endif %}">
+            <span class="data-{{ addressType }} street2">{{ address.street2 }}</span><br/>
+        </div>
+        <span class="data-{{ addressType }} postcode">{{ address.postcode }}</span> <span class="data-{{ addressType }} city">{{ address.city }}</span><br/>
+        <span class="data-{{ addressType }} countryCode">{{ address.countryCode|sylius_country_name|upper }}</span>
+    </address>
+{% else %}
+    <div class="mb-3 no-address-yet">{{ 'sylius.ui.no_address_yet'|trans }}</div>
+    <address class="d-none cancel-info {{ addressType }}" data-first-name="" data-last-name="" data-street="" data-country-code="" data-country-name="" data-city="" data-postcode="">
+        <strong>
+            <span class="data-{{ addressType }} firstName"></span>
+            <span class="data-{{ addressType }} lastName"></span>
+        </strong><br>
+        <span class="data-{{ addressType }} street"></span><br/>
+        <div class="street2-container-{{ addressType }} d-none">
+            <span class="data-{{ addressType }} street2"></span><br/>
+        </div>
+        <span class="data-{{ addressType }} postcode"></span> <span class="data-{{ addressType }} city"></span><br/>
+        <span class="data-{{ addressType }} countryCode"></span>
+    </address>
+{% endif %}

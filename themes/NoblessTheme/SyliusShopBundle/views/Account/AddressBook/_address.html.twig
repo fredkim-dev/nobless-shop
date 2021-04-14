@@ -1,6 +1,10 @@
-<address>
-    <span class="d-block">{# {{ address.gender|capitalize }} #} {{ address.firstName }} {{ address.lastName }}</span>
-    <span class="d-block">{{ address.street }} {{ address.street2 }}</span>
-    <span class="d-block">{{ address.postcode }} {{ address.city }}</span>
-    <span class="d-block">{{ address.countryCode|sylius_country_name }}</span>
-</address>
+{% if address is not null %}
+    <address>
+        <span class="d-block">{# {{ address.gender|capitalize }} #} {{ address.firstName }} {{ address.lastName }}</span>
+        <span class="d-block">{{ address.street }} {{ address.street2 }}</span>
+        <span class="d-block">{{ address.postcode }} {{ address.city }}</span>
+        <span class="d-block">{{ address.countryCode|sylius_country_name }}</span>
+    </address>
+{% else %}
+    <address>{{ 'sylius.ui.no_default_address'|trans }}</address>
+{% endif %}

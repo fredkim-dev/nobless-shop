@@ -40,9 +40,13 @@
         {{ pagination.simple(resources.data) }}
     </div>
 {% else %}
-    <div class="row">
-        <div class="col-12">
-        {{ messages.info('sylius.ui.no_product_filter') }}
+    <div class="row mt-3 mb-5">
+        <div class="col-12 px-3">
+            <div class="px-3">
+                {{ 'sylius.ui.no_product_filter'|trans }}<br>
+                {{ 'sylius.ui.no_product_filter_2'|trans }}
+                <div class="my-5"></div>
+            </div>
         </div>
     </div>
 {% endif %}

@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Product\Product;
-use App\Entity\Taxonomy\Taxon;
 use BitBag\SyliusProductBundlePlugin\Repository\ProductVariantRepository as BaseProductVariantRepository;
+use Sylius\Component\Taxonomy\Model\TaxonInterface;
 
 class ProductVariantRepository extends BaseProductVariantRepository
 {
-    public function getMinAndMaxPrices(Taxon $taxonomy)
+    public function getMinAndMaxPrices(TaxonInterface $taxonomy)
     {
         return $this->createQueryBuilder('pv')
             ->select('min(cp.price) as minPrice, max(cp.price) as maxPrice')

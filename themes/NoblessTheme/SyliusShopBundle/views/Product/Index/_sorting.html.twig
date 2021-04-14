@@ -20,10 +20,10 @@
 {% endif %}
 
 
-<div class="dropdown d-flex flex-row align-items-center">
+<div class="dropdown d-flex flex-row align-items-center pr-2">
     <span class="default-color">{{ 'sylius.ui.sort_by'|trans }}</span>
     <button class="btn btn-link dropdown-toggle px-1 py-0 font-weight-bold" type="button" data-toggle="dropdown">{{ current_sorting_label }}</button>
-    <div class="dropdown-menu">
+    <div class="dropdown-menu dropdown-menu-right px-3">
         <a class="dropdown-item" href="{{ newest_first_path }}" data-text="{{ 'sylius.ui.newest_first'|trans|lower }}">{{ 'sylius.ui.newest_first'|trans }}</a>
         <a class="dropdown-item" href="{{ cheapest_first_path }}" data-text="{{ 'sylius.ui.cheapest_first'|trans|lower }}">{{ 'sylius.ui.cheapest_first'|trans }}</a>
         <a class="dropdown-item" href="{{ most_expensive_first_path }}" data-text="{{ 'sylius.ui.most_expensive_first'|trans|lower }}">{{ 'sylius.ui.most_expensive_first'|trans }}</a>

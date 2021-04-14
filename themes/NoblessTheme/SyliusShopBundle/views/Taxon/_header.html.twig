@@ -1,7 +1,5 @@
-{% import '@SyliusShop/Common/Macro/headers.html.twig' as headers %}
-
 {{ sonata_block_render_event('sylius.shop.taxon.header.before', {'taxon': taxon}) }}
 
-{{ headers.default(taxon.name, '', taxon.description) }}
+<h1 class="px-3">{{ taxon.name }}</h1>
 
 {{ sonata_block_render_event('sylius.shop.taxon.header.after', {'taxon': taxon}) }}

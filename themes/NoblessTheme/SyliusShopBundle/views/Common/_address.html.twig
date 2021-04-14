@@ -1,20 +1,9 @@
-<address class="cancel-info {{ addressType }}"
-         data-first-name="{{ address.firstName }}"
-         data-last-name="{{ address.lastName }}"
-         data-street="{{ address.street }}"
-         data-country-code="{{ address.countryCode }}"
-         data-country-name="{{ address.countryCode|sylius_country_name|upper }}"
-         data-city="{{ address.city }}"
-         data-postcode="{{ address.postcode }}">
-
-    <strong><span class="data-{{ addressType }} firstName">{{ address.firstName }}</span> <span class="data-{{ addressType }} lastName">{{ address.lastName }}</span></strong><br>
-    <span class="data-{{ addressType }} street">{{ address.street }}</span><br/>
-    <div class="street2-container-{{ addressType }}{% if address.street2 == '' %} d-none{% endif %}">
-        <span class="data-{{ addressType }} street2">{{ address.street2 }}</span><br/>
+<address>
+    <strong>{{ address.firstName }} {{ address.lastName }}</strong><br>
+    {{ address.street }}<br>
+    <div class="{% if address.street2 == '' %} d-none{% endif %}">
+        {{ address.street2 }}<br>
     </div>
-    <span class="data-{{ addressType }} postcode">{{ address.postcode }}</span> <span class="data-{{ addressType }} city">{{ address.city }}</span><br/>
-    {% if address|sylius_province_name is not empty %}
-        {{ address|sylius_province_name }}<br/>
-    {% endif %}
-    <span class="data-{{ addressType }} countryCode">{{ address.countryCode|sylius_country_name|upper }}</span>
+    {{ address.postcode }} {{ address.city }}<br>
+    {{ address.countryCode|sylius_country_name|upper }}
 </address>

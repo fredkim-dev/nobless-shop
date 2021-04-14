@@ -17,7 +17,6 @@ use FOS\RestBundle\View\View;
 use Sylius\Component\Resource\ResourceActions;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
-use Sylius\Bundle\UserBundle\Form\Model\PasswordReset;
 use Sylius\Bundle\UserBundle\Form\Model\PasswordResetRequest;
 use Sylius\Bundle\UserBundle\Form\Type\UserRequestPasswordResetType;
 use Sylius\Bundle\UserBundle\UserEvents;
@@ -29,10 +28,8 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Sylius\Component\Resource\Exception\UpdateHandlingException;
 use Webmozart\Assert\Assert;
-
 
 class UserController extends ResourceController
 {
@@ -133,6 +130,90 @@ class UserController extends ResourceController
         }
 
         return parent::updateAction($request);
+    }
+
+    public function verifyAction(Request $request, string $token): Response
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $redirectRoute = $this->getSyliusAttribute($request, 'redirect', null);
+
+        $response = $this->redirectToRoute($redirectRoute);
+
+        /** @var UserInterface|null $user */
+        $user = $this->repository->findOneBy(['emailVerificationToken' => $token]);
+        if (null === $user) {
+            if (!$configuration->isHtmlRequest()) {
+                return $this->viewHandler->handle($configuration, View::create($configuration, Response::HTTP_BAD_REQUEST));
+            }
+
+            $this->addTranslatedFlash('error', 'sylius.user.verify_email_by_invalid_token');
+
+            return $this->redirectToRoute($redirectRoute);
+        }
+
+        $user->setVerifiedAt(new \DateTime());
+        $user->setEmailVerificationToken(null);
+        $user->enable();
+
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        $eventDispatcher->dispatch(UserEvents::PRE_EMAIL_VERIFICATION, new GenericEvent($user));
+
+        $this->manager->flush();
+
+        $eventDispatcher->dispatch(UserEvents::POST_EMAIL_VERIFICATION, new GenericEvent($user));
+
+        if (!$configuration->isHtmlRequest()) {
+            return $this->viewHandler->handle($configuration, View::create($user));
+        }
+
+        $flashMessage = $this->getSyliusAttribute($request, 'flash', 'sylius.user.verify_email');
+        $this->addTranslatedFlash('success', $flashMessage);
+
+        return $response;
+    }
+
+    public function requestVerificationTokenAction(Request $request): Response
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $redirectRoute = $this->getSyliusAttribute($request, 'redirect', 'referer');
+
+        $user = $this->getUser();
+        if (null === $user) {
+            if (!$configuration->isHtmlRequest()) {
+                return $this->viewHandler->handle($configuration, View::create($configuration, Response::HTTP_UNAUTHORIZED));
+            }
+
+            $this->addTranslatedFlash('notice', 'sylius.user.verify_no_user');
+
+            return $this->redirectHandler->redirectToRoute($configuration, $redirectRoute);
+        }
+
+        if (null !== $user->getVerifiedAt()) {
+            if (!$configuration->isHtmlRequest()) {
+                return $this->viewHandler->handle($configuration, View::create($configuration, Response::HTTP_BAD_REQUEST));
+            }
+
+            $this->addTranslatedFlash('notice', 'sylius.user.verify_verified_email');
+
+            return $this->redirectHandler->redirectToRoute($configuration, $redirectRoute);
+        }
+
+        /** @var GeneratorInterface $tokenGenerator */
+        $tokenGenerator = $this->container->get(sprintf('sylius.%s.token_generator.email_verification', $this->metadata->getName()));
+        $user->setEmailVerificationToken($tokenGenerator->generate());
+
+        $this->manager->flush();
+
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        $eventDispatcher->dispatch(UserEvents::REQUEST_VERIFICATION_TOKEN, new GenericEvent($user));
+
+        if (!$configuration->isHtmlRequest()) {
+            return $this->viewHandler->handle($configuration, View::create(null, Response::HTTP_NO_CONTENT));
+        }
+
+        $this->addTranslatedFlash('success', 'sylius.user.verify_email_request');
+
+        return $this->redirectHandler->redirectToRoute($configuration, $redirectRoute);
     }
 
     public function requestPasswordResetTokenAction(Request $request): Response

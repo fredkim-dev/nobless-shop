@@ -5,7 +5,7 @@
     <h5 class="col-12 no-border">{{ 'sylius.ui.customer_login'|trans }}</h5>
 
     {{ form_start(form, {'action': path('sylius_shop_login_check'), 'attr': {'class': 'loadable col-12', 'novalidate': 'novalidate'}}) }}
-        {% include '@SyliusShop/Login/_form.html.twig' %}
+        {% include '@SyliusShop/Login/_form.html.twig' with {'id': 'headerLogin'} %}
 
         {{ sonata_block_render_event('sylius.shop.login.form', {'form': form}) }}
 

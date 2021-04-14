@@ -1,10 +1,14 @@
-{% if app.user is not empty and app.user.customer is not empty and app.user.customer.addresses|length > 0 %}
-    <div id="carouselAddressList" class="choose-address mx-3">
+<div class="mx-0 mx-xl-3">
+    <div id="carouselAddressList" class="choose-address mb-3{% if noAddressesYet %} d-none{% endif %}">
         {% for address in app.user.customer.addresses %}
-            <div class="col choose-address-item mx-0 p-0">
+            <div class="col choose-address-item m-0 p-0">
                 {% include '@SyliusShop/Checkout/Address/Book/_item.html.twig' %}
             </div>
         {% endfor %}
     </div>
-    <div class="slider-controls mt-0 mt-xl-3"></div>
-{% endif %}
+    <div class="slider-controls mt-3 {% if noAddressesYet %} d-none{% endif %}"></div>
+
+    <div class="my-3{% if addressInCheckout %} d-none{% endif %}">
+        {{ 'sylius.ui.no_additionnal_addresses'|trans }}
+    </div>
+</div>

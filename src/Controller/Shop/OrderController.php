@@ -16,32 +16,19 @@ namespace App\Controller\Shop;
 use App\Entity\Addressing\Address;
 use App\Entity\Customer\Customer;
 use App\Entity\Order\Order;
-use Doctrine\Common\Persistence\ObjectManager;
+use App\Entity\Product\Product;
 use Sylius\Bundle\CoreBundle\Controller\OrderController as BaseOrderController;
 use FOS\RestBundle\View\View;
-use Sylius\Bundle\ResourceBundle\Controller\AuthorizationCheckerInterface;
-use Sylius\Bundle\ResourceBundle\Controller\FlashHelperInterface;
-use Sylius\Bundle\ResourceBundle\Controller\NewResourceFactoryInterface;
-use Sylius\Bundle\ResourceBundle\Controller\RedirectHandlerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
-use Sylius\Bundle\ResourceBundle\Controller\ResourceDeleteHandlerInterface;
-use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
-use Sylius\Bundle\ResourceBundle\Controller\ResourcesCollectionProviderInterface;
-use Sylius\Bundle\ResourceBundle\Controller\ResourceUpdateHandlerInterface;
-use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProviderInterface;
-use Sylius\Bundle\ResourceBundle\Controller\StateMachineInterface;
-use Sylius\Bundle\ResourceBundle\Controller\ViewHandlerInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Component\Addressing\Model\AddressInterface;
+use Sylius\Component\Customer\Context\CustomerContextInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Order\Repository\OrderRepositoryInterface;
 use Sylius\Component\Resource\Exception\UpdateHandlingException;
-use Sylius\Component\Resource\Factory\FactoryInterface;
-use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -56,9 +43,15 @@ class OrderController extends ResourceController
      */
     protected $_parent;
 
-    public function __construct(BaseOrderController $baseOrderController)
+    /**
+     * @var CustomerContextInterface
+     */
+    protected $customerContext;
+
+    public function __construct(BaseOrderController $baseOrderController, CustomerContextInterface $customerContext)
     {
         $this->_parent = $baseOrderController;
+        $this->customerContext = $customerContext;
     }
 
     /**
@@ -88,7 +81,12 @@ class OrderController extends ResourceController
                  * @var Customer $customer
                  */
                 $customer = $order->getCustomer();
-                $customer->addAddress($newAddress);
+                // Check if user has address and set new address as default if not
+                if (count($customer->getAddresses()) == 0) {
+                    $customer->setDefaultAddress($newAddress);
+                } else {
+                    $customer->addAddress($newAddress);
+                }
 
                 $this->container->get('sylius.manager.customer')->flush();
 
@@ -105,6 +103,18 @@ class OrderController extends ResourceController
 
         $this->_parent->isGrantedOr403($configuration, ResourceActions::UPDATE);
         $resource = $this->_parent->findOr404($configuration);
+
+        // Check if customer has product out of stock, and redirect him to cart if so
+        if ($request->get('_route') === 'sylius_shop_checkout_address') {
+            /**
+             * @var $resource OrderInterface
+             */
+            foreach($resource->getItems() as $product) {
+                if ($product->getVariant()->getOnHand() === 0) {
+                    return $this->redirect($this->generateUrl('sylius_shop_cart_summary'), 301);
+                }
+            }
+        }
 
         $form = $this->_parent->resourceFormFactory->create($configuration, $resource);
         $formSaveAccount = $this->_parent->resourceFormFactory->create($configuration, $resource);
@@ -124,6 +134,19 @@ class OrderController extends ResourceController
             'billing_city' => 'save_billing_city',
             'billing_postcode' => 'save_billing_postcode',
         ];
+        /**
+         * @var $customer Customer
+         */
+        $customer = $this->customerContext->getCustomer();
+        $haveAddresses = count($customer->getAddresses()) > 0 || $customer->getDefaultAddress() instanceof AddressInterface;
+
+        /**
+         * @var $resource Order
+         */
+        $orderHasAddresses = false;
+        if ($resource->getShippingAddress() || $resource->getBillingAddress()) {
+            $orderHasAddresses = true;
+        }
 
         if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'], true) && $form->handleRequest($request)->isValid()) {
             $resource = $form->getData();
@@ -199,6 +222,8 @@ class OrderController extends ResourceController
                 'form' => $form->createView(),
                 'formSave' => $formSaveAccount->createView(),
                 'ids' => $customIds,
+                'haveAddresses' => $haveAddresses,
+                'orderHasAddresses' => $orderHasAddresses,
             ])
             ->setTemplate($configuration->getTemplate(ResourceActions::UPDATE . '.html'))
         ;
@@ -254,6 +279,20 @@ class OrderController extends ResourceController
     {
         $order = $form->getData();
 
+        /**
+         * @var $customer Customer
+         */
+        $customer = $this->customerContext->getCustomer();
+        $haveAddresses = count($customer->getAddresses()) > 0 || $customer->getDefaultAddress() instanceof AddressInterface;
+
+        /**
+         * @var $order Order
+         */
+        $orderHasAddresses = false;
+        if ($order->getShippingAddress() || $order->getBillingAddress()) {
+            $orderHasAddresses = true;
+        }
+
         /** @var ResourceControllerEvent $event */
         $event = $this->_parent->eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $order);
 
@@ -289,7 +328,9 @@ class OrderController extends ResourceController
             '@SyliusShop/Checkout/Address/Save/dataSaved.html.twig',
             [
                 'shipping' => $form->getViewData()->getShippingAddress(),
-                'billing' => $form->getViewData()->getBillingAddress()
+                'billing' => $form->getViewData()->getBillingAddress(),
+                'noAddressesYet' => !$haveAddresses && !$orderHasAddresses,
+                'addressInCheckout' => $haveAddresses || $orderHasAddresses,
             ]
         );
     }
@@ -315,30 +356,46 @@ class OrderController extends ResourceController
             return $initializeEventResponse;
         }
 
-        if ($request->isXMLHttpRequest()) {
-            $customIds = [
-                'shipping_firstname' => 'save_shipping_firstname',
-                'shipping_lastname' => 'save_shipping_lastname',
-                'shipping_street' => 'save_shipping_street',
-                'shipping_street2' => 'save_shipping_street2',
-                'shipping_countrycode' => 'save_shipping_countryCode',
-                'shipping_city' => 'save_shipping_city',
-                'shipping_postcode' => 'save_shipping_postcode',
-                'billing_firstname' => 'save_billing_firstname',
-                'billing_lastname' => 'save_billing_lastname',
-                'billing_street' => 'save_billing_street',
-                'billing_street2' => 'save_billing_street2',
-                'billing_countrycode' => 'save_billing_countryCode',
-                'billing_city' => 'save_billing_city',
-                'billing_postcode' => 'save_billing_postcode',
-            ];
+        /**
+         * @var $customer Customer
+         */
+        $customer = $this->customerContext->getCustomer();
+        $haveAddresses = count($customer->getAddresses()) > 0 || $customer->getDefaultAddress() instanceof AddressInterface;
 
+        /**
+         * @var $order Order
+         */
+        $orderHasAddresses = false;
+        if ($order->getShippingAddress() || $order->getBillingAddress()) {
+            $orderHasAddresses = true;
+        }
+
+        $customIds = [
+            'shipping_firstname' => 'save_shipping_firstname',
+            'shipping_lastname' => 'save_shipping_lastname',
+            'shipping_street' => 'save_shipping_street',
+            'shipping_street2' => 'save_shipping_street2',
+            'shipping_countrycode' => 'save_shipping_countryCode',
+            'shipping_city' => 'save_shipping_city',
+            'shipping_postcode' => 'save_shipping_postcode',
+            'billing_firstname' => 'save_billing_firstname',
+            'billing_lastname' => 'save_billing_lastname',
+            'billing_street' => 'save_billing_street',
+            'billing_street2' => 'save_billing_street2',
+            'billing_countrycode' => 'save_billing_countryCode',
+            'billing_city' => 'save_billing_city',
+            'billing_postcode' => 'save_billing_postcode',
+        ];
+
+        if ($request->isXMLHttpRequest()) {
             $html = $this->container->get('templating')->renderResponse(
                 '@SyliusShop/Checkout/Address/_saveAddressNavigation.html.twig',
                 [
                     'form' => $form->createView(),
                     'order' => $order,
-                    'ids' => $customIds
+                    'ids' => $customIds,
+                    'noAddressesYet' => !$haveAddresses && !$orderHasAddresses,
+                    'addressInCheckout' => $haveAddresses || $orderHasAddresses,
                 ]
             );
 
@@ -349,7 +406,10 @@ class OrderController extends ResourceController
             '@SyliusShop/Checkout/Address/_saveAddressNavigation.html.twig',
             [
                 'form' => $form->createView(),
-                'order' => $order
+                'order' => $order,
+                'ids' => $customIds,
+                'noAddressesYet' => !$haveAddresses && !$orderHasAddresses,
+                'addressInCheckout' => $haveAddresses || $orderHasAddresses,
             ]
         );
     }

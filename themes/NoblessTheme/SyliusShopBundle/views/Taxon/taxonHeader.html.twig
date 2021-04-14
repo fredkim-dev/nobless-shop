@@ -3,6 +3,11 @@
     {% set imagePath = (media|first).path %}
 {% endif %}
 
+{{ render(url('sylius_shop_partial_taxon_show_by_slug', {
+    'slug': app.request.query.get('slug'),
+    'template': '@SyliusShop/Taxon/_breadcrumb.html.twig'
+})) }}
+
 <div class="taxon-header-image row" style="background: url('{{ imagePath }}') no-repeat top center;">
     <div class="col-10 taxon-header-title d-flex flex-column justify-content-center align-items-center align-items-md-start">
         {{ render(url('sylius_shop_partial_taxon_show_by_slug', {

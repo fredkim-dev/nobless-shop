@@ -5,11 +5,21 @@
     {% set class_name = 'is-invalid' %}
 {% endif %}
 
+{% set idUsername = form._username.vars.id %}
+{% set idPassword = form._password.vars.id %}
+{% set idRememberMe = form._remember_me.vars.id %}
+{% if id is defined %}
+    {% set idUsername = 'headerUsername' %}
+    {% set idPassword = 'headerPassword' %}
+    {% set idRememberMe = 'headerRememberMe' %}
+{% endif %}
+
+
 <div class="form-group">
-    {{ form_widget(form._username, {'attr': {'class': class_name}}) }}
+    {{ form_widget(form._username, {'id': idUsername, 'attr': {'class': class_name}}) }}
 </div>
 <div class="form-group">
-    {{ form_widget(form._password, {'attr': {'class': class_name}}) }}
+    {{ form_widget(form._password, {'id': idPassword, 'attr': {'class': class_name}}) }}
 </div>
 {% if last_error %}
 <span class="invalid-feedback d-block">
@@ -20,7 +30,9 @@
 {% endif %}
 <div class="row mb-1">
     <div class="col-6 pr-0 remember-checkbox">
-        {{ form_row(form._remember_me) }}
+        {{ form_widget(form._remember_me, {'id': idRememberMe}) }}
+        {{ form_label(form._remember_me) }}
+        {{ form_errors(form._remember_me) }}
     </div>
     <div class="col-6 pl-0 m-0 text-right forgotten-password">
         <a href="{{ path('sylius_shop_request_password_reset_token') }}" class="btn btn-link reset-password-open" data-modal-id="#resetPasswordModal">{{ 'sylius.ui.forgot_password'|trans }}</a>

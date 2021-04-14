@@ -1,8 +1,17 @@
 import 'slick-carousel/slick/slick.min';
 import Fresco from './fresco/js/fresco.min';
-import noUiSlider from 'nouislider';
 
+// GENERAL FUNCTIONS
+import { carousel, replaceCarouselArrow, replaceCarouselArrowCart, createGalleryDesktop } from './js/carousel.js';
 import checkout from './js/checkout-nobless.js';
+import {product, filterProducts, resizeFilterMenu} from './js/product-nobless';
+// MENU FUNCTIONS
+// LOGIN FUNCTIONS
+// CONTACT FUNCTIONS
+// SHARE FUNCTIONS
+// CART FUNCTIONS
+// ORDERS GRID FUNCTIONS
+
 
 /**
  * Resize function to keep all the main-content visible
@@ -11,516 +20,6 @@ function resizeMainContainer() {
   const footerHeight = document.getElementById('footerContainer').clientHeight;
   const contentHeight = window.innerHeight - document.getElementById('headerContainer').clientHeight - footerHeight;
   document.getElementById('mainContentContainer').style.height = contentHeight + "px";
-}
-
-function replaceCarouselArrow(carouselElement) {
-  let imgSliderHeight;
-  let arrowTopValue;
-  if (carouselElement !== undefined) {
-    imgSliderHeight = $('.slick-active .card-img-top', carouselElement).outerHeight();
-    arrowTopValue = Math.round(imgSliderHeight / 2 - 17);
-    $(carouselElement).next('.slider-controls').css('top', arrowTopValue + 'px');
-  } else {
-    imgSliderHeight = $('.slick-active .card-img-top').outerHeight();
-    arrowTopValue = Math.round(imgSliderHeight / 2 - 17);
-    $('.slider-controls').not('.product-gallery').css('top', arrowTopValue + 'px');
-  }
-}
-
-function replaceCarouselArrowCart() {
-  const element = jQuery('#carouselSummaryItemsMobile');
-  const imgSliderHeight = $('.slick-active img', element).outerHeight();
-  const arrowTopValue = Math.round(imgSliderHeight);
-  $(element).next('.slider-controls').css('top', arrowTopValue + 'px');
-}
-
-/**
- * Carousel creation
- */
-function createCarousel() {
-  if (jQuery('#carouselLatestProducts') && !jQuery('#carouselLatestProducts').hasClass('slick-initialized')) {
-    jQuery('#carouselLatestProducts').slick({
-      infinite: true,
-      speed: 700,
-      slidesToShow: 4,
-      slidesToScroll: 4,
-      appendArrows: jQuery('#carouselLatestProducts').next('.slider-controls'),
-      prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
-      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Next</button></div>',
-      responsive: [
-        {
-          breakpoint: 1920,
-          settings: {
-            slidesToShow: 4,
-            slidesToScroll: 4,
-            infinite: true
-          }
-        },
-        {
-          breakpoint: 1200,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            infinite: true
-          }
-        },
-        {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2
-          }
-        }
-      ]
-    });
-    $('#carouselLatestProducts').on('setPosition', function(event, slick, currentSlide, nextSlide){
-      replaceCarouselArrow(jQuery('#carouselLatestProducts'));
-    });
-  }
-
-  if(jQuery('#carouselLatestBundles') && !jQuery('#carouselLatestBundles').hasClass('slick-initialized')) {
-    jQuery('#carouselLatestBundles').slick({
-      infinite: true,
-      speed: 700,
-      slidesToShow: 4,
-      slidesToScroll: 4,
-      appendArrows: jQuery('#carouselLatestBundles').next('.slider-controls'),
-      prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
-      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Next</button></div>',
-      responsive: [
-        {
-          breakpoint: 1920,
-          settings: {
-            slidesToShow: 4,
-            slidesToScroll: 4,
-            infinite: true
-          }
-        },
-        {
-          breakpoint: 1200,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            infinite: true
-          }
-        },
-        {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2
-          }
-        }
-      ]
-    });
-    $('#carouselLatestBundles').on('setPosition', function(event, slick, currentSlide, nextSlide){
-      replaceCarouselArrow(jQuery('#carouselLatestBundles'));
-    });
-  }
-
-  if (jQuery('#productGallery') && !jQuery('#productGallery').hasClass('slick-initialized')) {
-    jQuery('#productGallery').slick({
-      infinite: true,
-      speed: 700,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      mobileFirst: true,
-      appendArrows: jQuery('#productGallery').next('.slider-controls'),
-      prevArrow: '<div class="div-btn prev"><button type="button" class="slick-prev">Previous</button></div>',
-      nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Next</button></div>',
-      responsive: [
-        {
-          breakpoint: 550,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1
-          }
-        },
-        {
-          breakpoint: 992,
-          settings: "unslick"
-        }
-      ]
-    });
-  } else {
-    // Resize Product Gallery slider when resizing from desktop to mobile
-    const opts = {
-      infinite: true,
-      speed: 700,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      mobileFirst: true,
-      appendArrows: jQuery('#productGallery').next('.slider-controls'),
-      prevArrow: '<div class="div-btn prev"><button type="button" class="slick-prev">Previous</button></div>',
-      nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Next</button></div>',
-      responsive: [
-        {
-          breakpoint: 550,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1
-          }
-        },
-        {
-          breakpoint: 992,
-          settings: "unslick"
-        }
-      ]
-    };
-    let slider = $('#productGallery');
-    if($(document).width() < 768 && slider[0].slick && slider[0].slick.unslicked) {
-      slider.slick(opts);
-    }
-  }
-
-  if (jQuery('#carouselCompleteYourStyle') && !jQuery('#carouselCompleteYourStyle').hasClass('slick-initialized')) {
-    jQuery('#carouselCompleteYourStyle').slick({
-      infinite: true,
-      speed: 700,
-      slidesToShow: 4,
-      slidesToScroll: 4,
-      appendArrows: jQuery('#carouselCompleteYourStyle').next('.slider-controls'),
-      prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
-      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Next</button></div>',
-      responsive: [
-        {
-          breakpoint: 1920,
-          settings: {
-            slidesToShow: 4,
-            slidesToScroll: 4,
-            infinite: true
-          }
-        },
-        {
-          breakpoint: 1200,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 4,
-            infinite: true
-          }
-        },
-        {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2
-          }
-        }
-      ]
-    });
-    $('#carouselCompleteYourStyle').on('setPosition', function(event, slick, currentSlide, nextSlide){
-      replaceCarouselArrow(jQuery('#carouselCompleteYourStyle'));
-    });
-  }
-
-  if (jQuery('#carouselSummaryItemsMobile') && !jQuery('#carouselSummaryItemsMobile').hasClass('slick-initialized')) {
-    let slider = jQuery('#carouselSummaryItemsMobile');
-    slider.slick({
-      infinite: true,
-      speed: 700,
-      slidesToShow: 2,
-      slidesToScroll: 2,
-      appendArrows: jQuery('#carouselSummaryItemsMobile').next('.slider-controls'),
-      prevArrow: '<div class="div-btn prev-btn"><button type="button" class="slick-prev ">Previous</button></div>',
-      nextArrow: '<div class="div-btn next-btn"><button type="button" class="slick-next">Next</button></div>',
-      responsive: [
-        {
-          breakpoint: 550,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2
-          }
-        },
-        {
-          breakpoint: 992,
-          settings: "unslick"
-        }
-      ]
-    });
-    replaceCarouselArrowCart();
-  } else {
-    const opts = {
-      infinite: true,
-      speed: 700,
-      slidesToShow: 2,
-      slidesToScroll: 2,
-      mobileFirst: true,
-      appendArrows: jQuery('#carouselSummaryItemsMobile').next('.slider-controls'),
-      prevArrow: '<div class="div-btn prev"><button type="button" class="slick-prev">Previous</button></div>',
-      nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Next</button></div>',
-      responsive: [
-        {
-          breakpoint: 550,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2
-          }
-        },
-        {
-          breakpoint: 992,
-          settings: "unslick"
-        }
-      ]
-    };
-    let slider = $('#carouselSummaryItemsMobile');
-    if($(document).width() < 768 && slider[0].slick && slider[0].slick.unslicked) {
-      slider.slick(opts);
-    }
-    slider.on('setPosition', function(slick){
-      replaceCarouselArrowCart();
-    });
-  }
-}
-
-/**
- * Create product gallery for desktop when resize
- */
-function createGalleryDesktop() {
-  const images = [];
-  $('.fresco-slide').each(function(index) {
-    const image = {
-      url : $(this).data('image'),
-      thumbnail : $(this).data('thumbnail'),
-    };
-    images.push(image);
-  });
-  const heightContent = Math.max( document.body.scrollHeight, document.body.offsetHeight,
-  document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight );
-
-  document.querySelectorAll('.fresco-slide').forEach((item, index) => {
-    item.addEventListener('click', function(event) {
-      event.preventDefault();
-      Fresco.show(
-        images,
-        {
-          thumbnails: 'vertical',
-          loop: true,
-          height: heightContent
-        },
-        Number(index + 1)
-      );
-
-    })
-  });
-}
-
-/**
- * Fix product description div on top (right column) when scrolling
- */
-/*function fixProductDescriptionDiv() {
-  if ($('#images-container').height() - $('#product-sticky').height() - $('#headerContainer').height() - 24 >= -($('#images-container').offset().top)) {
-    document.getElementById('product-sticky').classList.remove('sticky-bottom');
-    document.getElementById('product-sticky').classList.add('sticky-top-custom');
-  } else {
-    document.getElementById('product-sticky').classList.add('sticky-bottom');
-    document.getElementById('product-sticky').classList.remove('sticky-top-custom');
-  }
-}*/
-
-function productFunctions() {
-  $('.variant-list .variant-name:not(.variant-disabled)').on('click', function(event) {
-    const bundleItem = $(this).data('bundle-item');
-    if(bundleItem !== undefined) {
-      $('.variant-name[data-bundle-item="' + bundleItem + '"]').removeClass('variant-selected');
-    } else {
-      $('.variant-list .variant-name').removeClass('variant-selected');
-    }
-    $(this).addClass('variant-selected');
-  });
-
-  $('.card-carousel .card-img-top .variants-container').hide();
-  $('.card-carousel .card-img-top')
-  .on('mouseenter', function() {
-    if ($(document).width() > 1440) {
-      $('.variants-container', this).show();
-    }
-  }).on('mouseleave', function() {
-    $('.variants-container', this).hide();
-  });
-
-  $('#sylius-product-adding-to-cart .btn-primary').on('click', function(e) {
-    e.preventDefault();
-    const addToCartForm = $(this).closest('form');
-    const selectedSize = $('input[name^="' + $(addToCartForm).data('nameToCheck') + '"]:checked').length;
-    const bundleItemsCount = $('div.bundle-item').length;
-    if(selectedSize > 0 && selectedSize < bundleItemsCount ) {
-      $(addToCartForm).find('.empty-product:not(.input-checked)').removeClass('d-none').addClass('d-block');
-    } else if (selectedSize === 0) {
-      $(addToCartForm).find('.empty-product').removeClass('d-none').addClass('d-block');
-    } else {
-      $(addToCartForm).find('.empty-product').addClass('d-none').removeClass('d-block');
-      $(addToCartForm).trigger('submit');
-    }
-  })
-
-  $('input[id^="bitbag_sylius_product_bundle_plugin_add_product_bundle_to_cart_"]').on('change', function(e) {
-    $(this).closest('div').find('span.invalid-feedback').addClass('input-checked').addClass('d-none').removeClass('d-block');
-  })
-}
-
-function filterProductFunctions() {
-  const queryString = window.location.search;
-  const criteria = queryString.indexOf('criteria');
-  const priceInput = $('.price-filter .price-input');
-  let priceSlider;
-  let priceSliderMobile;
-  const priceMin = $('#productsFilters input[name="criteria[price][price_1]"]');
-  const priceMax = $('#productsFilters input[name="criteria[price][price_2]"]');
-  const priceMinMobile = $('#productsFiltersMobile input[name="criteria[price][price_1]"]');
-  const priceMaxMobile = $('#productsFiltersMobile input[name="criteria[price][price_2]"]');
-  if (priceInput.length > 0) {
-    // Prepare slider options
-    const taxonMinPrice = parseFloat(priceInput.first().data('min'));
-    const taxonMaxPrice = parseFloat(priceInput.first().data('max'));
-    const rangeSliderOptions = {
-      start: [priceMin.val(), priceMax.val()],
-
-      range: {
-        'min': [taxonMinPrice],
-        'max': [taxonMaxPrice]
-      },
-      step: 1,
-      connect: true,
-      format: {
-        to: function (value) {
-          return value;
-        },
-        from: function (value) {
-          return value;
-        }
-      },
-      behaviour: 'tap',
-      tooltips: false
-    };
-
-    // Desktop Slider
-    const priceRange = $('#productsFilters #priceRange');
-    priceSlider = noUiSlider.create(priceRange[0], rangeSliderOptions);
-    priceSlider.on('slide', function(newValue) {
-      priceMin.val(parseInt(newValue[0]));
-      priceMax.val(parseInt(newValue[1]));
-    });
-
-    // Mobile Slider
-    const priceRangeMobile = $('#productsFiltersMobile #priceRange');
-    priceSliderMobile = noUiSlider.create(priceRangeMobile[0], rangeSliderOptions);
-    priceSliderMobile.on('slide', function(newValue) {
-      priceMinMobile.val(parseInt(newValue[0]));
-      priceMaxMobile.val(parseInt(newValue[1]));
-    });
-
-    // When user changes price input value
-    priceInput.on('keyup', function(e) {
-      if(e.which !== 8 && !isNaN(String.fromCharCode(e.which))){
-        const newValue = [priceMin.val(), priceMax.val()];
-        priceSlider.set(newValue);
-        const newValueMobile = [priceMinMobile.val(), priceMaxMobile.val()];
-        priceSliderMobile.set(newValueMobile);
-      }
-    });
-  }
-
-  const sizeFilterInput = $('#sizeFilter input');
-  sizeFilterInput.each(function( index ) {
-    if(this.checked) {
-      $(this).next('label').addClass('selected');
-      $('input[data-id="' + $(this).attr('id') + '"]').attr('checked', 'checked').next('label').addClass('selected');
-    }
-  });
-  sizeFilterInput.on('change', function(e) {
-    if(e.target.checked) {
-      $(e.target).next('label').addClass('selected');
-    } else {
-      $(e.target).next('label').removeClass('selected');
-    }
-  });
-
-  $('#criteriaSizeMobile input').on('change', function(e) {
-    const inputToCheck = $(e.target).data('id');
-    if(e.target.checked) {
-      $(e.target).next('label').addClass('selected');
-      $('#' + inputToCheck).attr('checked', 'checked').next('label').addClass('selected');
-    } else {
-      $(e.target).next('label').removeClass('selected');
-      $('#' + inputToCheck).removeAttr('checked').next('label').removeClass('selected');
-    }
-  });
-
-  // Sorting
-  $('#productFilterMobileForm .radio-container input.input-sorting').on('change', function(e) {
-    $('#productFilterMobileForm .radio-container input').removeAttr('checked');
-    $('#productFilterMobileForm .radio-container .checkmark .checked').removeClass('d-block');
-    $(e.target).attr('checked', 'checked');
-    $(e.target).next('.checkmark').find('.checked').addClass('d-block');
-  });
-
-  // Validate filters
-  $('a.validate-filter').on('click', function(e) {
-    e.preventDefault();
-    checkPriceValue(priceSlider, priceMin, priceMax);
-    checkPriceValue(priceSliderMobile, priceMinMobile, priceMaxMobile);
-    $('#productFilterForm').submit();
-  });
-
-  $('#productFilterMobileForm button.btn-primary').on('click', function(e) {
-    e.preventDefault();
-    if($('.input-sorting:checked').val() === 'createdAt') {
-      $('.input-sorting:checked').remove();
-      $('.input-sorting-createdAt').attr('checked', true).removeClass('d-none').addClass('d-inline-block');
-    }
-    checkPriceValue(priceSlider, priceMin, priceMax);
-    checkPriceValue(priceSliderMobile, priceMinMobile, priceMaxMobile);
-    $(this).closest('form').submit();
-  })
-
-  if (criteria !== -1) {
-    $('.reinit-filter').removeClass('d-none')
-  }
-
-  // Mobile filters
-  $('.product-filters.dropdown').on('show.bs.dropdown', function(e) {
-    if ($(document).width() <= 1200) {
-      resizeFilterMobileMenu();
-      const headerOuterHeight = $('#headerContainer').outerHeight() - $('.header-banner').height();
-      $('.screen-overlay-filters').css('top', headerOuterHeight + 'px');
-
-      $(".screen-overlay-filters").addClass("show");
-      $('body').addClass("offcanvas-active");
-      $('#productsFiltersMobile .close').removeClass("d-none");
-    }
-  }).on('hidden.bs.dropdown', function(e) {
-    if ($(document).width() <= 1200) {
-      $(".screen-overlay-filters").removeClass("show");
-      $('body').removeClass("offcanvas-active");
-      $('#productsFiltersMobile .close').addClass("d-none");
-    }
-  });
-
-  $('#productsFiltersMobile .close').on('click', function(e) {
-    e.preventDefault();
-    $('#productsFiltersMobile .dropdown-toggle').trigger('click');
-  })
-}
-
-function checkPriceValue(priceSliderObject, priceMin, priceMax) {
-  const priceInput = $('.price-filter .price-input').first();
-  let priceMinValue = priceMin.val();
-  let priceMaxValue = priceMax.val();
-  if (priceMin.val() < priceInput.data('min')) {
-    priceMinValue = priceInput.data('min');
-  }
-  if (priceMin.val() > priceInput.data('max')) {
-    priceMinValue = priceInput.data('max');
-  }
-  priceMin.val(priceMinValue);
-  if (priceMax.val() > priceInput.data('max')) {
-    priceMaxValue = priceInput.data('max');
-  }
-  if (priceMax.val() < priceInput.data('min')) {
-    priceMaxValue = priceInput.data('min');
-  }
-  priceMax.val(priceMaxValue);
-  priceSliderObject.set([priceMinValue, priceMaxValue]);
 }
 
 /**
@@ -655,18 +154,6 @@ function resizeMenu(element) {
   }
 }
 
-function resizeFilterMobileMenu() {
-  if ($(document).width() > 1200) {
-    $(".screen-overlay-filters").removeClass("show");
-  } else {
-    const headerHeight = $('#headerContainer').height() - $('.header-banner').height();
-    const headerOuterHeight = $('#headerContainer').outerHeight() - $('.header-banner').height();
-    const filterListContainerHeight = $('#productsFiltersMobile .dropdown-menu').height() - $('header').height() - $('#filterSubmit').outerHeight() - 10;
-    $('#productsFiltersMobile').css('height', 'calc(100% - ' + headerHeight + 'px)');
-    $('.screen-overlay-filters').css('top', headerOuterHeight + 'px');
-    $('#filterList').css('height', filterListContainerHeight + 'px');
-  }
-}
 
 function openMobileMenu() {
   var offcanvas_id = $('#menuButton').attr('data-trigger');
@@ -681,6 +168,7 @@ function openMobileMenu() {
 
   $('#navbarMain').show();
   $('#navbarLocale').hide();
+  $('#navbarTaxons').hide();
 
   $('#menuButtonMain .close').show();
   $('#menuButtonMain .back').hide();
@@ -702,6 +190,7 @@ function closeMobileMenu() {
 
   $('#navbarMain').show();
   $('#navbarLocale').hide();
+  $('#navbarTaxons').hide();
 
   $('#menuButtonMain .close').hide();
   $('#menuButtonMain .back').hide();
@@ -768,26 +257,22 @@ function loginFunctions() {
   $('button.submit-register').on('click', function(e) {
     e.preventDefault();
     const regex = /\S+@\S+\.\S+/;
-    let email = $(e.target).closest('form').find('input').val();
-    let registerForm = $(e.target).closest('form');
-    let invalidSpan = $(e.target).prev('span');
-    if($(e.target).data('form') !== undefined) {
-      registerForm = $($(e.target).data('form'));
-      email = $(registerForm).find('input').val()
-      invalidSpan = $($(registerForm).find('.invalid-feedback'));
-    }
+    const registerForm = $($(e.target).data('form'));
+    const inputRegisterForm = registerForm.find('input');
+    const email = inputRegisterForm.val();
+    const invalidSpan = inputRegisterForm.closest('div').next('span');
     if (regex.test(email)) {
       invalidSpan.removeClass('d-block');
-      registerForm.find('input').removeClass('is-invalid');
+      inputRegisterForm.removeClass('is-invalid');
       registerForm.submit();
     } else {
       invalidSpan.addClass('d-block');
-      registerForm.find('input').addClass('is-invalid');
+      inputRegisterForm.addClass('is-invalid');
     }
   });
 }
 
-$('.register-form input').on('keyup', function(e) {
+$('.register-form input, .header-register-form input').on('keyup', function(e) {
   const regex = /\S+@\S+\.\S+/;
   const email = $(e.target).closest('form').find('input').val();
   if (regex.test(email) && $(e.target).hasClass('is-invalid')) {
@@ -913,7 +398,6 @@ function cartFunctions() {
   // Apply bonus points
   $('.bonus-points-btn').on('click', function() {
     const bonusPoints = $('.bonus-points').val();
-    console.log(bonusPoints);
     if (bonusPoints === '') {
       $('#sylius_cart_bonusPoints').val('');
     } else {
@@ -963,6 +447,12 @@ function cartFunctions() {
     $('.coupon-error').html($('.coupon-code-error .form-error-message').html());
     $('.coupon-code').val($('#sylius_cart_promotionCoupon').val());
   }
+
+  $('a.btn-to-checkout').on('click', function(e) {
+    if ($(this).hasClass('disabled')) {
+      e.preventDefault();
+    }
+  });
 }
 
 
@@ -1000,19 +490,19 @@ function loginPageFunctions() {
 
 function resizeContent() {
   resizeMainContainer();
-  createCarousel();
+  carousel();
   if ($(document).width() > 768) {
     createGalleryDesktop();
   }
   shareFunctions();
   resizeMenu($('#menuButton').attr('data-trigger'));
-  resizeFilterMobileMenu();
+  resizeFilterMenu();
   $('.header-dropdown').show();
   Fresco.hide();
 }
 
 function init() {
-  createCarousel();
+  carousel();
   navbarCollapseInit();
   $(function () {
     $('[data-toggle="tooltip"]').tooltip();
@@ -1022,8 +512,8 @@ function init() {
     e.stopImmediatePropagation();
   });
   shareFunctions();
-  productFunctions();
-  filterProductFunctions();
+  product();
+  filterProducts();
   // Menu Functions
   megamenuFunctions();
   menuIconesFunctions();
@@ -1032,7 +522,7 @@ function init() {
   ordersGridFunctions();
   loginPageFunctions();
   cartFunctions();
-  checkout($('#checkoutPage'));
+  checkout();
 
   contactPageFunction();
 

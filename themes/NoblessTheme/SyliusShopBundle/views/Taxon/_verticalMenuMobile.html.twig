@@ -27,8 +27,8 @@
         <div id="navbarMain" class="col-12 p-0 h-100">
             <div class="col-12 navbar-nav d-flex flex-column py-2 px-0 text-center">
                 <a class="nav-item nav-link navbarTaxonsLink" data-div-to-open="#navbarTaxons">{{ 'sylius.ui.pret_a_porter'|trans }}<img class="arrow" src="{{ asset('nobless-theme/images/next.png', 'noblessTheme') }}" /></a>
-                <a href="{{ path('sylius_shop_product_index', {'slug': 'bundles', '_locale': sylius.localeCode}) }}" class="nav-item nav-link">Buy by Look</a>
-                <a href="#" class="nav-item nav-link">Archives</a>
+                <a href="{{ path('sylius_shop_product_index', {'slug': 'bundles', '_locale': sylius.localeCode}) }}" class="nav-item nav-link">{{ 'sylius.ui.buy_by_look'|trans }}</a>
+                <a href="#" class="nav-item nav-link">{{ 'sylius.ui.archives'|trans }}</a>
             </div>
             <div id="menuMobileLinks" class="mt-3">
                 <div class="menu-link">

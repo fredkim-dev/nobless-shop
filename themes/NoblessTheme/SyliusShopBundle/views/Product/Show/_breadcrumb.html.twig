@@ -1,6 +1,7 @@
-<nav>
-    <ol class="breadcrumb">
+<nav class="row col-xl-10 p-0 p-md-auto m-0 mx-sm-3 mx-xl-auto">
+    <ol class="breadcrumb px-3 my-3">
         <li class="breadcrumb-item"><a href="{{ path('sylius_shop_homepage') }}">{{ 'sylius.ui.home'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ 'sylius.ui.pret_a_porter'|trans }}</li>
 
         {% if product.mainTaxon is not null %}
             {% set taxon = product.mainTaxon %}

@@ -21,7 +21,11 @@ sylius:
         additional_addresses: 'Adresses supplémentaires'
         add_new_address: Ajouter l'adresse
         add_address: Ajouter une adresse
+        no_default_address: Pas d'adresse par défaut
+        no_address_yet: Aucune adresse
         use_new_address: Utiliser une nouvelle adresse
+        add_new_address_form: Ajouter une nouvelle adresse
+        no_additionnal_addresses: Vous n'avez pas d'adresses supplémentaires
         of_shipping: de livraison
         of_billing: de facturation
         use_address: Utiliser l'adresse
@@ -57,6 +61,8 @@ sylius:
         set_a_new_password_for_your_account_1: Veuillez saisir l'adresse mail associée à votre compte.
         set_a_new_password_for_your_account_2: Vous recevrez à cette adresse un lien vous permettant de réinitialiser votre mot de passe.
         reset_password: Réinitialiser mon mot de passe
+        caution: Attention
+        has_product_out_of_stock: Votre panier contient des produits qui ne sont plus disponibles (en gris). Veuillez les supprimer avant de procéder au paiement.
         cart_total: Total du panier
         items_total: Sous-total HT
         order_total: Total commande
@@ -84,10 +90,11 @@ sylius:
         invalid_email: Email invalide
         see_product: Voir le produit
         newest_products: Nouveautés
-        buy_by_look: Buy By Look
+        buy_by_look: Outfit Patch
         complete_your_style: Compléter votre style
         filters: Filtres
         no_product_filter: Aucun produit ne correspond à votre sélection
+        no_product_filter_2: Veuillez réessayer avec des filtres différents
         size_filter: Taille
         price_filter: Prix
         validate_filter: Filtrer
@@ -126,6 +133,7 @@ sylius:
         shop_catalog: Catalogue
         visit_blog: Visitez
         noblezz_blog: le blog de Noblezz
+        view_order: Voir la commande
     user:
         reset_password_request_ok: Votre demande de réinitialisation a bien été prise en compte
         reset_password_request: Si l'email que vous avez spécifié existe dans notre système, vous recevrez un message avec les instructions pour réinitialiser votre mot de passe.
@@ -179,3 +187,8 @@ sylius:
             message_is: 'Voici le message : '
             email: 'Email : '
             phone_number: 'Numéro de téléphone : '
+bitbag_sylius_bonus_points:
+    ui:
+        bonus_points: Utiliser ma cagnotte
+        you_have_bonus_points_available: 'Cagnotte disponible :'
+        bonus_points_total: Remise

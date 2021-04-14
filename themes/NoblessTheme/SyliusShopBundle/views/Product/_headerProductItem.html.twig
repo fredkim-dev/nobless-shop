@@ -2,11 +2,13 @@
 {% set product = variant.product %}
 {% if cart_widget is not defined %}
     {% set div_order = ' order-first' %}
+    {% set class_padding = 'px-3' %}
 {% else %}
     {% set div_order = ' order-last' %}
+    {% set class_padding = 'px-0' %}
 {% endif %}
 
-<div class="d-flex align-items-start px-3 mb-3">
+<div class="d-flex align-items-start {{ class_padding }} mb-3">
     <div class="mr-3 product-img-order {{ div_order }}">
         {% include '@SyliusShop/Product/_mainImage.html.twig' with {'product': product, 'filter': 'sylius_shop_order_info_thumbnail', 'class': 'p-0 img-fluid'} %}
     </div>

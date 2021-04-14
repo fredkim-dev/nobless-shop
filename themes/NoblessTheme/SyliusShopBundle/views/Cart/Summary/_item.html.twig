@@ -5,7 +5,7 @@
 {% set product = item.variant.product %}
 {% set prices = product.variants|first.channelPricings|first %}
 
-<div class="col-12 position-relative card m-0 mb-1">
+<div class="col-12 position-relative card m-0 pb-1 {% if product_variant.onHand == 0 %}out-of-stock{% endif %}">
     <button type="button"
             data-js-remove-from-cart-button
             data-js-remove-from-cart-redirect-url="{{ path('sylius_shop_cart_summary') }}"

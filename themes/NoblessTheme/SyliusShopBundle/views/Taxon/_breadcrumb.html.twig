@@ -1,8 +1,9 @@
 {% set ancestors = taxon.ancestors|reverse %}
 
-<nav>
-    <ol class="breadcrumb mx-3">
+<nav class="col-10 mx-auto p-0">
+    <ol class="breadcrumb px-3 my-3">
         <li class="breadcrumb-item"><a href="{{ path('sylius_shop_homepage') }}">{{ 'sylius.ui.home'|trans }}</a></li>
+        <li class="breadcrumb-item active pret-a-porter">{{ 'sylius.ui.pret_a_porter'|trans }}</li>
 
         {% for ancestor in ancestors %}
             {% if not ancestor.isRoot() %}

@@ -5,11 +5,11 @@
 {% import '@SyliusShop/Common/Macro/messages.html.twig' as messages %}
 
 {% set header = 'sylius.ui.your_shopping_cart' %}
+{% set hasProductOutOfStock = sylius_product_out_of_stock(cart) %}
 
 {% block title %}{{ header|trans }} | {{ parent() }}{% endblock %}
 
 {% block content %}
-
     <div id="cartPage" class="row col-12 col-lg-11 col-xl-10 mx-auto mx-3 mb-3">
         {% if not cart.empty %}
             {% block flashes %}
@@ -18,11 +18,16 @@
                 </div>
             {% endblock %}
 
+            {% if hasProductOutOfStock %}
+                {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' %}
+            {% endif %}
+
             <div class="col-12 p-0">
                 {% include '@SyliusShop/Cart/Summary/_header.html.twig' %}
 
                 {{ sonata_block_render_event('sylius.shop.cart.summary.after_content_header', {'cart': cart}) }}
             </div>
+
             {# FORM DESKTOP #}
             <div class="col-7 mb-3 d-none d-md-block p-0">
                 {{ sonata_block_render_event('sylius.shop.cart.summary.before_items', {'cart': cart}) }}
@@ -48,7 +53,7 @@
             </div>
         {% else %}
             <div class="col-12">
-                {{ messages.info('sylius.ui.your_cart_is_empty') }}
+                <h6>{{ 'sylius.ui.your_cart_is_empty'|trans }}</h6>
             </div>
         {% endif %}
     </div>

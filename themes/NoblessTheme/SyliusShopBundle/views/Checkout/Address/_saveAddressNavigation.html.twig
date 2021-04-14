@@ -1,20 +1,23 @@
 {% form_theme form '@SyliusShop/Form/theme.html.twig' %}
 
-<div class="save-address-form col-12 col-xl-11 mx-auto">
+<div class="save-address-form {% if noAddressesYet %}d-block{% endif%} col-12 col-xl-11 mx-auto">
     <div class="separator w-75 mx-auto mb-3"></div>
     {{ form_start(form, {'action': path('sylius_shop_checkout_save_user_address'), 'attr': {'class': 'loadable', 'novalidate': 'novalidate'}}) }}
-        {% include '@SyliusShop/Checkout/Address/_form.html.twig' with {'form': form, 'customIds': ids, 'formSaveType': 'inAccount'} %}
+        {% include '@SyliusShop/Checkout/Address/_form.html.twig' with {'form': form, 'customIds': ids, 'formSaveType': 'inAccount', 'noAddressesYet': noAddressesYet, 'addressInCheckout': addressInCheckout} %}
         <input type="hidden" name="address_type" />
 
         <div class="row mt-4 save-address-navigation px-3">
             <div class="col-auto d-flex align-items-center px-0 px-xl-3">
-                <a class="btn btn-link cancel-add-checkout-address px-0">
+                <a class="btn btn-link cancel-add-checkout-address px-0 {% if noAddressesYet %}d-none{% endif %}">
                     {{ 'sylius.ui.cancel'|trans }}
+                </a>
+                <a href="{{ path('sylius_shop_homepage') }}" class="btn btn-link {% if addressInCheckout %}d-none{% endif %}">
+                    {{ 'sylius.ui.back_to_store'|trans }}
                 </a>
             </div>
             <div class="d-flex col-auto save-buttons mb-2 order-1 order-sm-2 px-0 px-xl-3">
                 <div class="col-auto px-0">
-                    <button type="submit" class="btn btn-primary save-in-account">
+                    <button type="submit" class="btn btn-primary save-in-account {% if noAddressesYet %}no-addresses{% endif %}">
                         {{ 'sylius.ui.save_and_use_address'|trans }}
                     </button>
                 </div>

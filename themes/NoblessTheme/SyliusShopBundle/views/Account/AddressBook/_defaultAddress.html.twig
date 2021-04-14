@@ -1,8 +1,10 @@
 <div class="card">
     <div class="card-body p-0">
         {% include '@SyliusShop/Account/AddressBook/_address.html.twig' with {'address': address, 'customer': sylius.customer} %}
-        <div class="mt-2">
-            <a href="{{ path('sylius_shop_account_address_book_update', {'id': address.id}) }}" class="d-block text-uppercase">{{ 'sylius.ui.edit_address'|trans }}</a>
-        </div>
+        {% if address is not null %}
+            <div class="mt-2">
+                <a href="{{ path('sylius_shop_account_address_book_update', {'id': address.id}) }}" class="d-block text-uppercase">{{ 'sylius.ui.edit_address'|trans }}</a>
+            </div>
+        {% endif %}
     </div>
 </div>

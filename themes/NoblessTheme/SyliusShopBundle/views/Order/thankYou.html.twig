@@ -1,0 +1,15 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% import '@SyliusShop/Common/Macro/headers.html.twig' as headers %}
+
+{% block content %}
+    <div class="row col-10 col-lg-8 px-3 mx-auto mb-5">
+        <div>
+            {{ headers.default('sylius.ui.thank_you'|trans, '', 'sylius.ui.placed_an_order'|trans) }}
+
+            {{ sonata_block_render_event('sylius.shop.order.thank_you.after_message', {'order': order}) }}
+
+            <a href="{{ path('sylius_shop_account_order_index') }}" class="btn btn-primary my-3">{{ 'sylius.ui.view_order'|trans }}</a>
+        </div>
+    </div>
+{% endblock %}

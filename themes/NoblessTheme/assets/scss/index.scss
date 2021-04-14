@@ -197,6 +197,13 @@ a {
     width: 70px;
 }
 
+.breadcrumb-item {
+    &.active,
+    & + .breadcrumb-item::before {
+        color: #271513;
+    }
+}
+
 /*=================*/
 /* HEADER / FOOTER */
 /*=================*/
@@ -1019,6 +1026,13 @@ div.taxon-header {
                 }
             }
         }
+
+        .dropdown-filter {
+            .dropdown-menu {
+                padding: 0.5rem 1.5rem;
+                transform: translate3d(1px, 45px, 0px) !important;
+            }
+        }
     }
     #productsFilters {
         #priceFilter {
@@ -1108,10 +1122,20 @@ div.taxon-header {
     .alert {
         display: none;
     }
+    .has-product-out-of-stock {
+        .alert {
+            display: block;
+        }
+    }
     .cart-items {
         border: 1px solid var(--gray);
         .card {
             border: none;
+            &.out-of-stock {
+                div.row {
+                    opacity: 0.4;
+                }
+            }
         }
         .cart-item-separator {
             width: 80%;
@@ -1252,17 +1276,30 @@ div.taxon-header {
     #completeAddresses {
         flex-direction: row;
     }
+    .checkout-title {
+        border-bottom: 1px solid #271513;
+        h6 {
+            font-size: 0.95rem;
+        }
+    }
+    .sylius-billing-address {
+        display: none;
+    }
+    label {
+        .invalid-feedback {
+            display: none !important;
+        }
+    }
+    .invalid-feedback {
+        .form-error-icon {
+            display: none;
+        }
+    }
     .save-address-navigation {
         flex-direction: row;
         justify-content: space-between;
         .save-buttons {
             flex-direction: row;
-        }
-    }
-    .checkout-title {
-        border-bottom: 1px solid #271513;
-        h6 {
-            font-size: 0.95rem;
         }
     }
     .cart-summary {
@@ -1388,16 +1425,23 @@ div.taxon-header {
             }
         }
     }
-    .choose-address-item {
-        border: 1px solid white;
-        margin: 0;
-        padding: 0;
-        address {
+    .slick-slide {
+        &:focus {
+            outline: none;
+        }
+        & > div {
+            &:focus {
+                outline: none;
+            }
             border: 1px solid white;
-            margin-bottom: 0;
-            &:hover {
-                cursor: pointer;
-                border: 1px solid #271513;
+            .choose-address-item {
+                border: 1px solid white;
+                address {
+                    margin-bottom: 0;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
             }
         }
     }
@@ -1621,7 +1665,7 @@ div.taxon-header {
         }
         .address-list {
             .card {
-                border: 1px solid #271513;
+                border: 1px solid white;
             }
         }
     }
@@ -1689,7 +1733,7 @@ div.taxon-header {
                     }
                 }
                 td {
-                    vertical-align: bottom;
+                    vertical-align: middle;
                     .product-img-order {
                         img {
                             padding: 0.5rem 0 !important;
@@ -1919,12 +1963,6 @@ div {
     }
 }
 
-.breadcrumb-item {
-    &.active, & + .breadcrumb-item::before {
-        color: #212529;
-    }
-}
-
 /*==========================*/
 /* MEDIA QUERY MIN BEHAVIOR */
 /*==========================*/
@@ -1973,6 +2011,36 @@ div {
         flex: 0 0 100%;
         max-width: 100%;
     }
+
+    #accountPage {
+        .additional-address {
+            .address-list {
+                .card {
+                    &:hover {
+                        border: 1px solid #271513;
+                    }
+                }
+            }
+        }
+    }
+
+    #checkoutPage {
+        .slick-slide {
+            &:focus {
+                outline: none;
+            }
+            & > div {
+                &:focus {
+                    border: none;
+                }
+                .choose-address-item:hover {
+                    border: 1px solid #271513;
+                }
+            }
+        }
+    }
+
+
 }
 
 @media (min-width: 1440px) {
