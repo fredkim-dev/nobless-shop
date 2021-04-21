@@ -15,6 +15,10 @@ sylius_shop_checkout:
     resource: "../routing/checkout.yml"
     prefix: /{_locale}/checkout
     
+sylius_shop_cart:
+    resource: "../routing/cart.yml"
+    prefix: /{_locale}/cart
+    
 sylius_shop_default_locale:
     path: /
     methods: [GET]

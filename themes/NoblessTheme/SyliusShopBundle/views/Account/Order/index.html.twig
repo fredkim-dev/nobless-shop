@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block breadcrumb %}
-    {% include '@SyliusShop/Account/Order/Index/_breadcrumb.html.twig' %}
+    {% include '@SyliusShop/Common/_breadcrumb.html.twig' with {'pageTitle': 'sylius.menu.shop.account.order_history', 'accountPage': true} %}
 {% endblock %}
 
 {% block subcontent %}

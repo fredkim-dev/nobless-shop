@@ -16,11 +16,12 @@
                 {{ form_errors(form) }}
                 <input type="hidden" name="_method" value="PUT" />
 
-                {% include '@SyliusShop/Checkout/SelectPayment/_form.html.twig' %}
+                <div class="col-12 col-lg-8 col-xxl-6 mx-auto px-0">
+                    {% include '@SyliusShop/Checkout/SelectPayment/_form.html.twig' %}
 
-                {{ sonata_block_render_event('sylius.shop.checkout.select_payment.before_navigation', {'order': order}) }}
-                {% include '@SyliusShop/Checkout/SelectPayment/_navigation.html.twig' %}
-
+                    {{ sonata_block_render_event('sylius.shop.checkout.select_payment.before_navigation', {'order': order}) }}
+                    {% include '@SyliusShop/Checkout/SelectPayment/_navigation.html.twig' %}
+                </div>
                 {{ form_row(form._token) }}
             {{ form_end(form, {'render_rest': false}) }}
         </div>

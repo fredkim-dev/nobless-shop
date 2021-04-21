@@ -1,0 +1,5 @@
+#Sylius\Component\Core\Model\Order:
+#    constraints:
+#        - BitBag\SyliusBonusPointsPlugin\Validator\Constraints\BonusPointsAvailability:
+#              groups: [ 'other' ]
+#              message: 'test'

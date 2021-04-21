@@ -8,12 +8,7 @@
 {% endblock %}
 
 {% block breadcrumb %}
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('sylius_shop_homepage') }}">{{ 'sylius.ui.home'|trans }}</a></li>
-            <li class="breadcrumb-item active">{{ 'sylius.ui.my_account'|trans }}</li>
-        </ol>
-    </nav>
+    {% include '@SyliusShop/Common/_breadcrumb.html.twig' with {'pageTitle': 'sylius.menu.shop.account.dashboard', 'accountPage': true} %}
 {% endblock %}
 
 {% block subcontent %}

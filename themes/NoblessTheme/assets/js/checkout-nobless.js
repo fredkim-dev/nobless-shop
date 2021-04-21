@@ -1,3 +1,7 @@
+/***********************/
+/* CHECKOUT MANAGEMENT */
+/***********************/
+
 import { createAddressCarousel } from './carousel';
 
 // Main function used in init
@@ -143,6 +147,7 @@ function checkoutSaveAddress(element, addressType, container) {
         });
         if (noAddress) {
           $('.chosen-address address.cancel-info').removeClass('d-none');
+          $('.no-addresses-text', container).addClass('d-none');
           showMainForm(container);
         }
         hideChangeAddress(container);

@@ -29,7 +29,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{Entity,Migrations,Tests,Kernel.php,Twig}'
+        exclude: '../src/{Entity,Migrations,Tests,Kernel.php,Twig,Validator}'
 
     # Controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -59,7 +59,7 @@ services:
 
     sylius.controller.shop.order_custom:
         class: App\Controller\Shop\OrderController
-        arguments: ['@sylius.controller.order']
+        arguments: ['@sylius.controller.order', '@sylius.context.customer']
 
     sylius.controller.shop.locale_switch:
         class: App\Controller\Shop\LocaleSwitchController
@@ -74,30 +74,15 @@ services:
         arguments: ['@security.authentication_utils', '@form.factory', '@templating', '@security.authorization_checker', '@router']
 
     # Forms
-    app.form.type.register_login:
-        class: App\Form\RegisterLoginType
+    app.form.extension.cart:
+        class: App\Form\Extension\CartTypeExtension
+        decorates: App\Form\Extension\CartTypeExtension
+        arguments:
+            - '@bitbag_sylius_bonus_points.context.customer_bonus_points'
+            - '@bitbag_sylius_bonus_points.resolver.bonus_points'
+            - '@sylius.context.cart'
         tags:
-            - { name: form.type }
-
-    app.form.extension.customer_registration:
-        class: App\Form\Extension\CustomerRegistrationTypeExtension
-        tags:
-            - { name: form.type_extension, extended_type: Sylius\Bundle\CoreBundle\Form\Type\Customer\CustomerRegistrationType }
-
-    app.form.extension.customer_profile:
-        class: App\Form\Extension\CustomerProfileTypeExtension
-        tags:
-            - { name: form.type_extension, extended_type: Sylius\Bundle\CustomerBundle\Form\Type\CustomerProfileType }
-
-    app.form.extension.address:
-        class: App\Form\Extension\AddressTypeExtension
-        tags:
-            - { name: form.type_extension, extended_type: Sylius\Bundle\AddressingBundle\Form\Type\AddressType }
-
-    app.form.extension.contact:
-        class: App\Form\Extension\ContactTypeExtension
-        tags:
-            - { name: form.type_extension, extended_type: Sylius\Bundle\CoreBundle\Form\Type\ContactType }
+            - { name: form.type_extension, extended_type: Sylius\Bundle\CoreBundle\Form\Type\CartType }
 
     #Menu
     app.listener.shop.menu_builder:
@@ -149,12 +134,51 @@ services:
         tags:
             - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }
 
+    app.bonus_points_admin_builder:
+        class: App\Menu\AdminBonusPointsBuilder
+        decorates: bitbag_sylius_bonus_points.listener.menu.admin
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu.admin.mai, method: addItems }
+
     app.bonus_points_strategy_rule_checker.none:
         class: App\Checker\Rule\NoRuleChecker
         tags:
-            - { name: bitbag.bonus_points_strategy_rule_checker, type: none, label: "no rule", form_type: App\Form\Rule\NoRuleConfigurationType }
+            - { name: bitbag.bonus_points_strategy_rule_checker, type: none, label: "No Rule", form_type: App\Form\Rule\NoRuleConfigurationType }
 
     app.form.type.rule.no_rule_configuration:
         class: App\Form\Rule\NoRuleConfigurationType
         tags:
             - { name: form.type }
+
+    app.bonus_points_order_processor_custom:
+        class: App\OrderProcessing\OrderBonusPointsProcessor
+        decorates: App\OrderProcessing\OrderBonusPointsProcessor
+        arguments:
+            - '@bitbag_sylius_bonus_points.repository.bonus_points'
+            - '@sylius.factory.adjustment'
+            - '@doctrine.orm.entity_manager'
+            - '@bitbag_sylius_bonus_points.context.customer_bonus_points'
+    
+    app.bonus_points_assigner_custom:
+        class: App\Assigner\BonusPointsAssignerCustom
+        decorates: bitbag_sylius_bonus_points.bonus_points_assigner
+        arguments: 
+            - '@bitbag_sylius_bonus_points.bonus_points_strategy_calculator'
+            - '@bitbag_sylius_bonus_points.bonus_points_strategy_rules_eligibility_checker'
+            - '@bitbag_sylius_bonus_points.repository.bonus_points_strategy'
+            - '@bitbag_sylius_bonus_points.repository.bonus_points'
+            - '@bitbag_sylius_bonus_points.factory.bonus_points'
+            - '@bitbag_sylius_bonus_points.manager.bonus_points'
+            - '@bitbag_sylius_bonus_points.repository.customer_bonus_points'
+            - '@bitbag_sylius_bonus_points.factory.customer_bonus_points'
+            - '@sylius.proportional_integer_distributor'
+                
+    app.bonus_points_availability_validator:
+        class: App\Validator\Constraints\BonusPointsAvailabilityValidator
+        decorates: bitbag_sylius_bonus_points.validator.bonus_points_availability
+        arguments:
+            - '@bitbag_sylius_bonus_points.resolver.bonus_points'
+            - '@bitbag_sylius_bonus_points.repository.bonus_points'
+        tags: 
+            - { name: validator.constraint_validator }
+        

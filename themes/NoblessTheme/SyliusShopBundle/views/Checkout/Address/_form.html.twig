@@ -16,7 +16,7 @@
         </span>
     </h6>
     <div class="card border-0{% if formSaveType is defined %} mx-0 mx-xl-3{% endif %}">
-        <div class="px-0 px-xl-5">
+        <div class="px-0">
             {% if formSaveType is not defined %}
             <div class="mb-3 address-book">
                 {% include '@SyliusShop/Checkout/Address/_addressBookSelect.html.twig' with {'noAddressesYet': noAddressesYet, 'addressInCheckout': addressInCheckout} %}

@@ -5,6 +5,11 @@
 {% set product = item.variant.product %}
 {% set prices = product.variants|first.channelPricings|first %}
 
+{% if error != '' %}
+<div class="col-12 mx-auto has-product-out-of-stock">
+    {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' with {'message': error, 'isItem': true} %}
+</div>
+{% endif %}
 <div class="col-12 position-relative card m-0 pb-1 {% if product_variant.onHand == 0 %}out-of-stock{% endif %}">
     <button type="button"
             data-js-remove-from-cart-button
@@ -66,7 +71,7 @@
                 {% endif %}
 
                 <div class="col-sm-12 col-lg-6 col-xl {{ paddingClass }}">
-                    {{ 'sylius.ui.quantity'|trans }} : {{ form_widget(form.quantity, {'attr': {'class': 'qty' }}) }} <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty" />
+                    {{ 'sylius.ui.quantity'|trans }} : {{ form_widget(form.quantity, {'attr': {'class': 'qty', 'max': 7 }}) }} <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty" />
                 </div>
 
                 <div class="col-sm-12 col-md-5 col-lg-6 col-xl-4 p-2 px-lg-2 {{ totalPaddingClass }}">

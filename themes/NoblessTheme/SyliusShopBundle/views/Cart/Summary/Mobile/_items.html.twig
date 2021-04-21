@@ -1,12 +1,15 @@
 
 {{ form_start(form, {'action': path('sylius_shop_cart_save'), 'attr': {'class': 'loadable cart-items', 'novalidate': 'novalidate'}}) }}
-    {{ form_errors(form) }}
     <input type="hidden" name="_method" value="PATCH"/>
 
     {{ sonata_block_render_event('sylius.shop.cart.summary.items', {'cart': cart, 'form': form}) }}
 
+    {% set error = '' %}
     {% for key, item in cart.items %}
-        {% include '@SyliusShop/Cart/Summary/Mobile/_item.html.twig' with {'item': item, 'form': form.items[key], 'key': key} %}
+        {% if formErrors is defined and item.id in formErrors|keys %}
+            {% set error = formErrors[item.id] %}
+        {% endif %}
+        {% include '@SyliusShop/Cart/Summary/Mobile/_item.html.twig' with {'item': item, 'form': form.items[key], 'key': key, 'error': error} %}
     {% endfor %}
     <div class="card-body d-none">
         <div class="row">

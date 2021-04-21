@@ -8,6 +8,10 @@
     {{ 'sylius.menu.shop.account.address_book'|trans }} | {{ parent() }}
 {% endblock %}
 
+{% block breadcrumb %}
+    {% include '@SyliusShop/Common/_breadcrumb.html.twig' with {'pageTitle': 'sylius.menu.shop.account.address_book', 'accountPage': true} %}
+{% endblock %}
+
 {% block subcontent %}
     <div id="addressPage" class="col-12">
         {% if addresses|length > 0 %}

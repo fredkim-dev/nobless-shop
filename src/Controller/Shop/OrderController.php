@@ -27,14 +27,18 @@ use Sylius\Component\Customer\Context\CustomerContextInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Order\Repository\OrderRepositoryInterface;
+use Sylius\Component\Order\SyliusCartEvents;
 use Sylius\Component\Resource\Exception\UpdateHandlingException;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Webmozart\Assert\Assert;
 
 class OrderController extends ResourceController
 {
@@ -224,6 +228,72 @@ class OrderController extends ResourceController
                 'ids' => $customIds,
                 'haveAddresses' => $haveAddresses,
                 'orderHasAddresses' => $orderHasAddresses,
+            ])
+            ->setTemplate($configuration->getTemplate(ResourceActions::UPDATE . '.html'))
+        ;
+
+        return $this->_parent->viewHandler->handle($configuration, $view);
+    }
+
+    public function saveAction(Request $request): Response
+    {
+        $configuration = $this->_parent->requestConfigurationFactory->create($this->_parent->metadata, $request);
+
+        $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
+        $resource = $this->getCurrentCart();
+
+        $form = $this->_parent->resourceFormFactory->create($configuration, $resource);
+
+        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'], true) && $form->handleRequest($request)->isValid()) {
+            $resource = $form->getData();
+
+            $event = $this->_parent->eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
+
+            if ($event->isStopped() && !$configuration->isHtmlRequest()) {
+                throw new HttpException($event->getErrorCode(), $event->getMessage());
+            }
+            if ($event->isStopped()) {
+                $this->_parent->flashHelper->addFlashFromEvent($configuration, $event);
+
+                return $this->_parent->redirectHandler->redirectToResource($configuration, $resource);
+            }
+
+            if ($configuration->hasStateMachine()) {
+                $this->_parent->stateMachine->apply($configuration, $resource);
+            }
+
+            $this->_parent->eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
+
+            $this->getEventDispatcher()->dispatch(SyliusCartEvents::CART_CHANGE, new GenericEvent($resource));
+            $this->_parent->manager->flush();
+
+            if (!$configuration->isHtmlRequest()) {
+                return $this->_parent->viewHandler->handle($configuration, View::create(null, Response::HTTP_NO_CONTENT));
+            }
+
+            $this->_parent->flashHelper->addSuccessFlash($configuration, ResourceActions::UPDATE, $resource);
+
+            return $this->_parent->redirectHandler->redirectToResource($configuration, $resource);
+        }
+
+        if (!$configuration->isHtmlRequest()) {
+            return $this->_parent->viewHandler->handle($configuration, View::create($form, Response::HTTP_BAD_REQUEST));
+        }
+
+        $formErrors = [];
+        foreach($form->getErrors() as $error) {
+            /** @var $error FormError */
+
+            $formErrors[$error->getCause()->getInvalidValue()->getId()] = $error->getMessageTemplate();
+        }
+
+        $view = View::create()
+            ->setData([
+                'configuration' => $configuration,
+                $this->_parent->metadata->getName() => $resource,
+                'form' => $form->createView(),
+                'cart' => $resource,
+                'formErrors' => $formErrors,
             ])
             ->setTemplate($configuration->getTemplate(ResourceActions::UPDATE . '.html'))
         ;

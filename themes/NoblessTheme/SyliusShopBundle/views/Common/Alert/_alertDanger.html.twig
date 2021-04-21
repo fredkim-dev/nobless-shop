@@ -1,0 +1,24 @@
+{% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
+
+{% set marginClass = 'mt-3' %}
+{% set paddingClass = '' %}
+
+<div class="col-12 p-0 mt-3">
+    <div class="alert alert-danger ">
+        <div class="d-flex align-items-center">
+            <span class="pr-3 fa-2x">{{ icons.danger() }}</span>
+            <div>
+                {% if message is iterable %}
+                    {% for newMessage in message %}
+                        {{ newMessage|trans }}
+                        {% if loop.index != loop.last %}
+                            <br>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {{ message|trans }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

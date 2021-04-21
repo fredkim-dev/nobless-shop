@@ -1,11 +1,11 @@
 <div class="card complete-summary">
     {% include '@SyliusShop/Checkout/_chosenAddresses.html.twig' with {'step': 'complete', 'shipping': order.shippingAddress, 'billing': order.billingAddress} %}
 
-    <div class="separator w-75 mx-auto mb-4"></div>
+    <div class="separator w-50 mx-auto mb-4"></div>
 
     {% include '@SyliusShop/Checkout/Complete/_chosenMethod.html.twig' with {'type': 'shipping', 'method': order.shipments[0].method} %}
 
-    <div class="separator w-75 mx-auto mb-4"></div>
+    <div class="separator w-50 mx-auto mb-4"></div>
 
     {% include '@SyliusShop/Checkout/Complete/_chosenMethod.html.twig' with {'type': 'payment', 'method': order.payments[0].method} %}
 </div>

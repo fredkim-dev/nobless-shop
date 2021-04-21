@@ -1,0 +1,16 @@
+<div id="shareDropdown" class="dropdown mt-1 justify-content-end">
+    <a class="share-dropdown dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="fas fa-share-square"></i>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right py-0">
+        <div class="share-icons mx-2 py-2 dropdown-item">
+            <a id="copyShare" data-toggle="tooltip" title="Copied!" data-placement="top"><i class="fas fa-copy"></i></a>
+            <a id="facebookShare" data-url="{{ currentUrl | url_encode }}" href="http://www.facebook.com/sharer.php?u={{ currentUrl | url_encode }}"><i class="fab fa-facebook"></i></a>
+            <a data-pin-do="buttonPin" id="pinterestShare" data-pin-custom="true"><i class="fab fa-pinterest"></i></a>
+            <a id="mailShare" class="icon-bg" data-mailto="mailto:?subject={{ subject }}&body={{ currentUrl }}"><i class="far fa-envelope"></i></a>
+            <input type="text" id="pageLink" class="d-none" value="{{ currentUrl }}" data-subject="{{ subject }}" />
+        </div>
+    </div>
+</div>
+
+<a class="d-none" data-pin-do="buttonPin" id="realPinterestShare" href="https://www.pinterest.com/pin/create/button/?url={{ currentUrl }}&media={{ image | url_encode }}&description={{ subject }}" data-pin-custom="true"></a>

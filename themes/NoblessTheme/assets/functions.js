@@ -5,11 +5,11 @@ import Fresco from './fresco/js/fresco.min';
 import { carousel, replaceCarouselArrow, replaceCarouselArrowCart, createGalleryDesktop } from './js/carousel.js';
 import checkout from './js/checkout-nobless.js';
 import {product, filterProducts, resizeFilterMenu} from './js/product-nobless';
+import cart from './js/cart-nobless.js';
+import shareProduct from './js/share-product.js';
 // MENU FUNCTIONS
 // LOGIN FUNCTIONS
 // CONTACT FUNCTIONS
-// SHARE FUNCTIONS
-// CART FUNCTIONS
 // ORDERS GRID FUNCTIONS
 
 
@@ -169,6 +169,7 @@ function openMobileMenu() {
   $('#navbarMain').show();
   $('#navbarLocale').hide();
   $('#navbarTaxons').hide();
+  $('#navbarAccountLinks').hide();
 
   $('#menuButtonMain .close').show();
   $('#menuButtonMain .back').hide();
@@ -191,6 +192,7 @@ function closeMobileMenu() {
   $('#navbarMain').show();
   $('#navbarLocale').hide();
   $('#navbarTaxons').hide();
+  $('#navbarAccountLinks').hide();
 
   $('#menuButtonMain .close').hide();
   $('#menuButtonMain .back').hide();
@@ -341,120 +343,6 @@ function contactPageFunction() {
   });
 }
 
-/**
- * Share function
- */
-function shareFunctions() {
-  if(document.getElementById('shareDropdown')) {
-    jQuery('#copyShare').tooltip('disable');
-    // Facebook Share
-    document.getElementById('facebookShare').addEventListener('click', function (event) {
-      event.preventDefault();
-      const winTop = (screen.height / 2) - (350 / 2);
-      const winLeft = (screen.width / 2) - (600 / 2);
-      const url = document.getElementById('facebookShare').dataset.url;
-      window.open('http://www.facebook.com/sharer.php?u='+url, 'Facebook - Noblezz Shop', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=600,height=350');
-    });
-
-    // Pinterest Share
-    document.getElementById('pinterestShare').addEventListener('click', function (event) {
-      event.preventDefault();
-      document.getElementById('realPinterestShare').click();
-    });
-
-
-    // Copy to Clipboard
-    document.getElementById('copyShare').addEventListener('click', function (event) {
-      event.preventDefault();
-      const copyText = document.getElementById('pageLink');
-      $('#copyShare').tooltip('enable');
-      navigator.clipboard.writeText(copyText.value)
-        .then(() => {
-          $('#copyShare').tooltip('show');
-          setTimeout(function() { $('#copyShare').tooltip('disable'); }, 1500);
-        })
-        .catch((error) => { console.log(`Copy failed! ${error}`) })
-    });
-
-    // Mail To
-    document.getElementById('mailShare').addEventListener('click', function(event) {
-      event.preventDefault();
-      const mailTo = document.getElementById('mailShare').dataset.mailto;
-      window.location.href = mailTo;
-    });
-  }
-}
-
-function cartFunctions() {
-  // Reload Qty
-  $('.reload-qty').on('click', function() {
-    if ($(this).hasClass('mobile')) {
-      $('form.form-to-submit').trigger('submit');
-    } else {
-      $(this).closest('form').trigger('submit');
-    }
-  });
-
-  // Apply bonus points
-  $('.bonus-points-btn').on('click', function() {
-    const bonusPoints = $('.bonus-points').val();
-    if (bonusPoints === '') {
-      $('#sylius_cart_bonusPoints').val('');
-    } else {
-      $('#sylius_cart_bonusPoints').val(bonusPoints);
-    }
-
-    $('form.form-to-submit').trigger('submit');
-  });
-
-  $("body").on("keydown", ".bonus-points", function () {
-    $(this).closest('div').removeClass('invalid-code');
-    $('.bonus-points-error').html('');
-  });
-
-  if($('#bitbag-bonus-points .form-error-message').html() != undefined) {
-    $('.bonus-points-input').addClass('invalid-code');
-    $('.bonus-points-error').html($('#bitbag-bonus-points .form-error-message').html());
-    $('.bonus-points').val($('#sylius_cart_bonusPoints').val());
-  }
-
-  // Apply coupon code
-  $('.coupon-code-btn').on('click', function() {
-    const coupon = $('.coupon-code').val();
-    if (coupon === '') {
-      $('#sylius_cart_promotionCoupon').val('')
-    } else {
-      $('#sylius_cart_promotionCoupon').val(coupon);
-    }
-
-    $('form.form-to-submit').trigger('submit');
-  });
-
-  $("body").on("keydown", ".coupon-code", function () {
-    $(this).closest('div').removeClass('invalid-code');
-    $('.coupon-error').html('');
-  });
-
-  // Change quantity on mobile
-  $('.mobile-qty').on('change', function() {
-    const newQty = $(this).val();
-    const inputQtyName = $(this).data('input-qty');
-    $('input[name="' + inputQtyName + '"]').val(newQty);
-  });
-
-  if($('.coupon-code-error .form-error-message').html() != undefined) {
-    $('.coupon-input').addClass('invalid-code');
-    $('.coupon-error').html($('.coupon-code-error .form-error-message').html());
-    $('.coupon-code').val($('#sylius_cart_promotionCoupon').val());
-  }
-
-  $('a.btn-to-checkout').on('click', function(e) {
-    if ($(this).hasClass('disabled')) {
-      e.preventDefault();
-    }
-  });
-}
-
 
 function ordersGridFunctions() {
   // Desktop Accordion
@@ -511,7 +399,7 @@ function init() {
   $('.dropdown-menu').on("click.bs.dropdown", function (e) {
     e.stopImmediatePropagation();
   });
-  shareFunctions();
+  shareProduct();
   product();
   filterProducts();
   // Menu Functions
@@ -521,7 +409,7 @@ function init() {
   loginFunctions();
   ordersGridFunctions();
   loginPageFunctions();
-  cartFunctions();
+  cart();
   checkout();
 
   contactPageFunction();

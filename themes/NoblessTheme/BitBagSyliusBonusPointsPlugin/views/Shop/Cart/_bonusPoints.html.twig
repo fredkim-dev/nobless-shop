@@ -1,18 +1,13 @@
-{# {% form_theme form '@BitBagSyliusBonusPointsPlugin/Shop/Form/theme.html.twig' %} #}
-
 {% if form.bonusPoints is defined %}
-    <div class="total-separator w-75 mx-auto mt-3 mb-2"></div>
     <div id="bitbag-bonus-points">
-        <div class="d-flex flex-column">
-            <span class="text-muted mb-2">{{ 'bitbag_sylius_bonus_points.ui.you_have_bonus_points_available'|trans }} <strong>{{ (bitbag_active_bonus_points() / 100) }}</strong></span>
+        <div>
             <div class="coupon-input input-group mb-2 mr-sm-2">
-                {{ form_widget(form.bonusPoints, {'attr': {'placeholder': 'bitbag_sylius_bonus_points.ui.bonus_points'|trans~'...'}}) }}
+                {{ form_widget(form.bonusPoints, {'attr': {'placeholder': 'bitbag_sylius_bonus_points.ui.bonus_points'|trans}}) }}
                 {{ form_errors(form.bonusPoints) }}
                 <div class="input-group-append">
-                    <button class="btn input-group-text coupon-code-btn"><i class="fas fa-long-arrow-alt-right"></i></button>
+                    <button class="btn input-group-text bonus-points-btn">Go</button>
                 </div>
             </div>
-            <span class="coupon-error px-2"></span>
         </div>
     </div>
 {% endif %}

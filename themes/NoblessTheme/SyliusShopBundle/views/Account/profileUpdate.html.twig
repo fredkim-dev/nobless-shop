@@ -8,6 +8,10 @@
     {{ 'sylius.menu.shop.account.personal_information'|trans }} | {{ parent() }}
 {% endblock %}
 
+{% block breadcrumb %}
+    {% include '@SyliusShop/Common/_breadcrumb.html.twig' with {'pageTitle': 'sylius.menu.shop.account.personal_information', 'accountPage': true} %}
+{% endblock %}
+
 {% block subcontent %}
     <div class="col-12 mt-5">
         {{ form_start(form, {'action': path('sylius_shop_account_profile_update'), 'attr': {'class': 'loadable', 'novalidate': 'novalidate'}}) }}

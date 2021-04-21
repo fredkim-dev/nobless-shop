@@ -1,6 +1,6 @@
 {% form_theme form '@SyliusShop/Form/theme.html.twig' %}
 
-<div class="save-address-form {% if noAddressesYet %}d-block{% endif%} col-12 col-xl-11 mx-auto">
+<div class="save-address-form {% if noAddressesYet %}d-block{% endif%} col-12 col-lg-11 col-xxl-9 mx-auto">
     <div class="separator w-75 mx-auto mb-3"></div>
     {{ form_start(form, {'action': path('sylius_shop_checkout_save_user_address'), 'attr': {'class': 'loadable', 'novalidate': 'novalidate'}}) }}
         {% include '@SyliusShop/Checkout/Address/_form.html.twig' with {'form': form, 'customIds': ids, 'formSaveType': 'inAccount', 'noAddressesYet': noAddressesYet, 'addressInCheckout': addressInCheckout} %}

@@ -1235,10 +1235,16 @@ div.taxon-header {
             color: #dc3545;
             font-size: 80%;
         }
-
         .bonus-points-error {
             color: #dc3545;
             font-size: 80%;
+        }
+        .delete-bonus-points {
+            font-size: 90%;
+            text-decoration: underline;
+            &:hover {
+                cursor: pointer;
+            }
         }
         .promotion-amount {
             color: #dc3545;
@@ -1627,8 +1633,10 @@ div.taxon-header {
 /* ACCOUNT PAGE */
 /*==============*/
 #accountPage {
-    margin-top: 5rem;
     margin-bottom: 10rem;
+    nav {
+        margin-bottom: 5rem;
+    }
     #openAccountMenu {
         &:hover {
             cursor: pointer;

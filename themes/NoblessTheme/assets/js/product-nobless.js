@@ -1,3 +1,6 @@
+/**********************/
+/* PRODUCT MANAGEMENT */
+/**********************/
 import noUiSlider from 'nouislider';
 
 const priceContainerSelector = '#productsFilters';
@@ -7,6 +10,7 @@ const priceMinSelector = 'input[name="criteria[price][price_1]"]';
 const priceMaxSelector = 'input[name="criteria[price][price_2]"]';
 
 const product = function mainFunctions() {
+  // Manage variant list when clicking in size available
   $('.variant-list .variant-name:not(.variant-disabled)').on('click', function(event) {
     const bundleItem = $(this).data('bundle-item');
     if(bundleItem !== undefined) {
@@ -17,6 +21,7 @@ const product = function mainFunctions() {
     $(this).addClass('variant-selected');
   });
 
+  // Show or hide variants list in products carousel according to screen size
   $('.card-carousel .card-img-top .variants-container').hide();
   $('.card-carousel .card-img-top')
     .on('mouseenter', function() {
@@ -27,6 +32,7 @@ const product = function mainFunctions() {
     $('.variants-container', this).hide();
   });
 
+  // When clicking on add to cart button
   $('#sylius-product-adding-to-cart .btn-primary').on('click', function(e) {
     e.preventDefault();
     const addToCartForm = $(this).closest('form');

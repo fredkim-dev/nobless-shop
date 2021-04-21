@@ -14,3 +14,7 @@ sylius:
             not_blank: Veuillez saisir votre prénom
         email:
             not_blank: Veuillez saisir votre email
+bitbag_sylius_bonus_points:
+    order:
+        bonus_points:
+            not_available: Vous n'avez pas assez sur votre cagnotte

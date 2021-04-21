@@ -36,7 +36,7 @@ sylius:
         gender:
             f: 'Mme.'
             m: 'M.'
-        no_results_to_display: Vous n'avez pas encore passé commande chez Noblezz
+        no_orders_yet: Vous n'avez pas encore passé commande chez Noblezz
         show_order: Voir la commande
         number: Numéro de la commande
         date: Date de la commande
@@ -54,7 +54,7 @@ sylius:
         choose_size: Choisir sa taille
         please_choose_size: Veuillez choisir une taille
         please_choose_size_bundle: Veuillez choisir une taille pour chaque produit du pack
-        view_cart: Voir le panier
+        view_cart: Afficher le panier
         edit_cart: Modifier le panier
         modify: Modifier
         forgot_password_title: J'ai oublié mon mot de passe
@@ -62,13 +62,14 @@ sylius:
         set_a_new_password_for_your_account_2: Vous recevrez à cette adresse un lien vous permettant de réinitialiser votre mot de passe.
         reset_password: Réinitialiser mon mot de passe
         caution: Attention
-        has_product_out_of_stock: Votre panier contient des produits qui ne sont plus disponibles (en gris). Veuillez les supprimer avant de procéder au paiement.
+        has_product_out_of_stock: Votre panier contient des produits qui ne sont plus disponibles. Veuillez les supprimer avant de procéder au paiement.
         cart_total: Total du panier
         items_total: Sous-total HT
         order_total: Total commande
         complete_order: Finaliser la commande
         your_shopping_cart: Aperçu de votre panier
-        deliver_tomorrow_with_chronopost: Recevez votre commande dès demain pour toute validation avant midi en choisissant la livraison Express (Chronopost)
+        deliver_tomorrow: Recevez votre commande dès demain pour toute validation avant midi en choisissant la livraison Express
+        cancelled: Annulée
         tva_20: TVA 20%
         ttc: (TTC)
         select_address_from_book: Utiliser une adresse enregistrée
@@ -187,8 +188,11 @@ sylius:
             message_is: 'Voici le message : '
             email: 'Email : '
             phone_number: 'Numéro de téléphone : '
+    cart_item:
+        not_available: Ce produit n'est pas en stock
 bitbag_sylius_bonus_points:
     ui:
         bonus_points: Utiliser ma cagnotte
         you_have_bonus_points_available: 'Cagnotte disponible :'
-        bonus_points_total: Remise
+        bonus_points_total_used: Cagnotte utilisée
+        bonus_points_delete_link: Ne plus utiliser ma cagnotte

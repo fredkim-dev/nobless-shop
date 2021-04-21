@@ -1,0 +1,8 @@
+{% set marginClass = '' %}
+{% if accountPage is defined %}
+    {% set marginClass = 'px-3' %}
+{% endif %}
+<ol class="breadcrumb my-1 {{ marginClass }}">
+    <li class="breadcrumb-item"><a href="{{ path('sylius_shop_homepage') }}">{{ 'sylius.ui.home'|trans }}</a></li>
+    <li class="breadcrumb-item">{{ pageTitle|trans }}</li>
+</ol>
