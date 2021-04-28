@@ -12,7 +12,11 @@
 {% block content %}
     <div id="cartPage" class="row col-12 col-lg-11 col-xl-10 mx-auto mx-3 mb-3">
         {% if not cart.empty %}
-            {% block flashes %}{% endblock %}
+            <div class="d-none">
+                {% block flashes %}
+                    {{ parent() }}
+                {% endblock %}
+            </div>
 
             <div class="col-12 p-0">
                 {% include '@SyliusShop/Cart/Summary/_header.html.twig' %}

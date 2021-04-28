@@ -1,5 +1,9 @@
 {% extends '@SyliusShop/layout.html.twig' %}
 
+{% set containerCol = 'col-12 col-lg-11' %}
+{% if app.request.attributes.get('_route') != 'sylius_shop_account_dashboard' %}
+    {% set containerCol = 'col-12 col-lg-10 col-xxl-8' %}
+{% endif %}
 {% block content %}
     <div id="accountPage" class="row col-12 col-lg-11 col-xl-10 mx-auto mt-1">
         <nav class="col-12">
@@ -26,10 +30,12 @@
             {{ sonata_block_render_event('sylius.shop.account.layout.after_menu') }}
 
             {% block flashes %}
-                {{ parent() }}
+                <div class="col-12 col-lg-10 col-xxl-8 mx-auto px-0">
+                    {{ parent() }}
+                </div>
             {% endblock %}
         </div>
-        <div class="col-12 col-lg-10 col-xxl-8 mx-auto">
+        <div class="mx-auto {{ containerCol }}">
             {{ sonata_block_render_event('sylius.shop.account.layout.before_subcontent') }}
 
             {% block subcontent %}

@@ -25,8 +25,10 @@ const cart = function mainFunctions() {
 
   // Prevent customer to add more than 7 times a product
   $('.qty', container).on('change', function (e) {
-    if ($(this).val() > 7) {
-      $(this).val(7);
+    if ($(this).val() >= $(this).attr('max')) {
+      $(this).val($(this).attr('max'));
+      const itemId = $(this).data('item-id');
+      $('.qty-max-in-cart-reached-' + itemId).removeClass('d-none')
     }
   });
 

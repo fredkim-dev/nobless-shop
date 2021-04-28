@@ -18,6 +18,14 @@ sylius_shop_checkout:
 sylius_shop_cart:
     resource: "../routing/cart.yml"
     prefix: /{_locale}/cart
+
+sylius_shop_account:
+    resource: "../routing/account.yml"
+    prefix: /{_locale}/account
+
+sylius_shop_ajax_cart:
+    resource: "../routing/ajax/cart.yml"
+    prefix: /{_locale}/cart
     
 sylius_shop_default_locale:
     path: /

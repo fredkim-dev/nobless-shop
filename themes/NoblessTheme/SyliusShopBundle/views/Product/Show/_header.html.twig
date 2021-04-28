@@ -1,18 +1,15 @@
 {% import '@SyliusShop/Common/Macro/headers.html.twig' as headers %}
 
-{% set currentUrl = app.request.uri %}
-{% set subject = product.name ~ " - Noblezz Shop" %}
-{% if product.imagesByType('thumbnail') is not empty %}
-    {% set image = product.imagesByType('thumbnail').first.path | imagine_filter(filter | default('sylius_shop_product_original')) %}
-{% elseif product.images.first %}
-    {% set image = product.images.first.path | imagine_filter(filter | default('sylius_shop_product_original')) %}
-{% else %}
-    {% set image = '//placehold.it/400x600' %}
-{% endif %}
-
-<div class="d-flex">
-    <div class="w-100">
+<div class="d-flex flex-column">
+    <span><strong>Noblezz</strong></span>
+    <div class="w-100 d-flex flex-row justify-content-between">
         {{ headers.default(product.name) }}
+
+        <div class="{% if isProductBundle %}d-none{% else %}d-none d-lg-block{% endif %}">
+            {% if not product.variants.empty() %}
+                {% include '@SyliusShop/Product/Show/_price.html.twig' %}
+            {% endif %}
+            {{ sonata_block_render_event('sylius.shop.product.show.after_price', {'product': product}) }}
+        </div>
     </div>
-    {% include '@SyliusShop/Product/Show/share.html.twig' %}
 </div>

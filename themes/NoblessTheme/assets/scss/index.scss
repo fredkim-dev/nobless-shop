@@ -55,7 +55,7 @@ body {
     background-color: #ffffff;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .h1 {
     font-family: 'Open Sans', 'Roboto', sans-serif;
 }
 
@@ -665,44 +665,49 @@ div#headerContainer {
             left: -7px;
         }
     }
-    .share-dropdown {
-        .fa-share-square {
-            font-size: 20px;
-            opacity: 0.4;
-        }
-        &::after {
-            content: none;
-        }
-    }
-    .share-icons {
-        &.dropdown-item {
-            padding: 0;
-        }
-        a {
-            margin: 0 8px;
-            font-size: 20px;
-            &:hover {
-                cursor:pointer;
+    #shareDropdown {
+        .share-dropdown {
+            .fa-share-square {
+                font-size: 20px;
+                opacity: 0.4;
             }
-            &.icon-bg {
-                background-color: #271529;
-                border-radius: 32px;
-                height: 32px;
-                width: 32px;
-                display: inline-block;
+            &::after {
+                content: none;
             }
-            .svg-inline--fa {
-                font-size: 32px;
-                text-align: center;
-                &.fa-facebook {
-                    color: #3b5998;
+        }
+        .dropdown-menu {
+            transform: translate3d(15px, 19px, 0px) !important;
+            .share-icons {
+                &.dropdown-item {
+                    padding: 0;
                 }
-                &.fa-pinterest {
-                    color: #BD081C;
-                }
-                &.fa-envelope {
-                    color: white;
-                    padding: 7px;
+                a {
+                    margin: 0 8px;
+                    font-size: 20px;
+                    &:hover {
+                        cursor:pointer;
+                    }
+                    &.icon-bg {
+                        background-color: #271529;
+                        border-radius: 32px;
+                        height: 32px;
+                        width: 32px;
+                        display: inline-block;
+                    }
+                    .svg-inline--fa {
+                        font-size: 32px;
+                        text-align: center;
+                        &.fa-facebook {
+                            color: #3b5998;
+                        }
+                        &.fa-pinterest {
+                            color: #BD081C;
+                        }
+                        &.fa-envelope {
+                            color: white;
+                            padding: 7px;
+                        }
+                    }
                 }
             }
         }
@@ -745,6 +750,17 @@ div#headerContainer {
         }
         .form-check-input {
             display:none;
+        }
+    }
+
+    .potential-bonus-points {
+        border-top: 1px solid #271513;
+        &.alert-success {
+            background: none;
+            a {
+                color: inherit;
+
+            }
         }
     }
 }
@@ -868,7 +884,6 @@ div#headerContainer {
     }
     &.add-to-cart {
         border: none;
-        border-top: 1px solid #271513;
         border-radius: 0;
         .card-body {
             padding: 0.5rem;
@@ -1635,7 +1650,7 @@ div.taxon-header {
 #accountPage {
     margin-bottom: 10rem;
     nav {
-        margin-bottom: 5rem;
+        margin-bottom: 3rem;
     }
     #openAccountMenu {
         &:hover {
@@ -2542,6 +2557,10 @@ div {
             right: auto;
             margin: 0 !important;
             padding: 0 15px;
+        }
+
+        .potential-bonus-points {
+            border-top: none;
         }
     }
     #resetPasswordModal.reset-password,

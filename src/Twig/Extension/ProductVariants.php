@@ -48,8 +48,9 @@ class ProductVariants extends AbstractExtension
      */
     public function hasProductOutOfStock(OrderInterface $order): bool
     {
-        foreach($order->getItems() as $product) {
-            if ($product->getVariant()->getOnHand() === 0) {
+        foreach($order->getItems() as $item) {
+            $qtyOnHand = $item->getVariant()->getOnHand();
+            if ($qtyOnHand === 0 || $qtyOnHand < $item->getQuantity()) {
                 return true;
             }
         }

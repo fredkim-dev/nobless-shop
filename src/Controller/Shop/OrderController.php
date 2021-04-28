@@ -113,8 +113,9 @@ class OrderController extends ResourceController
             /**
              * @var $resource OrderInterface
              */
-            foreach($resource->getItems() as $product) {
-                if ($product->getVariant()->getOnHand() === 0) {
+            foreach($resource->getItems() as $item) {
+                $qtyOnHand = $item->getVariant()->getOnHand();
+                if ($qtyOnHand === 0 || $qtyOnHand < $item->getQuantity()) {
                     return $this->redirect($this->generateUrl('sylius_shop_cart_summary'), 301);
                 }
             }

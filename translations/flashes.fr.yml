@@ -18,3 +18,5 @@ sylius:
         something_went_wrong_error: 'Une erreur s''est produite, merci de réessayer.'
     contact:
         request_success: Votre message a bien été envoyé. Il sera traité dans les plus brefs délais.
+    account:
+        change_password_successful: Votre mot de passe a bien été modifié.

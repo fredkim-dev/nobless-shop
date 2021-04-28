@@ -23,6 +23,16 @@ class Product extends BaseProduct implements ProductInterface
      */
     protected $productBundle;
 
+    /**
+     * Max product quantity in cart
+     */
+    const MAX_QTY_IN_CART = 5;
+
+    /**
+     * Limit quantity to display "Last products in stock"
+     */
+    const LAST_PRODUCT_IN_STOCK = 2;
+
     protected function createTranslation(): ProductTranslationInterface
     {
         return new ProductTranslation();

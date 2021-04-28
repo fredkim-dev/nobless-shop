@@ -29,7 +29,7 @@
 
             {{ sonata_block_render_event('sylius.shop.product.show.after_product_header', {'product': product}) }}
 
-            <div class="{% if isProductBundle %}mb-0{% else %}d-flex mb-3{% endif %}">
+            <div class="{% if isProductBundle %}mb-0{% else %}d-flex mb-3 d-lg-none{% endif %}">
                 {% if not product.variants.empty() %}
                     {% include '@SyliusShop/Product/Show/_price.html.twig' %}
                 {% endif %}
@@ -52,6 +52,8 @@
             {% if not isProductBundle %}
                 {% include '@SyliusShop/Product/Show/_tabs.html.twig' %}
             {% endif %}
+
+            {% include '@SyliusShop/Product/Show/potentialBonusPoints.html.twig' with {'product': product} %}
         </div>
     </div>
 </div>

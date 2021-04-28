@@ -1,16 +1,27 @@
 {% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
 {% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
 
-{% set product_variant = item.variant %}
+{% set maxQtyInCart = constant('App\\Entity\\Product\\Product::MAX_QTY_IN_CART') %}
+
+{% set productVariant = item.variant %}
 {% set product = item.variant.product %}
 {% set prices = product.variants|first.channelPricings|first %}
+{% set maxQty = (productVariant.onHand < maxQtyInCart) ? productVariant.onHand : maxQtyInCart %}
+
+{% set hideClass = false %}
+{% if error == '' %}
+    {% set error = 'sylius.ui.limit_in_cart_reached' %}
+    {% set hideClass = true %}
+{% endif %}
 
 {% if error != '' %}
-<div class="col-12 mx-auto has-product-out-of-stock">
-    {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' with {'message': error, 'isItem': true} %}
-</div>
+    <div class="col-12 mx-auto {% if hideClass %}qty-max-in-cart-reached-{{ item.id}} d-none{% endif %} {% if key == 0 %}mt-3{% endif %}">
+        {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' with {'message': error, 'isItem': true, 'maxQty': maxQty} %}
+    </div>
 {% endif %}
-<div class="col-12 position-relative card m-0 pb-1 {% if product_variant.onHand == 0 %}out-of-stock{% endif %}">
+
+
+<div class="col-12 position-relative card m-0 pb-1 {% if productVariant.onHand == 0 or productVariant.onHand < form.quantity.vars.data %}out-of-stock{% endif %}">
     <button type="button"
             data-js-remove-from-cart-button
             data-js-remove-from-cart-redirect-url="{{ path('sylius_shop_cart_summary') }}"
@@ -54,7 +65,7 @@
                     <div class="col-md-12 col-xxxl-4 px-2 {{ variantClass }}">
                         {% if product.hasOptions() %}
                             <div>
-                                {% for optionValue in product_variant.optionValues %}
+                                {% for optionValue in productVariant.optionValues %}
                                     <div data-sylius-option-name="{{ optionValue.name }}">
                                         {{ 'sylius.ui.size'|trans }} : {{ optionValue.value }}
                                     </div>
@@ -71,7 +82,7 @@
                 {% endif %}
 
                 <div class="col-sm-12 col-lg-6 col-xl {{ paddingClass }}">
-                    {{ 'sylius.ui.quantity'|trans }} : {{ form_widget(form.quantity, {'attr': {'class': 'qty', 'max': 7 }}) }} <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty" />
+                    {{ 'sylius.ui.quantity'|trans }} : {{ form_widget(form.quantity, {'attr': {'class': 'qty', 'max': maxQtyInCart, 'data-item-id': item.id }}) }} <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty" />
                 </div>
 
                 <div class="col-sm-12 col-md-5 col-lg-6 col-xl-4 p-2 px-lg-2 {{ totalPaddingClass }}">

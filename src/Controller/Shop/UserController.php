@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace App\Controller\Shop;
 
 use FOS\RestBundle\View\View;
+use Sylius\Bundle\UserBundle\Form\Model\ChangePassword;
+use Sylius\Bundle\UserBundle\Form\Type\UserChangePasswordType;
 use Sylius\Component\Resource\ResourceActions;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
@@ -29,6 +31,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sylius\Component\Resource\Exception\UpdateHandlingException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Webmozart\Assert\Assert;
 
 class UserController extends ResourceController
@@ -67,11 +70,6 @@ class UserController extends ResourceController
 
                 try {
                     $this->resourceUpdateHandler->handle($resource, $configuration, $this->manager);
-                    $newFormPassword = $form->get('newPassword')->getData();
-                    if ($newFormPassword !== null
-                    || (gettype($newFormPassword) == 'string' && trim($newFormPassword) !== '')) {
-                        $this->handleChangePassword($request, $configuration, $user, $form->get('newPassword')->getData());
-                    }
                 } catch (UpdateHandlingException $exception) {
                     if (!$configuration->isHtmlRequest()) {
                         return $this->viewHandler->handle(
@@ -318,6 +316,34 @@ class UserController extends ResourceController
         $this->container->get('session')->getFlashBag()->add($type, $translator->trans($message, [], 'flashes'));
     }
 
+    public function changePasswordAction(Request $request): Response
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        if (!$this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            throw new AccessDeniedException('You have to be registered user to access this section.');
+        }
+
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        $changePassword = new ChangePassword();
+        $formType = $this->getSyliusAttribute($request, 'form', UserChangePasswordType::class);
+        $form = $this->createResourceForm($configuration, $formType, $changePassword);
+
+        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'], true) && $form->handleRequest($request)->isValid()) {
+            return $this->handleChangePassword($request, $configuration, $user, $changePassword->getNewPassword());
+        }
+
+        if (!$configuration->isHtmlRequest()) {
+            return $this->viewHandler->handle($configuration, View::create($form, Response::HTTP_BAD_REQUEST));
+        }
+
+        return $this->container->get('templating')->renderResponse(
+            $configuration->getTemplate('changePassword.html'),
+            ['form' => $form->createView()]
+        );
+    }
+
     protected function handleChangePassword(
         Request $request,
         RequestConfiguration $configuration,
@@ -332,6 +358,8 @@ class UserController extends ResourceController
         $this->manager->flush();
 
         $dispatcher->dispatch(UserEvents::POST_PASSWORD_CHANGE, new GenericEvent($user));
+
+        $this->addTranslatedFlash('success', 'sylius.account.change_password_successful');
 
         if (!$configuration->isHtmlRequest()) {
             return $this->viewHandler->handle($configuration, View::create(null, Response::HTTP_NO_CONTENT));

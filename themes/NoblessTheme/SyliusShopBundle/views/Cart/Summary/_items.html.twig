@@ -1,15 +1,24 @@
+{% set maxQtyInCart = constant('App\\Entity\\Product\\Product::MAX_QTY_IN_CART') %}
 
 {{ form_start(form, {'action': path('sylius_shop_cart_save'), 'attr': {'class': 'loadable form-to-submit cart-items', 'novalidate': 'novalidate'}}) }}
     <input type="hidden" name="_method" value="PATCH"/>
 
     {{ sonata_block_render_event('sylius.shop.cart.summary.items', {'cart': cart, 'form': form}) }}
 
-    {% set error = '' %}
     {% for key, item in cart.items %}
+        {% set error = '' %}
+        {# Change maxQtyInCart if qty in stock is lower #}
+        {% if item.variant.onHand - item.variant.onHold < maxQtyInCart %}
+            {% set maxQtyInCart = item.variant.onHand - item.variant.onHold %}
+        {% endif %}
+
         {% if formErrors is defined and item.id in formErrors|keys %}
             {% set error = formErrors[item.id] %}
+        {% elseif form.items[key].quantity.vars.data >= maxQtyInCart %}
+            {% set error = 'sylius.ui.limit_in_cart_reached' %}
         {% endif %}
-        {% include '@SyliusShop/Cart/Summary/_item.html.twig' with {'item': item, 'form': form.items[key], 'error': error} %}
+
+        {% include '@SyliusShop/Cart/Summary/_item.html.twig' with {'item': item, 'form': form.items[key], 'error': error, 'maxQtyInCart': maxQtyInCart} %}
     {% endfor %}
     <div class="card-body d-none">
         <div class="row">

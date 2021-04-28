@@ -84,12 +84,6 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Sylius\Bundle\CoreBundle\Form\Type\CartType }
 
-    #Menu
-    app.listener.shop.menu_builder:
-        class: App\Menu\AccountMenuListener
-        tags:
-            - { name: kernel.event_listener, event: sylius.menu.shop.account, method: addAccountMenuItems }
-
     #Grid Filters
     app.grid.filter.size:
         class: App\Grid\Filter\SizeFilter

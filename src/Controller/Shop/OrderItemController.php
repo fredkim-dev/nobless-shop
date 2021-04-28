@@ -2,23 +2,29 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\BitBag;
+namespace App\Controller\Shop;
 
+use App\Entity\Order\Order;
+use App\Entity\Product\Product;
 use BitBag\SyliusProductBundlePlugin\Command\AddProductBundleToCartCommand;
 use BitBag\SyliusProductBundlePlugin\Entity\OrderItemInterface;
 use BitBag\SyliusProductBundlePlugin\Entity\ProductInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\RestBundle\View\View;
+use Sylius\Bundle\OrderBundle\Controller\AddToCartCommandInterface;
 use Sylius\Bundle\OrderBundle\Controller\OrderItemController as BaseOrderItemController;
 use Sylius\Bundle\ResourceBundle\Controller;
 use Sylius\Component\Core\Factory\CartItemFactory;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Order\CartActions;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -29,6 +35,9 @@ class OrderItemController extends BaseOrderItemController
 
     /** @var CartItemFactory */
     protected $cartItemFactory;
+
+    /** @var SessionInterface */
+    protected $session;
 
     public function __construct(
         MetadataInterface $metadata,
@@ -49,7 +58,8 @@ class OrderItemController extends BaseOrderItemController
         Controller\ResourceUpdateHandlerInterface $resourceUpdateHandler,
         Controller\ResourceDeleteHandlerInterface $resourceDeleteHandler,
         MessageBusInterface $messageBus,
-        CartItemFactory $cartItemFactory
+        CartItemFactory $cartItemFactory,
+        SessionInterface $session
     ) {
         parent::__construct(
             $metadata,
@@ -73,6 +83,94 @@ class OrderItemController extends BaseOrderItemController
 
         $this->messageBus = $messageBus;
         $this->cartItemFactory = $cartItemFactory;
+        $this->session = $session;
+    }
+
+    public function addAction(Request $request): Response
+    {
+        $cart = $this->getCurrentCart();
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        $this->isGrantedOr403($configuration, CartActions::ADD);
+        /** @var \Sylius\Component\Order\Model\OrderItemInterface $orderItem */
+        $orderItem = $this->newResourceFactory->create($configuration, $this->factory);
+
+        $this->getQuantityModifier()->modify($orderItem, 1);
+
+        $form = $this->getFormFactory()->create(
+            $configuration->getFormType(),
+            $this->createAddToCartCommand($cart, $orderItem),
+            $configuration->getFormOptions()
+        );
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            /** @var AddToCartCommandInterface $addToCartCommand */
+            $addToCartCommand = $form->getData();
+
+            $errors = $this->getCartItemErrors($addToCartCommand->getCartItem());
+            if (0 < count($errors)) {
+                $form = $this->getAddToCartFormWithErrors($errors, $form);
+
+                return $this->handleBadAjaxRequestView($configuration, $form);
+            }
+
+            // Check if product qty in cart is already greater than the limit
+            $message = $this->checkProductQtyInCart($request, $addToCartCommand);
+            if ($message !== '') {
+                return $this->redirectToProductPage($addToCartCommand, $request, $message);
+            }
+
+            $event = $this->eventDispatcher->dispatchPreEvent(CartActions::ADD, $configuration, $orderItem);
+
+            if ($event->isStopped() && !$configuration->isHtmlRequest()) {
+                throw new HttpException($event->getErrorCode(), $event->getMessage());
+            }
+            if ($event->isStopped()) {
+                $this->flashHelper->addFlashFromEvent($configuration, $event);
+
+                return $this->redirectHandler->redirectToIndex($configuration, $orderItem);
+            }
+
+            $this->getOrderModifier()->addToOrder($addToCartCommand->getCart(), $addToCartCommand->getCartItem());
+
+            $cartManager = $this->getCartManager();
+            $cartManager->persist($cart);
+            $cartManager->flush();
+
+            $resourceControllerEvent = $this->eventDispatcher->dispatchPostEvent(CartActions::ADD, $configuration, $orderItem);
+            if ($resourceControllerEvent->hasResponse()) {
+                return $resourceControllerEvent->getResponse();
+            }
+
+            $this->flashHelper->addSuccessFlash($configuration, CartActions::ADD, $orderItem);
+
+            if ($request->isXmlHttpRequest()) {
+                return $this->viewHandler->handle($configuration, View::create([], Response::HTTP_CREATED));
+            }
+
+            return $this->redirectHandler->redirectToResource($configuration, $orderItem);
+        }
+
+
+        if (!$configuration->isHtmlRequest()) {
+            $message = $this->checkProductQtyInCart($request, $form->getData());
+            if ($message === '' && count($form->getErrors()) > 0) {
+                $message = $form->getErrors()[0]->getMessage();
+            }
+
+            return $this->redirectToProductPage($form->getData(), $request, $message);
+        }
+
+        $view = View::create()
+            ->setData([
+                'configuration' => $configuration,
+                $this->metadata->getName() => $orderItem,
+                'form' => $form->createView(),
+            ])
+            ->setTemplate($configuration->getTemplate(CartActions::ADD . '.html'))
+        ;
+
+        return $this->viewHandler->handle($configuration, $view);
     }
 
     public function addProductBundleAction(Request $request): Response
@@ -190,4 +288,45 @@ class OrderItemController extends BaseOrderItemController
 
         return $countSameVariant === count($formData->getProductBundleItems()) ?? false;
     }
+
+    private function checkProductQtyInCart(Request $request, AddToCartCommandInterface $data): string
+    {
+        $qtyAdded = 1;
+        /** @var OrderItemInterface $item */
+        $item = $data->getCartItem();
+        $product = $item->getVariant();
+        $calculatedMxQty = $product->getOnHand() - $product->getOnHold();
+        if ($calculatedMxQty > Product::MAX_QTY_IN_CART) {
+            $calculatedMxQty = Product::MAX_QTY_IN_CART;
+        }
+
+        foreach ($data->getCart()->getItems() as $existingItem) {
+            if ($item->equals($existingItem)) {
+                if ($existingItem->getQuantity() + $qtyAdded > $calculatedMxQty) {
+                    return 'sylius.ui.limit_in_cart_reached';
+                }
+
+                return '';
+            }
+        }
+        return '';
+    }
+
+    /**
+     * Redirect to product page when form contains errors
+     *
+     * @param AddToCartCommandInterface $data
+     * @param Request $request
+     * @param string $message
+     * @return RedirectResponse
+     */
+    private function redirectToProductPage(AddToCartCommandInterface $data, Request $request, string $message): RedirectResponse
+    {
+        /** @var OrderItemInterface $item */
+        $item = $data->getCartItem();
+        $this->session->set('selectedVariant', $item->getVariant()->getOptionValues()[0]);
+        $this->addFlash('error', $this->get('translator')->trans($message));
+        return $this->redirect($request->headers->get('referer'));
+    }
+
 }

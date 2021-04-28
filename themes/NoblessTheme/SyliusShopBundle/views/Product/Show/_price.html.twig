@@ -2,17 +2,24 @@
 
 {% set prices = product.variants|first.channelPricings|first %}
 
-<div class="d-flex flex-row mb-1 align-items-center">
+<div class="d-flex flex-row {% if not isProductBundle %}flex-lg-column align-items-start align-items-md-center{% endif %} ">
     {% if prices.originalPrice > 0 %}
-        <span class="h3 original-price mr-4 mb-0 ml-1" data-js-product-price>
+        <span class="h3 original-price mr-4 ml-1 mb-0 {% if not isProductBundle %}mx-lg-0 order-1 order-lg-2{% endif %}" data-js-product-price>
             <span></span>
             {{ money.convertAndFormat(prices.originalPrice) }}
         </span>
     {% endif %}
 
-    <span class="h3 mb-0" data-js-product-price>
+    {# Mobile price and bundle price#}
+    <span class="h3 mb-0 {% if not isProductBundle %}d-block d-lg-none order-2 order-lg-1{% endif %}" data-js-product-price>
         {{ money.calculatePrice(product|sylius_resolve_variant) }}
     </span>
+
+    {% if not isProductBundle %}
+    <span class="d-none d-lg-block h1 mb-0 order-2 order-lg-1" data-js-product-price>
+        {{ money.calculatePrice(product|sylius_resolve_variant) }}
+    </span>
+    {% endif %}
 
     {% if product.isBundle() %}
         <div class="ml-3 bundle-saving d-none d-lg-block">{{ 'sylius.ui.bundle_saving'|trans }}</div>

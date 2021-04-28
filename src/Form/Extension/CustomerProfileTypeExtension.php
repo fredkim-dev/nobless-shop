@@ -36,21 +36,7 @@ final class CustomerProfileTypeExtension extends AbstractTypeExtension
                 'constraints' => [
                     new NotBlank([
                         'message' => 'sylius.form.customer.birthday.not_blank',
-                        'groups' => ['sylius', 'sylius_user_registration'], 
-                    ])
-                ],
-            ])
-            ->add('newPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'first_options' => ['label' => 'sylius.form.user_change_password.new'],
-                'second_options' => ['label' => 'sylius.form.user_change_password.confirmation'],
-                'invalid_message' => 'sylius.user.plainPassword.mismatch',
-                'mapped' => false,
-                'constraints' => [
-                    new Length([
-                        'min' => 6,
-                        'allowEmptyString' => true,
-                        'groups' => ['sylius', 'sylius_user_registration'], 
+                        'groups' => ['sylius', 'sylius_user_registration'],
                     ])
                 ],
             ])

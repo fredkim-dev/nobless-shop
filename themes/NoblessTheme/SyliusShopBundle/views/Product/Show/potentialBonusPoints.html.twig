@@ -1,0 +1,9 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+{% set prices = product.variants|first.channelPricings|first %}
+{% set potentialBonusPoints = (prices.price / 1000)|round(0, 'floor') %}
+
+<div class="potential-bonus-points mb-2 py-3 px-2 alert-success ">
+    {{ 'sylius.ui.potential_bonus_points'|trans({'%s': potentialBonusPoints}) }}
+    {{ 'sylius.ui.potential_bonus_points_link'|trans }} <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'terms-of-sales'}) }}"><strong>{{ 'sylius.ui.cgv'|trans }}</strong></a>.
+</div>

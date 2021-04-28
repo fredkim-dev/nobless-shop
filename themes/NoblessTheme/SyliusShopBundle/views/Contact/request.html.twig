@@ -75,8 +75,9 @@
                     <div class="col-12 col-md-6 p-0 mb-3 mb-md-0 d-flex flex-row align-items-center">
                         <input type="checkbox" id="{{ form.acceptCgv.vars.id }}" name="{{ form.acceptCgv.vars.full_name }}" required class="form-check-input m-0" {% if form.acceptCgv.vars.checked %}checked{% endif %}>
                         <label for="{{ form.acceptCgv.vars.id }}" class="form-check-label{% if not form.acceptCgv.vars.valid %} is-invalid{% endif %}">
+                            {{ 'sylius.ui.accept_cgv_contact_1'|trans }}
                             <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'terms-of-sales'}) }}">
-                                {{ 'sylius.ui.accept_cgv_contact'|trans }}
+                                {{ 'sylius.ui.accept_cgv_contact_2'|trans }}
                             </a>
                             <span class="required d-inline-block ml-1">*</span>
                         </label>

@@ -18,6 +18,12 @@ const product = function mainFunctions() {
     } else {
       $('.variant-list .variant-name').removeClass('variant-selected');
     }
+    $('.variant-list .invalid-feedback').removeClass('d-block').addClass('d-none');
+    if ($(this).data('almost-out') !== undefined) {
+      $('.last-product-in-stock').removeClass('d-none').addClass('d-block');
+    } else {
+      $('.last-product-in-stock').removeClass('d-block').addClass('d-none');
+    }
     $(this).addClass('variant-selected');
   });
 
@@ -35,6 +41,7 @@ const product = function mainFunctions() {
   // When clicking on add to cart button
   $('#sylius-product-adding-to-cart .btn-primary').on('click', function(e) {
     e.preventDefault();
+    $('.variant-list .invalid-feedback').removeClass('d-block').addClass('d-none');
     const addToCartForm = $(this).closest('form');
     const selectedSize = $('input[name^="' + $(addToCartForm).data('nameToCheck') + '"]:checked').length;
     const bundleItemsCount = $('div.bundle-item').length;

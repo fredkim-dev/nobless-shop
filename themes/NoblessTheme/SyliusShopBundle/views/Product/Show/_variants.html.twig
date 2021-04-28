@@ -1,35 +1,46 @@
 {% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
 
-<div class="row">
-    <div class="variant-list col-12 col-xl-9">
+{% set lastProductQty = constant('App\\Entity\\Product\\Product::LAST_PRODUCT_IN_STOCK') %}
+{% set errorMessage = '' %}
+{% for message in app.session.flashbag.get('error') %}
+    {% set errorMessage = message %}
+{% endfor %}
+{% set selectedVariant = app.session.get('selectedVariant') %}
+{% set tmp = app.session.remove('selectedVariant') %}
+
+<div class="row m-0">
+    <div class="variant-list col-12 col-xl-9 px-0">
         <div class="form-group d-flex flex-column">
             <label class="variant-label required">{{ 'sylius.ui.choose_size'|trans }}</label>
             <div class="container-fluid col-12 p-0 text-left d-flex flex-row">
                 {% for key, variant in product.variants %}
-                    <label for="sylius_add_to_cart_cartItem_variant_{{ key }}" class="d-flex justify-content-center align-items-center variant-name{% if variant.onHand == 0 %} variant-disabled{% endif %}">
-                        {% for optionValue in variant.optionValues %}
-                            {{ optionValue.code }}
-                            {% if variant.onHand == 0 %}
-                                <span class="out-of-stock"></span>
-                            {% endif %}
-                        {% endfor %}
+                    {% set realStock = variant.onHand - variant.onHold %}
+                    {% set isOutOfStock = realStock <= 0 %}
+                    {% set optionValueId = variant.optionValues[0].id %}
+                    {% set selectedClass = (selectedVariant != null and selectedVariant.id == variant.optionValues[0].id) ? ' variant-selected' : '' %}
+
+                    <label for="sylius_add_to_cart_cartItem_variant_{{ key }}" class="d-flex justify-content-center align-items-center variant-name{{ selectedClass }}{% if isOutOfStock %} variant-disabled{% endif %}" {% if realStock < lastProductQty %}data-almost-out="true"{% endif %}>
+                        {{ variant.optionValues[0].code }}
+                        {% if isOutOfStock %}
+                            <span class="out-of-stock"></span>
+                        {% endif %}
                     </label>
-                    <input type="radio" id="sylius_add_to_cart_cartItem_variant_{{ key }}" name="sylius_add_to_cart[cartItem][variant]" required="required" class="form-check-input" value="{{ variant.code }}" {% if variant.onHand == 0 %}disabled{% endif %}/>
+                    <input type="radio" id="sylius_add_to_cart_cartItem_variant_{{ key }}" name="sylius_add_to_cart[cartItem][variant]" required="required" class="form-check-input" value="{{ variant.code }}" {% if selectedClass != ''%}checked{% endif%} {% if isOutOfStock %}disabled{% endif %} />
                 {% endfor %}
             </div>
 
             <span class="invalid-feedback d-none empty-product">{{ 'sylius.ui.please_choose_size'|trans }}</span>
+            <span class="invalid-feedback d-none last-product-in-stock">{{ 'sylius.ui.last_product_in_stock'|trans }}</span>
+            {% if errorMessage %}
+                <span class="invalid-feedback d-block">{{ errorMessage }}</span>
+            {% endif %}
             <div class="invalid-feedback form-error-message my-2 d-none" data-js-add-to-cart="error"></div>
         </div>
     </div>
-    <div class="qty-product col-12 col-xl-3">
+    <div class="qty-product col-12 col-xl-3 d-none">
         <div class="form-group d-flex flex-column">
-            <label for="sylius_add_to_cart_cartItem_quantity" class="required">Quantité</label>
-            <select id="sylius_add_to_cart_cartItem_quantity" name="sylius_add_to_cart[cartItem][quantity]" class="form-control" required="required">
-                {% for i in 1..7 %}
-                    <option value="{{ i }}">{{ i }}</option>
-                {% endfor %}
-            </select>
+            <label for="sylius_add_to_cart_cartItem_quantity" class="required">{{ 'sylius.ui.quantity'|trans }}</label>
+            <input type="number" max="1" id="sylius_add_to_cart_cartItem_quantity" name="sylius_add_to_cart[cartItem][quantity]" class="form-control" required="required" />
         </div>
 
         {{ sonata_block_render_event('sylius.shop.product.show.add_to_cart_form', {'product': product, 'order_item': order_item}) }}

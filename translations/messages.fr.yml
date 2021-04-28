@@ -1,5 +1,6 @@
 sylius:
     ui:
+        cgv: conditions générales
         pret_a_porter: Prêt-à-porter
         archives: Archives
         registered_customers: 'Connectez-vous'
@@ -36,7 +37,7 @@ sylius:
         gender:
             f: 'Mme.'
             m: 'M.'
-        no_orders_yet: Vous n'avez pas encore passé commande chez Noblezz
+        no_orders_yet: Vous n'avez pas encore effectué de commande
         show_order: Voir la commande
         number: Numéro de la commande
         date: Date de la commande
@@ -46,6 +47,8 @@ sylius:
         not_verified: Veuillez valider votre compte
         qty: Qté
         quantity: Quantité
+        share_this_product: Partager ce produit
+        last_product_in_stock: Dernières pièces
         size: Taille
         sku: Réf
         composition: Composition
@@ -54,6 +57,9 @@ sylius:
         choose_size: Choisir sa taille
         please_choose_size: Veuillez choisir une taille
         please_choose_size_bundle: Veuillez choisir une taille pour chaque produit du pack
+        limit_in_cart_reached: La quantité limite pour cet article est atteinte
+        potential_bonus_points: En achetant cet article, vous obtenez un cash-back de %s€ sur votre compte Noblezz, à valoir dès votre prochaine commande.
+        potential_bonus_points_link: Plus d'informations dans les
         view_cart: Afficher le panier
         edit_cart: Modifier le panier
         modify: Modifier
@@ -127,7 +133,8 @@ sylius:
         client_service_faq: FAQ - Service client
         contact_form: Formulaire de contact
         subject: Sujet
-        accept_cgv_contact: J'accepte les conditions générales
+        accept_cgv_contact_1: J'accepte
+        accept_cgv_contact_2: les conditions générales
         other_subject: Veuillez renseigner le sujet de votre message
         contact_us: Contactez-nous
         my_account: Mon compte
@@ -147,6 +154,7 @@ sylius:
                 address_book: Mes adresses
                 order_history: Mes commandes
                 client_assets: Mes avoirs
+                change_password: Sécurité du compte
     form:
         login:
             username: 'Adresse mail *'
@@ -160,7 +168,7 @@ sylius:
             subscribed_to_newsletter: S'inscrire à la newsletter
             subscribed_to_newsletter_noblezz: Je souhaite m'inscrire à la newsletter Noblezz m'informant des nouveaux produits et offres spécifiques de la marque
             accept_cgv_1: J'accepte
-            accept_cgv_2: les conditions générales de vente
+            accept_cgv_2: les conditions générales
             accept_cgv_3: la politique de confidentialité
         address:
             street: Adresse
@@ -192,7 +200,9 @@ sylius:
         not_available: Ce produit n'est pas en stock
 bitbag_sylius_bonus_points:
     ui:
-        bonus_points: Utiliser ma cagnotte
-        you_have_bonus_points_available: 'Cagnotte disponible :'
-        bonus_points_total_used: Cagnotte utilisée
-        bonus_points_delete_link: Ne plus utiliser ma cagnotte
+        bonus_points: Cash-back
+        use_bonus_points: Utiliser mon cash-back 
+        you_have_bonus_points_available: 'Cash-back disponible :'
+        bonus_points_total_used: Cash-back utilisé
+        bonus_points_delete_link: Ne plus utiliser mon cash-back
+        bonus_points_available_dashboard: Vous avez %s€ dans votre cash-back

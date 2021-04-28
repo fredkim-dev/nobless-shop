@@ -3,6 +3,8 @@
 {% import '@SyliusShop/Common/Macro/headers.html.twig' as headers %}
 {% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
 
+{% set bonusPointsAvailable = (bitbag_active_bonus_points() / 100)|round(0, 'floor') %}
+
 {% block title %}
     {{ 'sylius.menu.shop.account.dashboard'|trans }} | {{ parent() }}
 {% endblock %}
@@ -43,6 +45,12 @@
                 <div class="address-info mb-2">
                     {% include '@SyliusShop/Account/AddressBook/_defaultAddress.html.twig' with {'address': customer.defaultAddress} %}
                 </div>
+            </div>
+        </div>
+        <div class="col-12 row dashboard-items mt-5">
+            <div class="col-12">
+                <h5>{{ 'bitbag_sylius_bonus_points.ui.bonus_points'|trans }}</h5>
+                <span class="text-dark">{{ 'bitbag_sylius_bonus_points.ui.bonus_points_available_dashboard'|trans({'%s': bonusPointsAvailable })  }}</span>
             </div>
         </div>
     </div>

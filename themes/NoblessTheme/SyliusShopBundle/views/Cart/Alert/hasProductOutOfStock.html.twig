@@ -2,17 +2,19 @@
 
 {% set marginClass = 'mt-3' %}
 {% set paddingClass = '' %}
+{% set colClass = 'col-12' %}
 {% if isItem is defined %}
     {% set marginClass = '' %}
     {% set paddingClass = 'p-2 px-3' %}
+    {% set colClass = 'col-8 col-xxl-6 mx-auto' %}
 {% endif %}
 
-<div class="col-12 p-0 has-product-out-of-stock {{ marginClass}}">
+<div class="p-0 has-product-out-of-stock {{ marginClass}} {{ colClass }} ">
     <div class="alert alert-danger {{ paddingClass }}">
         <div class="d-flex align-items-center">
             <span class="pr-3 fa-2x">{{ icons.danger() }}</span>
             <div>
-                {{ message|trans }}
+                {{ message|trans }} {% if maxQty is defined %}<br>(Max. {{ maxQty }}){% endif %}
             </div>
         </div>
     </div>

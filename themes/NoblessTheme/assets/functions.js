@@ -7,9 +7,9 @@ import checkout from './js/checkout-nobless.js';
 import {product, filterProducts, resizeFilterMenu} from './js/product-nobless';
 import cart from './js/cart-nobless.js';
 import shareProduct from './js/share-product.js';
+import loginPage from './js/login-nobless.js';
+import contactPage from './js/contact-nobless';
 // MENU FUNCTIONS
-// LOGIN FUNCTIONS
-// CONTACT FUNCTIONS
 // ORDERS GRID FUNCTIONS
 
 
@@ -208,142 +208,6 @@ function developMobileMenu(divToOpen) {
   }
 }
 
-function loginFunctions() {
-  if($('.login-form')) {
-    $('.submit-login').on('click', function(e) {
-      e.preventDefault();
-      const formElement = $(this).data('form');
-      $(formElement).submit();
-    });
-  }
-
-  if($('.verify-account')) {
-    $('.verify-account').on('click', function(e) {
-      e.preventDefault();
-      $(this).closest('form').submit();
-    });
-  }
-
-  if ($('#resetPasswordSubmit')) {
-    $('#resetPasswordSubmit').on('click', function(event) {
-      event.preventDefault();
-      $('.reset-password .modal-dialog .form-error-message').html('');
-      const form = $(this).closest('form');
-      $(form).addClass('loading');
-      $.ajax({
-        type: "POST",
-        url: form.attr('action'),
-        data: form.serialize(),
-        success: function(response) {
-          $('.reset-password .modal-dialog').append(response);
-          $('.reset-password .modal-dialog .modal-content:not(.success)').addClass('d-none');
-          $('.modal-dialog input.form-control').removeClass('is-invalid');
-          $(form).removeClass('loading');
-        },
-        error: function(error) {
-          $('.reset-password .modal-dialog input.form-control').addClass('is-invalid');
-          $('.modal-dialog .form-errors .form-error-message').text($($.parseHTML(error.responseText)[1]).find('.form-errors ul li').text());
-          $(form).removeClass('loading');
-        }
-      })
-    });
-
-    $('#resetPasswordModal').on('hide.bs.modal', function (e) {
-      $('.reset-password .modal-dialog input.form-control').removeClass('is-invalid');
-      $('.reset-password .modal-dialog form').removeClass('loading');
-      $('.reset-password .modal-dialog form input').val('');
-      $('.reset-password .modal-dialog .form-error-message').html('');
-    })
-  }
-
-  $('button.submit-register').on('click', function(e) {
-    e.preventDefault();
-    const regex = /\S+@\S+\.\S+/;
-    const registerForm = $($(e.target).data('form'));
-    const inputRegisterForm = registerForm.find('input');
-    const email = inputRegisterForm.val();
-    const invalidSpan = inputRegisterForm.closest('div').next('span');
-    if (regex.test(email)) {
-      invalidSpan.removeClass('d-block');
-      inputRegisterForm.removeClass('is-invalid');
-      registerForm.submit();
-    } else {
-      invalidSpan.addClass('d-block');
-      inputRegisterForm.addClass('is-invalid');
-    }
-  });
-}
-
-$('.register-form input, .header-register-form input').on('keyup', function(e) {
-  const regex = /\S+@\S+\.\S+/;
-  const email = $(e.target).closest('form').find('input').val();
-  if (regex.test(email) && $(e.target).hasClass('is-invalid')) {
-    $(e.target).closest('div').next('span').removeClass('d-block');
-    $(e.target).removeClass('is-invalid');
-  }
-});
-
-/**
- * Contact Page function
- */
-function contactPageFunction() {
-  $('#contactPage form button').on('click', function(e) {
-    e.preventDefault();
-    const form = $(this).closest('form');
-    $(form).addClass('loading');
-    $.ajax({
-      type: "POST",
-      url: form.attr('action'),
-      data: form.serialize(),
-      success: function(response) {
-        $('#contactResponseModal .modal-body div').html(response);
-        $('#contactResponseModal').modal('show');
-        // Delete all errors of form when success
-        $('#contactPage [name^="sylius_contact"]').val('').prop( "checked", false );
-        $('#contactPage [name^="sylius_contact"], #contactPage [for^="sylius_contact_"]').removeClass('is-invalid');
-        $('#contactPage span.invalid-feedback').remove();
-        $(form).removeClass('loading');
-      },
-      error: function(error) {
-        if (error.status === 406) {
-          $('#contactPage span.invalid-feedback').remove();
-          const errorList = $($.parseHTML(error.responseText)[1]).find('span').toArray();
-          errorList.forEach(error => {
-            if (error.outerText !== '') {
-              if (error.className !== 'acceptCgv') {
-                $('#sylius_contact_' + error.className)
-                  .addClass('is-invalid')
-                  .after('<span class="invalid-feedback d-block">' + error.outerText + '</span>');
-              } else {
-                $('#sylius_contact_' + error.className)
-                  .next('label')
-                  .addClass('is-invalid');
-              }
-            }
-          });
-        }
-
-        if (error.status === 417) {
-          $('#contactPage .contact-error').html($.parseHTML(error.responseText)[1]);
-        }
-
-        console.log(error);
-
-        $(form).removeClass('loading');
-      }
-    })
-  });
-
-  $('#sylius_contact_subject').on('change', function(e) {
-    if($(e.target).val() === 'other') {
-      $('.other-subject').show();
-    } else {
-      $('.other-subject').hide();
-    }
-  });
-}
-
-
 function ordersGridFunctions() {
   // Desktop Accordion
   $('#orderAccordionDesktop').on('hidden.bs.collapse', function(e) {
@@ -367,14 +231,6 @@ function ordersGridFunctions() {
   });
 }
 
-function loginPageFunctions() {
-  $('.reset-password-open').on('click', function(e) {
-    e.preventDefault();
-    const modalId = $(this).data('modalId');
-    $(modalId).modal('show');
-    $('.header-dropdown').removeClass('show');
-  })
-}
 
 function resizeContent() {
   resizeMainContainer();
@@ -406,13 +262,12 @@ function init() {
   megamenuFunctions();
   menuIconesFunctions();
 
-  loginFunctions();
   ordersGridFunctions();
-  loginPageFunctions();
+  loginPage();
   cart();
   checkout();
 
-  contactPageFunction();
+  contactPage();
 
   resizeMainContainer();
   if ($(document).width() > 768) {
