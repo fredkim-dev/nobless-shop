@@ -124,7 +124,7 @@
             {% endfor %}
         </div>
     {% else %}
-        {% include '@SyliusShop/Common/Alert/_alertDanger.html.twig' with {'message': 'sylius.ui.no_orders_yet'} %}
+        {% include '@SyliusShop/Common/Alert/_alertError.html.twig' with {'message': 'sylius.ui.no_orders_yet'} %}
     {% endif %}
     {{ pagination.simple(data) }}
 </div>

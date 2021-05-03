@@ -17,18 +17,18 @@ const cart = function mainFunctions() {
   });
 
   // Mobile
-  $('.mobile-qty', container).on('change', function() {
-    const newQty = $(this).val();
-    const inputQtyName = $(this).data('input-qty');
-    $('input[name="' + inputQtyName + '"]').val(newQty);
+  $('.mobile-qty', container).on('input', function() {
+    const newQty = parseInt($(this).val());
+    if (newQty >= parseInt($(this).attr('max'))) {
+      const inputQtyName = $(this).data('input-qty');
+      $('input[name="' + inputQtyName + '"]').val(newQty);
+    }
   });
 
-  // Prevent customer to add more than 7 times a product
-  $('.qty', container).on('change', function (e) {
-    if ($(this).val() >= $(this).attr('max')) {
+  // Prevent customer to add more than 5 times a product
+  $('.qty', container).on('input', function (e) {
+    if (parseInt($(this).val()) >= parseInt($(this).attr('max'))) {
       $(this).val($(this).attr('max'));
-      const itemId = $(this).data('item-id');
-      $('.qty-max-in-cart-reached-' + itemId).removeClass('d-none')
     }
   });
 

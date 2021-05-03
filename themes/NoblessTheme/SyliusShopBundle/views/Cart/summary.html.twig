@@ -48,8 +48,8 @@
                 {{ sonata_block_render_event('sylius.shop.cart.summary.after_totals', {'cart': cart}) }}
             </div>
         {% else %}
-            <div class="col-12">
-                <h6>{{ 'sylius.ui.your_cart_is_empty'|trans }}</h6>
+            <div class="row col-12 col-lg-10 col-xxl-8 mx-auto mt-3 mb-5 empty-cart">
+                {% include '@SyliusShop/Common/Alert/_alertError.html.twig' with {'message': 'sylius.ui.your_cart_is_empty'} %}
             </div>
         {% endif %}
     </div>

@@ -8,14 +8,8 @@
 {% set prices = product.variants|first.channelPricings|first %}
 {% set maxQty = (productVariant.onHand < maxQtyInCart) ? productVariant.onHand : maxQtyInCart %}
 
-{% set hideClass = false %}
-{% if error == '' %}
-    {% set error = 'sylius.ui.limit_in_cart_reached' %}
-    {% set hideClass = true %}
-{% endif %}
-
 {% if error != '' %}
-    <div class="col-12 mx-auto {% if hideClass %}qty-max-in-cart-reached-{{ item.id}} d-none{% endif %} {% if key == 0 %}mt-3{% endif %}">
+    <div class="col-12 mx-auto {% if key == 0 %}mt-3{% endif %}">
         {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' with {'message': error, 'isItem': true, 'maxQty': maxQty} %}
     </div>
 {% endif %}

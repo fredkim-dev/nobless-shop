@@ -238,7 +238,7 @@ function resizeContent() {
   if ($(document).width() > 768) {
     createGalleryDesktop();
   }
-  shareFunctions();
+  shareProduct();
   resizeMenu($('#menuButton').attr('data-trigger'));
   resizeFilterMenu();
   $('.header-dropdown').show();

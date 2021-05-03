@@ -379,6 +379,9 @@ header {
         .dropdown {
             margin: 0 0.5rem;
             padding: 0.5rem 0;
+            &:hover {
+                cursor: pointer;
+            }
         }
         img.icon {
             width: 22px;
@@ -643,7 +646,6 @@ div#headerContainer {
 /*================*/
 #product-info {
     #product-sticky {
-        margin-top: 20px;
         &.sticky-top-custom {
             position: sticky;
             position: -webkit-sticky;
@@ -757,9 +759,9 @@ div#headerContainer {
         border-top: 1px solid #271513;
         &.alert-success {
             background: none;
+            color: #271513;
             a {
                 color: inherit;
-
             }
         }
     }
@@ -956,7 +958,7 @@ div#headerContainer {
 div.taxon-header {
     position: relative;
     .taxon-header-image {
-        height: 18rem;
+        height: 17rem;
     }
     .taxon-header-title {
         margin: 0 auto;
@@ -1136,6 +1138,11 @@ div.taxon-header {
 #cartPage {
     .alert {
         display: none;
+    }
+    .empty-cart {
+        .alert {
+            display: block;
+        }
     }
     .has-product-out-of-stock {
         .alert {
@@ -2262,29 +2269,31 @@ div {
 
     header {
         .menu-icones {
-            .header-dropdown {
-                visibility: hidden;
-                transform:translateX(100%) !important;
-                border-radius:0;
-                display: none;
-                top: 45px !important;
-                right: 0px !important;
-                left: unset !important;
-                height: 100%;
-                max-height: initial;
-                width: 35%;
-                transition: visibility .2s ease-in-out, transform .2s ease-in-out;
-                padding: 0.5rem;
-                &.show {
-                    visibility: visible;
-                    transform: translateX(0) !important;
-                }
-                .media-body {
-                    height: 150px;
-                }
-                #headerCartItems {
-                    overflow-y: auto;
-                    max-height: unset;
+            .dropdown {
+                .header-dropdown {
+                    visibility: hidden;
+                    transform:translateX(100%) !important;
+                    border-radius:0;
+                    display: none;
+                    top: 45px !important;
+                    right: 0px !important;
+                    left: unset !important;
+                    height: 100%;
+                    max-height: initial;
+                    width: 35%;
+                    transition: visibility .2s ease-in-out, transform .2s ease-in-out;
+                    padding: 0.5rem;
+                    &.show {
+                        visibility: visible;
+                        transform: translateX(0) !important;
+                    }
+                    .media-body {
+                        height: 150px;
+                    }
+                    #headerCartItems {
+                        overflow-y: auto;
+                        max-height: unset;
+                    }
                 }
             }
         }
@@ -2298,7 +2307,7 @@ div {
 
     div.taxon-header {
         .taxon-header-image {
-            height: 23rem;
+            height: 17rem;
         }
     }
 
@@ -2455,7 +2464,7 @@ div {
 
     div.taxon-header {
         .taxon-header-image {
-            height: 18rem;
+            height: 17rem;
         }
         .taxon-header-title {
             h1 {
