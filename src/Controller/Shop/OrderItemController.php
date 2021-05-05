@@ -59,8 +59,7 @@ class OrderItemController extends BaseOrderItemController
         Controller\ResourceDeleteHandlerInterface $resourceDeleteHandler,
         MessageBusInterface $messageBus,
         CartItemFactory $cartItemFactory,
-        SessionInterface $session,
-        RepositoryInterface $productBundleOrderItemRepository
+        SessionInterface $session
     ) {
         parent::__construct(
             $metadata,
