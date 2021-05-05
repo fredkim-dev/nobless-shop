@@ -17,7 +17,7 @@
                     {% set realStock = variant.onHand - variant.onHold %}
                     {% set isOutOfStock = realStock <= 0 %}
                     {% set optionValueId = variant.optionValues[0].id %}
-                    {% set selectedClass = (selectedVariant != null and selectedVariant.id == variant.optionValues[0].id) ? ' variant-selected' : '' %}
+                    {% set selectedClass = (selectedVariant != null and selectedVariant.id == optionValueId) ? ' variant-selected' : '' %}
 
                     <label for="sylius_add_to_cart_cartItem_variant_{{ key }}" class="d-flex justify-content-center align-items-center variant-name{{ selectedClass }}{% if isOutOfStock %} variant-disabled{% endif %}" {% if realStock < lastProductQty %}data-almost-out="true"{% endif %}>
                         {{ variant.optionValues[0].code }}

@@ -6,16 +6,20 @@
 {% set productVariant = item.variant %}
 {% set product = item.variant.product %}
 {% set prices = product.variants|first.channelPricings|first %}
-{% set maxQty = (productVariant.onHand < maxQtyInCart) ? productVariant.onHand : maxQtyInCart %}
+
+{% if product.isBundle() %}
+    {% set isOutOfStock = sylius_bundle_out_of_stock(item) %}
+{% else %}
+    {% set isOutOfStock = productVariant.onHand == 0 or productVariant.onHand < form.quantity.vars.data %}
+{% endif %}
 
 {% if error != '' %}
     <div class="col-12 mx-auto {% if key == 0 %}mt-3{% endif %}">
-        {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' with {'message': error, 'isItem': true, 'maxQty': maxQty} %}
+        {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' with {'message': error, 'isItem': true} %}
     </div>
 {% endif %}
 
-
-<div class="col-12 position-relative card m-0 pb-1 {% if productVariant.onHand == 0 or productVariant.onHand < form.quantity.vars.data %}out-of-stock{% endif %}">
+<div class="col-12 position-relative card m-0 pb-1 {% if isOutOfStock %}out-of-stock{% endif %}">
     <button type="button"
             data-js-remove-from-cart-button
             data-js-remove-from-cart-redirect-url="{{ path('sylius_shop_cart_summary') }}"

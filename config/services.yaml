@@ -59,7 +59,7 @@ services:
 
     sylius.controller.shop.order_custom:
         class: App\Controller\Shop\OrderController
-        arguments: ['@sylius.controller.order', '@sylius.context.customer']
+        arguments: ['@sylius.controller.order', '@sylius.context.customer', '@bitbag_sylius_product_bundle.repository.product_bundle_order_item']
 
     sylius.controller.shop.locale_switch:
         class: App\Controller\Shop\LocaleSwitchController
@@ -110,6 +110,7 @@ services:
         arguments:
             - '@twig'
             - '@doctrine.orm.entity_manager'
+            - '@bitbag_sylius_product_bundle.repository.product_bundle_order_item'
         tags:
             - { name: twig.extension }
                 

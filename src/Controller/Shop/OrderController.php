@@ -23,6 +23,7 @@ use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Addressing\Model\AddressInterface;
+use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Customer\Context\CustomerContextInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Order\Model\OrderInterface;
@@ -30,6 +31,7 @@ use Sylius\Component\Order\Repository\OrderRepositoryInterface;
 use Sylius\Component\Order\SyliusCartEvents;
 use Sylius\Component\Resource\Exception\UpdateHandlingException;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -52,10 +54,16 @@ class OrderController extends ResourceController
      */
     protected $customerContext;
 
-    public function __construct(BaseOrderController $baseOrderController, CustomerContextInterface $customerContext)
+    /**
+     * @var RepositoryInterface
+     */
+    private $productBundleOrderItemRepository;
+
+    public function __construct(BaseOrderController $baseOrderController, CustomerContextInterface $customerContext, RepositoryInterface $productBundleOrderItemRepository)
     {
         $this->_parent = $baseOrderController;
         $this->customerContext = $customerContext;
+        $this->productBundleOrderItemRepository = $productBundleOrderItemRepository;
     }
 
     /**
@@ -114,9 +122,15 @@ class OrderController extends ResourceController
              * @var $resource OrderInterface
              */
             foreach($resource->getItems() as $item) {
-                $qtyOnHand = $item->getVariant()->getOnHand();
-                if ($qtyOnHand === 0 || $qtyOnHand < $item->getQuantity()) {
+                /* @var OrderItemInterface $item */
+                if (!$item->getVariant()->getProduct()->isBundle()) {
+                    $productQty = (int)($item->getVariant()->getOnHand() - $item->getVariant()->getOnHold());
+                    if ($productQty <= 0 || $productQty < $item->getQuantity()) {
+                        return $this->redirect($this->generateUrl('sylius_shop_cart_summary'), 301);
+                    }
+                } elseif ($this->isBundleOutOfStock($item)) {
                     return $this->redirect($this->generateUrl('sylius_shop_cart_summary'), 301);
+
                 }
             }
         }
@@ -514,5 +528,27 @@ class OrderController extends ResourceController
         $newAddress->setStreet2($street2);
 
         return $newAddress;
+    }
+
+    /**
+     * Check if bundle is out of stock according to its product stock
+     *
+     * @param OrderItemInterface $orderItem
+     * @return bool
+     */
+    public function isBundleOutOfStock(OrderItemInterface $orderItem): bool
+    {
+        $items = $this->productBundleOrderItemRepository->findBy([
+            'orderItem' => $orderItem,
+        ]);
+
+        foreach($items as $item) {
+            $productQty = (int)($item->getProductVariant()->getOnHand() - $item->getProductVariant()->getOnHold());
+            if ($productQty <= 0 || $productQty < $item->getQuantity()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
