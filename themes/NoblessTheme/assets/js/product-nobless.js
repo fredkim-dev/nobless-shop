@@ -13,16 +13,19 @@ const product = function mainFunctions() {
   // Manage variant list when clicking in size available
   $('.variant-list .variant-name:not(.variant-disabled)').on('click', function(event) {
     const bundleItem = $(this).data('bundle-item');
+    const variantListContainer = $(this).closest('div.variant-list');
+
     if(bundleItem !== undefined) {
       $('.variant-name[data-bundle-item="' + bundleItem + '"]').removeClass('variant-selected');
     } else {
       $('.variant-list .variant-name').removeClass('variant-selected');
     }
-    $('.variant-list .invalid-feedback').removeClass('d-block').addClass('d-none');
+    $('.invalid-feedback', variantListContainer).removeClass('d-block').addClass('d-none');
+
     if ($(this).data('almost-out') !== undefined) {
-      $('.last-product-in-stock').removeClass('d-none').addClass('d-block');
+      $('.last-product-in-stock', variantListContainer).removeClass('d-none').addClass('d-block');
     } else {
-      $('.last-product-in-stock').removeClass('d-block').addClass('d-none');
+      $('.last-product-in-stock', variantListContainer).removeClass('d-block').addClass('d-none');
     }
     $(this).addClass('variant-selected');
   });

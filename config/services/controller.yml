@@ -1,6 +1,6 @@
 services:
     #Override bitbag product bundle Controller
-    nobless_order_item_controller:
-        class: App\Controller\Shop\OrderItemController
+    bitbag_custom_order_item_controller:
+        class: App\Controller\BitBag\OrderItemController
         parent: 'bitbag_sylius_product_bundle.controller.order_item'
-        arguments: ['@sylius.custom_factory.order_item', '@session']
+        arguments: ['@session']

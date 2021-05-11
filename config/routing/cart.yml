@@ -33,7 +33,7 @@ sylius_shop_cart_item_remove:
     path: /{id}/remove
     methods: [DELETE]
     defaults:
-        _controller: sylius.controller.order_item:removeAction
+        _controller: sylius.controller.shop.order_item_custom:removeAction
         _sylius:
             flash: sylius.cart.remove_item
             redirect:

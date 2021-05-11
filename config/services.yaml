@@ -60,6 +60,10 @@ services:
     sylius.controller.shop.order_custom:
         class: App\Controller\Shop\OrderController
         arguments: ['@sylius.controller.order', '@sylius.context.customer', '@bitbag_sylius_product_bundle.repository.product_bundle_order_item']
+        
+    sylius.controller.shop.order_item_custom:
+        class: App\Controller\Shop\OrderItemController
+        arguments: ['@sylius.controller.order_item', '@session']
 
     sylius.controller.shop.locale_switch:
         class: App\Controller\Shop\LocaleSwitchController
@@ -121,8 +125,23 @@ services:
         arguments:
             - '@sylius.manager.order'
             - '@sylius.context.cart'
-            - '@sylius.context.cart.session_and_channel_based'
-
+            - '@sylius.context.cart.session_and_channel_based' 
+    
+    #ORDER CUSTOM
+    app.component.order.order_modifier:
+        class: App\Component\Order\OrderModifier
+        decorates: sylius.order_modifier
+        
+    app.component.product_bundle.bundle_to_cart_handler:
+        class: App\Component\ProductBundle\AddProductBundleToCartHandler
+        decorates: bitbag_sylius_product_bundle.handler.add_product_bundle_to_cart
+        arguments:
+            - '@bitbag_sylius_product_bundle.factory.product_bundle_order_item'
+            - '@sylius.order_modifier'
+            - '@sylius.manager.order'
+        tags:
+            - { name: messenger.message_handler }
+        
     #Bonus Points
     app.listener.admin.menu_builder:
         class: App\Menu\AdminMenuListener

@@ -1,18 +1,7 @@
 # MESSAGES FLASH
 sylius:
     resource:
-        create: '%resource% a bien été créé.'
         update: 'Vos informations personnelles ont bien été mises à jour'
-        delete: '%resource% a bien été supprimé.'
-        bulk_delete: '%resources% ont bien été supprimés.'
-        move: '%resource% a été déplacé avec succès.'
-        generate: '%resource%s ont été générés avec succès.'
-        revert: 'Les modifications de %resource% ont bien été annulées.'
-        restore_deleted: '%resource% a bien été restauré.'
-        enable: '%resource% a bien été activé.'
-        disable: '%resource% a bien été désactivé.'
-        delete_error: 'Impossible de supprimer, %resource% est en cours d''utilisation.'
-        race_condition_error: 'Mise à jour impossible, %resource% a été modifiée précédemment.'
         something_went_wrong_error: 'Une erreur s''est produite, merci de réessayer.'
     contact:
         request_success: Votre message a bien été envoyé. Il sera traité dans les plus brefs délais.
@@ -24,10 +13,7 @@ sylius:
         set_address_as_default: 'Cette adresse est maintenant l''adresse par défaut.'
         register: 'Merci pour votre inscription, vous allez recevoir un mail pour vérifier votre compte.'
     cart:
-        add_item: 'L''article a bien été ajouté au panier'
         cannot_modify: 'Une commande a déjà été soumise pour le panier que vous avez essayé de modifier.'
-        remove_item: 'L''article a bien été supprimé du panier'
-        save: 'Le panier a été mis à jour avec succès'
     payment:
         cancelled: 'Le paiement a été annulé.'
         completed: 'Le paiement a été effectué.'
@@ -47,5 +33,4 @@ sylius:
         verify_email: 'Votre adresse email a été vérifiée avec succès.'
         verify_email_by_invalid_token: 'Le jeton de vérification est invalide.'
         verify_email_request: 'Un email contenant le lien de vérification a été envoyé à votre adresse email.'
-        verify_no_user: 'Il n''y a pas d''utilisateur connecté.'
         verify_verified_email: 'Votre email est déjà vérifié.'

@@ -1,0 +1,70 @@
+# MESSAGES FORMULAIRES
+sylius:
+    form:
+        customer:
+            birthday:
+                not_blank: Veuillez saisir votre date de naissance 141
+            password:
+                min_length: Votre mot de passe doit faire 6 caractères au minimum 142
+    cart_item:
+        not_available: L'article n'est pas en stock 143
+    contact:
+        lastname: 
+            not_blank: Veuillez saisir votre nom 144
+        firstname:
+            not_blank: Veuillez saisir votre prénom 145
+        email:
+            not_blank: Veuillez saisir votre email 146
+            invalid: Cet e-mail n'est pas valide. 147
+        message:
+            not_blank: Veuillez saisir votre message. 148
+    address:
+        city:
+            max_length: Le nom de la ville ne doit pas comporter plus de 255 caractères. 149
+            min_length: Le nom de la ville doit comporter au moins 2 caractères. 150
+            not_blank: Veuillez entrer une ville 151
+        country:
+            not_blank: Veuillez choisir un pays. 152
+        postcode:
+            max_length: Le code postal ne doit pas contenir plus de 255 caractères. 153
+            min_length: Le code postal doit comporter au moins 2 caractères. 154
+            not_blank: Veuillez entrer un code postal. 155
+        street:
+            max_length: L'adresse ne doit pas contenir plus de 255 caractères. 156
+            min_length: L'adresse doit comporter au moins 2 caractères. 157
+            not_blank: Veuillez entrer une adresse.158
+        not_shippable: Cette adresse n'est pas une destination d'envoi valide. 159
+    customer:
+        first_name:
+            max: Le prénom ne doit pas contenir plus de {{ limit }} caractères. 160
+            min: Le prénom doit contenir au moins {{ limit }} caractères. 161
+            not_blank: Veuillez saisir votre prénom. 162
+        last_name:
+            max: Le nom ne doit pas contenir plus de {{ limit }} caractères. 163
+            min: Le nom doit contenir au moins {{ limit }} caractères. 164
+            not_blank: Veuillez saisir votre nom. 165
+        gender:
+            not_blank: Veuillez choisir votre sexe. 166
+        email:
+            already_used: Cet e-mail est déjà utilisé, veuillez vous connecter ou procéder à la réinitialisation du mot de passe oublié. 167
+            max: L'e-mail ne doit pas contenir plus de {{ limit }} caractères. 168
+            not_blank: Veuillez saisir votre adresse email. 169
+            invalid: Cet e-mail n'est pas valide. 170
+            unique: Cet e-mail est déjà utilisé. 171
+            registered: Cet e-mail est déjà utilisé, veuillez vous connecter ou procéder à la réinitialisation du mot de passe oublié. 172
+    user:
+        email:
+            not_blank: Veuillez saisir votre adresse email. 173
+            invalid: Cet e-mail n'est pas valide. 174
+            not_registered: Cet e-mail n'existe pas. Veuillez d'abord vous inscrire. 175
+        plainPassword:
+            not_blank: Veuillez saisir votre mot de passe. 176
+            mismatch: Les mots de passe saisis ne correspondent pas 177
+            wrong_current: Le mot de passe fourni est différent de celui en cours. 178
+        password:
+            min: Le mot de passe doit comporter au moins {{ limit }} caractères. 179
+            max: Le mot de passe ne doit pas faire plus de {{ limit }} caractères. 180
+bitbag_sylius_bonus_points:
+    order:
+        bonus_points:
+            not_available: Vous n'avez pas assez sur votre cash-back 181

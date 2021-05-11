@@ -2,33 +2,33 @@
 sylius:
     ui:
         #HEADER
-        pret_a_porter: Prêt-à-porter
-        archives: Archives
-        customer_login: 'Mon compte'
-        remember_me: 'Rester connecté'
-        forgot_password: 'Mot de passe oublié ?'
-        login: 'Connexion'
-        login_button: 'Connexion'
-        create_an_account: 'Créer un compte'
-        register: 'Créer un compte'
-        register_button: 'Créer un compte'
-        your_cart_is_empty: 'Votre panier est vide'
-        quantity: Quantité
-        subtotal: 'Sous-total'
-        view_cart: Afficher le panier
-        checkout: 'Paiement'
+        pret_a_porter: Prêt-à-porter 1
+        archives: Archives 2 
+        customer_login: 'Mon compte 3'
+        remember_me: 'Rester connecté 4'
+        forgot_password: 'Mot de passe oublié ? 5'
+        login: 'Connexion 6'
+        login_button: 'Connexion 7'
+        create_an_account: 'Créer un compte 8'
+        register: 'Créer un compte 9'
+        register_button: 'Créer un compte 10'
+        your_cart_is_empty: 'Votre panier est vide 11'
+        quantity: Quantité 12
+        subtotal: 'Sous-total 13'
+        view_cart: Afficher le panier 14
+        checkout: 'Paiement 15'
         #FOOTER
-        customer_information: Informations
-        legal_notice: Mentions légales
-        terms_and_conditions: 'Conditions générales de vente'
-        privacy_policy: Politique de confidentialité
-        delivery_and_returns: Livraison et retours
-        client_service_faq: FAQ - Service client
-        contact_us: Contactez-nous
+        customer_information: Informations 16
+        legal_notice: Mentions légales 17
+        terms_and_conditions: 'Conditions générales de vente 18'
+        privacy_policy: Politique de confidentialité 19
+        delivery_and_returns: Livraison et retours 20
+        client_service_faq: FAQ - Service client 21
+        contact_us: Contactez-nous 22
                 #Mon compte MODIFY IN HEADER
         shop_catalog: Catalogue
                 #Peut-on déplacer cela dans Menu - Shop - Account
-        dashboard: 'Tableau de bord'
+        dashboard: 'Tableau de bord 24'
         #BANNIÈRE
         money_back_guarantee: Satisfait ou remboursé
         money_back_guarantee_desc_1: 14 jours pour retourner votre colis
@@ -60,13 +60,13 @@ sylius:
         most_expensive_first: Prix décroissant
         filters: Filtres
         validate_filter: Filtrer
-        reset: 'Réinitialiser'
-        reset_button: 'Réinitialiser'
+        reset: 'Réinitialiser 25'
+        reset_button: 'Réinitialiser 26'
         no_product_filter: Aucun produit ne correspond à votre sélection
         no_product_filter_2: Veuillez réessayer avec des filtres différents
         #HOME
-        home: 'Accueil'
-        newest_products: Nouveautés
+        home: 'Accueil 27'
+        newest_products: Nouveautés 28
         buy_by_look: Outfit Patch
         #PRODUCT PAGE
         bundle_saving: (Vous économisez 10%)
@@ -78,8 +78,8 @@ sylius:
         share_this_product: Partager ce produit
                 #DETAIL
         description: 'Description'
-        review_details: 'Détails'
-        details: 'Détails'
+        review_details: 'Détails 29'
+        details: 'Détails 30'
         composition: Composition
         potential_bonus_points: En achetant cet article, vous obtenez un cash-back de %s€ sur votre compte Noblezz, à valoir dès votre prochaine commande.
         potential_bonus_points_link: Plus d'informations dans les
@@ -89,77 +89,77 @@ sylius:
         #PANIER
         your_shopping_cart: Aperçu de votre panier
         deliver_tomorrow: Recevez votre commande dès demain pour toute validation avant midi en choisissant la livraison Express
-        size: Taille
+        size: Taille 31
                 #Quantité MOFIFY IN HEADER
-        total: 'Total'
-        cart_total: Total du panier
-        items_total: Sous-total HT
+        total: 'Total 32'
+        cart_total: Total du panier 33
+        items_total: Sous-total HT 34
         tva_20: TVA 20%
         global_amount: Montant global
         without_shipping: (hors frais de livraison)
         discount_code_cannot_be_combined: Les codes promo ne peuvent pas être combinés
         add_discount_code: Ajouter un code promo
-                #CE CODE PROMO N'EST PAS VALIDE MANQUE AU DOCUMENT
+                                #CE CODE PROMO N'EST PAS VALIDE
                 #CODE PROMO
-        coupon: 'Code promo'
-        discount: 'Code PROMO : %s'
+        coupon: 'Code promo 35'
+        discount: 'Code PROMO : %s 36'
         estimate_shipping: Estimation des frais de livraison
         france_shipping: France
         europe_shipping: Europe
         international_shipping: International
-                #LIVRAISON STANDARD
-                #LIVRAISON EXPRESS
-                #LIVRAISON EN POINT RELAIS
-                #OFFERTE DÈS 80€
-                #OFFERTE DÈS 300€
-        order_total: Total commande
-        ttc: (TTC)
-        complete_order: Finaliser la commande
+                                #LIVRAISON STANDARD
+                                #LIVRAISON EXPRESS
+                                #LIVRAISON EN POINT RELAIS
+                                #OFFERTE DÈS 80€
+                                #OFFERTE DÈS 300€
+        order_total: Total commande 37
+        ttc: (TTC) 38
+        complete_order: Finaliser la commande 39
         limit_in_cart_reached: La quantité limite pour cet article est atteinte
         has_product_out_of_stock: Votre panier contient des produits qui ne sont plus disponibles. Veuillez les supprimer avant de procéder au paiement.
         #TUNEL DE COMMANDE
-        cart: 'Panier'
-        modify: Modifier
-                #Quantité MOFIFY IN HEADER
+        cart: 'Panier 40'
+        modify: Modifier 41
+                #Quantité MODIFY IN HEADER
         benefit: Avantages
                 #CODE PROMO à voir
                 #Total commande MODIFY ON PANIER
                 #(TTC) MODIFY ON PANIER
                 #Paiement sécurisé MODIFY ON BANIÈRE
-        address: 'Adresse'
-        addressing_step: 'Adresse de livraison'
-        billing_address: 'Adresse de facturation'
-        bill_to: 'Adresse de facturation'
-        no_address_yet: Aucune adresse
-        change_address: Modifier l'adresse
-        back_to_store: 'Retour à la boutique'
-        change_shipping_address: Modifier l'adresse de livraison
-        change_billing_address: Modifier l'adresse de facturation
-        add_address: Ajouter une adresse
+        address: 'Adresse 42'
+        addressing_step: 'Adresse de livraison 43'
+        billing_address: 'Adresse de facturation 44'
+        bill_to: 'Adresse de facturation 45'
+        no_address_yet: Aucune adresse 46
+        change_address: Modifier l'adresse 47
+        back_to_store: 'Retour à la boutique 48'
+        change_shipping_address: Modifier l'adresse de livraison 49
+        change_billing_address: Modifier l'adresse de facturation 50
+        add_address: Ajouter une adresse 51
         use_new_address: Utiliser une nouvelle adresse
         of_shipping: de livraison
         of_billing: de facturation
         save_and_use_address: Enregistrer sur le compte et l'utiliser
-        cancel: 'Annuler'
-        shipping: 'Expédition'
+        cancel: 'Annuler 52'
+        shipping: 'Expédition 53'
                 #'Paiement' MODIFY ON HEADER
         change_shipping_method: 'Modifier le mode de livraison'
-        next: 'Suivant'
-        order_summary: Récapitulatif
-        shipping_method: "Méthode d'expédition"
-        payment_method: 'Moyen de paiement'
-        place_order: 'Commander'
+        next: 'Suivant 54'
+        order_summary: Récapitulatif 55
+        shipping_method: "Méthode d'expédition 56"
+        payment_method: 'Moyen de paiement 57'
+        place_order: 'Commander 58'
         #MON COMPTE
-        my_account: Mon compte
+        my_account: Mon compte 59
         hello_name: 'Bonjour <b>%name%</b>'
         menu: Menu
-        administration_dashboard: 'Tableau de bord'
+        administration_dashboard: 'Tableau de bord 60'
         profile: 'Profil'
                 #ADRESSE PAR DEFAUT
-        default_shipping_address: 'Adresse de livraison par défaut'
-        default_billing_address: 'Adresse de facturation par défaut'
-        shipping_address_default: 'Adresse de livraison par défaut'
-        billing_address_default: 'Adresse de facturation par défaut'
+        default_shipping_address: 'Adresse de livraison par défaut 61'
+        default_billing_address: 'Adresse de facturation par défaut 62'
+        shipping_address_default: 'Adresse de livraison par défaut 63'
+        billing_address_default: 'Adresse de facturation par défaut 64'
         gender:
             f: 'Mme.'
             m: 'M.'
@@ -172,76 +172,76 @@ sylius:
         change_newsletter_subscription: 'Modifier mon abonnement à la newsletter Noblezz'
                 #S'inscrire à la newsletter MODIFYON FORM - CUSTOMER
                 #Sécurité de compte MODIFY ON MENU - SHOP - ACCOUNT
-        change_password: 'Changer mon mot de passe'		
-        current_password: 'Mot de passe actuel'
-        new_password: 'Nouveau mot de passe'
-        repeat_new_password: 'Confirmer le mot de passe'
-        save_changes: 'Enregistrer les modifications'
+        change_password: 'Changer mon mot de passe 65'		
+        current_password: 'Mot de passe actuel 66'
+        new_password: 'Nouveau mot de passe 67'
+        repeat_new_password: 'Confirmer le mot de passe 68'
+        save_changes: 'Enregistrer les modifications 69'
                 #Mes adresses MODIFY ON MENU - SHOP - ACCOUNT
-        additional_addresses: 'Adresses supplémentaires'
+        additional_addresses: 'Adresses supplémentaires 70'
                 #Ajouter une adresse MODIFY ON TUNEL DE COMMANDE
-        set_as_default: 'Définir par défaut'
-        edit: 'Modifier'
-        delete: 'Supprimer'
+        set_as_default: 'Définir par défaut 71'
+        edit: 'Modifier 72'
+        delete: 'Supprimer 73'
                 #Mes commandes MODIFY ON MENU - SHOP - ACCOUNT
         number: Numéro de la commande
         date: Date de la commande
-        state: Statut de la commande
-        order_state: 'Statut de la commande'
-        fulfilled: 'Complétée'
-        cancelled: Annulée
-        new: 'Nouveau'
+        state: Statut de la commande 74
+        order_state: 'Statut de la commande 75'
+        fulfilled: 'Complétée 76'
+        cancelled: Annulée 77
+        new: 'Nouveau 78'
         tracking_number: Numéro de suivi
-        grand_total: 'Total'
-        actions: 'Actions'
-        show_order: Voir la commande
-        view_order: Voir la commande
+        grand_total: 'Total 79'
+        actions: 'Actions 80'
+        show_order: Voir la commande 81
+        view_order: Voir la commande 82
                 #Adresse de livraison MODIFY ON TUNEL DE COMMANDE
                 #Adresse de facturation MODIFY ON TUNEL DE COMMANDE
                 #Élement MANQUE AU DOCUMENT
                 #Sous-total MODIFY ON HEADER
-        sku: Réf
+        sku: Réf 83
                 #Taille MODIFY ON PANIER
-        qty: Qté
+        qty: Qté 84
                 #Sous-total HT MODIFY ON PANIER
                 #'Code promo' MODIFY ON PANIER
                 #'Code PROMO : %s' MODIFY ON PANIER
-        shipping_total: 'Total des frais de port'
+        shipping_total: 'Total des frais de port 85'
                 #Total à voir
-        no_orders_yet: Vous n'avez pas encore effectué de commande
-        logout: 'Déconnexion'
-        sign_out: 'Déconnexion'
+        no_orders_yet: Vous n'avez pas encore effectué de commande 86
+        logout: 'Déconnexion 87'
+        sign_out: 'Déconnexion 88'
         #LOGIN
                 #Mon compte à voir
-        registered_customers: 'Connectez-vous'		
+        registered_customers: 'Connectez-vous 89'		
         registered_customers_subtitle: 'Vous êtes déjà client Noblezz, connectez-vous avec vos identifiants de connexion'
                 #'Adresse mail *' MODIFY ON FORM LOGIN
                 #'Mot de passe *' MODIFY ON FORM LOGIN
                 #'Rester connecté' MODIFY ON FORM LOGIN
                 #'Veuillez vérifier vos informations de connexion' MODIFY ON FORM LOGIN
-        new_customers: 'Créer un compte'
+        new_customers: 'Créer un compte 90'
         new_customers_subtitle: Créer votre compte Noblezz en quelques clics pour pouvoir suivre aisément vos commandes, gérer vos adresses et cumuler des avoirs de fidélité à chaque commande. Suivez les prochaines étapes pour créer dès aujourd'hui votre compte Noblezz
-        invalid_email: Email invalide
+        invalid_email: Email invalide 91
         #CRÉATION DE COMPTE
-        personal_information: 'Informations personnelles'
-        account_credentials: 'Informations de connexion'
+        personal_information: 'Informations personnelles 92'
+        account_credentials: 'Informations de connexion 93'
         and: 'et la'
                 #Créer un compte à voir
         have_an_account_already: 'Vous avez déjà un compte ?'
         sign_in_here: 'Accédez à votre compte'
         #FORMULAIRE DE CONTACT
         contact_form: Formulaire de contact
-        subject: Sujet
-        topic: 'Sujet'
-        other_subject: Veuillez renseigner le sujet de votre message
-        message: 'Message'
+        subject: Sujet 94
+        topic: 'Sujet 96'
+                            #other_subject: Veuillez renseigner le sujet de votre message
+        message: 'Message 97'
                 #J'accepte les MODIFY ON FORM - CUSTOMER
                 #conditions générales ON FORM - CUSTOMER
-        send: 'Envoyer'
+        send: 'Envoyer 98'
         no_additionnal_addresses: Vous n'avez pas d'adresses supplémentaires
         caution: Attention
         free_shipping_method: Offerts
-        # JE NE SAIS PAS
+        # JE NE SAIS PAS SI CETTE LIGNE EST UTILISÉE
         item.choice: "{0} |{1}, 1 élément |] 1, Inf], %count% éléments"
         #MOT DE PASSE OUBLIÉ
         forgot_password_title: J'ai oublié mon mot de passe
@@ -262,44 +262,44 @@ sylius:
                 change_password: Sécurité du compte
     form:
         login:
-            username: 'Adresse mail *'
-            password: 'Mot de passe *'
-            remember_me: 'Rester connecté'
-            verify_credentials: 'Veuillez vérifier vos informations de connexion'
+            username: 'Adresse mail * 99'
+            password: 'Mot de passe * 100'
+            remember_me: 'Rester connecté 101'
+            verify_credentials: 'Veuillez vérifier vos informations de connexion 102'
         user:
-            email: E-mail
-            enabled: Activé
+            email: E-mail 103
+            enabled: Activé 104
             password:
-                label: Mot de passe
-                confirmation: 'Confirmer le mot de passe'
-            remember_me: Rester connecté
-            shipping_address: Adresse de livraison
+                label: Mot de passe 105
+                confirmation: 'Confirmer le mot de passe 106'
+            remember_me: Rester connecté 107
+            shipping_address: Adresse de livraison 108
         user_change_password:
-            confirmation: Confirmer nouveau mot de passe
-            current: Mot de passe actuel
-            new: Nouveau mot de passe
+            confirmation: Confirmer nouveau mot de passe 109
+            current: Mot de passe actuel 110
+            new: Nouveau mot de passe 111
         customer:
-            first_name: Prénom
-            last_name: Nom
-            email: E-mail
-            phone_number: Téléphone
-            gender: Sexe
-            birthday: Date de naissance
-            billing_address: Adresse de facturation
-            subscribed_to_newsletter: S'inscrire à la newsletter
-            subscribed_to_newsletter_noblezz: Je souhaite m'inscrire à la newsletter Noblezz m'informant des nouveaux produits et offres spécifiques de la marque
-            accept_cgv_1: J'accepte les
-            accept_cgv_2: conditions générales
-            accept_cgv_3: politique de confidentialité
+            first_name: Prénom 112
+            last_name: Nom 113
+            email: E-mail 114
+            phone_number: Téléphone 115
+            gender: Sexe 116
+            birthday: Date de naissance 117
+            billing_address: Adresse de facturation 118
+            subscribed_to_newsletter: S'inscrire à la newsletter 119
+            subscribed_to_newsletter_noblezz: Je souhaite m'inscrire à la newsletter Noblezz m'informant des nouveaux produits et offres spécifiques de la marque 120
+            accept_cgv_1: J'accepte les 121
+            accept_cgv_2: conditions générales 122
+            accept_cgv_3: politique de confidentialité 123
         address:
-            city: Ville
-            country: Pays
-            first_name: Prénom
-            last_name: Nom
-            phone_number: Téléphone
-            postcode: Code postal
-            street: Adresse
-            street2: Adresse (suite)
+            city: Ville 124
+            country: Pays 125
+            first_name: Prénom 126
+            last_name: Nom 127
+            phone_number: Téléphone 128
+            postcode: Code postal 129
+            street: Adresse 130
+            street2: Adresse (suite) 131
         choice:
             subject:
                 order_payment: Commande & Paiement
@@ -315,9 +315,9 @@ sylius:
                 brand_rights: Droit de la Marque
                 other: Autre
     gender:
-        unknown: Inconnu
-        male: Homme
-        female: Femme
+        unknown: Inconnu 132
+        male: Homme 133
+        female: Femme 134
     email:
         contact:
             new_contact_request: Vous avez un nouveau message
@@ -331,9 +331,9 @@ sylius:
         not_available: Ce produit n'est pas en stock
 bitbag_sylius_bonus_points:
     ui:
-        bonus_points: Cash-back
-        use_bonus_points: Utiliser mon cash-back 
-        you_have_bonus_points_available: 'Cash-back disponible :'
-        bonus_points_total_used: Cash-back utilisé
-        bonus_points_delete_link: Ne plus utiliser mon cash-back
-        bonus_points_available_dashboard: Vous avez %s€ dans votre cash-back
+        bonus_points: Cash-back 135
+        use_bonus_points: Utiliser mon cash-back 136
+        you_have_bonus_points_available: 'Cash-back disponible : 137'
+        bonus_points_total_used: Cash-back utilisé 138
+        bonus_points_delete_link: Ne plus utiliser mon cash-back 139
+        bonus_points_available_dashboard: Vous avez %s€ dans votre cash-back 140
