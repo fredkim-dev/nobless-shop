@@ -23,7 +23,7 @@
                     <div class="text-dark">{{ ('sylius.ui.gender.' ~ customer.gender|lower ~ '')|trans }} {{ customer.fullName }}</div>
                     <div>{{ customer.email }}</div>
                     {% if customer.user.verified %}
-                        <div class="text-success text-uppercase">{{ 'sylius.ui.verified'|trans }}</div>
+                        <div class="text-success text-uppercase">{{ 'sylius.ui.email_verified'|trans }}</div>
                     {% else %}
                         <form action="{{ path('sylius_shop_user_request_verification_token') }}" method="post">
                             <a class="verify-account">

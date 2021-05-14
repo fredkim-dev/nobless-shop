@@ -23,8 +23,6 @@ sylius:
         unknown: 'Il y a eu une erreur inconnue avec le paiement.'
     checkout:
         complete_error: 'Un problème inattendu est survenu au cours de la commande. Veuillez essayer à nouveau.'
-    product:
-        out_of_stock: 'Il ne reste que %quantity% produit(s) en stock.'
     user:
         expire_password_reset_token: 'Le jeton de réinitialisation de mot de passe a expiré.'
         change_password: 'Votre mot de passe a été modifié avec succès !'

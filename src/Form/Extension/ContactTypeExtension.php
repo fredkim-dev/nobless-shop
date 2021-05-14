@@ -72,7 +72,7 @@ final class ContactTypeExtension extends AbstractTypeExtension
                     'other' => 'other'
                 ],
                 'choice_label' => function ($choice, $key, $value) {
-                    return 'sylius.form.choice.subject.' . $key;
+                    return 'sylius.form.contact.choice.subject.' . $key;
                 },
                 'constraints' => [
                     new NotBlank([

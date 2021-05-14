@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12 col-md-6">
-        <h4>{{ 'sylius.ui.personal_information'|trans }}</h4>
+        <h4>{{ 'sylius.form.customer.personal_information'|trans }}</h4>
 
         {{ form_row(form.gender) }}
         <div class="row">
@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="col-12 col-md-6 mt-3 mt-md-0">
-        <h4>{{ 'sylius.ui.account_credentials'|trans }}</h4>
+        <h4>{{ 'sylius.form.customer.account_credentials'|trans }}</h4>
 
         <div class="form-group">
             {{ form_label(form.email) }}
@@ -55,7 +55,7 @@
             <div class="form-check">
                 <input type="checkbox" id="{{ form.acceptCgv.vars.id }}" name="{{ form.acceptCgv.vars.full_name }}" required class="form-check-input" {% if form.acceptCgv.vars.checked %}checked{% endif %}>
                 <label for="{{ form.acceptCgv.vars.id }}" class="form-check-label text-left text-md-center{% if not form.acceptCgv.vars.valid %} is-invalid{% endif %}">
-                    {{ 'sylius.form.customer.accept_cgv_1'|trans }} <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'terms-of-sales'}) }}">{{ 'sylius.form.customer.accept_cgv_2'|trans }}</a> {{ 'sylius.ui.and'|trans }} <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'privacy-policy'}) }}">{{ 'sylius.form.customer.accept_cgv_3'|trans }}</a><span class="required d-inline-block ml-1">*</span>
+                    {{ 'sylius.form.customer.accept_cgv_1'|trans }} <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'terms-of-sales'}) }}">{{ 'sylius.form.customer.accept_cgv_2'|trans }}</a> {{ 'sylius.form.customer.accept_cgv_and'|trans }} <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'privacy-policy'}) }}">{{ 'sylius.form.customer.accept_cgv_3'|trans }}</a><span class="required d-inline-block ml-1">*</span>
                 </label>
             </div>
         </div>
