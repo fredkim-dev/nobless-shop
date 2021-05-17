@@ -1,4 +1,3 @@
-# MESSAGES FORMULAIRES
 sylius:
     form:
         customer:
@@ -24,18 +23,22 @@ sylius:
             not_blank: Veuillez choisir votre sexe. 236
         email:
             not_blank: Veuillez saisir votre adresse email. 237
+#login
+            invalid_email: Email invalide 156
+#login
             invalid: Cet e-mail n'est pas valide. 238
             unique: Cet e-mail est déjà utilisé. 239
         plainPassword:
             not_blank: Veuillez saisir votre mot de passe. 240
-            #La confirmation du mot de passe est obligatoire.
+#ajouter La confirmation du mot de passe est obligatoire.
             mismatch: La confirmation du mot de passe ne correspondent pas. 241
             wrong_current: Le mot de passe fourni est différent de celui en cours. 242
         password:
             min: Le mot de passe doit comporter au moins {{ limit }} caractères. 243
+#panier
     promotion_coupon:
         is_invalid: Ce code promo n'est pas valide 74
 bitbag_sylius_bonus_points:
     order:
         bonus_points:
-            not_available: Vous n'avez pas assez sur votre cash-back 181
+            not_available: Vous n'avez pas assez sur votre cash-back 244

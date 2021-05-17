@@ -34,7 +34,7 @@ final class ContactTypeExtension extends AbstractTypeExtension
     {
         $builder
             ->add('gender', GenderType::class, [
-                'label' => 'sylius.form.customer.gender',
+                'label' => 'sylius.form.customer.gender_choice',
             ])
             ->add('firstname', TextType::class, [
                 'label' => 'sylius.ui.first_name',
@@ -64,6 +64,7 @@ final class ContactTypeExtension extends AbstractTypeExtension
                     'refund' => 'refund',
                     'product_info' => 'product_info',
                     'account' => 'account',
+                    'loyalty_program' => 'loyalty_program',
                     'personal_data' => 'personal_data',
                     'partnership' => 'partnership',
                     'career' => 'career',

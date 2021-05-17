@@ -18,7 +18,7 @@
         {% if formErrors is defined and item.id in formErrors|keys %}
             {% set error = formErrors[item.id] %}
         {% elseif form.items[key].quantity.vars.data >= maxQtyInCart %}
-            {% set error = 'sylius.ui.limit_in_cart_reached' %}
+            {% set error = 'sylius.form.bag.limit_in_cart_reached' %}
         {% endif %}
 
         {% include '@SyliusShop/Cart/Summary/_item.html.twig' with {'item': item, 'form': form.items[key], 'error': error, 'maxQtyInCart': maxQtyInCart} %}

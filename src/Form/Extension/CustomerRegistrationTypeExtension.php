@@ -34,12 +34,12 @@ final class CustomerRegistrationTypeExtension extends AbstractTypeExtension
                 'constraints' => [
                     new NotBlank([
                         'message' => 'sylius.form.customer.birthday.not_blank',
-                        'groups' => ['sylius', 'sylius_user_registration'], 
+                        'groups' => ['sylius', 'sylius_user_registration'],
                     ])
                 ],
             ])
             ->add('gender', GenderType::class, [
-                'label' => 'sylius.form.customer.gender',
+                'label' => 'sylius.form.customer.gender_choice',
             ])
             ->add('subscribedToNewsletter', CheckboxType::class, [
                 'required' => false,

@@ -29,8 +29,8 @@
                 {% endfor %}
             </div>
 
-            <span class="invalid-feedback d-none empty-product">{{ 'sylius.ui.please_choose_size'|trans }}</span>
-            <span class="invalid-feedback d-none last-product-in-stock">{{ 'sylius.ui.last_product_in_stock'|trans }}</span>
+            <span class="invalid-feedback d-none empty-product">{{ 'sylius.form.product.please_choose_size'|trans }}</span>
+            <span class="invalid-feedback d-none last-product-in-stock">{{ 'sylius.form.product.last_product_in_stock'|trans }}</span>
             {% if errorMessage %}
                 <span class="invalid-feedback d-block">{{ errorMessage }}</span>
             {% endif %}

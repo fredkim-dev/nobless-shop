@@ -2,7 +2,7 @@
     <a href="#" class="dropdown-toggle dropdown-icon" data-toggle="dropdown"><img src="{{ asset('nobless-theme/images/account-icon.png', 'noblessTheme') }}" class="icon" /></a>
     <div class="header-dropdown dropdown-menu">
         {% if is_granted('ROLE_USER') %}
-            <h5 class="pb-3">{{ 'sylius.ui.hello'|trans }} {{ sylius.customer.firstname }}</h5>
+            <h5 class="pb-3">{{ 'sylius.ui.hello'|trans({'%s': sylius.customer.firstname}) }}</h5>
             <div id="headerAccountLinks" class="my-3">
                 {{ knp_menu_render('sylius.shop.account', {'template': '@SyliusShop/Menu/menuAccountLinks.html.twig'}) }}
             </div>

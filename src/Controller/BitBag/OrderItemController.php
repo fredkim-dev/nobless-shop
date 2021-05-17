@@ -179,7 +179,7 @@ class OrderItemController extends BaseOrderItemController
 
         foreach ($data->getCart()->getItems() as $existingItem) {
             if ($this->checkBundleQtyInCart($data->getProductBundleItems(), $existingItem, $qtyAdded)) {
-                return 'sylius.ui.limit_in_cart_reached';
+                return 'sylius.form.bag.limit_in_cart_reached';
             }
         }
         return '';

@@ -197,7 +197,7 @@ class OrderItemController extends ResourceController
 
         foreach ($data->getCart()->getItems() as $existingItem) {
             if ($item->equals($existingItem) && $existingItem->getQuantity() + $qtyAdded > $calculatedMaxQty) {
-                return 'sylius.ui.limit_in_cart_reached';
+                return 'sylius.form.bag.limit_in_cart_reached';
             }
         }
         return '';
