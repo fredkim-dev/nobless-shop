@@ -82,7 +82,7 @@ function createProductCarousel(carouselElement) {
         }
       },
       {
-        breakpoint: 992,
+        breakpoint: 768,
         settings: "unslick"
       }
     ]

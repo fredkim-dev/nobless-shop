@@ -67,7 +67,12 @@ class LocaleSwitchController extends ResourceController
     public function switchAction(Request $request, ?string $code = null): Response
     {
         if (null === $code) {
-            $code = $this->localeProvider->getDefaultLocaleCode();
+            // Get previous locale from url referer to avoid redirecting to default locale
+            if (null !== $request->server->get('HTTP_REFERER')) {
+                $code = explode('/', $request->server->get('HTTP_REFERER'))[3];
+            } else {
+                $code = $this->localeProvider->getDefaultLocaleCode();
+            }
         }
 
         if (!in_array($code, $this->localeProvider->getAvailableLocalesCodes(), true)) {

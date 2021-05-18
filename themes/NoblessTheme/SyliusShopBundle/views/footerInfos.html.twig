@@ -39,7 +39,7 @@
                 <label for="newsletterSubscribe" class="text-uppercase mb-1">{{ 'sylius.ui.newsletter_subscribe'|trans }}</label>
                 <p class="col-md-10 p-0 mb-1 mx-md-auto mx-xl-0 tight-text">
                     {{ 'sylius.ui.newsletter_info_1'|trans }} <br>
-                    {{ 'sylius.ui.newsletter_info_2'|trans }} <a href="#" class="text-lowercase">{{ 'sylius.ui.privacy_policy'|trans }}</a>
+                    {{ 'sylius.ui.newsletter_info_2'|trans }} <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'privacy-policy'}) }}" class="text-lowercase">{{ 'sylius.ui.privacy_policy'|trans }}</a>
                 </p>
                 <div class="input-group mx-auto mx-xl-0 col-md-10 col-lg-9 col-xl-11 p-0">
                     <input id="newsletterSubscribe" type="text" class="form-control" />
@@ -79,7 +79,7 @@
                 <label for="newsletterSubscribe" class="text-uppercase mb-0">{{ 'sylius.ui.newsletter_subscribe'|trans }}</label>
                 <p class="tight-text mb-2">
                     {{ 'sylius.ui.newsletter_info_1'|trans }} <br>
-                    {{ 'sylius.ui.newsletter_info_2'|trans }} <a href="#" class="text-lowercase">{{ 'sylius.ui.privacy_policy'|trans }}</a>
+                    {{ 'sylius.ui.newsletter_info_2'|trans }} <a href="{{ path('bitbag_sylius_cms_plugin_shop_page_show', {'slug' : 'privacy-policy'}) }}" class="text-lowercase">{{ 'sylius.ui.privacy_policy'|trans }}</a>
                 </p>
                 <div class="input-group">
                     <input id="newsletterSubscribe" type="text" class="form-control" />

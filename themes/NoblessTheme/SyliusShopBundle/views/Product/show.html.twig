@@ -8,14 +8,14 @@
 
 <div class="row col-xl-10 p-0 p-md-auto m-0 mx-sm-3 mx-xl-auto{% if isProductBundle %} is-bundle{% endif %}">
     <div id="images-container" class="col-12 col-md-6 mb-3{% if not isProductBundle %} col-xl-8{% endif %}">
-        <div class="p-0 px-sm-3 d-block d-lg-none">
+        <div class="p-0 px-sm-3 d-block d-md-none">
             {{ sonata_block_render_event('sylius.shop.product.show.before_images', {'product': product}) }}
 
             {% include '@SyliusShop/Product/Show/_images_mobile.html.twig' %}
 
             {{ sonata_block_render_event('sylius.shop.product.show.after_images', {'product': product}) }}
         </div>
-        <div class="pr-3 d-none d-lg-block">
+        <div class="pr-3 d-none d-md-block">
             {{ sonata_block_render_event('sylius.shop.product.show.before_images', {'product': product}) }}
 
             {% include '@SyliusShop/Product/Show/_images.html.twig' %}

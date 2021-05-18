@@ -21,7 +21,7 @@ import SyliusApiToggle from '../../BootstrapTheme/assets/js/sylius-api-toggle';
 import SyliusApiLogin from '../../BootstrapTheme/assets/js/sylius-api-login';
 import SyliusVariantsPrices from '../../BootstrapTheme/assets/js/sylius-variants-prices';
 import SyliusVariantImages from '../../BootstrapTheme/assets/js/sylius-variant-images';
-import SyliusProvinceField from '../../BootstrapTheme/assets/js/sylius-province-field';
+//import SyliusProvinceField from '../../BootstrapTheme/assets/js/sylius-province-field';
 // import SyliusAddressBook from './js/sylius-address-book';
 import SyliusLoadableForms from '../../BootstrapTheme/assets/js/sylius-loadable-forms';
 
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .forEach(el => SyliusRemoveFromCart(el));
 
   // Province field
-  SyliusProvinceField();
+  //SyliusProvinceField();
 
   // Address book
   // const syliusShippingAddress = document.querySelector('[data-js-address-book="sylius-shipping-address"]');

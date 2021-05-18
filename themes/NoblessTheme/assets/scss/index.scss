@@ -714,6 +714,13 @@ div#headerContainer {
             }
         }
     }
+    .share-bundle {
+        #shareDropdown {
+            .dropdown-menu {
+                transform: translate3d(81px, 19px, 0px) !important;
+            }
+        }
+    }
     .variant-list {
         .variant-label {
             display: block;
@@ -2518,15 +2525,17 @@ div {
 @media (max-width: 667px) {
     header {
         .menu-icones {
-            .header-dropdown {
-                width: 75%;
-                .product-img-order {
-                    img {
-                        max-height: 125px;
+            .dropdown {
+                .header-dropdown {
+                    width: 75%;
+                    .product-img-order {
+                        img {
+                            max-height: 125px;
+                        }
                     }
-                }
-                .media-body {
-                    height: 125px;
+                    .media-body {
+                        height: 125px;
+                    }
                 }
             }
         }

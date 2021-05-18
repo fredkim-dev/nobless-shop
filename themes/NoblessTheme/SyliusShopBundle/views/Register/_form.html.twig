@@ -46,12 +46,11 @@
         </div>
     </div>
     <div class="col-12 mx-auto mt-3">
-        <div class="form-group col-12 col-md-10 mx-auto px-0 px-md-3">
+        <div class="form-group col-12 col-md-10 mx-auto px-0 px-md-3 text-center mb-0">
             {{ form_widget(form.subscribedToNewsletter, {'attr': {'checked': true}}) }}
         </div>
 
-        <div class="mb-1 label-button">_</div>
-        <div class="form-group col-12 col-md-10 mx-auto px-0 px-md-3">
+        <div class="form-group col-12 col-md-10 mx-auto px-0 px-md-3 text-center">
             <div class="form-check">
                 <input type="checkbox" id="{{ form.acceptCgv.vars.id }}" name="{{ form.acceptCgv.vars.full_name }}" required class="form-check-input" {% if form.acceptCgv.vars.checked %}checked{% endif %}>
                 <label for="{{ form.acceptCgv.vars.id }}" class="form-check-label text-left text-md-center{% if not form.acceptCgv.vars.valid %} is-invalid{% endif %}">
@@ -60,9 +59,8 @@
             </div>
         </div>
 
-        <div class="form-group col-12 col-md-8 mx-auto px-0 px-md-3">
-            <label class="d-none d-md-inline-block label-button">_</label>
-            <button type="submit" class="col-12 btn btn-primary mt-4 mt-md-0">
+        <div class="form-group col-12 col-md-6 mx-auto px-0 px-md-3">
+            <button type="submit" class="col-12 btn btn-primary">
                 {{ 'sylius.ui.create_an_account'|trans }}
             </button>
         </div>

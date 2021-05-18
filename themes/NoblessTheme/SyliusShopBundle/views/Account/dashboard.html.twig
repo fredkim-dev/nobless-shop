@@ -3,7 +3,7 @@
 {% import '@SyliusShop/Common/Macro/headers.html.twig' as headers %}
 {% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
 
-{% set bonusPointsAvailable = (bitbag_active_bonus_points() / 100)|round(0, 'floor') %}
+{% set bonusPointsAvailable = (bitbag_all_bonus_points() / 100)|round(0, 'floor') %}
 
 {% block title %}
     {{ 'sylius.menu.shop.account.dashboard'|trans }} | {{ parent() }}

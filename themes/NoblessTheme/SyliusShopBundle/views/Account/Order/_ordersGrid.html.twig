@@ -103,11 +103,13 @@
                     </div>
                     <div class="order-details collapse py-3 row" id="collapse-{{ order.id }}" data-parent="#orderAccordionMobile">
                         <div class="col-12 d-flex justify-content-between">
-                            <div class="font-weight-bold">{{ 'sylius.ui.state'|trans }} :</div> <div class="">{{ ('sylius.ui.' ~ order.state)|trans }}</div>
+                            <div class="font-weight-bold">{{ 'sylius.ui.state'|trans }} :</div>
+                            <div>{{ ('sylius.ui.' ~ order.state)|trans }}</div>
                         </div>
                         {% if order.shipments.first.tracking %}
-                            <div class="col-12 row">
-                                <div class="col-4 font-weight-bold">{{ 'sylius.ui.tracking_number'|trans }} :</div> <div class="col-2"><strong>{{ order.shipments.first.tracking }}</strong></div>
+                            <div class="col-12 d-flex flex-row">
+                                <div class="font-weight-bold">{{ 'sylius.ui.tracking_number'|trans }} :</div>&nbsp;
+                                <div><strong>{{ order.shipments.first.tracking }}</strong></div>
                             </div>
                         {% endif %}
 

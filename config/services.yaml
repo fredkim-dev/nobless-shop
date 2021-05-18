@@ -117,6 +117,14 @@ services:
             - '@bitbag_sylius_product_bundle.repository.product_bundle_order_item'
         tags:
             - { name: twig.extension }
+
+    app.twig.extension.bitbag.bonus_points_extension:
+        class: App\Twig\Extension\BonusPointsExtensionCustom
+        arguments:
+            - '@bitbag_sylius_bonus_points.context.customer_bonus_points'
+            - '@sylius.context.cart'
+        tags:
+            - { name: twig.extension }
                 
     #Event Listener
     app.listener.cart_blamer:

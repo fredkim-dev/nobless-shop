@@ -45,7 +45,7 @@
                 <div class="row col-12 mt-3 p-0 address-list m-0">
                     {% set addressCount = 1 %}
                     {% for address in addresses if default_address is null or address.id != default_address.id %}
-                        <div class="col-12 col-lg-6 mb-3 px-2 p-0{% if addressCount % 2 == 1 %} pl-md-0{% else %} pr-md-0{% endif %}">
+                        <div class="col-12 col-lg-6 mb-3 px-2 p-0{% if addressCount % 2 == 1 %} pl-lg-0{% else %} pr-lg-0{% endif %}">
                             {% include '@SyliusShop/Account/AddressBook/_item.html.twig' %}
                         </div>
                         {% set addressCount = addressCount + 1 %}

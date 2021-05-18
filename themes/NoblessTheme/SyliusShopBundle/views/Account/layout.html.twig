@@ -1,7 +1,9 @@
 {% extends '@SyliusShop/layout.html.twig' %}
 
 {% set containerCol = 'col-12 col-lg-11' %}
-{% if app.request.attributes.get('_route') != 'sylius_shop_account_dashboard' %}
+{% if app.request.attributes.get('_route') == 'sylius_shop_account_address_book_index' %}
+    {% set containerCol = 'col-12 col-xl-10 col-xxl-8' %}
+{% elseif app.request.attributes.get('_route') != 'sylius_shop_account_dashboard' %}
     {% set containerCol = 'col-12 col-lg-10 col-xxl-8' %}
 {% endif %}
 {% block content %}

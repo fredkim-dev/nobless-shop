@@ -7,15 +7,20 @@
 {% set orderPromotionAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT') %}
 {% set orderPromotions = sylius_aggregate_adjustments(order.adjustmentsRecursively(orderPromotionAdjustment)) %}
 
+{% set bonusPointsAdjustment = constant('BitBag\\SyliusBonusPointsPlugin\\Entity\\AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT') %}
+{% set bonusPointsTotal = order.getAdjustmentsTotal(bonusPointsAdjustment) %}
+
 <tr>
     <td colspan="4">
         <strong>{{ 'sylius.ui.items_total'|trans }}:</strong> {{ money.convertAndFormat(itemsSubtotal) }}<br>
-        <strong>{{ 'sylius.ui.discount'|trans }}:</strong> {{ money.convertAndFormat(order.orderPromotionTotal)  }}
         {% if order.orderPromotionTotal != 0 %}
-            <span title="{% for key, value in orderPromotions %}<div>{{ key }}: {{ money.convertAndFormat(value) }}</div>{% endfor %}" data-toggle="tooltip" data-placement="top" >
-                <i class="fas fa-question-circle"></i>
-            </span>
-        {% endif %}<br>
+            {% for key, value in orderPromotions %}
+                <strong>{{ 'sylius.ui.discount'|trans({'%s': key}) }}:</strong> {{ money.convertAndFormat(order.orderPromotionTotal) }}
+            {% endfor %}<br>
+        {% endif %}
+        {% if bonusPointsTotal %}
+            <strong>{{ 'bitbag_sylius_bonus_points.ui.bonus_points_total'|trans }}:</strong> {{ money.format(bonusPointsTotal, order.currencyCode) }}
+        {% endif %}
         {% include '@SyliusShop/Account/Order/Details/Table/_shipping.html.twig' with {'order': order} %}<br>
         <span class="h3">{{ 'sylius.ui.total'|trans }}: {{ money.convertAndFormat(order.total) }}</span><br>
         {% if order.currencyCode is not same as(sylius.currencyCode) %}
