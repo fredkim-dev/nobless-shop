@@ -1,8 +1,6 @@
 {% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
 {% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
 
-{% set maxQtyInCart = constant('App\\Entity\\Product\\Product::MAX_QTY_IN_CART') %}
-
 {% set productVariant = item.variant %}
 {% set product = item.variant.product %}
 {% set prices = product.variants|first.channelPricings|first %}

@@ -1,16 +1,22 @@
 {% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
 {% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
 
-{% set product_variant = item.variant %}
+{% set productVariant = item.variant %}
 {% set product = item.variant.product %}
 {% set prices = product.variants|first.channelPricings|first %}
 
+{% if product.isBundle() %}
+    {% set isOutOfStock = sylius_bundle_out_of_stock(item) %}
+{% else %}
+    {% set isOutOfStock = productVariant.onHand == 0 or productVariant.onHand < form.quantity.vars.data %}
+{% endif %}
+
 {% if error != '' %}
     <div class="col-12 mx-auto has-product-out-of-stock {% if loop.index == loop.first %}mt-2{% endif %}">
-        {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' with {'message': error, 'isItem': true} %}
+        {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' with {'message': error, 'isItem': true, 'isMobile': true} %}
     </div>
 {% endif %}
-<div class="col-12 position-relative card m-0 mb-1 mobile-display {% if product_variant.onHand == 0 %}out-of-stock{% endif %}">
+<div class="col-12 position-relative card m-0 mb-1 mobile-display {% if isOutOfStock %}out-of-stock{% endif %}">
     <button type="button"
             data-js-remove-from-cart-button
             data-js-remove-from-cart-redirect-url="{{ path('sylius_shop_cart_summary') }}"
@@ -26,17 +32,12 @@
                 {# Product name #}
                 <h6 class="col-11 p-0"><a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}">{{ item.productName }}</a></h6>
 
-                {# Quantity #}
-                <div class="col-12 p-0">
-                    {{ 'sylius.ui.quantity'|trans }} : <input type="number" class="form-control qty mobile-qty" value="{{ item.quantity }}" data-input-qty="sylius_cart[items][{{ key }}][quantity]" max="7"/> <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty mobile" />
-                </div>
-
                 {# Variant #}
                 {% if not product.isBundle() %}
                     <div class="col-12 p-0">
                         {% if product.hasOptions() %}
                             <div>
-                                {% for optionValue in product_variant.optionValues %}
+                                {% for optionValue in productVariant.optionValues %}
                                     <div data-sylius-option-name="{{ optionValue.name }}">
                                         {{ 'sylius.ui.size'|trans }} : {{ optionValue.value }}
                                     </div>
@@ -51,6 +52,11 @@
                         {{ bitbag_render_product_bundle_order_items(item) }}
                     </div>
                 {% endif %}
+
+                {# Quantity #}
+                <div class="col-12 p-0">
+                    {{ 'sylius.ui.quantity'|trans }} : <input type="number" class="form-control qty mobile-qty" value="{{ item.quantity }}" data-input-qty="sylius_cart[items][{{ key }}][quantity]" max="{{ maxQtyInCart }}"/> <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty mobile" />
+                </div>
             </div>
 
             <div>

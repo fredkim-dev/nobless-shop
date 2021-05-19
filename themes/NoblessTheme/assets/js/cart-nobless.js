@@ -19,7 +19,7 @@ const cart = function mainFunctions() {
   // Mobile
   $('.mobile-qty', container).on('input', function() {
     const newQty = parseInt($(this).val());
-    if (newQty >= parseInt($(this).attr('max'))) {
+    if (newQty <= parseInt($(this).attr('max'))) {
       const inputQtyName = $(this).data('input-qty');
       $('input[name="' + inputQtyName + '"]').val(newQty);
     }

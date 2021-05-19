@@ -6,7 +6,11 @@
 {% if isItem is defined %}
     {% set marginClass = '' %}
     {% set paddingClass = 'p-2 px-3' %}
-    {% set colClass = 'col-8 col-xxl-6 mx-auto' %}
+    {% if isMobile is defined %}
+        {% set colClass = 'col-12 mx-auto' %}
+    {% else %}
+        {% set colClass = 'col-8 col-xxl-6 mx-auto' %}
+    {% endif %}
 {% endif %}
 
 <div class="p-0 has-product-out-of-stock {{ marginClass}} {{ colClass }} ">
