@@ -1,3 +1,4 @@
+# MESSAGES FLASH
 sylius:
     resource:
         update: 'Vos informations personnelles ont bien été mises à jour'

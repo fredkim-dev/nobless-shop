@@ -69,9 +69,7 @@ sylius:
 #ICONE PANIER
         subtotal: 'Sous-total 58'
         view_cart: Afficher le panier 59
-#Remplacer cette ligne directement par Finaliser la commande, ligne 99
-        checkout: 'Paiement 60'
-        your_cart_is_empty: 'Votre panier est vide 61' #Ne gère pas le message d'erreur dans la page panier
+        your_cart_is_empty: 'Votre panier est vide 61'
 #PAGE PANIER
         your_shopping_cart: Aperçu de votre panier 62
         deliver_tomorrow: Recevez votre commande dès demain pour toute validation avant midi en choisissant la livraison Express 63
@@ -95,26 +93,19 @@ sylius:
         relay_shipping: Livraison en point relais 82
         standard_shipping_free: (offerte dès 80€) 81
         express_shipping_free: (offerte dès 300€) 84
+        relay_shipping_free: (offerte dès 30€) 84.1
         order_total: Total commande 85
         ttc: (TTC) 86
         complete_order: Finaliser la commande 87
     #TUNEL DE COMMANDE
-        cart: 'Panier 90'
-        modify: Modifier 91
-                #Quantité - Ligne 80
-        benefit: Avantages 92
-                #'Code PROMO : %s' - LIGNE 89
-        shipping_method: "Méthode d'expédition 92.3"
-                #Total commande - LIGNE 99
-                #(TTC) - LIGNE 100
                 #Paiement sécurisé - LIGNE 32
         address: 'Adresse 94'
         shipping_address: Adresse de livraison 95
         billing_address: 'Adresse de facturation 96'
         no_address_yet: Aucune adresse 97
+        add_new_address_form: Ajouter une nouvelle adresse 99.1
         change_address: Modifier l'adresse 98
         back_to_store: 'Retour à la boutique 99'
-        add_new_address_form: Ajouter une nouvelle adresse 99.1
         change_shipping_address: Modifier l'adresse de livraison 100
         change_billing_address: Modifier l'adresse de facturation 101
         add_address: Ajouter une adresse 102
@@ -124,48 +115,88 @@ sylius:
         save_and_use_address: Enregistrer sur le compte et l'utiliser 106
         cancel: 'Annuler 107'
         shipping: 'Expédition 108'
-                #Modifier l'adresse - LIGNE 121
+                #Modifier l'adresse - LIGNE 109
         payment: Paiement 109
         change_shipping_method: 'Modifier le mode de livraison 110'
         next: 'Suivant 111'
         order_summary: Récapitulatif 112
-                #Adresse de livraison - Ligne 118
-                #Adresse de facturation - Ligne 119
-                #"Méthode d'expédition" - Ligne 113
+                #Adresse de livraison - Ligne 105
+                #Adresse de facturation - Ligne 106
+        shipping_method: "Méthode d'expédition 92.3"
         payment_method: 'Moyen de paiement 114'
         place_order: 'Commander 115'
+        cart: 'Panier 90'
+        modify: Modifier 91
+                #Quantité - Ligne 79
+        benefit: Avantages 92
+                #'Code PROMO : %s' - LIGNE 88
+                #Cash-back - LIGNE 320
+                #"Méthode d'expédition" - Ligne 126
+                #Total commande - LIGNE 99
+                #(TTC) - LIGNE 100
+    #FORMULAIRE DE CONTACT
+        contact_form: Formulaire de contact 163
+        first_name: Prénom 1000 
+        lastname: Nom 1001 
+        email: Email 1003 
+        phone_number: Téléphone 1002 
+        subject: Sujet 164 
+        other_subject: Veuillez renseigner le sujet de votre message 164.2 
+        message: 'Message 165' 
+        accept_cgv_contact_1: J'accepte les 166 
+        accept_cgv_contact_2: conditions générales 167 
+        send: 'Envoyer 168'
+    #LOGIN
+        customer_login: 'Mon compte 149'
+        registered_customers: 'Connectez-vous 150'		
+        registered_customers_subtitle: 'Vous êtes déjà client Noblezz, connectez-vous avec vos identifiants de connexion 151'
+                #'Rester connecté' - LIGNE 258
+        forgot_password: 'Mot de passe oublié ? 152'
+        login: 'Connexion 153'
+        new_customers: 'Créer un compte 154'
+        new_customers_subtitle: Créer votre compte Noblezz en quelques clics pour pouvoir suivre aisément vos commandes, gérer vos adresses et cumuler des avoirs de fidélité à chaque commande. Suivez les prochaines étapes pour créer dès aujourd'hui votre compte Noblezz 155
+        create_an_account: 'Créer un compte 157'
+    #CRÉATION DE COMPTE
+                #'Mon compte' - LIGNE 152
+#Pas pris en compte dans le site internet
+        personal_information: 'Informations personnelles 158'
+        account_credentials: 'Informations de connexion 159'
+                #Créer un compte - LIGNE 160
+        have_an_account_already: 'Vous avez déjà un compte ? 161'
+        sign_in_here: 'Accédez à votre compte 162'
     #MON COMPTE
-                #Mon compte - LIGNE 15
+                #Mon compte - LIGNE 15#
         hello: Bonjour %s 116 
         menu: Menu 117
-                #Tableau de bord - LIGNE 241
+                #Tableau de bord - LIGNE 249
         profile: 'Profil 118'
-        shipping_address_default: 'Adresse de livraison par défaut 119'
-        billing_address_default: 'Adresse de facturation par défaut 120'
         gender:
             f: 'Mme. 121'
             m: 'M. 122'
         not_verified: Veuillez valider votre adresse e-mail 123
         email_verified: E-mail vérifié 124
         edit_account: 'Editer mon profil 125'
+        shipping_address_default: 'Adresse de livraison par défaut 119'
+        billing_address_default: 'Adresse de facturation par défaut 120'
         edit_address: Editer l'adresse 126
-                #Mes informations personnelles - LIGNE 242
+                #Mes informations personnelles - LIGNE 250
         edit_your_personal_information: 'Modifier mes informations personnelles 127'
         change_newsletter_subscription: 'Modifier mon abonnement à la newsletter Noblezz 128'
-                #Sécurité de compte - LIGNE 243
+                #Sécurité de compte - LIGNE 251
         change_password: 'Changer mon mot de passe 129'		
         save_changes: 'Enregistrer les modifications 130'
-                #Mes adresses - LIGNE 244
-                #Adresse de livraison par défaut - LIGNE 148
-                #Adresse de facturation par défaut - LIGNE 149
-                #Editer l'adresse - LIGNE 156
-        edit_my_address: 'Modifier mon adresse 130.1'  
+                #Mes adresses - LIGNE 252
+                #Adresse de livraison par défaut - LIGNE 186
+                #Adresse de facturation par défaut - LIGNE 187
+                #Editer l'adresse - LIGNE 188
+        edit_my_address: 'Modifier mon adresse 130.1'
+                #Annuler - LIGNE 118
         additional_addresses: 'Adresses supplémentaires 131'
-                #Ajouter une adresse - LIGNE 125
+                #Ajouter une adresse - LIGNE 113
         set_as_default: 'Définir par défaut 132'
         edit: 'Modifier 133'
         delete: 'Supprimer 134'
-                #Mes commandes - LIGNE 245
+                #Mes commandes - LIGNE 253
         number: Numéro de la commande 135
         date: Date de la commande 136
         state: Statut de la commande 137
@@ -173,56 +204,27 @@ sylius:
         cancelled: Annulée 139
         new: 'Nouveau 140'
         tracking_number: Numéro de suivi 141
-                #Total - LIGNE 81
+                #Total - LIGNE 80
         actions: 'Détails 142'
         show_order: Voir la commande 143
-                #Adresse de livraison - LIGNE 118
-                #Adresse de facturation - LIGNE 119
+                #Adresse de livraison - LIGNE 105
+                #Adresse de facturation - LIGNE 106
         item: Element 50
-                #Sous-total - LIGNE 72
+                #Sous-total - LIGNE 70
         sku: Réf 144
-                #Taille - LIGNE 79
+                #Taille - LIGNE 78
         qty: Qté 145
-                #Sous-total HT - LIGNE 83
-                #'Code PROMO : %s' - LIGNE 89
+                #Sous-total HT - LIGNE 82
+                #'Code PROMO : %s' - LIGNE 88
         shipping_total: 'Total des frais de port 146'
-                #Total - LIGNE 81
+                #Total - LIGNE 80
         no_orders_yet: Vous n'avez pas encore effectué de commande 147
         logout: 'Déconnexion 148'
-    #LOGIN
-        customer_login: 'Mon compte 149'
-        registered_customers: 'Connectez-vous 150'		
-        registered_customers_subtitle: 'Vous êtes déjà client Noblezz, connectez-vous avec vos identifiants de connexion 151'
-                #'Rester connecté' - LIGNE 251
-        forgot_password: 'Mot de passe oublié ? 152'
-        login: 'Connexion 153'
-        new_customers: 'Créer un compte 154'
-        new_customers_subtitle: Créer votre compte Noblezz en quelques clics pour pouvoir suivre aisément vos commandes, gérer vos adresses et cumuler des avoirs de fidélité à chaque commande. Suivez les prochaines étapes pour créer dès aujourd'hui votre compte Noblezz 155
-        create_an_account: 'Créer un compte 157'
-    #CRÉATION DE COMPTE
-                #'Mon compte' - LIGNE 199
-        personal_information: 'Informations personnelles 158'
-        account_credentials: 'Informations de connexion 159'
-                #Créer un compte - LIGNE 208
-        have_an_account_already: 'Vous avez déjà un compte ? 161'
-        sign_in_here: 'Accédez à votre compte 162'
-    #FORMULAIRE DE CONTACT
-        contact_form: Formulaire de contact 163
-        send: 'Envoyer 168'
-        first_name: Prénom 1000
-        lastname: Nom 1001 
-        phone_number: Téléphone 1002
-        email: Email 1003
-        subject: Sujet 164
-        other_subject: Veuillez renseigner le sujet de votre message 164.2
-        message: 'Message 165'
-        accept_cgv_contact_1: J'accepte les 166
-        accept_cgv_contact_2: conditions générales 167
     #####
         no_additionnal_addresses: Vous n'avez pas d'adresses supplémentaires
         caution: Attention
         free_shipping_method: Offerts
-    #Sexe Nouveau Compte
+    #SEXE NOUVEAU COMPTE & FORMULAIRE DE CONTACT
     gender:
         unknown: Inconnu 219
         male: Homme 220
@@ -232,6 +234,7 @@ sylius:
         forgot_password_title: J'ai oublié mon mot de passe 169
         set_a_new_password_for_your_account_1: Veuillez saisir l'adresse mail associée à votre compte. 170
         set_a_new_password_for_your_account_2: Vous recevrez à cette adresse un lien vous permettant de réinitialiser votre mot de passe. 171
+        reset_password: Réinitialiser mon mot de passe 172
         reset_password_request_ok: Votre demande de réinitialisation a bien été prise en compte 173
         reset_password_request: Si l'email que vous avez spécifié existe dans notre système, vous recevrez un message avec les instructions pour réinitialiser votre mot de passe. 174
         reset_password_not_received_title: Vous n'avez pas reçu cette email ? 175
@@ -245,35 +248,33 @@ sylius:
                 address_book: Mes adresses 303
                 order_history: Mes commandes 304
     form:
-        login:
+        login: #LOGIN
             username: 'Adresse mail * 177'
             password: 'Mot de passe * 178'
             remember_me: 'Rester connecté 179'
-            verify_credentials: 'Veuillez vérifier vos informations de connexion 180'
-        user:
-            password:
-                label: Mot de passe 1100
-                confirmation: Confirmation mot de passe 1101
-        user_change_password:
+            verify_credentials: 'Veuillez vérifier vos informations de connexion 180' #PAS POSSIBLE
+        user_change_password: #SÉCURITÉ DU COMPTE
             current: Mot de passe actuel 185
             new: Nouveau mot de passe 186
             confirmation: Confirmer nouveau mot de passe 184
-        customer:
+        user: #CRÉATION DE COMPTE
+            password:
+                label: Mot de passe 1100
+                confirmation: Confirmation mot de passe 1101
+        customer: #CRÉATION DE COMPTE & INFORMATION PERSONNELLES
             gender_choice: Sexe 191
             first_name: Prénom 187
             last_name: Nom 188
             birthday: Date de naissance 192
             phone_number: Téléphone 190
             email: E-mail 189
-            label: Mot de passe 181
-            confirmation: 'Confirmer le mot de passe 182'
             subscribed_to_newsletter: S'inscrire à la newsletter 194
             subscribed_to_newsletter_noblezz: Je souhaite m'inscrire à la newsletter Noblezz m'informant des nouveaux produits et offres spécifiques de la marque 195
             accept_cgv_1: J'accepte les 196
             accept_cgv_2: conditions générales 197
             accept_cgv_and: 'et la 160'
             accept_cgv_3: politique de confidentialité 198
-        address:
+        address: #CRÉATION OU MODIFICATION D'ADRESSE
             first_name: Prénom 201
             last_name: Nom 202
             street: Adresse 205
@@ -281,7 +282,7 @@ sylius:
             postcode: Code postal 204
             city: Ville 199
             country: Pays 200
-        contact:
+        contact: #FORMULAIRE DE CONTACT
             choice:
                 subject:
                     order_payment: Commande & Paiement 207
@@ -289,24 +290,19 @@ sylius:
                     refund: Retour & Remboursement 209
                     product_info: Information Produits 210
                     account: Compte client 211
-                    loyalty_program: Programme de fidélité 212 #n'est pas dans le site
+                    loyalty_program: Programme de fidélité 212
                     personal_data: Données Personnelles 213
                     partnership: Partenariat & Collaboration 214
                     career: Carrière 215
                     noblezz: La maison Noblezz 216
                     brand_rights: Droit de la Marque 217
                     other: Autre 218
-#page produit
-        product:
+        product: #PAS POSSIBLE
             please_choose_size: Veuillez choisir une taille 47
             last_product_in_stock: Dernières pièces 48
-# page produit
-#panier
-        bag:
+        bag: #PAS POSSIBLE
             limit_in_cart_reached: La quantité limite pour cet article est atteinte 88
             has_product_out_of_stock: Votre panier contient des produits qui ne sont plus disponibles. Veuillez les supprimer avant de procéder au paiement. 89
-    cart_item:
-        not_available: Ce produit n'est plus en stock xxxxx
     email:
         contact:
             new_contact_request: Vous avez un nouveau message
@@ -319,8 +315,8 @@ sylius:
 bitbag_sylius_bonus_points:
     ui:
         bonus_points: Cash-back 222
+        bonus_points_available_dashboard: Vous avez %s€ dans votre cash-back 227
         use_bonus_points: Utiliser mon cash-back 223
         you_have_bonus_points_available: 'Cash-back disponible : 224'
         bonus_points_total_used: Cash-back utilisé 225
         bonus_points_delete_link: Ne plus utiliser mon cash-back 226
-        bonus_points_available_dashboard: Vous avez %s€ dans votre cash-back 227

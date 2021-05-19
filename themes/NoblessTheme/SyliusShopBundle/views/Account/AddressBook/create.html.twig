@@ -13,8 +13,8 @@
 
             {{ form_start(form, {'action': path('sylius_shop_account_address_book_create'), 'attr': {'novalidate': 'novalidate'}}) }}
                 {% include '@SyliusShop/Account/AddressBook/_addressForm.html.twig' with {'form': form} %}
-                
-                <div class="row">
+
+                <div class="row mt-3">
                     <div class="col-12 col-md-6 mb-2 mb-md-0">
                         <div class="col-12 p-0">
                             <a href="{{ path('sylius_shop_account_address_book_index') }}" class="btn btn-secondary w-100 d-inline-block d-md-none">

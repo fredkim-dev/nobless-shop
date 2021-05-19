@@ -4,7 +4,7 @@
 {% endif %}
 
 {% if hasProductOutOfStock %}
-    {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' with {'message': 'sylius.ui.has_product_out_of_stock'} %}
+    {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' with {'message': 'sylius.form.bag.has_product_out_of_stock'} %}
 {% endif %}
 
 <a href="{{ path('sylius_shop_checkout_start') }}" class="{{ classBtn }} btn-to-checkout btn btn-block mt-4 mb-2">

@@ -1,3 +1,4 @@
+# MESSAGES ERREUR
 sylius:
     form:
         customer:
@@ -6,14 +7,27 @@ sylius:
         message:
             not_blank: Veuillez saisir votre message. 229
     address:
+        first_name:
+            not_blank: Veuillez saisir un prénom 229.1
+        last_name:
+            not_blank: Veuillez saisir un nom 229.2
         city:
             not_blank: Veuillez saisir le nom d'une ville 230
         country:
-            not_blank: Veuillez choisir un pays. 231
+            not_blank: Veuillez sélectionner un pays. 231
         postcode:
             not_blank: Veuillez saisir un code postal. 232
         street:
             not_blank: Veuillez saisir une adresse.233
+    contact:
+        firstname:
+            not_blank: Veuillez saisir un prénom 2001
+        lastname:
+            not_blank: Veuillez saisir un nom 2002
+        email:
+            not_blank: Veuillez saisir un email 2003
+        message:
+            not_blank: Veuillez saisir un message 2004
     customer:
         first_name:
             not_blank: Veuillez saisir votre prénom. 234
@@ -23,18 +37,17 @@ sylius:
             not_blank: Veuillez choisir votre sexe. 236
         email:
             not_blank: Veuillez saisir votre adresse email. 237
-#login
             invalid_email: Email invalide 156
-#login
             invalid: Cet e-mail n'est pas valide. 238
             unique: Cet e-mail est déjà utilisé. 239
-        plainPassword:
-            not_blank: Veuillez saisir votre mot de passe. 240
-#ajouter La confirmation du mot de passe est obligatoire.
-            mismatch: La confirmation du mot de passe ne correspondent pas. 241
-            wrong_current: Le mot de passe fourni est différent de celui en cours. 242
         password:
             min: Le mot de passe doit comporter au moins {{ limit }} caractères. 243
+            not_blank: Veuillez saisir un nouveau mot de passe 2100
+    user:
+        plainPassword:
+            not_blank: Veuillez saisir votre mot de passe. 240
+            mismatch: La confirmation du mot de passe ne correspondent pas. 241
+            wrong_current: Le mot de passe fourni est différent de celui en cours. 242
 #panier
     promotion_coupon:
         is_invalid: Ce code promo n'est pas valide 74
