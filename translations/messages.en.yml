@@ -144,7 +144,7 @@ sylius:
         subject: Sujet 164 
         other_subject: Veuillez renseigner le sujet de votre message 164.2 
         message: 'Message 165' 
-        accept_cgv_contact_1: J'accepte les 166 
+        accept_cgv_contact_1: J'accepte les 166
         accept_cgv_contact_2: conditions générales 167 
         send: 'Envoyer 168'
     #LOGIN
@@ -159,7 +159,7 @@ sylius:
         create_an_account: 'Créer un compte 157'
     #CRÉATION DE COMPTE
                 #'Mon compte' - LIGNE 152
-#Pas pris en compte dans le site internet
+#OK
         personal_information: 'Informations personnelles 158'
         account_credentials: 'Informations de connexion 159'
                 #Créer un compte - LIGNE 160
@@ -253,7 +253,7 @@ sylius:
             username: 'Adresse mail * 177'
             password: 'Mot de passe * 178'
             remember_me: 'Rester connecté 179'
-            verify_credentials: 'Veuillez vérifier vos informations de connexion 180' #PAS POSSIBLE
+            verify_credentials: 'Veuillez vérifier vos informations de connexion 180' #PAS POSSIBLE +
         user_change_password: #SÉCURITÉ DU COMPTE
             current: Mot de passe actuel 185
             new: Nouveau mot de passe 186
@@ -299,10 +299,10 @@ sylius:
                     noblezz: La maison Noblezz 216
                     brand_rights: Droit de la Marque 217
                     other: Autre 218
-        product: #PAS POSSIBLE
+        product: #PAS POSSIBLE +
             please_choose_size: Veuillez choisir une taille 47
             last_product_in_stock: Dernières pièces 48
-        bag: #PAS POSSIBLE
+        bag: #PAS POSSIBLE +
             limit_in_cart_reached: La quantité limite pour cet article est atteinte 88
             not_available: Ce produit n'est plus disponible 1x1
             has_product_out_of_stock: Votre panier contient des produits qui ne sont plus disponibles. Veuillez les supprimer avant de procéder au paiement. 89
