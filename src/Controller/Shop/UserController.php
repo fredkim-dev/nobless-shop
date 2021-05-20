@@ -36,6 +36,73 @@ use Webmozart\Assert\Assert;
 
 class UserController extends ResourceController
 {
+    public function createAction(Request $request): Response
+    {
+        if ($request->get('_route') === 'sylius_shop_register') {
+            // Check if user is connected, redirect to register page if not
+            $dashboardRoute = $request->attributes->get('_sylius')['redirect']['route'] ?? null;
+            $securityContext = $this->container->get('security.authorization_checker');
+            if ($dashboardRoute && $securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+                return new RedirectResponse($this->generateUrl($dashboardRoute));
+            }
+
+            $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+            $this->isGrantedOr403($configuration, ResourceActions::CREATE);
+            $newResource = $this->newResourceFactory->create($configuration, $this->factory);
+            $form = $this->resourceFormFactory->create($configuration, $newResource);
+            if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+                $newResource = $form->getData();
+                $event = $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
+                if ($event->isStopped() && !$configuration->isHtmlRequest()) {
+                    throw new HttpException($event->getErrorCode(), $event->getMessage());
+                }
+                if ($event->isStopped()) {
+                    $this->flashHelper->addFlashFromEvent($configuration, $event);
+                    $eventResponse = $event->getResponse();
+                    if (null !== $eventResponse) {
+                        return $eventResponse;
+                    }
+                    return $this->redirectHandler->redirectToIndex($configuration, $newResource);
+                }
+                if ($configuration->hasStateMachine()) {
+                    $this->stateMachine->apply($configuration, $newResource);
+                }
+                $this->repository->add($newResource);
+                if ($configuration->isHtmlRequest()) {
+                    $this->flashHelper->addSuccessFlash($configuration, ResourceActions::CREATE, $newResource);
+                }
+                $postEvent = $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
+                if (!$configuration->isHtmlRequest()) {
+                    return $this->viewHandler->handle($configuration, View::create($newResource, Response::HTTP_CREATED));
+                }
+                $postEventResponse = $postEvent->getResponse();
+                if (null !== $postEventResponse) {
+                    return $postEventResponse;
+                }
+                return $this->redirectHandler->redirectToResource($configuration, $newResource);
+            }
+            if (!$configuration->isHtmlRequest()) {
+                return $this->viewHandler->handle($configuration, View::create($form, Response::HTTP_BAD_REQUEST));
+            }
+            $initializeEvent = $this->eventDispatcher->dispatchInitializeEvent(ResourceActions::CREATE, $configuration, $newResource);
+            $initializeEventResponse = $initializeEvent->getResponse();
+            if (null !== $initializeEventResponse) {
+                return $initializeEventResponse;
+            }
+            $view = View::create()
+                ->setData([
+                    'configuration' => $configuration,
+                    'metadata' => $this->metadata,
+                    'resource' => $newResource,
+                    $this->metadata->getName() => $newResource,
+                    'form' => $form->createView(),
+                ])
+                ->setTemplate($configuration->getTemplate(ResourceActions::CREATE . '.html'))
+            ;
+            return $this->viewHandler->handle($configuration, $view);
+        }
+    }
+
     public function updateAction(Request $request): Response
     {
         if ($request->get('_route') === 'sylius_shop_account_profile_update') {
@@ -243,6 +310,12 @@ class UserController extends ResourceController
             $user = $userRepository->findOneByEmail($passwordReset->getEmail());
             if (null !== $user) {
                 $this->handleResetPasswordRequest($generator, $user, $senderEvent);
+            } else {
+                $html = $this->container->get('templating')->renderResponse(
+                    '@SyliusShop/Account/PasswordReset/error.html.twig'
+                );
+
+                return new Response($html, 400);
             }
 
             if (!$configuration->isHtmlRequest()) {
