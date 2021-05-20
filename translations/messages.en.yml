@@ -240,6 +240,7 @@ sylius:
         reset_password_request: Si l'email que vous avez spécifié existe dans notre système, vous recevrez un message avec les instructions pour réinitialiser votre mot de passe. 174
         reset_password_not_received_title: Vous n'avez pas reçu cette email ? 175
         reset_password_not_received: Nous vous invitons à vérifier que l'email n'a pas été redirigé dans la boite de courriers indésirables (Spam) de votre boite de réception. 176
+        reset_password_request_not_ok: L'adresse que vous avez renseigné n'existe pas 2200
     menu:
         shop:
             account:
