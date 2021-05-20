@@ -108,6 +108,7 @@ sylius:
         back_to_store: 'Retour à la boutique 99'
         change_shipping_address: Modifier l'adresse de livraison 100
         change_billing_address: Modifier l'adresse de facturation 101
+        add: Ajouter 2100
         add_address: Ajouter une adresse 102
         use_new_address: Utiliser une nouvelle adresse 103
         of_shipping: de livraison 104
@@ -258,6 +259,7 @@ sylius:
             new: Nouveau mot de passe 186
             confirmation: Confirmer nouveau mot de passe 184
         user: #CRÉATION DE COMPTE
+            email: Email 2005 #POPUP MOT DE PASSE OUBLIE
             password:
                 label: Mot de passe 1100
                 confirmation: Confirmation mot de passe 1101
@@ -302,6 +304,7 @@ sylius:
             last_product_in_stock: Dernières pièces 48
         bag: #PAS POSSIBLE
             limit_in_cart_reached: La quantité limite pour cet article est atteinte 88
+            not_available: Ce produit n'est plus disponible 1x1
             has_product_out_of_stock: Votre panier contient des produits qui ne sont plus disponibles. Veuillez les supprimer avant de procéder au paiement. 89
     email:
         contact:

@@ -8,7 +8,7 @@
 {% if product.isBundle() %}
     {% set isOutOfStock = sylius_bundle_out_of_stock(item) %}
 {% else %}
-    {% set isOutOfStock = productVariant.onHand == 0 or productVariant.onHand < form.quantity.vars.data %}
+    {% set isOutOfStock = productVariant.onHand == 0 or productVariant.onHand < form.quantity.vars.data or not product.enabled  %}
 {% endif %}
 
 {% if error != '' %}

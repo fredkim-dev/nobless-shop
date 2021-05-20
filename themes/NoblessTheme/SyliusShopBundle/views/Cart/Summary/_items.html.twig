@@ -17,6 +17,8 @@
 
         {% if formErrors is defined and item.id in formErrors|keys %}
             {% set error = formErrors[item.id] %}
+        {% elseif not item.variant.product.enabled %}
+            {% set error = 'sylius.form.bag.not_available' %}
         {% elseif form.items[key].quantity.vars.data >= maxQtyInCart %}
             {% set error = 'sylius.form.bag.limit_in_cart_reached' %}
         {% endif %}
