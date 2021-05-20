@@ -58,7 +58,8 @@ class ProductVariants extends AbstractExtension
         foreach($order->getItems() as $item) {
             if (!$item->getVariant()->getProduct()->isBundle()) {
                 $productQty = (int)($item->getVariant()->getOnHand() - $item->getVariant()->getOnHold());
-                if ($productQty <= 0 || $productQty < $item->getQuantity()) {
+                $productIsEnabled = $item->getVariant()->getProduct()->isEnabled();
+                if ($productQty <= 0 || $productQty < $item->getQuantity() || !$productIsEnabled) {
                     return true;
                 }
             } elseif ($this->isBundleOutOfStock($item)) {
@@ -83,7 +84,8 @@ class ProductVariants extends AbstractExtension
 
         foreach($items as $item) {
             $productQty = (int)($item->getProductVariant()->getOnHand() - $item->getProductVariant()->getOnHold());
-            if ($productQty <= 0 || $productQty < $item->getQuantity()) {
+            $productIsEnabled = $item->getProductVariant()->getProduct()->isEnabled();
+            if ($productQty <= 0 || $productQty < $item->getQuantity() || !$productIsEnabled) {
                 return true;
             }
         }

@@ -125,7 +125,8 @@ class OrderController extends ResourceController
                 /* @var OrderItemInterface $item */
                 if (!$item->getVariant()->getProduct()->isBundle()) {
                     $productQty = (int)($item->getVariant()->getOnHand() - $item->getVariant()->getOnHold());
-                    if ($productQty <= 0 || $productQty < $item->getQuantity()) {
+                    $productIsEnabled = $item->getVariant()->getProduct()->isEnabled();
+                    if ($productQty <= 0 || $productQty < $item->getQuantity() || !$productIsEnabled) {
                         return $this->redirect($this->generateUrl('sylius_shop_cart_summary'), 301);
                     }
                 } elseif ($this->isBundleOutOfStock($item)) {
@@ -544,7 +545,8 @@ class OrderController extends ResourceController
 
         foreach($items as $item) {
             $productQty = (int)($item->getProductVariant()->getOnHand() - $item->getProductVariant()->getOnHold());
-            if ($productQty <= 0 || $productQty < $item->getQuantity()) {
+            $productIsEnabled = $item->getProductVariant()->getProduct()->isEnabled();
+            if ($productQty <= 0 || $productQty < $item->getQuantity() || !$productIsEnabled) {
                 return true;
             }
         }
