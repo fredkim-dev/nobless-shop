@@ -1,6 +1,6 @@
 
-{% if media.code == 'menu-image-look' %}
-    <a href="{{ path('sylius_shop_product_index', {'slug': 'bundles', '_locale': sylius.localeCode}) }}">
+{% if 'menu-image-look' in media.code %}
+    <a href="{{ media.link }}">
         <img class="d-block img-fluid" src="{{ media.path }}" alt="{{ media.name }}"/>
     </a>
 {% else %}

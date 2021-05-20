@@ -38,19 +38,19 @@
                 </div>
             </div>
             <div class="col-6 {% if taxons|length > 2 %}col-xl-7{% else %}col-xl-8{% endif %} p-0 d-flex flex-row menu-images">
-                <div class="col-4 p-0 d-none d-xl-block">
+                <div class="col-3 p-0 d-none d-xl-block">
                     {% for taxon in taxons %}
                         <div class="menu-img menu-img-{{ taxon.slug }}{% if loop.index == 1 %} active{% endif %}">
                             {{ bitbag_cms_render_media('menu-image-taxon-' ~ taxon.slug) }}
                         </div>
                     {% endfor %}
                 </div>
-                <div class="col-4 p-0 m-0 ml-xl-3">
+                <div class="col-3 p-0 m-0 ml-xl-3">
                     <div class="menu-img-look">
                         {{ bitbag_cms_render_media('menu-image-look') }}
                     </div>
                 </div>
-                <div class="col-4 p-0 m-0 ml-xl-3">
+                <div class="col-3 p-0 m-0 ml-xl-3">
                     <div class="menu-img-look">
                         {{ bitbag_cms_render_media('menu-image-look-2') }}
                     </div>
