@@ -28,6 +28,7 @@ class ProductVariantRepository extends BaseProductVariantRepository
             ->innerJoin('p.productTaxons', 't')
             ->andWhere('t.taxon = :taxon')
             ->setParameter('taxon', $taxonomy)
+            ->andWhere('p.enabled = 1')
             ->getQuery()
             ->getArrayResult()
         ;

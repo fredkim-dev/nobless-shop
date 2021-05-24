@@ -5,7 +5,7 @@
     <div class="mr-3 product-img-order">
         {% include '@SyliusShop/Product/_mainImage.html.twig' with {'product': product, 'filter': 'sylius_shop_order_info_thumbnail'} %}
     </div>
-    <div class="media-body d-flex flex-column justify-content-between py-2" style="height:166px;">
+    <div class="media-body d-flex flex-column justify-content-between py-2" style="min-height:166px;">
         <div>
             <h5 class="my-2">{{ item.productName }}</h5>
             <span>{{ 'sylius.ui.sku'|trans }} : {{ variant.code }}</span>

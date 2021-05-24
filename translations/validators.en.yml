@@ -1,57 +1,56 @@
 # MESSAGES ERREUR
 sylius:
     form:
-        customer:
+        customer: #DEPLACER DANS customer plus bas
             birthday:
-                not_blank: Veuillez saisir votre date de naissance 228
-        message:
-            not_blank: Veuillez saisir votre message. 229
-    address:
+                not_blank: Veuillez saisir votre date de naissance 237
+    address: #CRÉATION + MODIFICATION D'ADRESSE : MES ADRESSE + TUNNEL
         first_name:
-            not_blank: Veuillez saisir un prénom 229.1
+            not_blank: Veuillez saisir un prénom 238
         last_name:
-            not_blank: Veuillez saisir un nom 229.2
-        city:
-            not_blank: Veuillez saisir le nom d'une ville 230
-        country:
-            not_blank: Veuillez sélectionner un pays. 231
-        postcode:
-            not_blank: Veuillez saisir un code postal. 232
+            not_blank: Veuillez saisir un nom 239
         street:
-            not_blank: Veuillez saisir une adresse.233
-    contact:
+            not_blank: Veuillez saisir une adresse 240
+        postcode:
+            not_blank: Veuillez saisir un code postal 241
+        city:
+            not_blank: Veuillez saisir le nom d'une ville 242
+        country:
+            not_blank: Veuillez sélectionner un pays 243
+    contact: #FORMULAIRE DE CONTACT
         firstname:
-            not_blank: Veuillez saisir un prénom 2001
+            not_blank: Veuillez saisir votre prénom 244
         lastname:
-            not_blank: Veuillez saisir un nom 2002
+            not_blank: Veuillez saisir votre nom 245
         email:
-            not_blank: Veuillez saisir un email 2003
+            not_blank: Veuillez saisir votre email 246
         message:
-            not_blank: Veuillez saisir un message 2004
-    customer:
+            not_blank: Veuillez saisir votre message 247
+    customer: #MES INFORMATIONS PERSONNELLES
         first_name:
-            not_blank: Veuillez saisir votre prénom. 234
+            not_blank: Veuillez saisir votre prénom 248
         last_name:
-            not_blank: Veuillez saisir votre nom. 235
-        gender:
-            not_blank: Veuillez choisir votre sexe. 236
+            not_blank: Veuillez saisir votre nom 249
         email:
-            not_blank: Veuillez saisir votre adresse email. 237
-            invalid_email: Email invalide 156
-            invalid: Cet e-mail n'est pas valide. 238
-            unique: Cet e-mail est déjà utilisé. 239
+            not_blank: Veuillez saisir votre adresse email 250
+            invalid: Cet e-mail n'est pas valide 251
+            unique: Cet e-mail est déjà utilisé 252
         password:
-            min: Le mot de passe doit comporter au moins {{ limit }} caractères. 243
-            not_blank: Veuillez saisir un nouveau mot de passe 2100
-    user:
+            min: Le mot de passe doit comporter au moins {{ limit }} caractères 253
+            not_blank: Veuillez saisir un nouveau mot de passe 254
+    user: #CHANGER MON MOT DE PASSE
+        email: 
+            not_blank: Veuillez saisir votre mot de passe 255.1
+        password:
+            min: Le mot de passe doit comporter au moins {{ limit }} caractères 255.2
+            max: Le mot de passe ne doit pas dépasser {{ limit }} caractères 255.3
         plainPassword:
-            not_blank: Veuillez saisir votre mot de passe. 240
-            mismatch: La confirmation du mot de passe ne correspondent pas. 241
-            wrong_current: Le mot de passe fourni est différent de celui en cours. 242
-#panier
-    promotion_coupon:
-        is_invalid: Ce code promo n'est pas valide 74
+            not_blank: Veuillez saisir votre mot de passe 255
+            wrong_current: Le mot de passe fourni est différent de celui en cours 256
+            mismatch: La confirmation du mot de passe ne correspondent pas 257
+    promotion_coupon: #PANIER
+        is_invalid: Ce code promo n'est pas valide 258
 bitbag_sylius_bonus_points:
-    order:
+    order: #PANIER
         bonus_points:
-            not_available: Vous n'avez pas assez sur votre cash-back 244
+            not_available: Vous n'avez pas assez sur votre cash-back 259

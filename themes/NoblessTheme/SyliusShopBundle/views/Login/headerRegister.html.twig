@@ -3,7 +3,7 @@
         {{ form_widget(form.username, {'id': 'headerRegister'}) }}
     </div>
     <span class="invalid-feedback mb-1">
-        <span class="form-error-message">{{ 'sylius.customer.email.invalid_email'|trans({}, 'validators') }}</span>
+        <span class="form-error-message">{{ 'sylius.customer.email.invalid'|trans({}, 'validators') }}</span>
     </span>
     <button type="submit" class="col-12 btn btn-primary submit-register" data-form=".header-register-form">{{ 'sylius.ui.create_an_account'|trans }}</button>
 {{ form_end(form, {'render_rest': false}) }}
