@@ -230,6 +230,7 @@ sylius:
         female: Femme 171
     #MOT DE PASSE OUBLIÉ
     user:
+        email: Email 2005 #DEPLACE DEPUIS ligne 261
         forgot_password_title: J'ai oublié mon mot de passe 172
         set_a_new_password_for_your_account_1: Veuillez saisir l'adresse mail associée à votre compte. 173
         set_a_new_password_for_your_account_2: Vous recevrez à cette adresse un lien vous permettant de réinitialiser votre mot de passe. 174
@@ -238,7 +239,6 @@ sylius:
         reset_password_request: Un email contenant les instructions de réinitialisation de votre mot de passe viens de vous être envoyer sur votre adresse email. 177
         reset_password_not_received_title: Vous n'avez pas reçu cet email ? 178
         reset_password_not_received: Nous vous invitons à vérifier que l'email n'a pas été redirigé dans la boite de courriers indésirables (Spam) de votre boite de réception. 179
-        reset_password_request_not_ok: Aucun compte Noblezz n'est associé à cette adresse mail. 180
     menu:
         shop:
             account: #FOOTER & MON COMPTE
@@ -258,7 +258,6 @@ sylius:
             new: Nouveau mot de passe 191
             confirmation: Confirmer nouveau mot de passe 192
         user:
-            email: Email 2005 #POPUP MOT DE PASSE OUBLIE #PEUT-ON LE DÉPLACER DANS #MOT DE PASSE OUBLIÉ
             password: #CRÉATION DE COMPTE
                 label: Mot de passe 193
                 confirmation: Confirmation mot de passe 194
@@ -311,9 +310,9 @@ sylius:
             new_request_from: 'Une nouvelle demande de contact a été faite par : M02' 
             request_infos: Voici les informations renseignées M03
             subject_is: 'Le sujet concerne : M04' 
-            message_is: 'Voici le message : M05' 
-            email: 'Email : M06' 
-            phone_number: 'Numéro de téléphone : M07' 
+            message_is: 'Voici le message : M05'
+            email: 'Email : M06'
+            phone_number: 'Numéro de téléphone : M07'
 bitbag_sylius_bonus_points:
     ui:
         bonus_points: Cash-back 231

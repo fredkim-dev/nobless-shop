@@ -310,12 +310,6 @@ class UserController extends ResourceController
             $user = $userRepository->findOneByEmail($passwordReset->getEmail());
             if (null !== $user) {
                 $this->handleResetPasswordRequest($generator, $user, $senderEvent);
-            } else {
-                $html = $this->container->get('templating')->renderResponse(
-                    '@SyliusShop/Account/PasswordReset/error.html.twig'
-                );
-
-                return new Response($html, 400);
             }
 
             if (!$configuration->isHtmlRequest()) {

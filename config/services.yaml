@@ -134,6 +134,14 @@ services:
             - '@sylius.manager.order'
             - '@sylius.context.cart'
             - '@sylius.context.cart.session_and_channel_based' 
+                
+    #VALIDATOR
+    app.validator.unknown_password_email:
+        class: App\Validator\Constraints\UnknownPasswordEmailValidator
+        arguments:
+            - '@sylius.repository.shop_user'
+        tags:
+            - { name: validator.constraint_validator }
     
     #ORDER CUSTOM
     app.component.order.order_modifier:

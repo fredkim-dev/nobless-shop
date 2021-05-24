@@ -6,12 +6,10 @@ namespace App\Form\Extension;
 
 use BitBag\SyliusBonusPointsPlugin\Context\CustomerBonusPointsContextInterface;
 use BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolverInterface;
-use App\Validator\Constraints\BonusPointsAvailability;
 use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Sylius\Bundle\OrderBundle\Form\Type\CartType;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
