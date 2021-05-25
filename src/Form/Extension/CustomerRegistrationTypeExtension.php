@@ -39,7 +39,7 @@ final class CustomerRegistrationTypeExtension extends AbstractTypeExtension
                 ],
             ])
             ->add('gender', GenderType::class, [
-                'label' => 'sylius.form.customer.gender_choice',
+                'label' => 'sylius.form.customer.gender',
             ])
             ->add('subscribedToNewsletter', CheckboxType::class, [
                 'required' => false,

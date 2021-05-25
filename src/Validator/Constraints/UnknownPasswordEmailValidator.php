@@ -21,9 +21,14 @@ class UnknownPasswordEmailValidator extends ConstraintValidator
     {
         $user = $this->repository->findOneByEmail($value);
 
-        if (null === $user) {
+        if (null === $user && $this->isValueEmail($value)) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation();
         }
+    }
+
+    private function isValueEmail(string $email): bool
+    {
+        return preg_match('/\S+@\S+\.\S+/', $email);
     }
 }

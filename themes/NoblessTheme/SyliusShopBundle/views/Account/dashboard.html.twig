@@ -20,7 +20,7 @@
             <div class="col-12 col-md-4">
                 <h5>{{ 'sylius.ui.profile'|trans }}</h5>
                 <div class="mb-3">
-                    <div class="text-dark">{{ ('sylius.ui.gender.' ~ customer.gender|lower ~ '')|trans }} {{ customer.fullName }}</div>
+                    <div class="text-dark">{{ customer.fullName }}</div>
                     <div>{{ customer.email }}</div>
                     {% if customer.user.verified %}
                         <div class="text-success text-uppercase">{{ 'sylius.ui.email_verified'|trans }}</div>
