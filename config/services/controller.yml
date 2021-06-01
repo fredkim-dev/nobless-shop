@@ -3,4 +3,4 @@ services:
     bitbag_custom_order_item_controller:
         class: App\Controller\BitBag\OrderItemController
         parent: 'bitbag_sylius_product_bundle.controller.order_item'
-        arguments: ['@session']
+        arguments: ['@session', '@templating']

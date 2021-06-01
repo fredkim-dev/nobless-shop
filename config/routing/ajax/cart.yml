@@ -15,16 +15,26 @@ sylius_shop_ajax_cart_add_item:
                 type: Sylius\Bundle\CoreBundle\Form\Type\Order\AddToCartType
                 options:
                     product: expr:notFoundOnNull(service('sylius.repository.product').find($productId))
+            template: "@SyliusShop/Cart/Summary/Ajax/items.html.twig"
             redirect:
                 route: sylius_shop_cart_summary
                 parameters: {}
             flash: sylius.cart.add_item
 
+sylius_shop_ajax_cart_item_update:
+    path: /{id}/update
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.shop.order_item_custom:updateQuantityAction
+        _format: json
+        _sylius:
+            flash: sylius.cart.update_quantity
+            
 sylius_shop_ajax_cart_item_remove:
     path: /{id}/remove
     methods: [DELETE]
     defaults:
-        _controller: sylius.controller.order_item:removeAction
+        _controller: sylius.controller.shop.order_item_custom:removeAction
         _format: json
         _sylius:
             flash: sylius.cart.remove_item

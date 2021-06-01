@@ -15,8 +15,6 @@ import axios from 'axios';
 import '../../BootstrapTheme/assets/js/fontawesome';
 import SyliusRating from '../../BootstrapTheme/assets/js/sylius-rating';
 import SyliusToggle from '../../BootstrapTheme/assets/js/sylius-toggle';
-import SyliusAddToCart from '../../BootstrapTheme/assets/js/sylius-add-to-cart';
-import SyliusRemoveFromCart from '../../BootstrapTheme/assets/js/sylius-remove-from-cart';
 import SyliusApiToggle from '../../BootstrapTheme/assets/js/sylius-api-toggle';
 import SyliusApiLogin from '../../BootstrapTheme/assets/js/sylius-api-login';
 import SyliusVariantsPrices from '../../BootstrapTheme/assets/js/sylius-variants-prices';
@@ -24,6 +22,7 @@ import SyliusVariantImages from '../../BootstrapTheme/assets/js/sylius-variant-i
 //import SyliusProvinceField from '../../BootstrapTheme/assets/js/sylius-province-field';
 // import SyliusAddressBook from './js/sylius-address-book';
 import SyliusLoadableForms from '../../BootstrapTheme/assets/js/sylius-loadable-forms';
+import {afterDomReplacementFunctions, addToCartFunctions } from './js/sylius-cart-common';
 
 // Global axios settings
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8';
@@ -34,13 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Lightbox
   const glightbox = GLightbox({ selector: 'glightbox' });
 
-  // Add to cart
-  document.querySelectorAll('[data-js-add-to-cart="form"]')
-    .forEach(el => SyliusAddToCart(el));
+  addToCartFunctions();
 
-  // Remove from cart
-  document.querySelectorAll('[data-js-remove-from-cart-button]')
-    .forEach(el => SyliusRemoveFromCart(el));
+  afterDomReplacementFunctions();
 
   // Province field
   //SyliusProvinceField();

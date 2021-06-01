@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller\BitBag;
 
-use App\Entity\Order\Order;
 use App\Entity\Product\Product;
 use App\Component\ProductBundle\AddProductBundleToCartCommand;
+use App\Entity\Product\ProductVariant;
 use BitBag\SyliusProductBundlePlugin\Entity\OrderItemInterface;
 use BitBag\SyliusProductBundlePlugin\Entity\ProductInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\RestBundle\View\View;
-use Sylius\Bundle\OrderBundle\Controller\AddToCartCommandInterface;
 use Sylius\Bundle\OrderBundle\Controller\OrderItemController as BaseOrderItemController;
 use Sylius\Bundle\ResourceBundle\Controller;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -19,6 +19,7 @@ use Sylius\Component\Order\CartActions;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,6 +35,9 @@ class OrderItemController extends BaseOrderItemController
 
     /** @var SessionInterface */
     protected $session;
+
+    /** @var EngineInterface */
+    protected $templatingEngine;
 
     public function __construct(
         MetadataInterface $metadata,
@@ -54,7 +58,8 @@ class OrderItemController extends BaseOrderItemController
         Controller\ResourceUpdateHandlerInterface $resourceUpdateHandler,
         Controller\ResourceDeleteHandlerInterface $resourceDeleteHandler,
         MessageBusInterface $messageBus,
-        SessionInterface $session
+        SessionInterface $session,
+        EngineInterface $templatingEngine
     ) {
         parent::__construct(
             $metadata,
@@ -78,6 +83,7 @@ class OrderItemController extends BaseOrderItemController
 
         $this->messageBus = $messageBus;
         $this->session = $session;
+        $this->templatingEngine = $templatingEngine;
     }
 
     public function addProductBundleAction(Request $request): Response
@@ -102,23 +108,33 @@ class OrderItemController extends BaseOrderItemController
         );
 
         if ($request->isMethod(Request::METHOD_POST) && $form->handleRequest($request)->isValid()) {
-            // If bundle with selected variants is in cart and reach the quantity limit, redirect to product page
-            $message = $this->checkProductQtyInCart($form->getData());
-            if ($message !== '') {
-                return $this->redirectToProductPage($form->getData(), $request, $message);
+            // If bundle with selected variants is in cart and reach the quantity limit, display error message
+            $productOutOfStockId = $this->checkProductQtyInCart($form->getData()->getProductBundleItems());
+            if ($productOutOfStockId !== null) {
+                $response = [
+                    'message' => $this->container->get('translator')->trans('sylius.form.bag.limit_in_cart_reached'),
+                    'product_id' => $productOutOfStockId
+                ];
+
+                return new Response(json_encode($response), 500);
             }
 
             $newAddBundleToCart = new AddProductBundleToCartCommand($cart, $orderItem, $product, $form->getData()->getProductBundleItems());
-            return $this->handleForm($form, $configuration, $orderItem, $request, $newAddBundleToCart);
+            return $this->handleForm($form, $configuration, $orderItem, $request, $newAddBundleToCart, $cart);
         }
 
         if (!$configuration->isHtmlRequest()) {
-            $message = $this->checkProductQtyInCart($form->getData());
-            if ($message === '' && count($form->getErrors()) > 0) {
+            $productOutOfStockId = $this->checkProductQtyInCart($form->getData()->getProductBundleItems());
+            $message = '';
+            if ($productOutOfStockId === null && count($form->getErrors()) > 0) {
                 $message = $form->getErrors()[0]->getMessage();
             }
 
-            return $this->redirectToProductPage($form->getData(), $request, $message);
+            $response = [
+                'message' => $this->container->get('translator')->trans($message)
+            ];
+
+            return new Response(json_encode($response), 500);
         }
 
         $view = View::create()
@@ -138,7 +154,8 @@ class OrderItemController extends BaseOrderItemController
         Controller\RequestConfiguration $configuration,
         OrderItemInterface $orderItem,
         Request $request,
-        AddProductBundleToCartCommand $addProductBundleToCartCommand): ?Response
+        AddProductBundleToCartCommand $addProductBundleToCartCommand,
+        OrderInterface $cart): ?Response
     {
         $errors = $this->getCartItemErrors($orderItem);
         if (0 < count($errors)) {
@@ -160,72 +177,79 @@ class OrderItemController extends BaseOrderItemController
         if ($resourceControllerEvent->hasResponse()) {
             return $resourceControllerEvent->getResponse();
         }
-        $this->flashHelper->addSuccessFlash($configuration, CartActions::ADD, $orderItem);
 
         if ($request->isXmlHttpRequest()) {
-            $response = $this->viewHandler->handle($configuration, View::create([], Response::HTTP_CREATED));
-        } else {
-            $response = $this->redirectHandler->redirectToResource($configuration, $orderItem);
+            $template = '@SyliusShop/Cart/Summary/Ajax/items.html.twig';
+            return $this->templatingEngine->renderResponse($template, [
+                'items' => $cart->getItems(),
+                'newItem' => $this->getCartItem($cart, $orderItem),
+                'subtotal' => $cart->getItemsTotal()
+            ]);
         }
 
-        return $response;
+        return $this->redirectHandler->redirectToResource($configuration, $orderItem);
     }
 
-    private function checkProductQtyInCart($data): string
+    private function checkProductQtyInCart(array $dataProductBundleItems): ?int
     {
-        $qtyAdded = 1;
-        /** @var OrderItemInterface $item */
-        $item = $data->getCartItem();
+        $cart = $this->getCurrentCart();
 
-        foreach ($data->getCart()->getItems() as $existingItem) {
-            if ($this->checkBundleQtyInCart($data->getProductBundleItems(), $existingItem, $qtyAdded)) {
-                return 'sylius.form.bag.limit_in_cart_reached';
+        foreach ($cart->getItems() as $existingItem) {
+            if ($existingItem->getProduct()->isBundle()
+                && $this->checkBundleVariants($dataProductBundleItems, $existingItem->getProductBundleOrderItems())) {
+                return $this->maxBundleQtyInCartIsReached($dataProductBundleItems, $existingItem);
             }
         }
-        return '';
+        return null;
     }
 
     /**
-     * Check if bundle products are in stock, redirect to product page if not
+     * Check if bundle products are in stock
      *
      * @param array $bundleItems
      * @param OrderItemInterface $existingItem
-     * @param int $qtyAdded
-     * @return bool
+     * @return mixed
      */
-    private function checkBundleQtyInCart(array $bundleItems, OrderItemInterface $existingItem, int $qtyAdded) : bool
+    private function maxBundleQtyInCartIsReached(array $bundleItems, OrderItemInterface $existingItem): ?int
     {
+        $qtyAdded = 1;
+        $bundleItemsMaxQty = 0;
         foreach($bundleItems as $key => $item) {
             $calculatedMaxQty = Product::MAX_QTY_IN_CART;
             if ($calculatedMaxQty > (int)($item->getProductVariant()->getOnHand() - $item->getProductVariant()->getOnHold())) {
                 $calculatedMaxQty = (int)($item->getProductVariant()->getOnHand() - $item->getProductVariant()->getOnHold());
             }
-            if ($existingItem->getQuantity() + $qtyAdded > $calculatedMaxQty) {
-                return true;
+            if ($calculatedMaxQty < Product::MAX_QTY_IN_CART && $existingItem->getQuantity() + $qtyAdded > $calculatedMaxQty) {
+                return $item->getProductVariant()->getProduct()->getId();
+            } elseif ($calculatedMaxQty == Product::MAX_QTY_IN_CART && $existingItem->getQuantity() + $qtyAdded > $calculatedMaxQty) {
+                $bundleItemsMaxQty++;
             }
         }
 
-        return false;
+        return $bundleItemsMaxQty == count($bundleItems) ? 0 : null;
     }
 
-    /**
-     * Redirect to product page when form contains errors
-     *
-     * @param $data
-     * @param Request $request
-     * @param string $message
-     * @param bool $isBundle
-     * @return RedirectResponse
-     */
-    private function redirectToProductPage($data, Request $request, string $message, bool $isBundle = false): RedirectResponse
+    private function getCartItem(OrderInterface $cart, OrderItemInterface $orderItem): OrderItemInterface
     {
-        $selectedVariant = [];
-        foreach($data->getProductBundleItems() as $item) {
-            $selectedVariant[$item->getProductVariant()->getId()] = $item->getProductVariant()->getOptionValues()[0];
+        foreach($cart->getItems() as $cartItem) {
+            if ($cartItem->getId() === $orderItem->getId()
+                || ($cartItem->getProduct()->isBundle() && $this->checkBundleVariants($cartItem->getProductBundleOrderItems()->toArray(), $orderItem->getProductBundleOrderItems()))) {
+                return $cartItem;
+            }
         }
-        $this->session->set('selectedVariant', $selectedVariant);
-        $this->addFlash('error', $this->get('translator')->trans($message));
-        return $this->redirect($request->headers->get('referer'));
     }
 
+    private function checkBundleVariants(array $cartProductBundleOrderItems, ArrayCollection $newCartProductBundleOrderItems): bool
+    {
+        $allTheSame = 0;
+        foreach($cartProductBundleOrderItems as $key => $bundleOrderItem) {
+            /** @var ProductVariant $bundleOrderItemVariant */
+            $bundleOrderItemVariant = $bundleOrderItem->getProductVariant();
+            if ($bundleOrderItemVariant === $newCartProductBundleOrderItems[$key]->getProductVariant()) {
+                $allTheSame++;
+            }
+        }
+
+        return $allTheSame > 0 && $allTheSame == count($cartProductBundleOrderItems);
+    }
 }

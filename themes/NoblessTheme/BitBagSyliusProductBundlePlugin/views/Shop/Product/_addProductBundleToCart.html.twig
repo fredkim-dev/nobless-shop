@@ -11,7 +11,7 @@
     <div class="card-body">
         {{ sonata_block_render_event('sylius.shop.product.show.before_add_to_cart', {'product': product, 'order_item': order_item}) }}
 
-        {{ form_start(form, {'action': path('bitbag_sylius_product_bundle_shop_ajax_cart_add_product_bundle', {'productId': product.id}), 'attr': {'id': 'sylius-product-adding-to-cart', 'class': 'loadable form', 'novalidate': 'novalidate', 'data-redirect': path(configuration.getRedirectRoute('summary')), 'data-name-to-check': 'bitbag_sylius_product_bundle_plugin_add_product_bundle_to_cart'}}) }}
+        {{ form_start(form, {'action': path('bitbag_sylius_product_bundle_shop_ajax_cart_add_product_bundle', {'productId': product.id}), 'attr': {'id': 'sylius-product-adding-to-cart', 'data-js-add-to-cart': 'form', 'class': 'form', 'novalidate': 'novalidate', 'data-redirect': path(configuration.getRedirectRoute('summary')), 'data-name-to-check': 'bitbag_sylius_product_bundle_plugin_add_product_bundle_to_cart'}}) }}
         {{ form_errors(form) }}
         <div class="alert alert-danger d-none sylius-validation-error" id="sylius-cart-validation-error"></div>
 
@@ -52,6 +52,7 @@
             {# Add to cart button #}
             <div class="col-8 col-xxl-6 mx-auto">
                 <div class="form-group">
+                    <span class="invalid-feedback mb-2 text-center" data-js-add-to-cart="error" data-bundle-error></span>
                     <button type="submit" class="btn btn-block btn-primary" {{ sylius_test_html_attribute('add-to-cart-button') }}>
                         <span class="btn-icon">{{ icons.cart() }}</span>
                         {{ 'sylius.ui.add_to_cart'|trans }}

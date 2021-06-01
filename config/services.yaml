@@ -63,7 +63,7 @@ services:
         
     sylius.controller.shop.order_item_custom:
         class: App\Controller\Shop\OrderItemController
-        arguments: ['@sylius.controller.order_item', '@session']
+        arguments: ['@sylius.controller.order_item', '@session', '@templating']
 
     sylius.controller.shop.locale_switch:
         class: App\Controller\Shop\LocaleSwitchController
@@ -123,6 +123,14 @@ services:
         arguments:
             - '@bitbag_sylius_bonus_points.context.customer_bonus_points'
             - '@sylius.context.cart'
+        tags:
+            - { name: twig.extension }
+
+    app.twig.extension.bitbag.product_bundle_order_items_extension:
+        class: App\Twig\Extension\ProductBundleOrderItemExtensionCustom
+        arguments:
+            - '@bitbag_sylius_product_bundle.repository.product_bundle_order_item'
+            - '@twig'
         tags:
             - { name: twig.extension }
                 

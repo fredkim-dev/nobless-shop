@@ -41,22 +41,10 @@ const product = function mainFunctions() {
     $('.variants-container', this).hide();
   });
 
-  // When clicking on add to cart button
-  $('#sylius-product-adding-to-cart .btn-primary').on('click', function(e) {
-    e.preventDefault();
-    $('.variant-list .invalid-feedback').removeClass('d-block').addClass('d-none');
-    const addToCartForm = $(this).closest('form');
-    const selectedSize = $('input[name^="' + $(addToCartForm).data('nameToCheck') + '"]:checked').length;
-    const bundleItemsCount = $('div.bundle-item').length;
-    if(selectedSize > 0 && selectedSize < bundleItemsCount ) {
-      $(addToCartForm).find('.empty-product:not(.input-checked)').removeClass('d-none').addClass('d-block');
-    } else if (selectedSize === 0) {
-      $(addToCartForm).find('.empty-product').removeClass('d-none').addClass('d-block');
-    } else {
-      $(addToCartForm).find('.empty-product').addClass('d-none').removeClass('d-block');
-      $(addToCartForm).trigger('submit');
-    }
-  })
+  // When clicking on add to cart button => SEE sylius-add-to-cart.js
+  //$('#sylius-product-adding-to-cart .btn-primary').on('click', function(e) {
+    //e.preventDefault();
+  //})
 
   $('input[id^="bitbag_sylius_product_bundle_plugin_add_product_bundle_to_cart_"]').on('change', function(e) {
     $(this).closest('div').find('span.invalid-feedback').addClass('input-checked').addClass('d-none').removeClass('d-block');

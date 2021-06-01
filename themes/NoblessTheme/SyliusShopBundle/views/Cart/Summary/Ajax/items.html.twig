@@ -1,0 +1,22 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+<div>
+    {% set countItems = 0 %}
+    <div class="ajax-cart-items">
+        {% for item in items %}
+            {% include '@SyliusShop/Product/_headerProductItem.html.twig' with {'variant': item.variant} %}
+            {% set countItems = countItems + item.quantity %}
+        {% endfor %}
+        <div class="loading-overlay" data-js-loading-overlay="">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+    <span class="ajax-count-cart-items">{{ countItems }}</span>
+    {% if newItem is defined %}
+    <div class="ajax-new-item">
+        {% include '@SyliusShop/Product/_headerProductItem.html.twig' with {'item': newItem, 'variant': newItem.variant, 'noAjax': true} %}
+    </div>
+    {% endif %}
+    <span class="ajax-cart-subtotal">{{ money.convertAndFormat(subtotal) }}</span>
+</div>

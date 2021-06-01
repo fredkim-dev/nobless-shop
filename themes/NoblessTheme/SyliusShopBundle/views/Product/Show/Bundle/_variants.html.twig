@@ -1,28 +1,19 @@
 {% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
 
 {% set lastProductQty = constant('App\\Entity\\Product\\Product::LAST_PRODUCT_IN_STOCK') %}
-{% set errorMessage = '' %}
-{% for message in app.session.flashbag.get('error') %}
-    {% set errorMessage = message %}
-{% endfor %}
 
 <div class="row">
     <div class="variant-list col-12">
         <div class="d-flex flex-column">
             <label class="variant-label required">{{ 'sylius.ui.choose_size'|trans }}</label>
             <div class="container-fluid col-12 p-0 text-left d-flex flex-row">
-                {% set selectedInput = '' %}
                 {% for key, variant in product.variants %}
                     {% set realStock = variant.onHand - variant.onHold %}
                     {% set isOutOfStock = realStock <= 0 %}
                     {% set optionValueId = variant.optionValues[0].id %}
-                    {% set variantId = id ~ '_productVariant_' ~ key %}
-                    {% if (selectedVariant[variant.id] is defined and selectedInput == '') %}
-                        {% set selectedInput = variantId %}
-                    {% endif %}
 
                     <label for="{{ id }}_productVariant_{{ key }}"
-                           class="variant-name{% if selectedInput == variantId %} variant-selected{% endif %}{% if isOutOfStock %} variant-disabled{% endif %}"
+                           class="variant-name{% if isOutOfStock %} variant-disabled{% endif %}"
                            data-bundle-item="{{ id }}"
                            {% if realStock < lastProductQty %}data-almost-out="true"{% endif %}>
                         {% for optionValue in variant.optionValues %}
@@ -34,14 +25,12 @@
                     </label>
                 {% endfor %}
                 {% for variant_input in product_variant_input %}
-                    {% include '@SyliusShop/Product/Show/Bundle/_input.html.twig' with {'form_row_variables': variant_input.vars, 'selectedInput': selectedInput} %}
+                    {% include '@SyliusShop/Product/Show/Bundle/_input.html.twig' with {'form_row_variables': variant_input.vars} %}
                 {% endfor %}
             </div>
             <span class="invalid-feedback d-none empty-product">{{ 'sylius.form.product.please_choose_size'|trans }}</span>
             <span class="invalid-feedback d-none last-product-in-stock">{{ 'sylius.form.product.last_product_in_stock'|trans }}</span>
-            {% if errorMessage %}
-                <span class="invalid-feedback d-block">{{ errorMessage }}</span>
-            {% endif %}
+            <span class="invalid-feedback" data-product-id="{{ product.id }}" data-js-add-to-cart="error"></span>
         </div>
     </div>
 </div>

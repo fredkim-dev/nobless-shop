@@ -319,7 +319,23 @@ class OrderController extends ResourceController
 
     public function widgetAction(Request $request): Response
     {
-        return $this->_parent->widgetAction($request);
+        $configuration = $this->_parent->requestConfigurationFactory->create($this->_parent->metadata, $request);
+
+        $cart = $this->getCurrentCart();
+
+        if (!$configuration->isHtmlRequest()) {
+            return $this->_parent->viewHandler->handle($configuration, View::create($cart));
+        }
+
+        $view = View::create()
+            ->setTemplate($configuration->getTemplate('summary.html'))
+            ->setData([
+                'cart' => $cart,
+                'parentRoute' => $request->query->get('parentRoute')
+            ])
+        ;
+
+        return $this->_parent->viewHandler->handle($configuration, $view);
     }
 
     private function getSyliusAttribute(Request $request, string $attribute, $default = null)

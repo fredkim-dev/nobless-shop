@@ -38,7 +38,7 @@
     <div class="col-3 col-lg-4 text-right my-1">
         <div class="d-flex flex-row justify-content-end menu-icones">
             {{ render(controller('sylius.controller.shop.security_widget:renderAction')) }}
-            {{ render(url('sylius_shop_partial_cart_summary', {'template': '@SyliusShop/Cart/_widget.html.twig'})) }}
+            {{ render(url('sylius_shop_partial_cart_summary', {'template': '@SyliusShop/Cart/_widget.html.twig', 'parentRoute': app.request.attributes.get('_route')})) }}
             {{ render(controller('sylius.controller.shop.locale_switch:renderAction')) }}
         </div>
     </div>

@@ -5,8 +5,6 @@
 {% for message in app.session.flashbag.get('error') %}
     {% set errorMessage = message %}
 {% endfor %}
-{% set selectedVariant = app.session.get('selectedVariant') %}
-{% set tmp = app.session.remove('selectedVariant') %}
 
 <div class="row m-0">
     <div class="variant-list col-12 col-xl-9 px-0">
@@ -17,15 +15,14 @@
                     {% set realStock = variant.onHand - variant.onHold %}
                     {% set isOutOfStock = realStock <= 0 %}
                     {% set optionValueId = variant.optionValues[0].id %}
-                    {% set selectedClass = (selectedVariant != null and selectedVariant.id == optionValueId) ? ' variant-selected' : '' %}
 
-                    <label for="sylius_add_to_cart_cartItem_variant_{{ key }}" class="d-flex justify-content-center align-items-center variant-name{{ selectedClass }}{% if isOutOfStock %} variant-disabled{% endif %}" {% if realStock < lastProductQty %}data-almost-out="true"{% endif %}>
+                    <label for="sylius_add_to_cart_cartItem_variant_{{ key }}" class="d-flex justify-content-center align-items-center variant-name{% if isOutOfStock %} variant-disabled{% endif %}" {% if realStock < lastProductQty %}data-almost-out="true"{% endif %}>
                         {{ variant.optionValues[0].code }}
                         {% if isOutOfStock %}
                             <span class="out-of-stock"></span>
                         {% endif %}
                     </label>
-                    <input type="radio" id="sylius_add_to_cart_cartItem_variant_{{ key }}" name="sylius_add_to_cart[cartItem][variant]" required="required" class="form-check-input" value="{{ variant.code }}" {% if selectedClass != ''%}checked{% endif%} {% if isOutOfStock %}disabled{% endif %} />
+                    <input type="radio" id="sylius_add_to_cart_cartItem_variant_{{ key }}" name="sylius_add_to_cart[cartItem][variant]" required="required" class="form-check-input" value="{{ variant.code }}" {% if isOutOfStock %}disabled{% endif %} />
                 {% endfor %}
             </div>
 

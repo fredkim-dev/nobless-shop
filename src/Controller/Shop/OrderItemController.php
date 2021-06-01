@@ -17,6 +17,7 @@ use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
 use Sylius\Component\Order\Modifier\OrderModifierInterface;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -35,12 +36,18 @@ class OrderItemController extends ResourceController
     /** @var SessionInterface */
     protected $session;
 
+    /** @var EngineInterface */
+    protected $templatingEngine;
+
     public function __construct(
         BaseOrderItemController $parent,
-        SessionInterface $session
+        SessionInterface $session,
+        EngineInterface $templatingEngine
     ) {
         $this->_parent = $parent;
         $this->session = $session;
+        $this->templatingEngine = $templatingEngine;
+
     }
 
     public function addAction(Request $request): Response
@@ -72,9 +79,10 @@ class OrderItemController extends ResourceController
             }
 
             // Check if product qty in cart is already greater than the limit
-            $message = $this->checkProductQtyInCart($addToCartCommand);
+            $message = $this->checkProductAddedQty($addToCartCommand);
             if ($message !== '') {
-                return $this->redirectToProductPage($addToCartCommand, $request, $message);
+                $translatedMessage = $this->container->get('translator')->trans($message);
+                return new Response($translatedMessage, 500);
             }
 
             $event = $this->_parent->eventDispatcher->dispatchPreEvent(CartActions::ADD, $configuration, $orderItem);
@@ -99,10 +107,14 @@ class OrderItemController extends ResourceController
                 return $resourceControllerEvent->getResponse();
             }
 
-            $this->_parent->flashHelper->addSuccessFlash($configuration, CartActions::ADD, $orderItem);
 
             if ($request->isXmlHttpRequest()) {
-                return $this->_parent->viewHandler->handle($configuration, View::create([], Response::HTTP_CREATED));
+                $template = '@SyliusShop/Cart/Summary/Ajax/items.html.twig';
+                return $this->templatingEngine->renderResponse($template, [
+                    'items' => $cart->getItems(),
+                    'newItem' => $this->getCartItem($cart, $orderItem),
+                    'subtotal' => $cart->getItemsTotal()
+                ]);
             }
 
             return $this->_parent->redirectHandler->redirectToResource($configuration, $orderItem);
@@ -115,7 +127,7 @@ class OrderItemController extends ResourceController
                 $message = $form->getErrors()[0]->getMessage();
             }
 
-            return $this->redirectToProductPage($form->getData(), $request, $message);
+            return new Response($this->container->get('translator')->trans($message), 500);
         }
 
         $view = View::create()
@@ -128,6 +140,64 @@ class OrderItemController extends ResourceController
         ;
 
         return $this->_parent->viewHandler->handle($configuration, $view);
+    }
+
+    public function updateQuantityAction(Request $request): Response
+    {
+        $configuration = $this->_parent->requestConfigurationFactory->create($this->_parent->metadata, $request);
+
+        $this->_parent->isGrantedOr403($configuration, CartActions::ADD);
+        /** @var \Sylius\Component\Order\Model\OrderItemInterface $orderItem */
+        $orderItem = $this->_parent->findOr404($configuration);
+
+        $event = $this->_parent->eventDispatcher->dispatchPreEvent(CartActions::ADD, $configuration, $orderItem);
+
+        if ($configuration->isCsrfProtectionEnabled() && !$this->_parent->isCsrfTokenValid((string) $orderItem->getId(), $request->request->get('_csrf_token'))) {
+            throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid csrf token.');
+        }
+
+        // Check if product qty in cart is already greater than the limit
+        $newQuantity = (int)$request->request->get('quantity');
+        $this->getQuantityModifier()->modify($orderItem, $newQuantity);
+        $message = $this->checkProductQtyInCart($orderItem, 0);
+        if ($message !== '') {
+            $translatedMessage = $this->container->get('translator')->trans($message);
+            return new Response($translatedMessage, 500);
+        }
+
+        if ($event->isStopped() && !$configuration->isHtmlRequest()) {
+            throw new HttpException($event->getErrorCode(), $event->getMessage());
+        }
+        if ($event->isStopped()) {
+            $this->_parent->flashHelper->addFlashFromEvent($configuration, $event);
+
+            return $this->_parent->redirectHandler->redirectToIndex($configuration, $orderItem);
+        }
+
+        $cart = $this->getCurrentCart();
+        if ($cart !== $orderItem->getOrder()) {
+            $this->addFlash('error', $this->get('translator')->trans('sylius.cart.cannot_modify', [], 'flashes'));
+
+            if (!$configuration->isHtmlRequest()) {
+                return $this->_parent->viewHandler->handle($configuration, View::create(null, Response::HTTP_NO_CONTENT));
+            }
+
+            return $this->_parent->redirectHandler->redirectToIndex($configuration, $orderItem);
+        }
+
+        $this->getOrderModifier()->updateQuantityInOrder($cart, $orderItem, $newQuantity);
+
+        $cartManager = $this->getCartManager();
+        $cartManager->persist($cart);
+        $cartManager->flush();
+
+        $this->_parent->eventDispatcher->dispatchPostEvent(CartActions::ADD, $configuration, $orderItem);
+
+        $template = '@SyliusShop/Cart/Summary/Ajax/items.html.twig';
+        return $this->templatingEngine->renderResponse($template, [
+            'items' => $cart->getItems(),
+            'subtotal' => $cart->getItemsTotal()
+        ]);
     }
 
     public function removeAction(Request $request): Response
@@ -166,8 +236,6 @@ class OrderItemController extends ResourceController
 
         $this->getOrderModifier()->removeFromOrder($cart, $orderItem);
 
-        //$this->_parent->repository->remove($orderItem);
-
         $cartManager = $this->getCartManager();
         $cartManager->persist($cart);
         $cartManager->flush();
@@ -179,28 +247,59 @@ class OrderItemController extends ResourceController
             return $this->_parent->viewHandler->handle($configuration, View::create(null, Response::HTTP_NO_CONTENT));
         }
 
-        $this->_parent->flashHelper->addSuccessFlash($configuration, CartActions::REMOVE, $orderItem);
-
-        return new Response();
+        $template = '@SyliusShop/Cart/Summary/Ajax/items.html.twig';
+        return $this->templatingEngine->renderResponse($template, [
+            'items' => $cart->getItems(),
+            'subtotal' => $cart->getItemsTotal()
+        ]);
     }
 
-    private function checkProductQtyInCart($data): string
+    private function checkProductAddedQty($data): string
     {
-        $qtyAdded = 1;
-        /** @var OrderItemInterface $item */
-        $item = $data->getCartItem();
+        return $this->checkProductQtyInCart($data->getCartItem());
+    }
+
+    private function checkProductQtyInCart($item, $qtyAdded = 1): string
+    {
+        $cart = $this->getCurrentCart();
         $productVariant = $item->getVariant();
         $calculatedMaxQty = $productVariant->getOnHand() - $productVariant->getOnHold();
         if ($calculatedMaxQty > Product::MAX_QTY_IN_CART) {
             $calculatedMaxQty = Product::MAX_QTY_IN_CART;
         }
 
-        foreach ($data->getCart()->getItems() as $existingItem) {
-            if ($item->equals($existingItem) && $existingItem->getQuantity() + $qtyAdded > $calculatedMaxQty) {
-                return 'sylius.form.bag.limit_in_cart_reached';
+        foreach ($cart->getItems() as $existingItem) {
+            if ($item->equals($existingItem)) {
+                if ($existingItem->getQuantity() + $qtyAdded > $calculatedMaxQty
+                    || ($existingItem->getProduct()->isBundle() && $this->maxBundleQtyInCartIsReached($item))) {
+                    return 'sylius.form.bag.limit_in_cart_reached';
+                }
             }
         }
         return '';
+    }
+
+    private function maxBundleQtyInCartIsReached(OrderItemInterface $item): bool
+    {
+        foreach($item->getProductBundleOrderItems() as $key => $item) {
+            $calculatedMaxQty = Product::MAX_QTY_IN_CART;
+            if ($calculatedMaxQty > (int)($item->getProductVariant()->getOnHand() - $item->getProductVariant()->getOnHold())) {
+                $calculatedMaxQty = (int)($item->getProductVariant()->getOnHand() - $item->getProductVariant()->getOnHold());
+            }
+            if ($item->getQuantity() > $calculatedMaxQty) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function getCartItem(OrderInterface $cart, OrderItemInterface $orderItem): OrderItemInterface
+    {
+        foreach($cart->getItems() as $cartItem) {
+            if ($cartItem->equals($orderItem)) {
+                return $cartItem;
+            }
+        }
     }
 
     /**

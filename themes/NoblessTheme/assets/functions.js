@@ -133,6 +133,12 @@ function menuIconesFunctions() {
       $(".screen-overlay-cart").removeClass("show");
       $('body').removeClass("offcanvas-active");
     }
+    // Cart Icon
+    if ($(this).closest('.dropdown').hasClass('cart-btn')) {
+      $('#headerCartNewItem').html('');
+      $('#headerCartItems').removeClass('d-none');
+      $('#cartActions .cart-subtotal').addClass('d-flex').removeClass('d-none');
+    }
   });
 }
 

@@ -19,6 +19,10 @@ sylius_shop_cart:
     resource: "../routing/cart.yml"
     prefix: /{_locale}/cart
 
+sylius_shop_partial:
+    resource: "../routing/partial.yml"
+    prefix: /_partial
+
 sylius_shop_account:
     resource: "../routing/account.yml"
     prefix: /{_locale}/account

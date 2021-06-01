@@ -6,22 +6,18 @@
 
     <div>
         <div>
-            <div>{{ product.name }}</div>
+            <span>{{ product.name }}</span>
             <div class="row">
-                <div class="col-4 pr-0 d-none d-lg-block">
-                    {{ money.calculatePrice(product|sylius_resolve_variant) }}
-                </div>
-                <div class="col ml-3 ml-lg-3">
+                <span class="col ml-3">
                     {% if product.hasOptions() %}
                         {% for optionValue in variant.optionValues %}
-                            {{ 'sylius.ui.size'|trans }} : {{ optionValue.value }}
+                            {{ optionValue.value }}
                         {% endfor %}
                     {% elseif variant.name is not null %}
-                        {{ 'sylius.ui.size'|trans }} : {{ variant.name }}
+                        {{ variant.name }}
                     {% endif %}
-                </div>
+                </span>
             </div>
-
         </div>
     </div>
 {% endfor %}

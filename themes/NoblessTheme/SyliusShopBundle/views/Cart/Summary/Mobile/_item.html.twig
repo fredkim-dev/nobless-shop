@@ -55,7 +55,7 @@
 
                 {# Quantity #}
                 <div class="col-12 p-0">
-                    {{ 'sylius.ui.quantity'|trans }} : <input type="number" class="form-control qty mobile-qty" value="{{ item.quantity }}" data-input-qty="sylius_cart[items][{{ key }}][quantity]" max="{{ maxQtyInCart }}"/> <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty mobile" />
+                    {{ 'sylius.ui.quantity'|trans }} : <input type="number" class="form-control qty mobile-qty" value="{{ item.quantity }}" data-input-qty="sylius_cart[items][{{ key }}][quantity]" max="{{ maxQtyInCart }}" min="0"/> <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty mobile" />
                 </div>
             </div>
 

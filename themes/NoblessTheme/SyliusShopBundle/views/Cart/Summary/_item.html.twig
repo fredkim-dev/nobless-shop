@@ -78,7 +78,7 @@
                 {% endif %}
 
                 <div class="col-sm-12 col-lg-6 col-xl {{ paddingClass }}">
-                    {{ 'sylius.ui.quantity'|trans }} : {{ form_widget(form.quantity, {'attr': {'class': 'qty', 'max': maxQtyInCart, 'data-item-id': item.id }}) }} <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty" />
+                    {{ 'sylius.ui.quantity'|trans }} : {{ form_widget(form.quantity, {'attr': {'class': 'qty', 'min': 0, 'max': maxQtyInCart, 'data-item-id': item.id }}) }} <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty" />
                 </div>
 
                 <div class="col-sm-12 col-md-5 col-lg-6 col-xl-4 p-2 px-lg-2 {{ totalPaddingClass }}">

@@ -39,12 +39,19 @@ final class OrderModifier implements OrderModifierInterface
         $this->orderProcessor->process($order);
     }
 
+    public function updateQuantityInOrder(OrderInterface $order, OrderItemInterface $item, int $quantity): void
+    {
+        $this->resolveOrderItem($order, $item, $quantity);
+
+        $this->orderProcessor->process($order);
+    }
+
     public function removeFromOrder(OrderInterface $order, OrderItemInterface $item): void
     {
         $this->_parent->removeFromOrder($order, $item);
     }
 
-    private function resolveOrderItem(OrderInterface $order, OrderItemInterface $item): void
+    private function resolveOrderItem(OrderInterface $order, OrderItemInterface $item, int $quantity = 0): void
     {
         $newProductVariant = [];
         foreach($item->getProductBundleOrderItems() as $bundleOrderItem) {
@@ -59,20 +66,26 @@ final class OrderModifier implements OrderModifierInterface
                 }
 
                 if(count(array_diff($newProductVariant, $existingProductVariant)) == 0) {
-                    dump(array_diff($newProductVariant, $existingProductVariant));
+                    $targetQuantity = $quantity;
+                    if ($quantity == 0) {
+                        $targetQuantity = $existingItem->getQuantity() + $item->getQuantity();
+                    }
                     $this->orderItemQuantityModifier->modify(
                         $existingItem,
-                        $existingItem->getQuantity() + $item->getQuantity()
+                        $targetQuantity
                     );
 
                     return;
                 }
 
             } elseif ($item->equals($existingItem)) {
-
+                $targetQuantity = $quantity;
+                if ($quantity == 0) {
+                    $targetQuantity = $existingItem->getQuantity() + $item->getQuantity();
+                }
                 $this->orderItemQuantityModifier->modify(
                     $existingItem,
-                    $existingItem->getQuantity() + $item->getQuantity()
+                    $targetQuantity
                 );
 
                 return;
