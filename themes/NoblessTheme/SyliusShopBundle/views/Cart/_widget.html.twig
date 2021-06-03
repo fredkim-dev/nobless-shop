@@ -23,24 +23,25 @@
     <b class="screen-overlay-cart"></b>
     <div class="header-dropdown dropdown-menu cart-dropdown">
         {{ sonata_block_render_event('sylius.shop.partial.cart.summary.before_popup_content', {'cart': cart}) }}
-        <div id="cartWidgetTitle" class="d-flex flex-row justify-content-between mx-3 mb-2">
-            <div>
-                <h3 class="d-none d-md-block">{{ 'sylius.ui.your_shopping_cart'|trans }}</h3>
-                <h3 class="d-block d-md-none">{{ 'sylius.ui.cart'|trans }}</h3>
-            </div>
-            <div class="close-cart-widget">{{ icons.times() }}</div>
-        </div>
 
         <div id="emptyCart" class="card-body text-center{% if not cart.empty %} d-none{% endif %}">
             {{ 'sylius.ui.your_cart_is_empty'|trans }}
         </div>
         <div id="cartItems" class="{% if cart.empty %}d-none{% else %}d-flex{% endif %} flex-column justify-content-between">
+            <div id="cartWidgetTitle" class="d-flex flex-row justify-content-between mx-3 mb-2 pb-2">
+                <div>
+                    <h3 class="d-none d-md-block">{{ 'sylius.ui.your_shopping_cart'|trans }}</h3>
+                    <h3 class="d-block d-md-none">{{ 'sylius.ui.cart'|trans }}</h3>
+                </div>
+                <div class="close-cart-widget">{{ icons.times() }}</div>
+            </div>
+
             <form id="headerCartItems" class="position-relative loadable">
                 {% for item in cart.items %}
                     {% include '@SyliusShop/Product/_headerProductItem.html.twig' with {'variant': item.variant, 'parentRoute': parentRoute} %}
                 {% endfor %}
             </form>
-            <div id="headerCartNewItem"></div>
+            <div id="headerCartNewItem" class="d-none"></div>
             <div id="cartActions">
                 <div class="d-flex flex-row justify-content-between mt-2 mx-3 cart-subtotal">
                     <span class="item-title">{{ 'sylius.ui.subtotal'|trans }}</span>

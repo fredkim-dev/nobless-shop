@@ -47,7 +47,7 @@ const SyliusAddToCart = (el) => {
         }
         $('#headerCartItems').html($(responseData).find('.ajax-cart-items')[0].innerHTML).scrollTop(0).addClass('d-none');
         $('.cart-count').html($(responseData).find('.ajax-count-cart-items')[0].innerHTML);
-        $('#headerCartNewItem').html($(responseData).find('.ajax-new-item')[0].innerHTML);
+        $('#headerCartNewItem').html($(responseData).find('.ajax-new-item')[0].innerHTML).removeClass('d-none');
         $('.dropdown.cart-btn .dropdown-toggle').trigger('click');
         $('#cartActions .cart-subtotal').removeClass('d-flex').addClass('d-none');
         $('#cartActions .cart-subtotal span').last().html($(responseData).find('.ajax-cart-subtotal')[0].innerHTML);
