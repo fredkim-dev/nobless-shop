@@ -6,18 +6,11 @@
 
     {% for key, item in cart.items %}
         {% set error = '' %}
-        {% set maxQtyInCart = constant('App\\Entity\\Product\\Product::MAX_QTY_IN_CART') %}
-
-        {# Change maxQtyInCart if qty in stock is lower #}
-        {% if not item.product.isBundle() and (item.variant.onHand - item.variant.onHold < maxQtyInCart) %}
-            {% set maxQtyInCart = item.variant.onHand - item.variant.onHold %}
-        {% elseif item.product.isBundle() %}
-            {% set maxQtyInCart = sylius_bundle_max_qty_in_cart(item) %}
-        {% endif %}
+        {% set maxQtyInCart = sylius_max_qty_in_cart(item) %}
 
         {% if formErrors is defined and item.id in formErrors|keys %}
             {% set error = formErrors[item.id] %}
-        {% elseif not item.variant.product.enabled or maxQtyInCart <= 0 %}
+        {% elseif sylius_order_item_out_of_stock(item) %}
             {% set error = 'sylius.form.bag.not_available' %}
         {% elseif form.items[key].quantity.vars.data >= maxQtyInCart %}
             {% set error = 'sylius.form.bag.limit_in_cart_reached' %}

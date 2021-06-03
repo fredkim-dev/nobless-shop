@@ -37,7 +37,7 @@
                 {% endfor %}
                 </div>
             </div>
-            <div class="col-6 {% if taxons|length > 2 %}col-xl-7{% else %}col-xl-8{% endif %} p-0 d-flex flex-row menu-images">
+            <div class="col-6 {% if taxons|length > 6 %}col-xl-7{% else %}col-xl-8{% endif %} p-0 d-flex flex-row menu-images">
                 <div class="col-3 p-0 d-none d-xl-block">
                     {% for taxon in taxons %}
                         <div class="menu-img menu-img-{{ taxon.slug }}{% if loop.index == 1 %} active{% endif %}">

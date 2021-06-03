@@ -40,6 +40,11 @@ const SyliusAddToCart = (el) => {
       request.then((response) => {
         validationElement.classList.remove('d-block');
         const responseData = $.parseHTML(response.data)[0];
+        $('#cartActions .invalid-feedback').removeClass('d-block');
+        if (!$('#emptyCart').hasClass('d-none')) {
+          $('#cartItems').removeClass('d-none').addClass('d-flex');
+          $('#emptyCart').addClass('d-none');
+        }
         $('#headerCartItems').html($(responseData).find('.ajax-cart-items')[0].innerHTML).scrollTop(0).addClass('d-none');
         $('.cart-count').html($(responseData).find('.ajax-count-cart-items')[0].innerHTML);
         $('#headerCartNewItem').html($(responseData).find('.ajax-new-item')[0].innerHTML);

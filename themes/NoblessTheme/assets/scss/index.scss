@@ -393,6 +393,13 @@ header {
                 cursor: pointer;
             }
             .cart-dropdown {
+                #cartWidgetTitle {
+                    border-bottom: 1px solid #271513;
+                    h3 {
+                        font-size: 1rem;
+                    }
+                }
+
                 input {
                     &.ajax-qty {
                         border: none;
@@ -425,7 +432,7 @@ header {
             top: 52px !important;
             right: -1px !important;
             left: unset !important;
-            max-height: 600px;
+            max-height: 670px;
             z-index: 99999;
             width:450px;
             overflow-x: hidden;
@@ -1241,7 +1248,7 @@ div.taxon-header {
         }
         .btn.delete-product {
             right: 5px;
-            top:5px;
+            top:12px;
             z-index: 99;
         }
         &.mobile-display {
@@ -2054,10 +2061,7 @@ div {
     #navbarMainMobile,
     .screen-overlay,
     .screen-overlay.show,
-    .screen-overlay-cart,
-    .screen-overlay-cart.show,
     .screen-overlay-filters,
-    .screen-overlay-cart.show,
     #menuButtonMain .close,
     #menuButtonMain .back {
         display:none !important;
@@ -2442,6 +2446,17 @@ div {
 }
 
 @media all and (max-width: 992px) {
+    header {
+        .menu-icones {
+            .dropdown {
+                .header-dropdown {
+                    width: 50%;
+                }
+            }
+        }
+
+    }
+
     #checkoutPage {
         #completeAddresses {
             flex-direction: column;

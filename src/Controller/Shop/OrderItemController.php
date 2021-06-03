@@ -156,8 +156,13 @@ class OrderItemController extends ResourceController
             throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid csrf token.');
         }
 
-        // Check if product qty in cart is already greater than the limit
         $newQuantity = (int)$request->request->get('quantity');
+        if ($newQuantity < 1) {
+            $translatedMessage = $this->container->get('translator')->trans('sylius.cart.wrong_product_quantity', [], 'validators');
+            return new Response($translatedMessage, 500);
+        }
+
+        // Check if product qty in cart is already greater than the limit
         $this->getQuantityModifier()->modify($orderItem, $newQuantity);
         $message = $this->checkProductQtyInCart($orderItem, 0);
         if ($message !== '') {

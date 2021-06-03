@@ -5,7 +5,7 @@
 {% import '@SyliusShop/Common/Macro/messages.html.twig' as messages %}
 
 {% set header = 'sylius.ui.your_shopping_cart' %}
-{% set hasProductOutOfStock = sylius_product_out_of_stock(cart) %}
+{% set hasProductOutOfStock = sylius_order_has_product_out_of_stock(cart) %}
 
 {% block title %}{{ header|trans }} | {{ parent() }}{% endblock %}
 

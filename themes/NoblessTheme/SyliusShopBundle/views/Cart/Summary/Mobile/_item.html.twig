@@ -5,18 +5,14 @@
 {% set product = item.variant.product %}
 {% set prices = product.variants|first.channelPricings|first %}
 
-{% if product.isBundle() %}
-    {% set isOutOfStock = sylius_bundle_out_of_stock(item) %}
-{% else %}
-    {% set isOutOfStock = productVariant.onHand == 0 or productVariant.onHand < form.quantity.vars.data or not product.enabled %}
-{% endif %}
+{% set isOutOfStock = sylius_order_item_out_of_stock(item) %}
 
 {% if error != '' %}
     <div class="col-12 mx-auto has-product-out-of-stock {% if loop.index == loop.first %}mt-2{% endif %}">
         {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' with {'message': error, 'isItem': true, 'isMobile': true} %}
     </div>
 {% endif %}
-<div class="col-12 position-relative card m-0 mb-1 mobile-display {% if isOutOfStock %}out-of-stock{% endif %}">
+<div class="col-12 position-relative cart-item-info card m-0 mb-1 mobile-display {% if isOutOfStock %}out-of-stock{% endif %}">
     <button type="button"
             data-js-remove-from-cart-button
             data-js-remove-from-cart-redirect-url="{{ path('sylius_shop_cart_summary') }}"
@@ -55,7 +51,7 @@
 
                 {# Quantity #}
                 <div class="col-12 p-0">
-                    {{ 'sylius.ui.quantity'|trans }} : <input type="number" class="form-control qty mobile-qty" value="{{ item.quantity }}" data-input-qty="sylius_cart[items][{{ key }}][quantity]" max="{{ maxQtyInCart }}" min="0"/> <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty mobile" />
+                    {{ 'sylius.ui.quantity'|trans }} : <input type="number" class="form-control qty mobile-qty" value="{{ item.quantity }}" data-input-qty="sylius_cart[items][{{ key }}][quantity]" max="{{ maxQtyInCart }}" min="1"/> <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty mobile d-none" />
                 </div>
             </div>
 

@@ -50,6 +50,8 @@ sylius:
             not_blank: Veuillez saisir votre mot de passe 255
             wrong_current: Le mot de passe fourni est différent de celui en cours 256
             mismatch: La confirmation du mot de passe ne correspondent pas 257
+    cart:
+        wrong_product_quantity: La quantité renseignée est incorrecte 258.1
     promotion_coupon: #PANIER
         is_invalid: Ce code promo n'est pas valide 258
 bitbag_sylius_bonus_points:

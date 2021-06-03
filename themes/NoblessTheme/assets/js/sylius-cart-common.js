@@ -16,15 +16,22 @@ const afterDomReplacementFunctions = function domReplacementFunctions() {
     $('.reload-qty.ajax').attr('data-js-update-qty-value', $(this).val());
     if (parseInt($(this).val()) >= parseInt($(this).attr('max'))) {
       $(this).val($(this).attr('max'));
+    } else if(parseInt($(this).val()) < parseInt($(this).attr('min'))) {
+      $(this).val($(this).attr('min'));
     }
   })
 }
 
 const updateCartWidgetFunctions = function updateCartWidget(response) {
   const responseData = $.parseHTML(response.data)[0];
+  const cartCount = $(responseData).find('.ajax-count-cart-items')[0].innerHTML;
   cartWidgetContainer.html($(responseData).find('.ajax-cart-items')[0].innerHTML).scrollTop(0).removeClass('loading');
-  $('.cart-count').html($(responseData).find('.ajax-count-cart-items')[0].innerHTML);
+  $('.cart-count').html(cartCount);
   $('#cartActions .cart-subtotal span').last().html($(responseData).find('.ajax-cart-subtotal')[0].innerHTML);
+  if (parseInt(cartCount) === 0) {
+    $('#cartItems').removeClass('d-flex').addClass('d-none');
+    $('#emptyCart').removeClass('d-none');
+  }
 }
 
 const addToCartFunctions = function addToCart() {

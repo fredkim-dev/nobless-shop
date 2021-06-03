@@ -1,8 +1,8 @@
 
 {% if 'menu-image-look' in media.code %}
     <a href="{{ media.link }}">
-        <img class="d-block img-fluid" src="{{ media.path }}" alt="{{ media.name }}"/>
+        <img class="d-inline-block img-fluid" src="{{ media.path }}" alt="{{ media.name }}"/>
     </a>
 {% else %}
-    <img class="d-block img-fluid" src="{{ media.path }}" alt="{{ media.name }}"/>
+    <img class="d-inline-block img-fluid" src="{{ media.path }}" alt="{{ media.name }}"/>
 {% endif %}

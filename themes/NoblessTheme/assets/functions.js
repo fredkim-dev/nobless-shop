@@ -9,6 +9,7 @@ import cart from './js/cart-nobless.js';
 import shareProduct from './js/share-product.js';
 import loginPage from './js/login-nobless.js';
 import contactPage from './js/contact-nobless';
+import $ from 'jquery';
 // MENU FUNCTIONS
 // ORDERS GRID FUNCTIONS
 
@@ -117,20 +118,20 @@ function megamenuFunctions() {
 
 function menuIconesFunctions() {
   $('.menu-icones .dropdown').on('show.bs.dropdown', function(e) {
+    $(".screen-overlay-cart").addClass("show");
     if ($(document).width() <= 1200) {
       const headerOuterHeight = $('#headerContainer').outerHeight() - $('.header-banner').height();
       const productContainerHeight = $('.cart-dropdown').height() - $('header').height() - $('#cartActions').outerHeight();
       $('.screen-overlay-cart').css('top', headerOuterHeight + 'px');
       $('#headerCartItems').css('height', productContainerHeight + 'px')
 
-      $(".screen-overlay-cart").addClass("show");
       $('body').addClass("offcanvas-active");
     }
   });
 
   $('.menu-icones .dropdown').on('hidden.bs.dropdown', function(e) {
+    $(".screen-overlay-cart").removeClass("show");
     if ($(document).width() <= 1200) {
-      $(".screen-overlay-cart").removeClass("show");
       $('body').removeClass("offcanvas-active");
     }
     // Cart Icon
@@ -138,7 +139,12 @@ function menuIconesFunctions() {
       $('#headerCartNewItem').html('');
       $('#headerCartItems').removeClass('d-none');
       $('#cartActions .cart-subtotal').addClass('d-flex').removeClass('d-none');
+      $('#cartActions .invalid-feedback').removeClass('d-block');
     }
+  });
+
+  $('.cart-dropdown .close-cart-widget').on('click', function(e) {
+    $('.dropdown.cart-btn .dropdown-toggle').trigger('click');
   });
 }
 

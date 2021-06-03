@@ -2,6 +2,8 @@
 /* CART PAGE MANAGEMENT */
 /************************/
 
+import $ from 'jquery';
+
 const container = $('#cartPage');
 const bodyContainer = $('body');
 
@@ -9,26 +11,35 @@ const cart = function mainFunctions() {
   // When reloading quantities
   // Desktop
   $('.reload-qty', container).on('click', function() {
-    if ($(this).hasClass('mobile')) {
-      $('form.form-to-submit').trigger('submit');
-    } else {
-      $(this).closest('form').trigger('submit');
+    if (!$(this).closest('.cart-item-info').hasClass('out-of-stock')) {
+      if ($(this).hasClass('mobile')) {
+        $('form.form-to-submit').trigger('submit');
+      } else {
+        $(this).closest('form').trigger('submit');
+      }
     }
   });
 
   // Mobile
   $('.mobile-qty', container).on('input', function() {
-    const newQty = parseInt($(this).val());
-    if (newQty <= parseInt($(this).attr('max'))) {
-      const inputQtyName = $(this).data('input-qty');
-      $('input[name="' + inputQtyName + '"]').val(newQty);
+    if (!$(this).closest('.cart-item-info').hasClass('out-of-stock')) {
+      $(this).next().removeClass('d-none');
+      const newQty = parseInt($(this).val());
+      if (newQty <= parseInt($(this).attr('max'))) {
+        const inputQtyName = $(this).data('input-qty');
+        $('input[name="' + inputQtyName + '"]').val(newQty);
+      }
     }
   });
 
   // Prevent customer to add more than 5 times a product
   $('.qty', container).on('input', function (e) {
-    if (parseInt($(this).val()) >= parseInt($(this).attr('max'))) {
-      $(this).val($(this).attr('max'));
+    // If product is out of stock, nothing happens
+    if (!$(this).closest('.cart-item-info').hasClass('out-of-stock')) {
+      $(this).next().removeClass('d-none');
+      if (parseInt($(this).val()) >= parseInt($(this).attr('max'))) {
+        $(this).val($(this).attr('max'));
+      }
     }
   });
 

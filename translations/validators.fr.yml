@@ -65,6 +65,8 @@ sylius:
         password:
             min: Le mot de passe doit comporter au moins {{ limit }} caractères.
             max: Le mot de passe ne doit pas faire plus de {{ limit }} caractères.
+    cart:
+        wrong_product_quantity: La quantité renseignée est incorrecte 258.1
 bitbag_sylius_bonus_points:
     order:
         bonus_points:

@@ -5,19 +5,9 @@
 {% set product = item.variant.product %}
 {% set prices = product.variants|first.channelPricings|first %}
 
-{% if product.isBundle() %}
-    {% set isOutOfStock = sylius_bundle_out_of_stock(item) %}
-{% else %}
-    {% set isOutOfStock = productVariant.onHand == 0 or productVariant.onHand < form.quantity.vars.data or not product.enabled  %}
-{% endif %}
+{% set isOutOfStock = sylius_order_item_out_of_stock(item) %}
 
-{% if error != '' %}
-    <div class="col-12 mx-auto {% if key == 0 %}mt-3{% endif %}">
-        {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' with {'message': error, 'isItem': true} %}
-    </div>
-{% endif %}
-
-<div class="col-12 position-relative card m-0 pb-1 {% if isOutOfStock %}out-of-stock{% endif %}">
+<div class="col-12 position-relative cart-item-info card m-0 pb-1 {% if isOutOfStock %}out-of-stock{% endif %}">
     <button type="button"
             data-js-remove-from-cart-button
             data-js-remove-from-cart-redirect-url="{{ path('sylius_shop_cart_summary') }}"
@@ -25,64 +15,72 @@
             data-js-remove-from-cart-api-url="{{ path('sylius_shop_ajax_cart_item_remove', {'id': item.id}) }}"
             class="btn btn-md btn-link delete-product position-absolute">{{ icons.times() }}</button>
     <div class="row">
-        <div class="col-4 d-flex align-items-center p-1 p-lg-3">
+        <div class="col-4 d-flex align-items-start p-1 p-lg-3">
             {% include '@SyliusShop/Product/_mainImage.html.twig' with {'product': product} %}
         </div>
-        <div class="col d-flex flex-column justify-content-center pl-0 py-3">
-            {# Product name #}
-            <h6><a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}">{{ item.productName }}</a></h6>
-
-            {# Unit price #}
-            {% if item.unitPrice != item.discountedUnitPrice %}
-                <small><s>{{ money.convertAndFormat(item.unitPrice) }}</s></small>
-            {% endif %}
-
-            {% if product.isBundle() %}
-                <div class="d-flex flex-row">
-                    <span class="original-price"><span></span>{{ money.convertAndFormat(prices.originalPrice) }}</span>
-                    <span class="ml-2">{{ money.convertAndFormat(item.discountedUnitPrice) }}</span>
+        <div class="col d-flex flex-column pl-0 py-3">
+            {% if error != '' %}
+                <div class="col mx-auto mt-2">
+                    {% include '@SyliusShop/Cart/Alert/hasProductOutOfStock.html.twig' with {'message': error, 'isItem': true} %}
                 </div>
-                <span class="bundle-saving">{{ 'sylius.ui.bundle_saving'|trans }}</span>
-            {% else %}
-                <span>{{ money.convertAndFormat(item.discountedUnitPrice) }}</span>
             {% endif %}
 
-            <div class="row mt-4 mt-sm-0 p-2">
-                {% set variantClass = "" %}
-                {% set paddingClass = "px-md-2 pt-md-2 pb-md-0 p-xxxl-0" %}
-                {% set totalPaddingClass = "py-xxl-0" %}
-                {% if not product.hasOptions() and item.variantName is null %}
-                    {% set variantClass = "d-none" %}
-                    {% set paddingClass = "px-2" %}
-                    {% set totalPaddingClass = "py-lg-0" %}
+            <div class="col{% if error != '' %} mt-3{% else %} d-flex flex-column justify-content-center{% endif%} ">
+                {# Product name #}
+                <h6><a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}">{{ item.productName }}</a></h6>
+
+                {# Unit price #}
+                {% if item.unitPrice != item.discountedUnitPrice %}
+                    <small><s>{{ money.convertAndFormat(item.unitPrice) }}</s></small>
                 {% endif %}
 
-                {% if not product.isBundle() %}
-                    <div class="col-md-12 col-xxxl-4 px-2 {{ variantClass }}">
-                        {% if product.hasOptions() %}
-                            <div>
-                                {% for optionValue in productVariant.optionValues %}
-                                    <div data-sylius-option-name="{{ optionValue.name }}">
-                                        {{ 'sylius.ui.size'|trans }} : {{ optionValue.value }}
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% elseif item.variantName is not null %}
-                            <div>{{ 'sylius.ui.size'|trans }} : {{ item.variantName }}</div>
-                        {% endif %}
+                {% if product.isBundle() %}
+                    <div class="d-flex flex-row">
+                        <span class="original-price"><span></span>{{ money.convertAndFormat(prices.originalPrice) }}</span>
+                        <span class="ml-2">{{ money.convertAndFormat(item.discountedUnitPrice) }}</span>
                     </div>
+                    <span class="bundle-saving">{{ 'sylius.ui.bundle_saving'|trans }}</span>
                 {% else %}
-                    <div class="col-12 p-2">
-                        {{ bitbag_render_product_bundle_order_items(item) }}
-                    </div>
+                    <span>{{ money.convertAndFormat(item.discountedUnitPrice) }}</span>
                 {% endif %}
 
-                <div class="col-sm-12 col-lg-6 col-xl {{ paddingClass }}">
-                    {{ 'sylius.ui.quantity'|trans }} : {{ form_widget(form.quantity, {'attr': {'class': 'qty', 'min': 0, 'max': maxQtyInCart, 'data-item-id': item.id }}) }} <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty" />
-                </div>
+                <div class="row mt-4 mt-sm-0 p-2">
+                    {% set variantClass = "" %}
+                    {% set paddingClass = "px-md-2 pt-md-2 pb-md-0 p-xxxl-0" %}
+                    {% set totalPaddingClass = "py-xxl-0" %}
+                    {% if not product.hasOptions() and item.variantName is null %}
+                        {% set variantClass = "d-none" %}
+                        {% set paddingClass = "px-2" %}
+                        {% set totalPaddingClass = "py-lg-0" %}
+                    {% endif %}
 
-                <div class="col-sm-12 col-md-5 col-lg-6 col-xl-4 p-2 px-lg-2 {{ totalPaddingClass }}">
-                    {{ 'sylius.ui.total'|trans }} : {{ money.convertAndFormat(item.subtotal) }}
+                    {% if not product.isBundle() %}
+                        <div class="col-md-12 col-xxxl-4 px-2 {{ variantClass }}">
+                            {% if product.hasOptions() %}
+                                <div>
+                                    {% for optionValue in productVariant.optionValues %}
+                                        <div data-sylius-option-name="{{ optionValue.name }}">
+                                            {{ 'sylius.ui.size'|trans }} : {{ optionValue.value }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% elseif item.variantName is not null %}
+                                <div>{{ 'sylius.ui.size'|trans }} : {{ item.variantName }}</div>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="col-12 p-2">
+                            {{ bitbag_render_product_bundle_order_items(item) }}
+                        </div>
+                    {% endif %}
+
+                    <div class="col-sm-12 col-lg-6 col-xl {{ paddingClass }}">
+                        {{ 'sylius.ui.quantity'|trans }} : {{ form_widget(form.quantity, {'attr': {'class': 'qty', 'min': 1, 'max': maxQtyInCart, 'data-item-id': item.id }}) }} <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}" class="reload-icon reload-qty d-none" />
+                    </div>
+
+                    <div class="col-sm-12 col-md-5 col-lg-6 col-xl-4 p-2 px-lg-2 {{ totalPaddingClass }}">
+                        {{ 'sylius.ui.total'|trans }} : {{ money.convertAndFormat(item.subtotal) }}
+                    </div>
                 </div>
             </div>
         </div>
