@@ -357,6 +357,26 @@ class UserController extends ResourceController
         );
     }
 
+    public function loadPasswordRequestFormAction(Request $request): Response
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        $passwordReset = new PasswordResetRequest();
+        $formType = $this->getSyliusAttribute($request, 'form', UserRequestPasswordResetType::class);
+        $form = $this->createResourceForm($configuration, $formType, $passwordReset);
+        $template = $this->getSyliusAttribute($request, 'template', null);
+        if ($configuration->isHtmlRequest()) {
+            Assert::notNull($template, 'Template is not configured.');
+        }
+
+        return $this->container->get('templating')->renderResponse(
+            $template,
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
     protected function handleResetPasswordRequest(
         GeneratorInterface $generator,
         UserInterface $user,

@@ -18,6 +18,8 @@ use Sylius\Bundle\UserBundle\Form\Type\UserRequestPasswordResetType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GroupSequence;
 
 final class UserRequestPasswordResetTypeExtension extends AbstractTypeExtension
 {
@@ -28,12 +30,20 @@ final class UserRequestPasswordResetTypeExtension extends AbstractTypeExtension
                 'label' => 'sylius.user.email',
                 'constraints' => [
                     new UnknownPasswordEmail([
-                        'groups' => ['sylius']
+                        'groups' => ['requestPassword']
                     ])
                 ],
             ])
         ;
     }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'validation_groups' => new GroupSequence(['requestPassword']),
+        ]);
+    }
+
 
     public static function getExtendedTypes(): iterable
     {

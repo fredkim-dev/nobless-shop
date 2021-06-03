@@ -21,7 +21,7 @@ import SyliusVariantsPrices from '../../BootstrapTheme/assets/js/sylius-variants
 import SyliusVariantImages from '../../BootstrapTheme/assets/js/sylius-variant-images';
 //import SyliusProvinceField from '../../BootstrapTheme/assets/js/sylius-province-field';
 // import SyliusAddressBook from './js/sylius-address-book';
-import SyliusLoadableForms from '../../BootstrapTheme/assets/js/sylius-loadable-forms';
+import { SyliusLoadableForms } from './js/sylius-loadable-forms';
 import {afterDomReplacementFunctions, addToCartFunctions } from './js/sylius-cart-common';
 
 // Global axios settings

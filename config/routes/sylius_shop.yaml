@@ -75,6 +75,15 @@ sylius_shop_product_index:
     requirements:
         slug: .+
 
+# Ajax password request form load
+sylius_ajax_password_request_form_load:
+    path: /load-password-request-form
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.shop_user:loadPasswordRequestFormAction
+        _sylius:
+            template: "@SyliusShop/Account/PasswordReset/form.html.twig"
+
 # Bitbag override
 bitbag_sylius_product_bundle_shop_partial_cart_add_product_bundle:
     path: /_partial/cart/product-bundle/add

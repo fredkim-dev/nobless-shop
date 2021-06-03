@@ -1,6 +1,7 @@
 /*************************/
 /* LOGIN PAGE MANAGEMENT */
 /*************************/
+import { SyliusLoadableForm } from './sylius-loadable-forms';
 
 const loginPage = function mainFunctions() {
   // Open reset password modal
@@ -31,31 +32,27 @@ const loginPage = function mainFunctions() {
 
   // Only when resetPasswordSubmit button exists in page, Ajax call to reset password
   if ($('#resetPasswordSubmit')) {
-    $('#resetPasswordSubmit').on('click', function(event) {
-      event.preventDefault();
-      $('.reset-password .modal-dialog .form-error-message').html('');
-      const form = $(this).closest('form');
-      $(form).addClass('loading');
-      $.ajax({
-        type: "POST",
-        url: form.attr('action'),
-        data: form.serialize(),
-        success: function(response) {
-          $('.reset-password .modal-dialog').append(response);
-          $('.reset-password .modal-dialog .modal-content:not(.success)').addClass('d-none');
-          $('.modal-dialog input.form-control').removeClass('is-invalid');
-          $(form).removeClass('loading');
-        },
-        error: function(error) {
-          $('.reset-password .modal-dialog input.form-control').addClass('is-invalid');
-          $('.modal-dialog .form-errors .form-error-message').text($($.parseHTML(error.responseText)[1]).find('.form-errors ul li').text());
-          $(form).removeClass('loading');
-        }
-      })
-    });
+    loadAjaxPasswordReset();
 
     // Actions when modal is closed
-    $('#resetPasswordModal').on('hide.bs.modal', function (e) {
+    $('#resetPasswordModal').on('show.bs.modal', function(e) {
+      if (!$('.modal-content').hasClass('is-success')) {
+        // Ajax load
+        const modalBody = $('.reset-password .modal-dialog .modal-body');
+        const overlay = document.querySelector('[data-js-loading-overlay]');
+        const url = $(this).data('ajax-password-request-url');
+        $('form.loadable', this).addClass('loading');
+        $.ajax({
+          type: "GET",
+          url,
+          success: function(response) {
+            modalBody.html(response);
+            loadAjaxPasswordReset();
+            SyliusLoadableForm($('form.loadable', modalBody)[0]);
+          }
+        })
+      }
+    }).on('hide.bs.modal', function (e) {
       $('.reset-password .modal-dialog input.form-control').removeClass('is-invalid');
       $('.reset-password .modal-dialog form').removeClass('loading');
       $('.reset-password .modal-dialog form input').val('');
@@ -91,5 +88,31 @@ const loginPage = function mainFunctions() {
     }
   });
 };
+
+function loadAjaxPasswordReset() {
+  $('#resetPasswordSubmit').on('click', function(event) {
+    event.preventDefault();
+    $('.reset-password .modal-dialog .form-error-message').html('');
+    const form = $(this).closest('form');
+    $(form).addClass('loading');
+    $.ajax({
+      type: "POST",
+      url: form.attr('action'),
+      data: form.serialize(),
+      success: function(response) {
+        $('.reset-password .modal-dialog').append(response);
+        $('.reset-password .modal-dialog .modal-content:not(.success)').addClass('d-none');
+        $('.modal-dialog input.form-control').removeClass('is-invalid');
+        $(form).removeClass('loading');
+        $('.modal-content').addClass('is-success');
+      },
+      error: function(error) {
+        $('.reset-password .modal-dialog input.form-control').addClass('is-invalid');
+        $('.modal-dialog .form-errors .form-error-message').text($($.parseHTML(error.responseText)[1]).find('.form-errors ul li').text());
+        $(form).removeClass('loading');
+      }
+    })
+  });
+}
 
 export default loginPage;
