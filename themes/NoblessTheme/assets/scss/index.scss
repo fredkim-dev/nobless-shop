@@ -184,24 +184,6 @@ a {
     line-height: 1rem;
 }
 
-/*===============*/
-/* COMMON DESIGN */
-/*===============*/
-/*.d-md-none .log-link {
-    color: inherit;
-    &:hover {
-        text-decoration: underline;
-        color: #271513;
-    }
-}
-.d-md-block .log-link {
-    color: #ffffff;
-    &:hover {
-        text-decoration: underline;
-        color: #ffffff;
-    }
-}*/
-
 .title-separator {
     border: 2px solid #271513;
     width: 70px;
@@ -211,6 +193,47 @@ a {
     &.active,
     & + .breadcrumb-item::before {
         color: #271513;
+    }
+}
+
+.pagination {
+    justify-content: center;
+    li {
+        padding-bottom: 0.25rem;
+        &.page-item {
+            position: relative;
+        }
+        &.disabled {
+            display: none;
+        }
+        &.prev, &.next {
+            .page-link {
+                &:hover {
+                    border: none;
+                }
+            }
+        }
+        .page-link {
+            border: none;
+            color: #271513;
+            padding: 0.5rem;
+            margin-left: 0.25rem;
+            margin-right: 0.25rem;
+            &:focus {
+                box-shadow: none;
+            }
+            &:hover {
+                border-bottom: 1px solid #271513;
+                background: none;
+            }
+        }
+        &.active {
+            .page-link {
+                background: none;
+                color: #271513;
+                border-bottom: 1px solid #271513;
+            }
+        }
     }
 }
 
@@ -1109,45 +1132,6 @@ div.taxon-header {
             width: 70%;
         }
     }
-    .pagination {
-        li {
-            padding-bottom: 0.25rem;
-            &.page-item {
-                position: relative;
-            }
-            &.disabled {
-                display: none;
-            }
-            &.prev, &.next {
-                .page-link {
-                    &:hover {
-                        border: none;
-                    }
-                }
-            }
-            .page-link {
-                border: none;
-                color: #271513;
-                padding: 0.5rem;
-                margin-left: 0.25rem;
-                margin-right: 0.25rem;
-                &:focus {
-                    box-shadow: none;
-                }
-                &:hover {
-                    border-bottom: 1px solid #271513;
-                    background: none;
-                }
-            }
-            &.active {
-                .page-link {
-                    background: none;
-                    color: #271513;
-                    border-bottom: 1px solid #271513;
-                }
-            }
-        }
-    }
 }
 
 /*==============*/
@@ -1895,6 +1879,7 @@ div.taxon-header {
 /*==========================*/
 /* PRODUCT GALLERY CAROUSEL */
 /*==========================*/
+.cart-items-mobile + .slider-controls,
 .product-gallery.slider-controls {
     position:absolute;
     width: 100%;

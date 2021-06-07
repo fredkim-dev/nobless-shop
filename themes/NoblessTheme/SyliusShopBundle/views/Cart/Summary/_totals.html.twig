@@ -12,6 +12,7 @@
 {% set bonusPointsAdjustment = constant('BitBag\\SyliusBonusPointsPlugin\\Entity\\AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT') %}
 
 {% set bonusPointsTotal = cart.getAdjustmentsTotal(bonusPointsAdjustment) %}
+{% set availableBonusPoints = (bitbag_active_bonus_points() / 100)|round(0, 'floor') %}
 
 <div class="totals card mb-3 position-sticky">
     {{ sonata_block_render_event('sylius.shop.cart.summary.totals', {'cart': cart}) }}
@@ -74,11 +75,11 @@
 
         <div class="total-separator w-75 mx-auto mt-3 mb-2"></div>
 
-        {% if bitbag_active_bonus_points() > 0 %}
+        {% if availableBonusPoints > 0 or bonusPointsTotal > 0 %}
             <div class="d-flex flex-column">
                 <div class="mb-2">
                     <span class="text-muted">{{ 'bitbag_sylius_bonus_points.ui.you_have_bonus_points_available'|trans }}</span>
-                    <strong>{{ (bitbag_active_bonus_points() / 100)|round(0, 'floor') }}&euro;</strong>
+                    <strong>{{ availableBonusPoints }}&euro;</strong>
                 </div>
 
                 <div class="bonus-points-input input-group mb-2 mr-sm-2{% if bonusPointsTotal %} d-none{% endif %}">

@@ -1,0 +1,322 @@
+# TRADUCTIONS SITE
+sylius:
+    ui:
+    #HEADER
+        pret_a_porter: Prêt-à-porter
+        archives: Magazine
+    #BANNIÈRE
+        money_back_guarantee: Satisfecho o rembolsado
+        money_back_guarantee_desc_1: 14 días para devolver su pedido
+        money_back_guarantee_desc_2: Devolucion gratis
+        express_delivery: Entrega gratuita
+        express_delivery_desc_1: En su casa o en un punto de relevo
+        express_delivery_desc_2: Entrega gratuita desde 59 €
+        secured_payment: Pago seguro
+        secured_payment_desc: Paga tu pedido con confianza
+        secured_payment_cards: Mastercard, Visa, Paypal
+        client_service: Servicio al cliente
+        client_service_desc: Nuestros asesores Noblezz están a su disposición
+                #Contactez-nous - Ligne 35
+    #NEWSLETTER
+        find_noblezz: Únete a Noblezz
+        newsletter_subscribe: Suscríbete a la newsletter Noblezz
+        newsletter_info_1: Aprovecha en exclusiva las últimas colecciones, ofertas y diversas iniciativas de la marca suscribiéndote a la newsletter de Noblezz.
+        newsletter_info_2: Encontrarás más informaciones sobre el tema en la pagina
+                #Politique de confidentialité - Ligne 32
+        visit_blog: Visita el
+        noblezz_blog: Magazine de Noblezz
+    #FOOTER
+        customer_information: Informaciones
+        legal_notice: Notas legales
+        terms_and_conditions: 'Condiciones generales'
+        privacy_policy: Política de confidencialidad
+        delivery_and_returns: Entrega y devoluciones
+        client_service_faq: Preguntas frecuentes
+        contact_us: Contáctenos
+        my_account: My Noblezz
+        shop_catalog: Catalogo
+    #FILTRE & TRI
+        size_filter: Talla
+        price_filter: Precio
+        sort_by: 'Ordenar por : '
+        newest_first: Novedades
+        cheapest_first: Precio ascendente
+        most_expensive_first: Precio descendente
+        sort_and_filter: Ordenar y filtrar
+        filters: Filtros
+        validate_filter: Filtrar
+        clear: Reiniciar
+        no_product_filter: Ningún articulo corresponde con su selección
+        no_product_filter_2: Vuelve a intentarlo con diferentes filtros.
+    #HOME
+        home: 'Inicio'
+        newest_products: Novedades
+        buy_by_look: Outfit Patch
+    #PRODUCT PAGE
+        bundle_saving: (Ahorras 10%)
+        bundle_composition: Composición del look
+        choose_size: Elige tu talla
+        add_to_cart: 'Añadir a la cesta'
+        share_this_product: Compartir este artículo
+        description: 'Descripción'
+        composition: Composición
+        potential_bonus_points: Al comprar este artículo, obtiene un cash-back de % s € en su cuenta de Noblezz, que se utilizará en su próximo pedido.
+        potential_bonus_points_link: Más informaciónes en las
+        cgv: condiciones generales
+        complete_your_style: Completa tu estilo
+                #Nouveautés - Ligne 53
+    #PANIER
+#ICONE PANIER
+        subtotal: 'Subtotal'
+        view_cart: Ver cesta
+        your_cart_is_empty: 'Su cesta está vacía'
+#PAGE PANIER
+        your_shopping_cart: Resumen de su cesta
+        size: Talla
+        quantity: Cantidad
+        total: 'Total'
+        cart_total: Total de la cesta
+        items_total: Subtotal sin IVA
+        tva_20: 20% de IVA
+        global_amount: Total con IVA
+        without_shipping: (sin gastos de envío)
+        discount_code_cannot_be_combined: Los códigos promocionales no se pueden combinar
+        add_discount_code: Agregar código promocional
+        discount: 'Códigos promocionales %s'
+        estimate_shipping: Gastos de envío estimados
+        france_shipping: Francia
+        europe_shipping: Europa
+        international_shipping: Internacional
+        standard_shipping: Envío estándar %s
+        express_shipping: Envío express %s
+        relay_shipping: Envío de punto de relevo %s
+        standard_shipping_free: (gratis desde 80 €)
+        express_shipping_free: (gratis desde 300€)
+        relay_shipping_free: (gratis desde 30€)
+        free_shipping_method: Gratis
+        order_total: Total pedido
+        ttc: (Con IVA)
+        complete_order: Finaliza el pedido
+    #TUNEL DE COMMANDE
+                #Paiement sécurisé - LIGNE 14
+        address: 'Dirección'
+        shipping_address: Dirección de entrega
+        billing_address: 'Dirección de facturación'
+        no_address_yet: Sin dirección
+        add_new_address_form: Añadir una dirección
+        change_address: Cambiar dirección
+        back_to_store: 'Regreso a la boutique'
+        change_shipping_address: Cambiar dirección de envío
+        change_billing_address: Cambiar dirección de facturación
+        add: Añadir
+        add_address: Añadir una dirección
+        use_new_address: Usar una nueva dirección
+        of_shipping: de envío
+        of_billing: de facturación
+        save_and_use_address: Regístrar en la cuenta y úsarla
+        cancel: 'Cancelado'
+        shipping: 'Transporte'
+                #Modifier l'adresse - LIGNE 108
+        payment: Pago
+        change_shipping_method: 'Cambiar el método de entrega'
+        next: 'Siguiente'
+        order_summary: Resumen
+                #Adresse de livraison - Ligne 104
+                #Adresse de facturation - Ligne 105
+        shipping_method: "Método de envío"
+        payment_method: 'Método de pago'
+        place_order: 'Pedir'
+        cart: 'Cesta'
+        modify: Modificar
+                #Quantité - Ligne 77
+        benefit: Ventajas
+                #'Code PROMO : %s' - LIGNE 86
+                #Cash-back - LIGNE 319
+                #"Méthode d'expédition" - Ligne 127
+                #Total commande - LIGNE 98
+                #(TTC) - LIGNE 99
+    #FORMULAIRE DE CONTACT
+        contact_form: Formulario de contacto
+        first_name: Nombre
+        lastname: Apellidos
+        email: Correo electrónico
+        phone_number: Teléfono
+        subject: Asunto
+        other_subject: Por favor ingrese el tema de su mensaje
+        message: 'Mensaje'
+        accept_cgv_contact_1: Acepto
+        accept_cgv_contact_2: condiciones generales
+        send: 'Enviar'
+    #LOGIN
+        customer_login: 'Mi cuenta'
+        registered_customers: 'Iniciar sesión'
+        registered_customers_subtitle: 'Ya es cliente de Noblezz, inicie sesión con sus datos de inicio de sesión'
+                #'Rester connecté' - LIGNE 255
+        forgot_password: '¿Contraseña olvidada?'
+        login: 'Iniciar sesión'
+        new_customers: 'Crear una cuenta'
+        new_customers_subtitle: Crea tu cuenta Noblezz para beneficiar de una gestión completa de tu perfil así como un seguimiento simplificado de todos tus pedidos. Aprovecha acumular ventajas de fidelidad con cada pedido. Siga los siguientes pasos para crear su cuenta Noblezz.
+        create_an_account: 'Crear una cuenta'
+    #CRÉATION DE COMPTE
+                #'Mon compte' - LIGNE 152
+        personal_information: 'Informaciones personales'
+        account_credentials: 'Información de inicio de sesión'
+                #Créer un compte - LIGNE 160
+        have_an_account_already: '¿Ya tienes una cuenta?'
+        sign_in_here: 'Acceder a tu cuenta'
+    #MON COMPTE
+                #Mon compte - LIGNE 36
+        hello: Buenos dias %s
+        menu: Menú
+                #Tableau de bord - LIGNE 246
+        profile: 'Perfil'
+        not_verified: Valide su dirección de correo electrónico
+        email_verified: Correo electrónico verificado
+        edit_account: 'Editar mi perfil'
+        shipping_address_default: 'Dirección de envío predeterminada'
+        billing_address_default: 'Dirección de facturación predeterminada'
+        no_default_address: Ninguna dirección predeterminada
+        edit_address: Editar dirección
+                #Mes informations personnelles - LIGNE 247
+        edit_your_personal_information: 'Informaciónes personales'
+        change_newsletter_subscription: 'Newsletter Noblezz'
+                #Sécurité de compte - LIGNE 248
+        change_password: 'Cambiar mi contraseña'
+        save_changes: 'Guardar su información'
+                #Mes adresses - LIGNE 249
+        you_have_no_addresses_defined: No tienes ninguna dirección registrada
+                #Adresse de livraison par défaut - LIGNE 177
+                #Adresse de facturation par défaut - LIGNE 178
+                #Editer l'adresse - LIGNE 180
+        edit_my_address: 'Cambiar mi direccion'
+                #Annuler - LIGNE 118
+        additional_addresses: Direcciones adicionales
+                #Ajouter - LIGNE 112
+                #Ajouter une adresse - LIGNE 113
+        set_as_default: 'Hacer predeterminada'
+        edit: 'Editar'
+        delete: 'Eliminar'
+                #Mes commandes - LIGNE 250
+        number: Número del pedido
+        date: Fecha del pedido
+        state: Estado del pedido
+        fulfilled: 'Completado'
+        cancelled: Cancelado
+        new: 'Nuevo'
+        tracking_number: Número de seguimiento
+                #Total - LIGNE 78
+        actions: 'Detalles'
+        show_order: Ver el pedido
+                #Adresse de livraison - LIGNE 104
+                #Adresse de facturation - LIGNE 105
+        item: Articulo
+                #Sous-total - LIGNE 70
+        sku: Ref
+                #Taille - LIGNE 76
+        qty: Cantidad
+                #Sous-total HT - LIGNE 80
+                #'Code PROMO : %s' - LIGNE 86
+        shipping_total: 'Gastos de envío'
+                #Total - LIGNE 78
+        no_orders_yet: No hay ningún pedido registrado para su cuenta
+        logout: 'Cerrar sesión'
+    #####
+        no_additionnal_addresses: No tienes direcciones adicionales
+    #SEXE NOUVEAU COMPTE & FORMULAIRE DE CONTACT
+    gender:
+        unknown: Sr.
+        male: Sra.
+        female: Srta.
+    #MOT DE PASSE OUBLIÉ
+    user:
+        forgot_password_title: Olvidé mi contraseña
+        set_a_new_password_for_your_account_1: Ingrese la dirección de correo electrónico asociada a su cuenta.
+        set_a_new_password_for_your_account_2: Recibirá en este correo electrónico un enlace que le permitirá restablecer su contraseña.
+        email: Correo electrónico
+        reset_password: Restablecer mi contraseña
+        reset_password_request_ok: Se ha tenido en cuenta su solicitud de restablecimiento
+        reset_password_request: Se acaba de enviar a su dirección de correo electrónico un correo electrónico con instrucciones para 
+        reset_password_not_received_title: ¿No recibió este correo electrónico?
+        reset_password_not_received: Lo invitamos a verificar que el correo electrónico no haya sido redirigido a la casilla de correo no deseado de su bandeja de entrada.
+    menu:
+        shop:
+            account: #FOOTER & MON COMPTE
+                dashboard: Mi perfil
+                personal_information: Mis informaciones personales
+                change_password: Seguridad de la cuenta
+                address_book: Mis direcciones
+                order_history: Mis pedidos
+    form:
+        login: #LOGIN
+            username: 'Correo electrónico *'
+            password: 'Contraseña *'
+            remember_me: #'Rester connecté 188'
+            verify_credentials: 'Comprobar sus datos de inicio de sesión'
+        user_change_password: #SÉCURITÉ DU COMPTE
+            current: Contraseña actual
+            new: Nueva contraseña
+            confirmation: Confirmar nueva contraseña
+        user:
+            password: #CRÉATION DE COMPTE
+                label: Contraseña
+                confirmation: Confirmación de contraseña
+        customer: #CRÉATION DE COMPTE & INFORMATION PERSONNELLES
+            gender: Título
+            first_name: Nombre
+            last_name: Apellidos
+            birthday: Fecha de nacimiento
+            phone_number: Teléfono
+            email: Correo electrónico
+            subscribed_to_newsletter: #S'inscrire à la newsletter 201
+            subscribed_to_newsletter_noblezz: Me gustaría suscribirme a la newsletter de Noblezz para recibir las últimas colecciones, ofertas y las diversas iniciativas de la marca.
+            accept_cgv_1: Acepto las
+            accept_cgv_2: condiciones generales
+            accept_cgv_and: 'y la'
+            accept_cgv_3: política de confidencialidad
+        address: #CRÉATION OU MODIFICATION D'ADRESSE
+            first_name: Nombre 
+            last_name: Apellidos
+            street: Dirección
+            street2: 'Dirección: información adicional'
+            postcode: Código postal
+            city: Ciudad
+            country: País
+        contact: #FORMULAIRE DE CONTACT
+            choice:
+                subject:
+                    order_payment: Pedido y Pago
+                    delivery: Envío y Entrega
+                    refund: Devolución y Reembolso
+                    product_info: Información productos
+                    account: Cuenta cliente
+                    loyalty_program: Programa de fidelidad
+                    personal_data: Datos personales
+                    partnership: Asociación y Colaboración
+                    career: Carrera profesional
+                    noblezz: La casa Noblezz
+                    brand_rights: Ley de la marca
+                    other: Otro
+        product:
+            please_choose_size: Por favor, seleccionar la talla 
+            last_product_in_stock: Última pieza
+        bag:
+            limit_in_cart_reached: Se alcanzó el límite de cantidad para este artículo
+            not_available: Este artículo ya no está disponible
+            has_product_out_of_stock: Su cesta contiene un o varios artículos que ya no están disponibles. Elimínelos antes de seguir con el pago.
+    email:
+        contact:
+            new_contact_request: Tienes un nuevo mensaje
+            new_request_from: 'Una nueva solicitud de contacto ha sido realizada por : '
+            request_infos: Aquí están las informaciónes proporcionadas
+            subject_is: 'El tema se refiere : '
+            message_is: 'Aquí está el mensaje : '
+            email: 'Email : ' 
+            phone_number: 'Número de teléfono :'
+bitbag_sylius_bonus_points:
+    ui:
+        bonus_points: Cash-back
+        bonus_points_available_dashboard: Tienes %s€ en tu cash-back
+        you_have_bonus_points_available: 'Cash-back disponible :'
+        use_bonus_points: Usar mi cash-back
+        bonus_points_total_used: Cash-back utilizado
+        bonus_points_delete_link: Dejar de usar mi cash-back

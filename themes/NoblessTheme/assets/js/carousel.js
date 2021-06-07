@@ -9,7 +9,7 @@ const carousel = function mainFunctions() {
   createCarousel($('#carouselCompleteYourStyle'));
 
   createProductCarousel($('#productGallery'));
-  createProductCarousel($('#carouselSummaryItemsMobile'));
+  createProductCarousel($('#carouselSummaryItemsMobile'), true);
 };
 
 /**
@@ -62,8 +62,7 @@ function createCarousel(carouselElement) {
 /**
  * Create product carousels
  */
-function createProductCarousel(carouselElement) {
-  let isCartItemsCarousel = (carouselElement === $('#carouselSummaryItemsMobile'));
+function createProductCarousel(carouselElement, isCartItemsCarousel = false) {
   const options = {
       infinite: true,
       speed: 700,
@@ -91,7 +90,7 @@ function createProductCarousel(carouselElement) {
   if (carouselElement && !carouselElement.hasClass('slick-initialized')) {
     carouselElement.slick(options);
     if (isCartItemsCarousel) {
-      replaceCarouselArrowCart();
+      replaceCarouselArrowCart(carouselElement);
     }
   } else {
     if($(document).width() < 768 && carouselElement[0].slick && carouselElement[0].slick.unslicked) {
@@ -99,7 +98,7 @@ function createProductCarousel(carouselElement) {
     }
     if (isCartItemsCarousel) {
       carouselElement.on('setPosition', function(slick){
-        replaceCarouselArrowCart();
+        replaceCarouselArrowCart(carouselElement);
       });
     }
   }
@@ -196,8 +195,8 @@ function replaceCarouselArrow(carouselElement) {
  */
 function replaceCarouselArrowCart(element) {
   const imgSliderHeight = $('.slick-active img', element).outerHeight();
-  const arrowTopValue = Math.round(imgSliderHeight);
-  $(element).next('.slider-controls').css('top', arrowTopValue + 'px');
+  const arrowTopValue = Math.round(imgSliderHeight - 0.2 * imgSliderHeight);
+  element.next().css('top', arrowTopValue + 'px');
 }
 
 export {carousel, replaceCarouselArrow, replaceCarouselArrowCart, createAddressCarousel, createGalleryDesktop};

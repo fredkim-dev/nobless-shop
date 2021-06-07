@@ -43,7 +43,7 @@ sylius:
             invalid: Cet e-mail n'est pas valide
             not_blank: Veuillez saisir votre mot de passe
         password:
-            unknown_email: Aucun compte Noblezz n'est associé à cette adresse mail
+            unknown_email: Aucun compte Noblezz n'est associé à cette adresse mail.
             min: Le mot de passe doit comporter au moins {{ limit }} caractères
             max: Le mot de passe ne doit pas dépasser {{ limit }} caractères
         plainPassword:

@@ -54,7 +54,7 @@ sylius_shop_checkout_select_shipping:
     path: /select-shipping
     methods: [GET, PUT]
     defaults:
-        _controller: sylius.controller.order:updateAction
+        _controller: sylius.controller.shop.order_custom:updateAction
         _sylius:
             event: select_shipping
             flash: false
@@ -72,7 +72,7 @@ sylius_shop_checkout_select_payment:
     path: /select-payment
     methods: [GET, PUT]
     defaults:
-        _controller: sylius.controller.order:updateAction
+        _controller: sylius.controller.shop.order_custom:updateAction
         _sylius:
             event: payment
             flash: false

@@ -1,35 +1,10 @@
 # TRADUCTIONS SITE
 sylius:
     ui:
-        #HEADER
+    #HEADER
         pret_a_porter: Prêt-à-porter
-        archives: Archives
-        customer_login: 'Mon compte'
-        remember_me: 'Rester connecté'
-        forgot_password: 'Mot de passe oublié ?'
-        login: 'Connexion'
-        login_button: 'Connexion'
-        create_an_account: 'Créer un compte'
-        register: 'Créer un compte'
-        register_button: 'Créer un compte'
-        your_cart_is_empty: 'Votre panier est vide'
-        quantity: Quantité
-        subtotal: 'Sous-total'
-        view_cart: Afficher le panier
-        checkout: 'Paiement'
-        #FOOTER
-        customer_information: Informations
-        legal_notice: Mentions légales
-        terms_and_conditions: 'Conditions générales de vente'
-        privacy_policy: Politique de confidentialité
-        delivery_and_returns: Livraison et retours
-        client_service_faq: FAQ - Service client
-        contact_us: Contactez-nous
-                #Mon compte MODIFY IN HEADER
-        shop_catalog: Catalogue
-                #Peut-on déplacer cela dans Menu - Shop - Account
-        dashboard: 'Tableau de bord'
-        #BANNIÈRE
+        archives: Magazine
+    #BANNIÈRE
         money_back_guarantee: Satisfait ou remboursé
         money_back_guarantee_desc_1: 14 jours pour retourner votre colis
         money_back_guarantee_desc_2: Retours offerts
@@ -41,100 +16,99 @@ sylius:
         secured_payment_cards: Mastercard, Visa, Paypal
         client_service: Service Client
         client_service_desc: Nos conseillers Noblezz sont à votre écoute
-                #Contactez-nous MODIFY IN FOOTER
-        #NEWSLETTER
-        find_noblezz: Retrouvez Noblezz
-        newsletter_subscribe: Inscrivez-vous à la newsletter
-        newsletter_info_1: En saisissant votre adresse mail ci-dessous, vous acceptez de recevoir notre newsletter qui présente nos dernières collections, nos évènements et nos initiatives.
-        newsletter_info_2: Vous trouverez plus d'informations à ce sujet dans notre
-                #Politique de confidentialité MODIFY IN FOOTER
-        visit_blog: Visitez
-        noblezz_blog: le blog de Noblezz
-        #FILTRE & TRIE
+                #Contactez-nous - Ligne 35
+    #NEWSLETTER
+        find_noblezz: Rejoignez Noblezz
+        newsletter_subscribe: Inscrivez-vous à la newsletter Noblezz
+        newsletter_info_1: Profitez en exclusivité des dernières collections, des offres ainsi que des diverses initatives de la marque en vous inscrivant à la newsletter Noblezz
+        newsletter_info_2: Vous trouverez plus d'informations à ce sujet dans la page
+                #Politique de confidentialité - Ligne 32
+        visit_blog: Visitez le 
+        noblezz_blog: Magazine de Noblezz
+    #FOOTER
+        customer_information: Informations
+        legal_notice: Mentions légales
+        terms_and_conditions: 'Conditions générales'
+        privacy_policy: Politique de confidentialité
+        delivery_and_returns: Livraison et retours
+        client_service_faq: Questions fréquentes
+        contact_us: Contactez-nous
+        my_account: My Noblezz
+        shop_catalog: Catalogue
+    #FILTRE & TRI
         size_filter: Taille
         price_filter: Prix
         sort_by: 'Trier par :'
-        sort_and_filter: Trier et filtrer
         newest_first: Nouveautés
         cheapest_first: Prix croissant
         most_expensive_first: Prix décroissant
+        sort_and_filter: Trier et filtrer
         filters: Filtres
         validate_filter: Filtrer
-        reset: 'Réinitialiser'
-        reset_button: 'Réinitialiser'
-        no_product_filter: Aucun produit ne correspond à votre sélection
+        clear: Réinitialiser
+        no_product_filter: Aucun artcile ne correspond à votre sélection
         no_product_filter_2: Veuillez réessayer avec des filtres différents
-        #HOME
+    #HOME
         home: 'Accueil'
         newest_products: Nouveautés
         buy_by_look: Outfit Patch
-        #PRODUCT PAGE
+    #PRODUCT PAGE
         bundle_saving: (Vous économisez 10%)
         bundle_composition: Composition du look
         choose_size: Choisir sa taille
-        please_choose_size: Veuillez choisir une taille
-        last_product_in_stock: Dernières pièces
         add_to_cart: 'Ajouter au panier'
-        share_this_product: Partager ce produit
-                #DETAIL
+        share_this_product: Partager cet article
         description: 'Description'
-        review_details: 'Détails'
-        details: 'Détails'
         composition: Composition
         potential_bonus_points: En achetant cet article, vous obtenez un cash-back de %s€ sur votre compte Noblezz, à valoir dès votre prochaine commande.
         potential_bonus_points_link: Plus d'informations dans les
         cgv: conditions générales
         complete_your_style: Compléter votre style
-                #Nouveautés MODIFY IN HOME
-        #PANIER
+                #Nouveautés - Ligne 53
+    #PANIER
+#ICONE PANIER
+        subtotal: 'Sous-total'
+        view_cart: Afficher le panier
+        your_cart_is_empty: 'Votre panier est vide'
+#PAGE PANIER
         your_shopping_cart: Aperçu de votre panier
-        deliver_tomorrow: Recevez votre commande dès demain pour toute validation avant midi en choisissant la livraison Express
         size: Taille
-                #Quantité MOFIFY IN HEADER
+        quantity: Quantité
         total: 'Total'
         cart_total: Total du panier
         items_total: Sous-total HT
         tva_20: TVA 20%
-        global_amount: Montant global
+        global_amount: Total TTC
         without_shipping: (hors frais de livraison)
         discount_code_cannot_be_combined: Les codes promo ne peuvent pas être combinés
         add_discount_code: Ajouter un code promo
-                #CE CODE PROMO N'EST PAS VALIDE MANQUE AU DOCUMENT
-                #CODE PROMO
-        coupon: 'Code promo'
         discount: 'Code PROMO : %s'
         estimate_shipping: Estimation des frais de livraison
         france_shipping: France
         europe_shipping: Europe
         international_shipping: International
-                #LIVRAISON STANDARD
-                #LIVRAISON EXPRESS
-                #LIVRAISON EN POINT RELAIS
-                #OFFERTE DÈS 80€
-                #OFFERTE DÈS 300€
+        standard_shipping: Livraison standard %s
+        express_shipping: Livraison express %s
+        relay_shipping: Livraison en point relais
+        standard_shipping_free: (offerte dès 80€)
+        express_shipping_free: (offerte dès 300€)
+        relay_shipping_free: (offerte dès 30€)
+        free_shipping_method: Offerte
         order_total: Total commande
-        ttc: (TTC)
+        ttc: (TVA incluse)
         complete_order: Finaliser la commande
-        limit_in_cart_reached: La quantité limite pour cet article est atteinte
-        has_product_out_of_stock: Votre panier contient des produits qui ne sont plus disponibles. Veuillez les supprimer avant de procéder au paiement.
-        #TUNEL DE COMMANDE
-        cart: 'Panier'
-        modify: Modifier
-                #Quantité MOFIFY IN HEADER
-        benefit: Avantages
-                #CODE PROMO à voir
-                #Total commande MODIFY ON PANIER
-                #(TTC) MODIFY ON PANIER
-                #Paiement sécurisé MODIFY ON BANIÈRE
+    #TUNEL DE COMMANDE
+                #Paiement sécurisé - LIGNE 14
         address: 'Adresse'
-        addressing_step: 'Adresse de livraison'
+        shipping_address: Adresse de livraison
         billing_address: 'Adresse de facturation'
-        bill_to: 'Adresse de facturation'
         no_address_yet: Aucune adresse
+        add_new_address_form: Ajouter une adresse
         change_address: Modifier l'adresse
         back_to_store: 'Retour à la boutique'
         change_shipping_address: Modifier l'adresse de livraison
         change_billing_address: Modifier l'adresse de facturation
+        add: Ajouter
         add_address: Ajouter une adresse
         use_new_address: Utiliser une nouvelle adresse
         of_shipping: de livraison
@@ -142,199 +116,207 @@ sylius:
         save_and_use_address: Enregistrer sur le compte et l'utiliser
         cancel: 'Annuler'
         shipping: 'Expédition'
-                #'Paiement' MODIFY ON HEADER
+                #Modifier l'adresse - LIGNE 108
+        payment: Paiement
         change_shipping_method: 'Modifier le mode de livraison'
-        next: 'Suivant'
+        next: 'Suivant '
         order_summary: Récapitulatif
+                #Adresse de livraison - Ligne 104
+                #Adresse de facturation - Ligne 105
         shipping_method: "Méthode d'expédition"
         payment_method: 'Moyen de paiement'
         place_order: 'Commander'
-        #MON COMPTE
-        my_account: Mon compte
-        hello_name: 'Bonjour <b>%name%</b>'
+        cart: 'Panier'
+        modify: Modifier
+                #Quantité - Ligne 77
+        benefit: Avantages
+                #'Code PROMO : %s' - LIGNE 86
+                #Cash-back - LIGNE 319
+                #"Méthode d'expédition" - Ligne 127
+                #Total commande - LIGNE 98
+                #(TTC) - LIGNE 99
+    #FORMULAIRE DE CONTACT
+        contact_form: Formulaire de contact
+        first_name: Prénom
+        lastname: Nom
+        email: Email
+        phone_number: Téléphone
+        subject: Sujet
+        other_subject: Veuillez renseigner le sujet de votre message
+        message: 'Message'
+        accept_cgv_contact_1: J'accepte les
+        accept_cgv_contact_2: conditions générales
+        send: 'Envoyer'
+    #LOGIN
+        customer_login: 'Mon compte'
+        registered_customers: 'Connectez-vous'
+        registered_customers_subtitle: 'Vous êtes déjà client Noblezz, connectez-vous avec vos identifiants de connexion'
+                #'Rester connecté' - LIGNE 255
+        forgot_password: 'Mot de passe oublié ?'
+        login: 'Connexion'
+        new_customers: 'Créer un compte'
+        new_customers_subtitle: Créez votre compte Noblezz afin de bénéficier d'une gestion complète de votre profil ainsi que d'un suivi simplifié toutes de vos commandes. Profitez de cumuler des avantages de fidélité à chaque commande. Suivez les prochaines étapes pour créer votre compte Noblezz.
+        create_an_account: 'Créer un compte'
+    #CRÉATION DE COMPTE
+                #'Mon compte' - LIGNE 152
+        personal_information: 'Informations personnelles'
+        account_credentials: 'Informations de connexion'
+                #Créer un compte - LIGNE 160
+        have_an_account_already: 'Vous avez déjà un compte ?'
+        sign_in_here: 'Accédez à votre compte'
+    #MON COMPTE
+                #My Noblezz - LIGNE 36
+        hello: Bonjour %s
         menu: Menu
-        administration_dashboard: 'Tableau de bord'
+                #Tableau de bord - LIGNE 246
         profile: 'Profil'
-                #ADRESSE PAR DEFAUT
-        default_shipping_address: 'Adresse de livraison par défaut'
-        default_billing_address: 'Adresse de facturation par défaut'
+        not_verified: Veuillez valider votre adresse e-mail
+        email_verified: E-mail vérifié
+        edit_account: 'Editer mon profil'
         shipping_address_default: 'Adresse de livraison par défaut'
         billing_address_default: 'Adresse de facturation par défaut'
-        gender:
-            f: 'Mme.'
-            m: 'M.'
-        not_verified: Veuillez valider votre compte
-        email_verified: 'Email vérifié'
-        edit_account: 'Editer mon profil'
+        no_default_address: Aucune adresse
         edit_address: Editer l'adresse
-                #Mes informations personnelles MODIFY ON MENU - SHOP - ACCOUNT
-        edit_your_personal_information: 'Modifier mes informations personnelles'
-        change_newsletter_subscription: 'Modifier mon abonnement à la newsletter Noblezz'
-                #S'inscrire à la newsletter MODIFYON FORM - CUSTOMER
-                #Sécurité de compte MODIFY ON MENU - SHOP - ACCOUNT
-        change_password: 'Changer mon mot de passe'		
-        current_password: 'Mot de passe actuel'
-        new_password: 'Nouveau mot de passe'
-        repeat_new_password: 'Confirmer le mot de passe'
+                #Mes informations personnelles - LIGNE 247
+        edit_your_personal_information: 'Informations personnelles'
+        change_newsletter_subscription: 'Abonnement à la newsletter Noblezz'
+                #Sécurité de compte - LIGNE 248
+        change_password: 'Changer mon mot de passe'
         save_changes: 'Enregistrer les modifications'
-                #Mes adresses MODIFY ON MENU - SHOP - ACCOUNT
-        additional_addresses: 'Adresses supplémentaires'
-                #Ajouter une adresse MODIFY ON TUNEL DE COMMANDE
+                #Mes adresses - LIGNE 249
+        you_have_no_addresses_defined: Vous n'avez aucune adresse enregistrée
+                #Adresse de livraison par défaut - LIGNE 177
+                #Adresse de facturation par défaut - LIGNE 178
+                #Editer l'adresse - LIGNE 180
+        edit_my_address: 'Modifier mon adresse'
+                #Annuler - LIGNE 118
+        additional_addresses: Adresses supplémentaires
+                #Ajouter - LIGNE 112
+                #Ajouter une adresse - LIGNE 113
         set_as_default: 'Définir par défaut'
         edit: 'Modifier'
         delete: 'Supprimer'
-                #Mes commandes MODIFY ON MENU - SHOP - ACCOUNT
+                #Mes commandes - LIGNE 250
         number: Numéro de la commande
         date: Date de la commande
         state: Statut de la commande
-        order_state: 'Statut de la commande'
         fulfilled: 'Complétée'
         cancelled: Annulée
         new: 'Nouveau'
         tracking_number: Numéro de suivi
-        grand_total: 'Total'
-        actions: 'Actions'
+                #Total - LIGNE 78
+        actions: 'Détails'
         show_order: Voir la commande
-        view_order: Voir la commande
-                #Adresse de livraison MODIFY ON TUNEL DE COMMANDE
-                #Adresse de facturation MODIFY ON TUNEL DE COMMANDE
-                #Élement MANQUE AU DOCUMENT
-                #Sous-total MODIFY ON HEADER
+                #Adresse de livraison - LIGNE 104
+                #Adresse de facturation - LIGNE 105
+        item: Article
+                #Sous-total - LIGNE 70
         sku: Réf
-                #Taille MODIFY ON PANIER
-        qty: Qté
-                #Sous-total HT MODIFY ON PANIER
-                #'Code promo' MODIFY ON PANIER
-                #'Code PROMO : %s' MODIFY ON PANIER
-        shipping_total: 'Total des frais de port'
-                #Total à voir
-        no_orders_yet: Vous n'avez pas encore effectué de commande
+                #Taille - LIGNE 76
+        qty: Quantité
+                #Sous-total HT - LIGNE 80
+                #'Code PROMO : %s' - LIGNE 86
+        shipping_total: 'Frais de port'
+                #Total - LIGNE 78
+        no_orders_yet: Aucune commande n'est enregistrée pour votre compte
         logout: 'Déconnexion'
-        sign_out: 'Déconnexion'
-        #LOGIN
-                #Mon compte à voir
-        registered_customers: 'Connectez-vous'		
-        registered_customers_subtitle: 'Vous êtes déjà client Noblezz, connectez-vous avec vos identifiants de connexion'
-                #'Adresse mail *' MODIFY ON FORM LOGIN
-                #'Mot de passe *' MODIFY ON FORM LOGIN
-                #'Rester connecté' MODIFY ON FORM LOGIN
-                #'Veuillez vérifier vos informations de connexion' MODIFY ON FORM LOGIN
-        new_customers: 'Créer un compte'
-        new_customers_subtitle: Créer votre compte Noblezz en quelques clics pour pouvoir suivre aisément vos commandes, gérer vos adresses et cumuler des avoirs de fidélité à chaque commande. Suivez les prochaines étapes pour créer dès aujourd'hui votre compte Noblezz
-        invalid_email: Email invalide
-        #CRÉATION DE COMPTE
-        personal_information: 'Informations personnelles'
-        account_credentials: 'Informations de connexion'
-        and: 'et la'
-                #Créer un compte à voir
-        have_an_account_already: 'Vous avez déjà un compte ?'
-        sign_in_here: 'Accédez à votre compte'
-        #FORMULAIRE DE CONTACT
-        contact_form: Formulaire de contact
-        subject: Sujet
-        topic: 'Sujet'
-        other_subject: Veuillez renseigner le sujet de votre message
-        message: 'Message'
-                #J'accepte les MODIFY ON FORM - CUSTOMER
-                #conditions générales ON FORM - CUSTOMER
-        send: 'Envoyer'
+    #####
         no_additionnal_addresses: Vous n'avez pas d'adresses supplémentaires
-        caution: Attention
-        free_shipping_method: Offerts
-        # JE NE SAIS PAS
-        item.choice: "{0} |{1}, 1 élément |] 1, Inf], %count% éléments"
-        #MOT DE PASSE OUBLIÉ
+    #SEXE NOUVEAU COMPTE & FORMULAIRE DE CONTACT
+    gender:
+        unknown: M
+        male: Mme
+        female: Mlle
+    #MOT DE PASSE OUBLIÉ
+    user:
         forgot_password_title: J'ai oublié mon mot de passe
         set_a_new_password_for_your_account_1: Veuillez saisir l'adresse mail associée à votre compte.
         set_a_new_password_for_your_account_2: Vous recevrez à cette adresse un lien vous permettant de réinitialiser votre mot de passe.
+        email: Email
         reset_password: Réinitialiser mon mot de passe
-    user:
         reset_password_request_ok: Votre demande de réinitialisation a bien été prise en compte
-        reset_password_request: Si l'email que vous avez spécifié existe dans notre système, vous recevrez un message avec les instructions pour réinitialiser votre mot de passe.
-        reset_password_not_received_title: Vous n'avez pas reçu cette email ?
+        reset_password_request: Un email contenant les instructions de réinitialisation de votre mot de passe viens de vous être envoyer sur votre adresse email.
+        reset_password_not_received_title: Vous n'avez pas reçu cet email ?
         reset_password_not_received: Nous vous invitons à vérifier que l'email n'a pas été redirigé dans la boite de courriers indésirables (Spam) de votre boite de réception.
-        reset_password_request_not_ok: L'adresse que vous avez renseigné n'existe pas
     menu:
         shop:
-            account:
+            account: #FOOTER & MON COMPTE
+                dashboard: Mon profil
                 personal_information: Mes informations personnelles
+                change_password: Sécurité du compte
                 address_book: Mes adresses
                 order_history: Mes commandes
-                change_password: Sécurité du compte
     form:
-        login:
+        login: #LOGIN
             username: 'Adresse mail *'
             password: 'Mot de passe *'
-            remember_me: 'Rester connecté'
+            remember_me: 'Rester connecté' #va disparaitre
             verify_credentials: 'Veuillez vérifier vos informations de connexion'
-        user:
-            email: E-mail
-            enabled: Activé
-            password:
-                label: Mot de passe
-                confirmation: 'Confirmer le mot de passe'
-            remember_me: Rester connecté
-            shipping_address: Adresse de livraison
-        user_change_password:
-            confirmation: Confirmer nouveau mot de passe
+        user_change_password: #SÉCURITÉ DU COMPTE
             current: Mot de passe actuel
             new: Nouveau mot de passe
-        customer:
+            confirmation: Confirmer nouveau mot de passe
+        user:
+            password: #CRÉATION DE COMPTE
+                label: Mot de passe
+                confirmation: Confirmation du mot de passe
+        customer: #CRÉATION DE COMPTE & INFORMATION PERSONNELLES
+            gender: Titre
             first_name: Prénom
             last_name: Nom
-            email: E-mail
-            phone_number: Téléphone
-            gender: Sexe
             birthday: Date de naissance
-            billing_address: Adresse de facturation
-            subscribed_to_newsletter: S'inscrire à la newsletter
-            subscribed_to_newsletter_noblezz: Je souhaite m'inscrire à la newsletter Noblezz m'informant des nouveaux produits et offres spécifiques de la marque
+            phone_number: Téléphone
+            email: E-mail
+            subscribed_to_newsletter: S'inscrire à la newsletter #va disparaitre
+            subscribed_to_newsletter_noblezz: Je souhaite m'inscrire à la newsletter Noblezz afin de recevoir les dèrnieres collections, les offres ainsi que les diverses initiatives de la marque
             accept_cgv_1: J'accepte les
             accept_cgv_2: conditions générales
+            accept_cgv_and: 'et la'
             accept_cgv_3: politique de confidentialité
-        address:
-            city: Ville
-            country: Pays
+        address: #CRÉATION OU MODIFICATION D'ADRESSE
             first_name: Prénom
             last_name: Nom
-            phone_number: Téléphone
+            street: Numéro et nom de la rue
+            street2: Complément d'adresse
             postcode: Code postal
-            street: Adresse
-            street2: Adresse (suite)
-        choice:
-            subject:
-                order_payment: Commande & Paiement
-                delivery: Expédition & Livraison
-                refund: Retour & Remboursement
-                product_info: Information Produits
-                account: Compte client
-                loyalty_program: Programme de fidélité
-                personal_data: Données Personnelles
-                partnership: Partenariat & Collaboration
-                career: Carrière
-                noblezz: La maison Noblezz
-                brand_rights: Droit de la Marque
-                other: Autre
-    gender:
-        unknown: Inconnu
-        male: Homme
-        female: Femme
+            city: Ville
+            country: Pays
+        contact: #FORMULAIRE DE CONTACT
+            choice:
+                subject:
+                    order_payment: Commande & Paiement
+                    delivery: Expédition & Livraison
+                    refund: Retour & Remboursement
+                    product_info: Information Produits
+                    account: Compte client
+                    loyalty_program: Programme de fidélité
+                    personal_data: Données Personnelles
+                    partnership: Partenariat & Collaboration
+                    career: Carrière
+                    noblezz: La maison Noblezz
+                    brand_rights: Droit de la Marque
+                    other: Autre
+        product:
+            please_choose_size: Veuillez choisir une taille
+            last_product_in_stock: Dernières pièces
+        bag:
+            limit_in_cart_reached: La quantité limite pour cet article est atteinte
+            not_available: Ce article n'est plus disponible
+            has_product_out_of_stock: Votre panier contient un ou plusieurs articles qui ne sont plus disponibles. Veuillez le/les supprimer avant de procéder au paiement.
     email:
         contact:
-            new_contact_request: Vous avez un nouveau message
-            new_request_from: 'Une nouvelle demande de contact a été faite par : '
-            request_infos: Voici les informations renseignées
-            subject_is: 'Le sujet concerne : '
-            message_is: 'Voici le message : '
-            email: 'Email : '
-            phone_number: 'Numéro de téléphone : '
-    cart_item:
-        not_available: Ce produit n'est pas en stock
+            new_contact_request: Vous avez un nouveau message M01
+            new_request_from: 'Une nouvelle demande de contact a été faite par : M02' 
+            request_infos: Voici les informations renseignées M03
+            subject_is: 'Le sujet concerne : M04' 
+            message_is: 'Voici le message : M05' 
+            email: 'Email : M06' 
+            phone_number: 'Numéro de téléphone : M07' 
 bitbag_sylius_bonus_points:
     ui:
         bonus_points: Cash-back
-        use_bonus_points: Utiliser mon cash-back 
+        bonus_points_available_dashboard: Vous avez %s€ dans votre cash-back
         you_have_bonus_points_available: 'Cash-back disponible :'
+        use_bonus_points: Utiliser mon cash-back
         bonus_points_total_used: Cash-back utilisé
         bonus_points_delete_link: Ne plus utiliser mon cash-back
-        bonus_points_available_dashboard: Vous avez %s€ dans votre cash-back

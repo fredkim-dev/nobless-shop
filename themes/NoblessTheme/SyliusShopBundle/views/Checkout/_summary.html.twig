@@ -33,7 +33,7 @@
         {# MOBILE cart items #}
         <div id="carouselSummaryItemsMobile" class="cart-items-mobile d-flex d-md-none row mb-3">
             {% for item in order.items %}
-                {% include '@SyliusShop/Checkout/Summary/_cartItem.html.twig' with {'product': item, 'variant': item.variant} %}
+                {% include '@SyliusShop/Checkout/Summary/_cartItem.html.twig' with {'product': item, 'variant': item.variant, 'cart_widget': false} %}
             {% endfor %}
         </div>
         <div class="row justify-content-center slider-controls d-block d-md-none"></div>

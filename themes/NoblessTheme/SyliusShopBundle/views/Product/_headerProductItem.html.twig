@@ -1,8 +1,11 @@
 {% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
 {% import "@SyliusShop/Common/Macro/icons.html.twig" as icons %}
 
-{% if parentRoute is not defined %}
-    {% set parentRoute = '' %}
+{% set hideActions = false %}
+{% if parentRoute is defined %}
+    {% if parentRoute == 'sylius_shop_cart_summary' or 'sylius_shop_checkout_' in parentRoute %}
+        {% set hideActions = true %}
+    {% endif %}
 {% endif %}
 
 {% set maxQtyInCart = sylius_max_qty_in_cart(item) %}
@@ -28,7 +31,7 @@
                         data-js-remove-from-cart-button
                         data-js-remove-from-cart-csrf-token="{{ csrf_token(item.id) }}"
                         data-js-remove-from-cart-api-url="{{ path('sylius_shop_ajax_cart_item_remove', {'id': item.id}) }}"
-                        class="p-0 btn btn-md btn-link delete-product-ajax {% if noAjax is defined or parentRoute == 'sylius_shop_cart_summary' %}d-none{% endif %}">{{ icons.times() }}</button>
+                        class="p-0 btn btn-md btn-link delete-product-ajax {% if noAjax is defined or hideActions %}d-none{% endif %}">{{ icons.times() }}</button>
             </div>
             {% if product.isBundle() %}
                 {{ bitbag_render_product_bundle_cart_widget_order_items(item) }}
@@ -48,7 +51,7 @@
                 {% endif %}
             {% endif %}
             <div>
-                {% if noAjax is not defined and parentRoute != 'sylius_shop_cart_summary' %}
+                {% if noAjax is not defined and not hideActions %}
                     <span> {{ 'sylius.ui.quantity'|trans }} : <input type="number" value="{{ item.quantity }}" name="" class="qty ajax-qty" min="1" max="{{ maxQtyInCart }}"/>
                         <img src="{{ asset('nobless-theme/images/reload.png', 'noblessTheme') }}"
                              class="reload-icon reload-qty ajax d-none"

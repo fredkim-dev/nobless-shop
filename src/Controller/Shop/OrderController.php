@@ -117,7 +117,7 @@ class OrderController extends ResourceController
         $resource = $this->_parent->findOr404($configuration);
 
         // Check if customer has product out of stock, and redirect him to cart if so
-        if ($request->get('_route') === 'sylius_shop_checkout_address') {
+        if (strpos($request->get('_route'), 'sylius_shop_checkout_')) {
             /**
              * @var $resource OrderInterface
              */
@@ -131,7 +131,6 @@ class OrderController extends ResourceController
                     }
                 } elseif ($this->isBundleOutOfStock($item)) {
                     return $this->redirect($this->generateUrl('sylius_shop_cart_summary'), 301);
-
                 }
             }
         }
@@ -244,6 +243,7 @@ class OrderController extends ResourceController
                 'ids' => $customIds,
                 'haveAddresses' => $haveAddresses,
                 'orderHasAddresses' => $orderHasAddresses,
+                'parentRoute' => $request->get('_route')
             ])
             ->setTemplate($configuration->getTemplate(ResourceActions::UPDATE . '.html'))
         ;

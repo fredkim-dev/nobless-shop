@@ -56,14 +56,22 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
             return;
         }
 
+        $customerBonusPoints = $this->customerBonusPointsContext->getCustomerBonusPoints();
         $bonusPointsAmount = $bonusPoints->getPoints();
+        $specialCase = false;
         // If customer validates bonus points input without anything
         if ($order->getBonusPoints() === null) {
             $bonusPointsAmount = 0;
-            $customerBonusPoints = $this->customerBonusPointsContext->getCustomerBonusPoints();
+            $specialCase = true;
+        } elseif ($order->getItemsTotal() < $bonusPointsAmount) {
+            $bonusPointsAmount = $order->getItemsTotal();
+            $specialCase = true;
+        }
+
+        if ($specialCase) {
             foreach($customerBonusPoints->getBonusPointsUsed() as $bonusPointsUsed) {
-                if ($order === $bonusPointsUsed->getOrder()) {
-                    $bonusPointsUsed->setPoints(0);
+                if ($order === $bonusPointsUsed->getOrder() && true === $bonusPointsUsed->isUsed()) {
+                    $bonusPointsUsed->setPoints($bonusPointsAmount);
                 }
                 $this->entityManager->flush();
             }
