@@ -2201,6 +2201,7 @@ div {
         &.show{
             visibility: visible;
             transform: translateX(0);
+            display: block;
         }
         .navbar {
             a {

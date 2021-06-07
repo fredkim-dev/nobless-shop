@@ -194,6 +194,7 @@ function replaceCarouselArrow(carouselElement) {
  * @param element
  */
 function replaceCarouselArrowCart(element) {
+  if (element === undefined) return;
   const imgSliderHeight = $('.slick-active img', element).outerHeight();
   const arrowTopValue = Math.round(imgSliderHeight - 0.2 * imgSliderHeight);
   element.next().css('top', arrowTopValue + 'px');
