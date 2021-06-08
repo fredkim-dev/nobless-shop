@@ -165,6 +165,14 @@ services:
             - '@sylius.manager.order'
         tags:
             - { name: messenger.message_handler }
+                
+    app.component.inventory.order_inventory_operator_custom:
+        class: App\Component\Inventory\Operator\OrderInventoryOperator
+        decorates: sylius.inventory.order_inventory_operator
+        public: true
+        arguments:
+            - '@bitbag_sylius_product_bundle.repository.product_bundle_order_item'
+    
         
     #Bonus Points
     app.listener.admin.menu_builder:

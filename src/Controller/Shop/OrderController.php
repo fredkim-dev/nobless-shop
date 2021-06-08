@@ -124,8 +124,14 @@ class OrderController extends ResourceController
             foreach($resource->getItems() as $item) {
                 /* @var OrderItemInterface $item */
                 if (!$item->getVariant()->getProduct()->isBundle()) {
-                    $productQty = (int)($item->getVariant()->getOnHand() - $item->getVariant()->getOnHold());
-                    $productIsEnabled = $item->getVariant()->getProduct()->isEnabled();
+                    $productVariant = $item->getVariant();
+                    $productQty = (int)($productVariant->getOnHand() - $productVariant->getOnHold());
+                    $productIsEnabled = $productVariant->getProduct()->isEnabled();
+
+                    if (!$productVariant->isTracked()) {
+                        continue;
+                    }
+
                     if ($productQty <= 0 || $productQty < $item->getQuantity() || !$productIsEnabled) {
                         return $this->redirect($this->generateUrl('sylius_shop_cart_summary'), 301);
                     }

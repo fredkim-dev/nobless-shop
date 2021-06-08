@@ -1,0 +1,12 @@
+winzou_state_machine:
+    sylius_order:
+        callbacks:
+            after:
+                sylius_hold_inventory:
+                    on: ["create"]
+                    do: ["@app.component.inventory.order_inventory_operator_custom", "hold"]
+                    args: ["object"]
+                sylis_cancel_order:
+                    on: ["cancel"]
+                    do: ["@app.component.inventory.order_inventory_operator_custom", "cancel"]
+                    args: ["object"]

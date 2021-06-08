@@ -268,6 +268,11 @@ class OrderItemController extends ResourceController
     {
         $cart = $this->getCurrentCart();
         $productVariant = $item->getVariant();
+
+        if (!$productVariant->isTracked()) {
+            return '';
+        }
+
         $calculatedMaxQty = $productVariant->getOnHand() - $productVariant->getOnHold();
         if ($calculatedMaxQty > Product::MAX_QTY_IN_CART) {
             $calculatedMaxQty = Product::MAX_QTY_IN_CART;
@@ -305,21 +310,6 @@ class OrderItemController extends ResourceController
                 return $cartItem;
             }
         }
-    }
-
-    /**
-     * Redirect to product page when form contains errors
-     *
-     * @param $data
-     * @param Request $request
-     * @param string $message
-     * @return RedirectResponse
-     */
-    private function redirectToProductPage($data, Request $request, string $message): RedirectResponse
-    {
-        $this->session->set('selectedVariant', $data->getCartItem()->getVariant()->getOptionValues()[0]);
-        $this->addFlash('error', $this->get('translator')->trans($message));
-        return $this->redirect($request->headers->get('referer'));
     }
 
     protected function getCurrentCart(): OrderInterface

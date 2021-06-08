@@ -8,6 +8,7 @@ imports:
     - { resource: "@BitBagSyliusProductBundlePlugin/Resources/config/config.yml" }
     
     - { resource: "@BitBagSyliusCmsPlugin/Resources/config/config.yml" }
+    - { resource: "../services/state_machine.yml" }
 
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'

@@ -88,8 +88,14 @@ class ProductVariants extends AbstractExtension
      */
     public function isProductOutOfStock(OrderItemInterface $orderItem): bool
     {
-        $productQty = (int)($orderItem->getVariant()->getOnHand() - $orderItem->getVariant()->getOnHold());
-        $productIsEnabled = $orderItem->getVariant()->getProduct()->isEnabled();
+        $productVariant = $orderItem->getVariant();
+        $productQty = (int)($productVariant->getOnHand() - $productVariant->getOnHold());
+        $productIsEnabled = $productVariant->getProduct()->isEnabled();
+
+        if (!$productVariant->isTracked()) {
+            return false;
+        }
+
         if ($productQty <= 0 || $productQty < $orderItem->getQuantity() || !$productIsEnabled) {
             return true;
         }
@@ -106,8 +112,14 @@ class ProductVariants extends AbstractExtension
     public function isBundleOutOfStock(OrderItemInterface $orderItem): bool
     {
         foreach($this->getBundleItems($orderItem) as $item) {
-            $productQty = (int)($item->getProductVariant()->getOnHand() - $item->getProductVariant()->getOnHold());
-            $productIsEnabled = $item->getProductVariant()->getProduct()->isEnabled();
+            $productVariant = $item->getProductVariant();
+            $productQty = (int)($productVariant->getOnHand() - $productVariant->getOnHold());
+            $productIsEnabled = $productVariant->getProduct()->isEnabled();
+
+            if (!$productVariant->isTracked()) {
+                continue;
+            }
+
             if ($productQty <= 0 || $productQty < $item->getQuantity() || !$productIsEnabled) {
                 return true;
             }
@@ -143,7 +155,7 @@ class ProductVariants extends AbstractExtension
         } else {
             $stock = (int)($item->getVariant()->getOnHand() - $item->getVariant()->getOnHold());
         }
-        return ($maxQtyInCart > $stock) ? $stock : $maxQtyInCart;
+        return ($stock < $maxQtyInCart) ? $stock : $maxQtyInCart;
     }
 
     /**
