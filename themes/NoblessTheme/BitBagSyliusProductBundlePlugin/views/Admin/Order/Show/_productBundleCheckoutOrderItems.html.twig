@@ -1,0 +1,21 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+<div class="d-inline bundle-details">
+    <span>{{ 'sylius.ui.actions'|trans }}</span>
+    <div class="custom-tooltip d-none">
+        {% for item in items %}
+            {% set variant = item.productVariant %}
+            {% set product = variant.product %}
+            {% set value = '' %}
+            {% if product.hasOptions() %}
+                {% for optionValue in variant.optionValues %}
+                    {% set value = value ~ optionValue.value %}
+                {% endfor %}
+            {% elseif variant.name is not null %}
+                {% set value = value ~ optionValue.value %}
+            {% endif %}
+
+            <div class="text-left"><span>{{ product.name }}</span><br><span class="col ml-1">{{ value }}</span></div>
+        {% endfor %}
+    </div>
+</div>

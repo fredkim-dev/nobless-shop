@@ -86,6 +86,15 @@ const checkout = function mainFunctions() {
     $('.save-address-form [class^="add-"]', container).hide();
     hideSaveAddressForm(container);
   });
+
+  // Bundle details tooltip
+  $('.bundle-details')
+    .on('mouseover', function(e) {
+      $('.bundle-details-tooltip').html($('.custom-tooltip', $(this)).html()).css({'left': $(this).offset().left + 20, 'top': $(this).offset().top + 20, 'display': 'block'});
+    })
+    .on('mouseout', function(e) {
+      $('.bundle-details-tooltip').html('').css({'display': 'none'});
+    })
 };
 
 // When user chose an address is the addresses list

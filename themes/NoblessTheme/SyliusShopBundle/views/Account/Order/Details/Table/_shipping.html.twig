@@ -9,9 +9,6 @@
     <small><s>{{ money.convertAndFormat(order.getAdjustmentsTotal(shippingAdjustment)) }}</s></small>
     <span>
         <span>{{ money.convertAndFormat(order.getAdjustmentsTotal(shippingAdjustment) + order.getAdjustmentsTotal(orderShippingPromotionAdjustment)) }}</span>
-        <span title="{% for label, amount in orderShippingPromotions %}<div>{{ label }}: {{ money.convertAndFormat(amount) }}</div>{% endfor %}" data-toggle="tooltip" data-placement="top" >
-            <i class="fas fa-question-circle"></i>
-        </span>
     </span>
 {% else %}
     <strong>{{ 'sylius.ui.shipping_total'|trans }}:</strong>

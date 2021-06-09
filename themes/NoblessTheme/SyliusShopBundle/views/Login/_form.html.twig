@@ -29,12 +29,7 @@
 </span>
 {% endif %}
 <div class="row mb-1">
-    <div class="col-6 pr-0 remember-checkbox">
-        {{ form_widget(form._remember_me, {'id': idRememberMe}) }}
-        {{ form_label(form._remember_me) }}
-        {{ form_errors(form._remember_me) }}
-    </div>
-    <div class="col-6 pl-0 m-0 text-right forgotten-password">
+    <div class="col-12 pl-0 m-0 text-right forgotten-password">
         <a href="{{ path('sylius_shop_request_password_reset_token') }}" class="btn btn-link reset-password-open" data-modal-id="#resetPasswordModal">{{ 'sylius.ui.forgot_password'|trans }}</a>
     </div>
 </div>

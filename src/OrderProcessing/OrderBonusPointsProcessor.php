@@ -64,7 +64,7 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
             $bonusPointsAmount = 0;
             $specialCase = true;
         } elseif ($order->getItemsTotal() < $bonusPointsAmount) {
-            $bonusPointsAmount = $order->getItemsTotal();
+            $bonusPointsAmount = (int)(floor($order->getItemsTotal() / 100)) * 100;
             $specialCase = true;
         }
 

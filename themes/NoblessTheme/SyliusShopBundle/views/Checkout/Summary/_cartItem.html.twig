@@ -7,18 +7,22 @@
     </div>
     <div class="d-flex flex-column">
         <div class="item-title size-up font-weight-bold">{{ item.productName }}</div>
-        {% if product.hasOptions() %}
-            <div>
-                {% for optionValue in variant.optionValues %}
-                    <div data-sylius-option-name="{{ optionValue.name }}">
-                        <span>{{ optionValue.value }}</span>
-                    </div>
-                {% endfor %}
-            </div>
-        {% elseif item.variantName is not null %}
-            <div>
-                <span>{{ item.variantName }}</span>
-            </div>
+        {% if product.isBundle() %}
+            {{ bitbag_render_product_bundle_cart_widget_order_items(item) }}
+        {% else %}
+            {% if product.hasOptions() %}
+                <div>
+                    {% for optionValue in variant.optionValues %}
+                        <div data-sylius-option-name="{{ optionValue.name }}">
+                            <span>{{ optionValue.value }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% elseif item.variantName is not null %}
+                <div>
+                    <span>{{ item.variantName }}</span>
+                </div>
+            {% endif %}
         {% endif %}
         <div>
             <span> {{ 'sylius.ui.quantity'|trans }} : {{ item.quantity }}

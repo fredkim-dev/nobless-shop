@@ -237,6 +237,20 @@ a {
     }
 }
 
+.bundle-details-tooltip {
+    background-color: #ffffff;
+    color: #271513;
+    border: 1px solid #271513;
+    padding: 0.5rem;
+    display:none;
+    position:fixed;
+    -webkit-transition: opacity 0.5s;
+    -moz-transition:  opacity 0.5s;
+    -ms-transition: opacity 0.5s;
+    -o-transition:  opacity 0.5s;
+    transition:  opacity 0.5s;
+}
+
 /*=================*/
 /* HEADER / FOOTER */
 /*=================*/
@@ -1358,6 +1372,11 @@ div.taxon-header {
         .cart-items {
             max-height: 350px;
             overflow-y: auto;
+        }
+        .bundle-details {
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
     .steps {
