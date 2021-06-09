@@ -19,7 +19,7 @@
             {% endfor %}<br>
         {% endif %}
         {% if bonusPointsTotal %}
-            <strong>{{ 'bitbag_sylius_bonus_points.ui.bonus_points_total'|trans }}:</strong> {{ money.format(bonusPointsTotal, order.currencyCode) }}<br>
+            <strong>{{ 'bitbag_sylius_bonus_points.ui.bonus_points'|trans }}:</strong> {{ money.format(bonusPointsTotal, order.currencyCode) }}<br>
         {% endif %}
         {% include '@SyliusShop/Account/Order/Details/Table/_shipping.html.twig' with {'order': order} %}<br>
         <span class="h3">{{ 'sylius.ui.total'|trans }}: {{ money.convertAndFormat(order.total) }}</span><br>

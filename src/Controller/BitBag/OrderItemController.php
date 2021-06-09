@@ -109,7 +109,7 @@ class OrderItemController extends BaseOrderItemController
 
         if ($request->isMethod(Request::METHOD_POST) && $form->handleRequest($request)->isValid()) {
             // If bundle with selected variants is in cart and reach the quantity limit, display error message
-            $productOutOfStockId = $this->checkProductQtyInCart($form->getData()->getProductBundleItems());
+            $productOutOfStockId = $this->checkProductQtyInCart($orderItem, $form->getData()->getProductBundleItems());
             if ($productOutOfStockId !== null) {
                 $response = [
                     'message' => $this->container->get('translator')->trans('sylius.form.bag.limit_in_cart_reached'),
@@ -124,7 +124,7 @@ class OrderItemController extends BaseOrderItemController
         }
 
         if (!$configuration->isHtmlRequest()) {
-            $productOutOfStockId = $this->checkProductQtyInCart($form->getData()->getProductBundleItems());
+            $productOutOfStockId = $this->checkProductQtyInCart($orderItem, $form->getData()->getProductBundleItems());
             $message = '';
             if ($productOutOfStockId === null && count($form->getErrors()) > 0) {
                 $message = $form->getErrors()[0]->getMessage();
@@ -190,12 +190,13 @@ class OrderItemController extends BaseOrderItemController
         return $this->redirectHandler->redirectToResource($configuration, $orderItem);
     }
 
-    private function checkProductQtyInCart(array $dataProductBundleItems): ?int
+    private function checkProductQtyInCart(OrderItemInterface $orderItem, array $dataProductBundleItems): ?int
     {
         $cart = $this->getCurrentCart();
 
         foreach ($cart->getItems() as $existingItem) {
             if ($existingItem->getProduct()->isBundle()
+                && $existingItem->getProduct()->getId() === $orderItem->getProduct()->getId()
                 && $this->checkBundleVariants($dataProductBundleItems, $existingItem->getProductBundleOrderItems())) {
                 return $this->maxBundleQtyInCartIsReached($dataProductBundleItems, $existingItem);
             }
@@ -238,6 +239,8 @@ class OrderItemController extends BaseOrderItemController
             }
         }
     }
+
+
 
     private function checkBundleVariants(array $cartProductBundleOrderItems, ArrayCollection $newCartProductBundleOrderItems): bool
     {

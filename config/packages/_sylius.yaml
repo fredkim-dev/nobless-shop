@@ -300,8 +300,6 @@ sylius_grid:
                         arguments:
                             - "expr:service('sylius.context.customer').getCustomer().getId()"
                             - "expr:service('sylius.context.channel').getChannel().getId()"
-            sorting:
-                checkoutCompletedAt: desc
             fields:
                 number:
                     type: twig
@@ -312,7 +310,7 @@ sylius_grid:
                 checkoutCompletedAt:
                     type: datetime
                     label: sylius.ui.date
-                    sortable: false
+                    sortable: ~
                     options:
                         format: m/d/Y
                 shippingAddress:

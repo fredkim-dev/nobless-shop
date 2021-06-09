@@ -37,11 +37,6 @@
                 {% endif %}
                 <span>
                     {{ money.convertAndFormat(item.discountedUnitPrice) }}
-                    {% if item.unitPrice != item.discountedUnitPrice %}
-                        <span title="{% for promotion in unitPromotions %}<div>{{ promotion.label }}: {{ money.convertAndFormat(promotion.amount) }}</div>{% endfor %}" data-toggle="tooltip" data-placement="top" >
-                            <i class="fas fa-question-circle"></i>
-                        </span>
-                    {% endif %}
                 </span>
             </div>
         </div>

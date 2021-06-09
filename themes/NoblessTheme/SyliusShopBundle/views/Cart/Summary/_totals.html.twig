@@ -75,7 +75,7 @@
 
         <div class="total-separator w-75 mx-auto mt-3 mb-2"></div>
 
-        {% if availableBonusPoints > 0 or bonusPointsTotal > 0 %}
+        {% if availableBonusPoints > 0 or bonusPointsTotal != 0 %}
             <div class="d-flex flex-column">
                 <div class="mb-2">
                     <span class="text-muted">{{ 'bitbag_sylius_bonus_points.ui.you_have_bonus_points_available'|trans }}</span>
