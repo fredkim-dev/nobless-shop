@@ -12,12 +12,17 @@ const afterDomReplacementFunctions = function domReplacementFunctions() {
     .forEach(el => SyliusUpdateQuantity(el));
 
   $('.ajax-qty', cartWidgetContainer).on('input', function(e) {
+    const reloadQtyDiv = $('.reload-qty.ajax');
+    const maxValue = $(this).attr('max');
+    const minValue = $(this).attr('min');
     $(this).next().removeClass('d-none');
-    $('.reload-qty.ajax').attr('data-js-update-qty-value', $(this).val());
-    if (parseInt($(this).val()) >= parseInt($(this).attr('max'))) {
-      $(this).val($(this).attr('max'));
-    } else if(parseInt($(this).val()) < parseInt($(this).attr('min'))) {
-      $(this).val($(this).attr('min'));
+    reloadQtyDiv.attr('data-js-update-qty-value', $(this).val());
+    if (parseInt($(this).val()) >= parseInt(maxValue)) {
+      $(this).val(maxValue);
+      reloadQtyDiv.attr('data-js-update-qty-value', maxValue);
+    } else if(parseInt($(this).val()) < parseInt(minValue)) {
+      $(this).val(minValue);
+      reloadQtyDiv.attr('data-js-update-qty-value', minValue);
     }
   })
 }

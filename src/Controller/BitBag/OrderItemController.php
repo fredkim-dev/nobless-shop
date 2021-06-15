@@ -240,8 +240,6 @@ class OrderItemController extends BaseOrderItemController
         }
     }
 
-
-
     private function checkBundleVariants(array $cartProductBundleOrderItems, ArrayCollection $newCartProductBundleOrderItems): bool
     {
         $allTheSame = 0;

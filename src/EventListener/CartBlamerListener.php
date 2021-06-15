@@ -13,14 +13,20 @@ declare(strict_types=1);
 
 namespace App\EventListener;
 
+use App\Component\Order\OrderModifier;
+use App\Entity\Order\OrderItem;
+use BitBag\SyliusProductBundlePlugin\Entity\ProductBundleOrderItemInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sylius\Bundle\UserBundle\Event\UserEvent;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Order\Context\CartNotFoundException;
+use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
 use Sylius\Component\Resource\Exception\UnexpectedTypeException;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 /**
  * @author Michał Marcinkowski <michal.marcinkowski@lakion.com>
@@ -43,18 +49,42 @@ final class CartBlamerListener
     private $sessionCartContext;
 
     /**
+     * @var RepositoryInterface
+     */
+    private $productBundleOrderItemRepository;
+
+    /**
+     * @var OrderModifier
+     */
+    private $orderModifier;
+
+    /**
+     * @var OrderItemQuantityModifierInterface
+     */
+    private $orderItemQuantityModifier;
+
+    /**
      * @param ObjectManager        $cartManager
      * @param CartContextInterface $cartContext
      * @param CartContextInterface $sessionCartContext
+     * @param RepositoryInterface $productBundleOrderItemRepository
+     * @param OrderModifier $orderModifier
+     * @param OrderItemQuantityModifierInterface $orderItemQuantityModifier
      */
     public function __construct(
         ObjectManager $cartManager,
         CartContextInterface $cartContext,
-        CartContextInterface $sessionCartContext
+        CartContextInterface $sessionCartContext,
+        RepositoryInterface $productBundleOrderItemRepository,
+        OrderModifier $orderModifier,
+        OrderItemQuantityModifierInterface $orderItemQuantityModifier
     ) {
         $this->cartManager        = $cartManager;
         $this->cartContext        = $cartContext;
         $this->sessionCartContext = $sessionCartContext;
+        $this->productBundleOrderItemRepository = $productBundleOrderItemRepository;
+        $this->orderModifier = $orderModifier;
+        $this->orderItemQuantityModifier = $orderItemQuantityModifier;
     }
 
     /**
@@ -93,9 +123,9 @@ final class CartBlamerListener
             return;
         }
 
-        $cartItemsId = [];
+        $cartItems = [];
         foreach ($cart->getItems() as $itemCart) {
-            $cartItemsId[] = $itemCart->getVariant()->getId();
+            $cartItems[] = $itemCart;
         }
 
         try {
@@ -104,8 +134,16 @@ final class CartBlamerListener
             $sessionCart = null;
         }
         if ($sessionCart !== null && $sessionCart->getId() !== $cart->getId()) {
+            /** @var OrderItemInterface $item */
             foreach ($sessionCart->getItems() as $item) {
-                if (!in_array($item->getVariant()->getId(), $cartItemsId)) {
+                $newItemInOldCart = array_filter($cartItems, function($oldItem) use($item) {
+                    return $oldItem->getVariant()->getId() === $item->getVariant()->getId();
+                });
+
+                if ($item->getVariant()->getProduct()->isBundle()
+                && !$this->checkOrderItemBundleItems($cartItems, $item)) {
+                    $this->addProductBundleOrderItemsToCart($cart, $item, $this->getBundleItems($item));
+                } elseif (count($newItemInOldCart) === 0) {
                     $cart->addItem($item);
                 }
             }
@@ -136,5 +174,69 @@ final class CartBlamerListener
         }
 
         return $cart;
+    }
+
+    /**
+     * Necessary function to add the bundle items info to OrderItem
+     *
+     * @param OrderInterface $cart
+     * @param OrderItemInterface $item
+     * @param array $bundleItems
+     */
+    private function addProductBundleOrderItemsToCart(OrderInterface $cart, OrderItemInterface $item, array $bundleItems): void
+    {
+        $newCartItem = new OrderItem();
+        /** @var ProductBundleOrderItemInterface $bundleItem */
+        foreach($bundleItems as $bundleItem) {
+            $this->orderItemQuantityModifier->modify(
+                $newCartItem,
+                1
+            );
+            $newCartItem->addProductBundleOrderItem($bundleItem);
+            $newCartItem->setVariant($bundleItem->getProductBundleItem()->getProductBundle()->getProduct()->getVariants()[0]);
+        }
+        $this->cartManager->persist($newCartItem);
+
+        $this->orderModifier->addToOrder($cart, $newCartItem);
+    }
+
+    /**
+     * @param OrderItemInterface $orderItem
+     * @return array
+     */
+    private function getBundleItems(OrderItemInterface $orderItem): array
+    {
+        $orderItemBundleItems = $this->productBundleOrderItemRepository->findBy([
+            'orderItem' => $orderItem,
+        ]);
+        $items = [];
+        foreach($orderItemBundleItems as $bundleItem) {
+            $items[$bundleItem->getProductVariant()->getId()] = $bundleItem;
+        }
+
+        return $items;
+    }
+
+    /**
+     * Check if bundle with selected variants is in cart
+     *
+     * @param array $cartItems
+     * @param OrderItemInterface $newOrderItem
+     * @return bool
+     */
+    private function checkOrderItemBundleItems(array $cartItems, OrderItemInterface $newOrderItem): bool
+    {
+        $newBundleItems = $this->getBundleItems($newOrderItem);
+        foreach($cartItems as $oldCartItem) {
+            if ($oldCartItem->getVariant()->getId() != $newOrderItem->getVariant()->getId()) continue;
+
+            $oldBundleItems = $this->getBundleItems($oldCartItem);
+            if(empty(array_diff_key($oldBundleItems, $newBundleItems))) {
+                return true;
+            }
+
+        }
+
+        return false;
     }
 }

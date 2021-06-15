@@ -4,10 +4,10 @@
 {% set hideActions = false %}
 {% set isCheckoutPage = false %}
 {% if parentRoute is defined %}
-    {% if parentRoute == 'sylius_shop_cart_summary' %}
+    {% if 'sylius_shop_checkout_' in parentRoute and app.request.attributes.get('_route') != 'sylius_shop_partial_cart_summary' %}
         {% set hideActions = true %}
-    {% elseif 'sylius_shop_checkout_' in parentRoute and app.request.attributes.get('_route') != 'sylius_shop_partial_cart_summary' %}
         {% set isCheckoutPage = true %}
+    {% elseif parentRoute == 'sylius_shop_cart_summary' or 'sylius_shop_checkout_' in parentRoute %}
         {% set hideActions = true %}
     {% endif %}
 {% endif %}

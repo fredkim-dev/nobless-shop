@@ -61,8 +61,8 @@ final class OrderModifier implements OrderModifierInterface
         foreach ($order->getItems() as $existingItem) {
             if ($item->equals($existingItem) && $item->getVariant()->getProduct()->isBundle()) {
                 $existingProductVariant = [];
-                foreach($existingItem->getProductBundleOrderItems() as $bundleOrderItem2) {
-                    $existingProductVariant[] = $bundleOrderItem2->getProductVariant()->getCode();
+                foreach($existingItem->getProductBundleOrderItems() as $existingBundleOrderItem) {
+                    $existingProductVariant[] = $existingBundleOrderItem->getProductVariant()->getCode();
                 }
 
                 if(count(array_diff($newProductVariant, $existingProductVariant)) == 0) {
