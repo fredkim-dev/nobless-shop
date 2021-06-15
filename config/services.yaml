@@ -141,7 +141,10 @@ services:
         arguments:
             - '@sylius.manager.order'
             - '@sylius.context.cart'
-            - '@sylius.context.cart.session_and_channel_based' 
+            - '@sylius.context.cart.session_and_channel_based'
+            - '@bitbag_sylius_product_bundle.repository.product_bundle_order_item'
+            - '@sylius.order_modifier'
+            - '@sylius.order_item_quantity_modifier'
                 
     #VALIDATOR
     app.validator.unknown_password_email:

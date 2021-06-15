@@ -25,7 +25,7 @@
                 </div>
             {% endif %}
 
-            <div class="col{% if error != '' %} mt-3{% else %} d-flex flex-column justify-content-center{% endif%} ">
+            <div class="col{% if error != '' %} mt-3{% endif%}">
                 {# Product name #}
                 <h6><a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}">{{ item.productName }}</a></h6>
 

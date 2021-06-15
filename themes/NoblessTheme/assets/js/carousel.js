@@ -63,6 +63,34 @@ function createCarousel(carouselElement) {
  * Create product carousels
  */
 function createProductCarousel(carouselElement, isCartItemsCarousel = false) {
+  let responsive = [
+    {
+      breakpoint: 550,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    },
+    {
+      breakpoint: 768,
+      settings: "unslick"
+    }
+  ];
+  if (isCartItemsCarousel) {
+    responsive = [
+      {
+        breakpoint: 350,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: "unslick"
+      }
+    ];
+  }
   const options = {
       infinite: true,
       speed: 700,
@@ -72,19 +100,7 @@ function createProductCarousel(carouselElement, isCartItemsCarousel = false) {
       appendArrows: carouselElement.next('.slider-controls'),
       prevArrow: '<div class="div-btn prev"><button type="button" class="slick-prev">Previous</button></div>',
       nextArrow: '<div class="div-btn next"><button type="button" class="slick-next">Next</button></div>',
-      responsive: [
-      {
-        breakpoint: 550,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: "unslick"
-      }
-    ]
+      responsive
   }
 
   if (carouselElement && !carouselElement.hasClass('slick-initialized')) {

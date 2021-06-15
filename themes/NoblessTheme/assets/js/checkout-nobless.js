@@ -89,12 +89,16 @@ const checkout = function mainFunctions() {
 
   // Bundle details tooltip
   $('.bundle-details')
-    .on('mouseover', function(e) {
-      $('.bundle-details-tooltip').html($('.custom-tooltip', $(this)).html()).css({'left': $(this).offset().left + 20, 'top': $(this).offset().top + 20, 'display': 'block'});
+    .on('mouseover touchmove', function(e) {
+      const details = $('.custom-tooltip', $(this)).html();
+      if (details.trim() !== '') {
+        $('.bundle-details-tooltip').html(details).css({'left': $(this).offset().left + 20, 'top': $(this).offset().top + 20, 'display': 'block'});
+      }
     })
     .on('mouseout', function(e) {
       $('.bundle-details-tooltip').html('').css({'display': 'none'});
-    })
+    });
+
 };
 
 // When user chose an address is the addresses list

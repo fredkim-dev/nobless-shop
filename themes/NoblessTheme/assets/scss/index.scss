@@ -2563,6 +2563,12 @@ div {
                 box-shadow: none;
             }
         }
+        .slick-slide {
+            img {
+                margin-right: auto;
+                margin-left: auto;
+            }
+        }
     }
 }
 
